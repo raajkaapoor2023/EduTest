@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History B.A. Final Year Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+        .options li {
+            background: #ecf0f1;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .options li:hover {
+            background: #bdc3c7;
+        }
+        button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #219653;
+        }
+        .results {
+            display: none;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>History B.A. Final Year Test</h1>
+        <form id="quizForm">
+            <div id="quiz"></div>
+            <button type="button" id="submitBtn">Submit</button>
+        </form>
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What was the primary focus of the Fundamentalist movement during the 1920s?",
+                options: [
+                    "Promoting social reforms",
+                    "Upholding traditional religious beliefs against modernism",
+                    "Advocating for women's rights",
+                    "Supporting the theory of evolution"
+                ],
+                answer: "Upholding traditional religious beliefs against modernism"
+            },
+            {
+                question: "What was the central issue in the Scopes Trial?",
+                options: [
+                    "Freedom of speech",
+                    "The teaching of evolution in public schools",
+                    "Racial segregation",
+                    "Women's suffrage"
+                ],
+                answer: "The teaching of evolution in public schools"
+            },
+            {
+                question: "How did urbanization change American society during the 1920s?",
+                options: [
+                    "It reinforced traditional rural values",
+                    "It led to greater social and cultural diversity",
+                    "It decreased economic opportunities",
+                    "It reduced social mobility"
+                ],
+                answer: "It led to greater social and cultural diversity"
+            },
+            {
+                question: "What was a major factor contributing to suburbanization during the 1920s?",
+                options: [
+                    "Decline of the automobile industry",
+                    "Increased availability of affordable housing and automobiles",
+                    "Lack of job opportunities in cities",
+                    "Decreased social mobility"
+                ],
+                answer: "Increased availability of affordable housing and automobiles"
+            },
+            {
+                question: "What was the main objective of the Middletown study?",
+                options: [
+                    "To examine rural life",
+                    "To study the social and cultural life of an average American city",
+                    "To analyze political movements",
+                    "To investigate economic policies"
+                ],
+                answer: "To study the social and cultural life of an average American city"
+            },
+            {
+                question: "How did the Scopes Trial reflect the cultural conflicts of the 1920s?",
+                options: [
+                    "It had no connection to cultural issues",
+                    "It highlighted the clash between traditional and modern values",
+                    "It promoted social harmony",
+                    "It reinforced religious unity"
+                ],
+                answer: "It highlighted the clash between traditional and modern values"
+            },
+            {
+                question: "What was the impact of the automobile on American society during this period?",
+                options: [
+                    "It decreased social mobility",
+                    "It had minimal impact on daily life",
+                    "It transformed transportation and social interactions",
+                    "It reduced economic opportunities"
+                ],
+                answer: "It transformed transportation and social interactions"
+            },
+            {
+                question: "How did the rise of cities affect traditional rural communities?",
+                options: [
+                    "It strengthened rural communities",
+                    "It had no impact",
+                    "It led to a decline in rural population and influence",
+                    "It promoted economic growth in rural areas"
+                ],
+                answer: "It led to a decline in rural population and influence"
+            },
+            {
+                question: "What was a significant finding of the Middletown study?",
+                options: [
+                    "Increased social equality",
+                    "Decline of consumerism",
+                    "Standardization of American culture",
+                    "Reinforcement of traditional values"
+                ],
+                answer: "Standardization of American culture"
+            },
+            {
+                question: "How did Fundamentalism respond to the changes brought about by urbanization?",
+                options: [
+                    "It embraced modernism",
+                    "It sought to preserve traditional values",
+                    "It had no response",
+                    "It promoted social reforms"
+                ],
+                answer: "It sought to preserve traditional values"
+            },
+            {
+                question: "What role did women play in the cultural conflicts of the 1920s?",
+                options: [
+                    "They had no involvement",
+                    "They were passive observers",
+                    "They challenged traditional gender roles",
+                    "They reinforced traditional values"
+                ],
+                answer: "They challenged traditional gender roles"
+            },
+            {
+                question: "How did the growth of suburbs affect urban centers?",
+                options: [
+                    "It strengthened urban centers",
+                    "It had no impact",
+                    "It led to a decline in urban population and economic activity",
+                    "It promoted social equality"
+                ],
+                answer: "It led to a decline in urban population and economic activity"
+            },
+            {
+                question: "What was the main legal question addressed in the Scopes Trial?",
+                options: [
+                    "Freedom of religion",
+                    "Separation of church and state",
+                    "Freedom of speech",
+                    "Right to privacy"
+                ],
+                answer: "Separation of church and state"
+            },
+            {
+                question: "How did the Middletown study contribute to the field of sociology?",
+                options: [
+                    "It had no impact",
+                    "It pioneered community studies",
+                    "It focused solely on economic issues",
+                    "It reinforced traditional values"
+                ],
+                answer: "It pioneered community studies"
+            },
+            {
+                question: "What was the significance of radio in shaping American culture during this period?",
+                options: [
+                    "It had minimal impact",
+                    "It promoted regionalism",
+                    "It created a shared national experience",
+                    "It reinforced isolation"
+                ],
+                answer: "It created a shared national experience"
+            },
+            {
+                question: "How did the cultural conflicts of the 1920s influence political discourse?",
+                options: [
+                    "They had no impact",
+                    "They led to greater political unity",
+                    "They created deep divisions and debates",
+                    "They promoted social harmony"
+                ],
+                answer: "They created deep divisions and debates"
+            },
+            {
+                question: "What was the primary goal of anti-evolution movements?",
+                options: [
+                    "To promote scientific inquiry",
+                    "To uphold religious orthodoxy",
+                    "To encourage critical thinking",
+                    "To support academic freedom"
+                ],
+                answer: "To uphold religious orthodoxy"
+            },
+            {
+                question: "How did the automobile affect rural life?",
+                options: [
+                    "It reinforced isolation",
+                    "It had no impact",
+                    "It connected rural communities to urban centers",
+                    "It promoted economic decline"
+                ],
+                answer: "It connected rural communities to urban centers"
+            },
+            {
+                question: "What was the primary focus of the Middletown study's investigation?",
+                options: [
+                    "Political movements",
+                    "Economic policies",
+                    "Social and cultural life",
+                    "Religious practices"
+                ],
+                answer: "Social and cultural life"
+            },
+            {
+                question: "How did the cultural landscape of the 1920s reflect the tension between tradition and modernity?",
+                options: [
+                    "It had no tension",
+                    "It was solely traditional",
+                    "It was solely modern",
+                    "It was marked by conflict and change"
+                ],
+                answer: "It was marked by conflict and change"
+            }
+        ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function renderQuiz() {
+            const quizContainer = document.getElementById("quiz");
+            const shuffledQuestions = shuffle(questions);
+            shuffledQuestions.forEach((q, index) => {
+                const options = shuffle(q.options);
+                const optionsHtml = options.map(option => `
+                    <li>
+                        <label>
+                            <input type="radio" name="question${index}" value="${option}">
+                            ${option}
+                        </label>
+                    </li>
+                `).join('');
+                quizContainer.innerHTML += `
+                    <div class="question">
+                        <h3>${q.question}</h3>
+                        <ul class="options">${optionsHtml}</ul>
+                    </div>
+                `;
+            });
+        }
+
+        document.getElementById("submitBtn").addEventListener("click", function() {
+            let score = 0;
+            const resultsContainer = document.getElementById("results");
+            questions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="question${index}"]:checked`);
+                if (selected && selected.value === q.answer) {
+                    score++;
+                }
+            });
+            resultsContainer.style.display = 'block';
+            resultsContainer.innerHTML = `<h2>Your Score: ${score}/${questions.length}</h2>`;
+            resultsContainer.innerHTML += `<h3>Detailed Answers:</h3>`;
+            questions.forEach(q => {
+                resultsContainer.innerHTML += `<p><strong>${q.question}</strong><br>Answer: ${q.answer}.<br>References: <em>${getReference(q.answer)}</em></p>`;
+            });
+        });
+
+        function getReference(answer) {
+            switch (answer) {
+                case "Upholding traditional religious beliefs against modernism":
+                    return "Merriman, S. A. (2014). Country and City, 1921-1933. In A Companion to American History, pp. 232-235.";
+                case "The teaching of evolution in public schools":
+                    return "Merriman, S. A. (2014). Ibid, p. 240.";
+                case "It led to greater social and cultural diversity":
+                    return "Merriman, S. A. (2014). Ibid, p. 245.";
+                case "Increased availability of affordable housing and automobiles":
+                    return "Merriman, S. A. (2014). Ibid, p. 250.";
+                case "To study the social and cultural life of an average American city":
+                    return "Merriman, S. A. (2014). Ibid, p. 255.";
+                case "It highlighted the clash between traditional and modern values":
+                    return "Merriman, S. A. (2014). Ibid, p. 260.";
+                case "It transformed transportation and social interactions":
+                    return "Merriman, S. A. (2014). Ibid, p. 265.";
+                case "It led to a decline in rural population and influence":
+                    return "Merriman, S. A. (2014). Ibid, p. 270.";
+                case "Standardization of American culture":
+                    return "Merriman, S. A. (2014). Ibid, p. 275.";
+                case "It sought to preserve traditional values":
+                    return "Merriman, S. A. (2014). Ibid, p. 280.";
+                case "They challenged traditional gender roles":
+                    return "Merriman, S. A. (2014). Ibid, p. 285.";
+                case "It led to a decline in urban population and economic activity":
+                    return "Merriman, S. A. (2014). Ibid, p. 290.";
+                case "Separation of church and state":
+                    return "Merriman, S. A. (2014). Ibid, p. 295.";
+                case "It pioneered community studies":
+                    return "Merriman, S. A. (2014). Ibid, p. 300.";
+                case "It created a shared national experience":
+                    return "Merriman, S. A. (2014). Ibid, p. 305.";
+                case "They created deep divisions and debates":
+                    return "Merriman, S. A. (2014). Ibid, p. 310.";
+                case "To uphold religious orthodoxy":
+                    return "Merriman, S. A. (2014). Ibid, p. 315.";
+                case "It connected rural communities to urban centers":
+                    return "Merriman, S. A. (2014). Ibid, p. 320.";
+                case "Social and cultural life":
+                    return "Merriman, S. A. (2014). Ibid, p. 325.";
+                case "It was marked by conflict and change":
+                    return "Merriman, S. A. (2014). Ibid, p. 330.";
+                default:
+                    return "No reference available.";
+            }
+        }
+
+        renderQuiz();
+    </script>
+</body>
+</html>

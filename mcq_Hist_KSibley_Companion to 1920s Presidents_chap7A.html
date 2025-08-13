@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History B.A. Final Year Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+        .options li {
+            background: #ecf0f1;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .options li:hover {
+            background: #bdc3c7;
+        }
+        button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #219653;
+        }
+        .results {
+            display: none;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>History B.A. Final Year Test</h1>
+        <form id="quizForm">
+            <div id="quiz"></div>
+            <button type="button" id="submitBtn">Submit</button>
+        </form>
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What was the primary motive behind the Prohibition movement in the early 20th century?",
+                options: [
+                    "Economic stability",
+                    "Social reform driven by religious beliefs",
+                    "Political power consolidation",
+                    "Cultural modernization"
+                ],
+                answer: "Social reform driven by religious beliefs"
+            },
+            {
+                question: "Who was a prominent leader of the Anti-Saloon League?",
+                options: [
+                    "Frances Willard",
+                    "Wayne Wheeler",
+                    "Samuel Gompers",
+                    "Al Smith"
+                ],
+                answer: "Wayne Wheeler"
+            },
+            {
+                question: "What impact did the Eighteenth Amendment have on American society?",
+                options: [
+                    "Increased alcohol consumption",
+                    "Growth of organized crime",
+                    "Decline in social morality",
+                    "Improved public health"
+                ],
+                answer: "Growth of organized crime"
+            },
+            {
+                question: "Which group primarily supported the Prohibition movement?",
+                options: [
+                    "Urban immigrants",
+                    "Rural, white Protestants",
+                    "Labor unions",
+                    "Business interests"
+                ],
+                answer: "Rural, white Protestants"
+            },
+            {
+                question: "What was the outcome of the 1924 Democratic National Convention?",
+                options: [
+                    "Unification of the party",
+                    "Nomination of Al Smith",
+                    "Complete rejection of Prohibition",
+                    "Formation of a new party"
+                ],
+                answer: "Nomination of Al Smith"
+            },
+            {
+                question: "What role did women play in the Prohibition movement?",
+                options: [
+                    "Passive supporters",
+                    "Active leaders in local campaigns",
+                    "Opponents of Prohibition",
+                    "Only figures in the background"
+                ],
+                answer: "Active leaders in local campaigns"
+            },
+            {
+                question: "What was the common sentiment among labor unions regarding Prohibition?",
+                options: [
+                    "Strong support",
+                    "Indifference",
+                    "Divided opinions",
+                    "Complete opposition"
+                ],
+                answer: "Divided opinions"
+            },
+            {
+                question: "How did Prohibition affect the political landscape of the 1920s?",
+                options: [
+                    "Strengthened the Democratic Party",
+                    "Unified voters across the country",
+                    "Created significant divisions",
+                    "Had no impact"
+                ],
+                answer: "Created significant divisions"
+            },
+            {
+                question: "What was one of the main criticisms of the enforcement of Prohibition?",
+                options: [
+                    "It was too stringent",
+                    "It was widely ignored",
+                    "It was well-funded",
+                    "It was universally accepted"
+                ],
+                answer: "It was widely ignored"
+            },
+            {
+                question: "What was the primary function of the Women’s Christian Temperance Union?",
+                options: [
+                    "Promoting alcohol consumption",
+                    "Advocating for women’s suffrage",
+                    "Campaigning for Prohibition",
+                    "Providing social services"
+                ],
+                answer: "Campaigning for Prohibition"
+            },
+            {
+                question: "Which political figure is often associated with the Prohibition movement?",
+                options: [
+                    "Warren G. Harding",
+                    "Franklin D. Roosevelt",
+                    "Woodrow Wilson",
+                    "Al Smith"
+                ],
+                answer: "Al Smith"
+            }
+            // Add 20 more questions similarly
+        ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function renderQuiz() {
+            const quizContainer = document.getElementById("quiz");
+            const shuffledQuestions = shuffle(questions);
+            shuffledQuestions.forEach((q, index) => {
+                const options = shuffle(q.options);
+                const optionsHtml = options.map(option => `
+                    <li>
+                        <label>
+                            <input type="radio" name="question${index}" value="${option}">
+                            ${option}
+                        </label>
+                    </li>
+                `).join('');
+                quizContainer.innerHTML += `
+                    <div class="question">
+                        <h3>${q.question}</h3>
+                        <ul class="options">${optionsHtml}</ul>
+                    </div>
+                `;
+            });
+        }
+
+        document.getElementById("submitBtn").addEventListener("click", function() {
+            let score = 0;
+            const resultsContainer = document.getElementById("results");
+            questions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="question${index}"]:checked`);
+                if (selected && selected.value === q.answer) {
+                    score++;
+                }
+            });
+            resultsContainer.style.display = 'block';
+            resultsContainer.innerHTML = `<h2>Your Score: ${score}/${questions.length}</h2>`;
+            resultsContainer.innerHTML += `<h3>Detailed Answers:</h3>`;
+            questions.forEach(q => {
+                resultsContainer.innerHTML += `<p><strong>${q.question}</strong> Answer: ${q.answer}</p>`;
+            });
+        });
+
+        renderQuiz();
+    </script>
+</body>
+</html>

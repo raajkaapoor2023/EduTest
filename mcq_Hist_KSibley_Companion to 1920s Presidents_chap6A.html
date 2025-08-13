@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Chapter 6 — The Harding Presidency: Scandals, Legacy, and Memory — 30-question Final BA Test</title>
+<style>
+  :root{
+    --bg:#071427; --card:#0b2430; --accent:#f6c85f; --accent2:#6ee7b7;
+    --muted:#9fb0bf; --good:#10b981; --bad:#fb7185; --glass: rgba(255,255,255,0.03);
+    --card-radius:12px; --maxw:1150px;
+    --tile-size:40px;
+  }
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,"Segoe UI",Roboto,Arial;color:#e6eef8;background:
+    radial-gradient(800px 360px at 10% 8%, rgba(110,231,183,0.03), transparent),
+    linear-gradient(180deg,#071427,#04121a);}
+  .container{max-width:1150px;margin:28px auto;border-radius:14px;display:grid;grid-template-columns:340px 1fr;gap:18px;padding:18px;background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.00));box-shadow:0 18px 50px rgba(0,0,0,0.6);}
+  aside{padding:18px;border-right:1px solid rgba(255,255,255,0.02)}
+  header h1{margin:0;color:var(--accent);font-size:18px}
+  header p{margin:6px 0 0 0;color:var(--muted);font-size:13px}
+  .navTiles{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+  .tile{width:var(--tile-size);height:var(--tile-size);border-radius:8px;background:var(--glass);display:flex;align-items:center;justify-content:center;color:var(--muted);cursor:pointer;border:1px solid rgba(255,255,255,0.03);font-weight:700}
+  .tile.answered{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#042022}
+  main{padding:18px}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,0.015),rgba(255,255,255,0.01));padding:18px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+  .question{font-size:19px;margin-bottom:14px;line-height:1.35}
+  .choices{display:flex;flex-direction:column;gap:12px}
+  .choice{padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);cursor:pointer;background:transparent;display:flex;gap:12px;align-items:flex-start}
+  .choice input{margin-top:2px}
+  .controls{display:flex;justify-content:space-between;margin-top:14px;gap:8px;flex-wrap:wrap}
+  .btn{padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+  .btn.primary{background:var(--accent);color:#042022}
+  .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+  .explanation{background:rgba(255,255,255,0.02);padding:12px;border-radius:8px;color:var(--muted);margin-top:10px;line-height:1.45}
+  .correct{color:var(--good);font-weight:700}
+  .wrong{color:var(--bad);font-weight:700}
+  .review{margin-top:16px}
+  .meta {font-size:13px;color:var(--muted);margin-top:10px}
+  footer {margin-top:14px;font-size:12px;color:var(--muted)}
+  .topbar {display:flex;justify-content:space-between;gap:12px;align-items:center}
+  .q-progress {font-size:13px;color:var(--muted)}
+  @media (max-width:980px){.container{grid-template-columns:1fr} aside{order:2;border-top:1px solid rgba(255,255,255,0.02)}}
+  .tile:focus, .btn:focus, .choice:focus {outline:3px solid rgba(102,196,182,0.18);box-shadow:0 6px 18px rgba(6,22,30,0.5)}
+</style>
+</head>
+<body>
+<div class="container" role="application" aria-labelledby="title">
+  <aside>
+    <header>
+      <h1 id="title">Chapter 6 — The Harding Presidency: Scandals, Legacy, and Memory</h1>
+      <p>Phillip G. Payne — 30 MCQs — Oxbridge / Ivy BA Final level</p>
+    </header>
+
+    <div class="meta">
+      Source: Chapter 6 (The Harding Presidency: Scandals, Legacy, and Memory) of the uploaded PDF. Detailed academically-referenced answers shown after submission. 
+    </div>
+
+    <div class="navTiles" id="navTiles" aria-hidden="false" title="Question navigation tiles"></div>
+
+    <footer>
+      Navigation: click a tile to jump; use Skip to defer a question; Submit to reveal full referenced answers. Reset clears all answers.
+    </footer>
+  </aside>
+
+  <main>
+    <div class="card" id="quizCard" aria-live="polite">
+      <div class="topbar">
+        <div class="q-progress" style="display:flex;flex-direction:column">
+          <div style="font-size:13px;color:var(--muted)">Question <span id="qnum">1</span> / 30</div>
+          <div id="answeredInfo" style="font-size:13px;color:var(--muted);margin-top:6px">Answered: 0</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:13px;color:var(--muted)">Randomized order & choices</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:6px">Time: <span id="timer">—</span></div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px">
+        <div class="question" id="questionText">Loading…</div>
+        <form id="choices" class="choices" aria-labelledby="questionText"></form>
+      </div>
+
+      <div class="controls" role="toolbar" aria-label="Quiz controls">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn secondary" id="prevBtn" type="button" aria-label="Previous question">&larr; Prev</button>
+          <button class="btn secondary" id="nextBtn" type="button" aria-label="Next question">Next &rarr;</button>
+          <button class="btn secondary" id="skipBtn" type="button" aria-label="Skip question">Skip</button>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn primary" id="submitBtn" type="button" aria-label="Submit quiz">Submit — Show Answers</button>
+          <button class="btn secondary" id="resetBtn" type="button" aria-label="Reset quiz">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="reviewCard" class="card" style="display:none; margin-top:16px">
+      <div id="scoreHeader"></div>
+      <div id="answersList" class="review"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+/* Utility: Fisher-Yates shuffle */
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+/* file citation token for answers */
+const fileCitation = "";
+
+/* 30 MCQs for Chapter 6:
+   Each item: q (string), choices (array), correct (index in choices), explanation (string) */
+let baseQuiz = [
+  {
+    q: "Which scandal is most closely associated with Secretary of the Interior Albert B. Fall during Harding’s presidency?",
+    choices: [
+      "The Teapot Dome affair — secret leasing of naval oil reserves to private companies for personal profit.",
+      "The Whiskey Ring — illegal distilling tax evasion scheme.",
+      "The Credit Mobilier scandal — fraudulent railroad contracts.",
+      "The Watergate burglary — illicit break-in of the Democratic headquarters."
+    ],
+    correct: 0,
+    explanation: "Payne places Teapot Dome at the center of Harding-era corruption: Fall secretly leased naval oil reserves (Teapot Dome, Elk Hills) to private oilmen and later accepted personal loans and gifts, for which he was convicted. " + fileCitation
+  },
+  {
+    q: "How does Payne characterise Harry Daugherty’s role in Harding’s administration and subsequent scandals?",
+    choices: [
+      "As Attorney General who exercised political control over patronage and was repeatedly accused of corruption and obstruction, though often shielded by partisan allies.",
+      "As a reforming Attorney General who investigated all corruption zealously.",
+      "As Harding’s vice president.",
+      "As the primary whistleblower exposing Teapot Dome."
+    ],
+    correct: 0,
+    explanation: "Payne examines Daugherty’s influence as political manager-turned-Attorney-General; allegations included toleration of corrupt associates and interference with prosecutions — controversies that dogged Harding’s legacy. " + fileCitation
+  },
+  {
+    q: "Which administrative office’s scandal involving Charles R. Forbes is examined by Payne?",
+    choices: [
+      "The Veterans Bureau — Forbes was implicated in fraudulent contracts and embezzlement related to veterans’ hospitals and supplies.",
+      "The Post Office — for forging stamps.",
+      "The Department of Agriculture — for price-fixing grain.",
+      "The Federal Reserve — for printing counterfeit notes."
+    ],
+    correct: 0,
+    explanation: "Payne reviews Forbes’s malfeasance as head of the Veterans Bureau: misuse of funds, bogus construction contracts, and kickbacks that led to Forbes’s conviction and imprisonment. " + fileCitation
+  },
+  {
+    q: "What general point does Payne make about the timing of scandals in relation to the campaign and nomination?",
+    choices: [
+      "Many of the worst abuses and exposures occurred after Harding’s inauguration; a number of actors who later figured in scandal were active in campaign roles but the administrative misconduct unfolded in office.",
+      "All scandals were widely known and fully litigated before the election.",
+      "Scandals were invented years later with no basis in fact.",
+      "Scandalous acts were exclusively the work of foreign agents."
+    ],
+    correct: 0,
+    explanation: "Payne emphasises that while some associates were already controversial, the large-scale revelations (Teapot Dome, Forbes, Daugherty inquiries) became visible after Harding took office and during the early 1920s. " + fileCitation
+  },
+  {
+    q: "Which interpretive caution does Payne stress when assessing Harding’s personal responsibility for administration scandals?",
+    choices: [
+      "That historians must distinguish between Harding’s personal knowledge/intention and the independent criminality of subordinates — archival evidence provides nuance that neither fully exonerates nor wholly condemns the president.",
+      "That presidents are always personally responsible for every subordinate’s crime without need for evidence.",
+      "That Harding confessed publicly to orchestrating all corruption.",
+      "That no distinction between knowledge and responsibility is necessary for historical analysis."
+    ],
+    correct: 0,
+    explanation: "Payne argues for careful parsing: some scandals reflected ministerial corruption rather than demonstrable direct orders from Harding, and archival context matters for evaluating culpability. " + fileCitation
+  },
+  {
+    q: "Which institutional weakness does Payne highlight as enabling corruption in the Harding administration?",
+    choices: [
+      "A weak oversight regime in rapidly expanding postwar federal programs and a patronage culture that rewarded political loyalty over competence.",
+      "An excess of congressional oversight that prevented any executive action.",
+      "A comprehensive civil service that blocked corruption.",
+      "An absence of a Treasury Department."
+    ],
+    correct: 0,
+    explanation: "Payne points to administrative growth, weak procurement controls, and patronage politics as structural conditions that facilitated malfeasance. " + fileCitation
+  },
+  {
+    q: "How does Payne discuss the role of investigative journalism and muckrakers in shaping public perception of Harding’s administration?",
+    choices: [
+      "Investigative reporting (and sensational accounts) magnified scandals and shaped public outrage, though some reports relied on dubious sources and later required archival verification.",
+      "The press uniformly defended the administration and suppressed scandal.",
+      "Journalists had no role and there was no press coverage.",
+      "Journalists exclusively produced official government press releases."
+    ],
+    correct: 0,
+    explanation: "Payne examines the interaction between press exposés, popular memoirs, and official probes; media coverage helped fix scandal narratives in public memory, even as some accounts were exaggerated. " + fileCitation
+  },
+  {
+    q: "What is Payne’s treatment of the famous 'Gaston Means' narratives and their relation to Harding memory?",
+    choices: [
+      "Means’s lurid tales contributed to sensational public memory but were methodologically suspect — Payne treats them as influential cultural artifacts rather than incontrovertible evidence.",
+      "Means authored the official Harding biography endorsed by scholars.",
+      "Means served as Harding’s chief of staff and provided official documentation.",
+      "Means was never associated with any accounts of Harding."
+    ],
+    correct: 0,
+    explanation: "Payne discusses Means as a disreputable source whose sensationalism helped cement negative public images of Harding; historians must therefore evaluate such testimonies critically. " + fileCitation
+  },
+  {
+    q: "Which legal outcome is associated with Albert Fall after Teapot Dome investigations?",
+    choices: [
+      "Conviction and imprisonment for taking bribes — Fall became the first former cabinet officer imprisoned for crimes in office.",
+      "Exoneration and promotion to Chief Justice.",
+      "Appointment as Secretary of State.",
+      "No charges were ever brought against him."
+    ],
+    correct: 0,
+    explanation: "Payne recounts Fall’s conviction in 1929 for accepting bribes in connection with oil reserve leases — a pivotal legal reckoning in the Teapot Dome saga. " + fileCitation
+  },
+  {
+    q: "How does Payne explain the interplay between partisan politics and the corruption investigations?",
+    choices: [
+      "Investigations were often politically charged: Republicans defended colleagues while Democrats (and some Republicans) demanded accountability — partisan dynamics shaped both inquiry intensity and public interpretation.",
+      "Investigations were entirely apolitical and universally welcomed by all parties.",
+      "There was a complete absence of any congressional or legal inquiry.",
+      "Only the Supreme Court conducted secret investigations without public record."
+    ],
+    correct: 0,
+    explanation: "Payne notes that partisan considerations influenced how aggressively allegations were pursued and how they were framed publicly, complicating simple narratives of objective inquiry. " + fileCitation
+  },
+  {
+    q: "What does Payne note about the timing of Harding’s death and its effect on scandal narratives?",
+    choices: [
+      "Harding’s sudden death in 1923 truncated immediate political reckoning and transformed some inquiries into posthumous probes, allowing memory and rumor to flourish in the interim.",
+      "Harding lived to respond to every allegation and cleared his name completely.",
+      "Harding died before taking office and thus was irrelevant to scandals.",
+      "His death resulted in immediate legal immunity for all subordinates."
+    ],
+    correct: 0,
+    explanation: "Payne emphasises how Harding’s death complicated accountability and allowed sensational reminiscences and contested narratives to enter the public record without the president’s clarifying testimony. " + fileCitation
+  },
+  {
+    q: "Which long-term interpretive shift about Harding does Payne document in historiography?",
+    choices: [
+      "A movement from early scandal-driven condemnations toward more nuanced archival reappraisals that situate Harding in policy and institutional contexts — neither full exoneration nor unqualified condemnation.",
+      "A consensus that Harding was the single greatest president ever.",
+      "A uniform and permanent caricature that never changed after 1923.",
+      "A view that Harding was secretly a foreign monarch."
+    ],
+    correct: 0,
+    explanation: "Payne traces historiographical change: access to papers and methodical research prompted balanced reassessments, complicating mid-century caricatures. " + fileCitation
+  },
+  {
+    q: "How does Payne approach the subject of Florence Harding’s public image and role in scandals?",
+    choices: [
+      "He treats sensational allegations about Florence cautiously — recognising their impact on memory while noting the weak evidentiary basis of some claims and the need for archival corroboration.",
+      "He asserts Florence authored official corruption memos.",
+      "He ignores Florence’s existence entirely.",
+      "He states Florence was the only honest actor in the administration."
+    ],
+    correct: 0,
+    explanation: "Payne analyses Florence’s role as both a visible figure and a target of rumor; he emphasises careful source analysis rather than uncritical acceptance of scandalous claims. " + fileCitation
+  },
+  {
+    q: "What does Payne identify as the major institutional reform (or response) that emerged from the Harding scandals?",
+    choices: [
+      "Greater scrutiny over federal procurement and a gradual strengthening of oversight mechanisms, although many reforms unfolded slowly and unevenly.",
+      "Immediate abolition of the executive branch.",
+      "A law forcing presidents to be members of Congress before appointment.",
+      "No changes occurred at any level of government."
+    ],
+    correct: 0,
+    explanation: "Payne argues the scandals stimulated debates about oversight and procurement reform, though meaningful institutional changes advanced only gradually. " + fileCitation
+  },
+  {
+    q: "Which of the following best captures Payne’s stance on assigning moral blame for the presidency’s scandals?",
+    choices: [
+      "A careful, evidence-based approach: distinguish direct orders from negligence and parse the archival record before apportioning blame to the president or subordinates.",
+      "Immediate moral condemnation of Harding without investigation.",
+      "Complete absolution of every actor without evidence.",
+      "Assigning blame only to foreign governments."
+    ],
+    correct: 0,
+    explanation: "Payne advocates discrimination between criminal intent and administrative failure — historians should rely on documents, not solely on later sensational accounts, in assigning culpability. " + fileCitation
+  },
+  {
+    q: "How does Payne treat the role of the Department of Justice in the aftermath of scandals?",
+    choices: [
+      "As a contested institution — prosecutors pursued some leads, but political interference, resource constraints, and ambiguous authority complicated enforcement.",
+      "As a uniformly effective and non-political machine that solved every case instantly.",
+      "As a private contracting firm with no legal powers.",
+      "As completely absent from any scandal response."
+    ],
+    correct: 0,
+    explanation: "Payne notes DOJ prosecutions were uneven; political pressures and questions about jurisdiction affected how cases (Forbes, Fall, Daugherty inquiries) progressed. " + fileCitation
+  },
+  {
+    q: "Which historianly warning about source use does Payne emphasise in his chapter on scandal and memory?",
+    choices: [
+      "That memoirs, sensational exposés, and partisan journalism must be triangulated with archival records since they may reflect perception more than verifiable fact.",
+      "That memoirs are always more reliable than archival documents.",
+      "That sensational accounts should never be considered even as perception evidence.",
+      "That historians should only use oral legends without documentary support."
+    ],
+    correct: 0,
+    explanation: "Payne repeatedly instructs readers to use sensational sources cautiously — they illuminate contemporaneous perception but are not substitutes for primary documentation when establishing facts. " + fileCitation
+  },
+  {
+    q: "What does Payne say about congressional investigations into Harding-era scandals?",
+    choices: [
+      "They were important mechanisms of accountability, but their findings and political impact were shaped by partisan dynamics and evidentiary limits.",
+      "Congress refused to hold any investigations at all.",
+      "Investigations were purely ceremonial with no witnesses allowed.",
+      "All congressional investigations unanimously absolved every accused official."
+    ],
+    correct: 0,
+    explanation: "Payne sees congressional probes as central to public reckoning, yet notes their limits — politics, procedure, and evidentiary gaps often constrained outcomes. " + fileCitation
+  },
+  {
+    q: "How does Payne treat the public memory of Harding in the decades after his death?",
+    choices: [
+      "Public memory was dominated for decades by scandal narratives and caricature, though academic re-evaluation gradually introduced more complexity into public understanding.",
+      "Public memory instantly rehabilitated Harding to heroic status.",
+      "Harding was never mentioned again in public discourse.",
+      "He was remembered mostly for his scientific discoveries."
+    ],
+    correct: 0,
+    explanation: "Payne documents how the Teapot Dome and lurid stories about Harding shaped public memory for many years, a trend slowly complicated by later scholarship. " + fileCitation
+  },
+  {
+    q: "Which figure’s legal conviction does Payne cite as a decisive indicator that high-level corruption reached criminal culpability?",
+    choices: [
+      "Albert B. Fall — his conviction was a legal turning point demonstrating criminal culpability at cabinet level.",
+      "Florence Harding — convicted for obstruction.",
+      "Harding himself — convicted after his death.",
+      "Harry Daugherty — convicted for embezzlement in 1921."
+    ],
+    correct: 0,
+    explanation: "Payne highlights Fall’s conviction (1929) as the most significant legal confirmation that corruption in the Harding era reached criminal levels at cabinet rank. " + fileCitation
+  },
+  {
+    q: "What does Payne suggest about the relationship between administrative expansion after WWI and opportunities for corruption?",
+    choices: [
+      "Rapid governmental expansion and new public programs after the war created procurement needs and discretion that, without robust controls, opened opportunities for graft.",
+      "Governmental expansion had no relationship to corruption opportunities.",
+      "Expansion eliminated any chance for corruption due to perfect oversight.",
+      "There was no administrative expansion after WWI."
+    ],
+    correct: 0,
+    explanation: "Payne connects postwar administrative growth with increased procurement and discretionary spending, structural conditions conducive to corrupt practices absent strong controls. " + fileCitation
+  },
+  {
+    q: "How does Payne evaluate the claim that the scandals fully define Harding’s presidency?",
+    choices: [
+      "He rejects a reductive verdict: while scandals are central to Harding’s legacy, they coexist with policy initiatives and governance issues that complicate a solely scandal-driven portrait.",
+      "He endorses the idea that scandal is the entirety of Harding’s presidency and nothing else matters.",
+      "He claims there were no scandals at all.",
+      "He argues that scandals were invented by later historians without basis."
+    ],
+    correct: 0,
+    explanation: "Payne cautions against single-issue history: scandals loom large, but policy, institutional change, and broader context also matter in assessing Harding’s administration. " + fileCitation
+  },
+  {
+    q: "What role does Payne attribute to archival releases (papers, correspondence) in revising Harding’s memory?",
+    choices: [
+      "They enabled historians to test sensational claims, to uncover nuance in administrative decisions, and to revise earlier conclusions where warranted.",
+      "They had no impact on historical interpretation.",
+      "They exclusively confirmed every sensational charge without nuance.",
+      "They were all lost and thus irrelevant."
+    ],
+    correct: 0,
+    explanation: "Payne credits the opening of documents with the capacity to refine or refute earlier claims and to produce more complex, evidence-based histories of Harding’s term. " + fileCitation
+  },
+  {
+    q: "Which administrative actor’s testimony or written record does Payne treat as particularly illuminating for reconstruction of the scandals?",
+    choices: [
+      "Primary documentary records from officials (letters, memos) and court exhibits — Payne uses such documents to show how decisions and transactions unfolded.",
+      "Only second-hand rumor collected in gossip columns.",
+      "Dream journals published decades later.",
+      "Weather reports from 1920."
+    ],
+    correct: 0,
+    explanation: "Payne relies on documentary evidence (official correspondence, procurement files, trial records) to reconstruct events and to differentiate rumor from document-based facts. " + fileCitation
+  },
+  {
+    q: "How does Payne treat the long-term political consequences of the Harding scandals for the Republican Party?",
+    choices: [
+      "They damaged the party’s moral standing temporarily and fed Progressive critiques, but Republicans remained electorally viable; the long-term effect was uneven and mediated by subsequent political developments.",
+      "They caused the immediate dissolution of the Republican Party.",
+      "They produced a permanent ban on Republicans holding federal office.",
+      "They led to single-party rule by the Democrats for decades."
+    ],
+    correct: 0,
+    explanation: "Payne indicates the scandals dented the party’s reputation and fueled critique, yet Republicans recovered electorally in subsequent cycles; the political cost was real but not uniformly terminal. " + fileCitation
+  },
+  {
+    q: "What does Payne say about the historiographical role of later defenders (rehabilitators) of Harding?",
+    choices: [
+      "Defenders have used archival research to argue for contextualised interpretations emphasizing administrative accomplishments, but such reassessments do not uniformly erase evidence of corruption.",
+      "Defenders universally denied archives existed.",
+      "Defenders allocated blame to unrelated presidents instead.",
+      "No defenders of Harding have ever existed."
+    ],
+    correct: 0,
+    explanation: "Payne engages with rehabilitationist scholarship that argues for nuance and context while acknowledging that such work does not completely negate documented instances of graft. " + fileCitation
+  },
+  {
+    q: "Which of the following best summarises Payne’s methodological advice for historians studying scandal and memory?",
+    choices: [
+      "Combine close archival work with attention to media narratives and public memory — assess both documentary truth and cultural impact rather than privileging one at the expense of the other.",
+      "Ignore archival work and rely only on gossip.",
+      "Use only polls and discard documents.",
+      "Publish immediate sensationalist accounts before doing research."
+    ],
+    correct: 0,
+    explanation: "Payne advocates a dual approach: reconciling documentary analysis with a study of the cultural production of scandal (press, memoirs) to understand both fact and memory. " + fileCitation
+  },
+  {
+    q: "What conclusion does Payne draw about the possibility of fully 'rehabilitating' Harding’s reputation?",
+    choices: [
+      "Full rehabilitation is unlikely because some documented abuses reached criminal thresholds, but qualified reassessments can moderate older caricatures and restore neglected policy achievements.",
+      "Full rehabilitation is achieved once historians stop researching.",
+      "Rehabilitation is impossible because all archives were destroyed.",
+      "Rehabilitation is unnecessary because Harding was never criticized."
+    ],
+    correct: 0,
+    explanation: "Payne argues rehabilitation must be evidence-based and partial: while some aspects of the record mitigate caricature, evidence of criminal wrongdoing undercuts any unconditional exoneration. " + fileCitation
+  },
+  {
+    q: "How does Payne characterise the relationship between presidential style/personality and administrative outcomes in Harding’s case?",
+    choices: [
+      "A president’s affability and delegation style can shape outcomes: Harding’s genial delegatory approach helped produce both administrative efficiency and vulnerabilities when oversight was lax.",
+      "Personality has no impact on administration.",
+      "Only the Vice President’s personality matters for administration.",
+      "Administrative outcomes are determined by astrology."
+    ],
+    correct: 0,
+    explanation: "Payne suggests Harding’s personal style (trusting, delegatory) influenced who exercised power and how oversight operated — a useful lens for explaining both achievements and failures. " + fileCitation
+  },
+  {
+    q: "Which memory-forming factor beyond archival and journalistic sources does Payne highlight as important to Harding’s long-term reputation?",
+    choices: [
+      "Popular biographies, memoirs, and cultural artifacts (books, plays) that amplified scandal narratives and helped shape collective memory.",
+      "Only congressional voting records and nothing else.",
+      "Astrological charts.",
+      "Agricultural yields in 1921."
+    ],
+    correct: 0,
+    explanation: "Payne notes the cultural afterlife of scandal — memoirs, sensational books, and popular narratives — as central to the formation of Harding’s public memory. " + fileCitation
+  },
+  {
+    q: "What does Payne suggest about comparative evaluation of presidential wrongdoing across eras?",
+    choices: [
+      "Historical evaluation should consider institutional context: procurement norms, oversight capabilities, and contemporary standards vary, so cross-era moral judgments require care.",
+      "All wrongdoing is identical across eras so comparison is trivial.",
+      "Only modern standards should be used to retroactively condemn past presidents.",
+      "Comparisons are impossible and so should never be attempted."
+    ],
+    correct: 0,
+    explanation: "Payne urges contextual comparison: what counts as abuse and how it was policed differs over time, so historians should be attentive to contemporaneous institutional constraints. " + fileCitation
+  },
+  {
+    q: "Which legal or congressional event does Payne emphasise as central to establishing the historical record of the Harding scandals?",
+    choices: [
+      "Congressional investigations and court trials (Forbes, Fall) produced documentary and testimonial records critical for historians reconstructing events.",
+      "A royal decree from Britain.",
+      "An executive order rescinding all records.",
+      "A musical composition that narrated events."
+    ],
+    correct: 0,
+    explanation: "Payne points to the evidentiary importance of congressional hearings and court records as primary sources that underpin historical reconstructions of corruption cases. " + fileCitation
+  }
+];
+
+/* ensure exactly 30 questions (fill if less) */
+while (baseQuiz.length < 30) {
+  baseQuiz.push({
+    q: "Placeholder question — should not appear.",
+    choices: ["A","B","C","D"],
+    correct: 0,
+    explanation: "Placeholder. " + fileCitation
+  });
+}
+
+/* Build randomized quiz copy and shuffle choices while preserving correct index */
+let quiz = baseQuiz.map(item => {
+  return {
+    q: item.q,
+    choices: item.choices.slice(),
+    correctText: item.choices[item.correct],
+    explanation: item.explanation
+  };
+});
+shuffle(quiz);
+quiz.forEach(q => {
+  shuffle(q.choices);
+  q.correct = q.choices.findIndex(c => c === q.correctText);
+  delete q.correctText;
+});
+
+/* State */
+let state = { idx: 0, answers: Array(quiz.length).fill(null), start: Date.now() };
+
+/* DOM refs */
+const navTiles = document.getElementById('navTiles');
+const qnum = document.getElementById('qnum');
+const questionText = document.getElementById('questionText');
+const choicesForm = document.getElementById('choices');
+const answeredInfo = document.getElementById('answeredInfo');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const skipBtn = document.getElementById('skipBtn');
+const submitBtn = document.getElementById('submitBtn');
+const resetBtn = document.getElementById('resetBtn');
+const reviewCard = document.getElementById('reviewCard');
+const scoreHeader = document.getElementById('scoreHeader');
+const answersList = document.getElementById('answersList');
+const quizCard = document.getElementById('quizCard');
+const timerEl = document.getElementById('timer');
+
+/* Timer */
+function updateTimer() {
+  const elapsed = Date.now() - state.start;
+  const s = Math.floor(elapsed / 1000) % 60;
+  const m = Math.floor(elapsed / 60000);
+  timerEl.textContent = (m > 0 ? m + 'm ' : '') + s + 's';
+}
+setInterval(updateTimer, 1000);
+
+/* Render nav */
+function renderNav(){
+  navTiles.innerHTML = '';
+  for (let i=0;i<quiz.length;i++){
+    const b = document.createElement('button');
+    b.className = 'tile' + (state.answers[i] !== null ? ' answered' : '');
+    b.textContent = i+1;
+    b.title = 'Go to Q' + (i+1);
+    b.setAttribute('aria-label', 'Question ' + (i+1));
+    b.addEventListener('click', ()=>{ state.idx = i; renderQuestion(); });
+    navTiles.appendChild(b);
+  }
+}
+
+/* Render question */
+function renderQuestion(){
+  const item = quiz[state.idx];
+  qnum.textContent = state.idx + 1;
+  questionText.innerHTML = item.q;
+  choicesForm.innerHTML = '';
+  item.choices.forEach((c, ci) => {
+    const id = 'c_' + state.idx + '_' + ci;
+    const label = document.createElement('label');
+    label.className = 'choice';
+    label.htmlFor = id;
+    const inp = document.createElement('input');
+    inp.type = 'radio'; inp.name = 'choice'; inp.id = id; inp.value = ci;
+    inp.checked = (state.answers[state.idx] === ci);
+    inp.addEventListener('change', ()=> {
+      state.answers[state.idx] = Number(ci);
+      renderNav(); updateAnsweredCount();
+    });
+    const span = document.createElement('div');
+    span.innerHTML = `<strong style="margin-right:8px">${String.fromCharCode(65+ci)}.</strong> ${c}`;
+    label.appendChild(inp); label.appendChild(span);
+    choicesForm.appendChild(label);
+  });
+  renderNav();
+  updateAnsweredCount();
+  const fi = choicesForm.querySelector('input');
+  if (fi) fi.focus();
+}
+
+function updateAnsweredCount(){
+  const n = state.answers.filter(a => a !== null).length;
+  answeredInfo.textContent = 'Answered: ' + n;
+}
+
+/* Controls */
+prevBtn.addEventListener('click', ()=> { state.idx = Math.max(0, state.idx-1); renderQuestion(); });
+nextBtn.addEventListener('click', ()=> { state.idx = Math.min(quiz.length-1, state.idx+1); renderQuestion(); });
+skipBtn.addEventListener('click', ()=> { state.idx = Math.min(quiz.length-1, state.idx+1); renderQuestion(); });
+
+submitBtn.addEventListener('click', ()=> {
+  if (!confirm("Submit and view the full academically-referenced answers? You will not be able to change answers after submission.")) return;
+  showResults();
+});
+
+resetBtn.addEventListener('click', ()=> {
+  if (!confirm("Reset all answers and restart the quiz?")) return;
+  state.answers = Array(quiz.length).fill(null);
+  state.idx = 0;
+  state.start = Date.now();
+  quizCard.style.display = 'block';
+  reviewCard.style.display = 'none';
+  renderQuestion();
+  renderNav();
+  updateAnsweredCount();
+});
+
+/* Show results */
+function showResults(){
+  let correct = 0;
+  for (let i=0;i<quiz.length;i++){
+    if (state.answers[i] !== null && state.answers[i] === quiz[i].correct) correct++;
+  }
+  const pct = Math.round((correct / quiz.length) * 100);
+  scoreHeader.innerHTML = `<h2 style="margin:0;color:var(--accent)">Result: ${correct} / ${quiz.length} (${pct}%)</h2>
+    <div style="color:var(--muted);margin-top:8px">Explanations derive from Chapter 6 of the uploaded PDF (\"The Harding Presidency: Scandals, Legacy, and Memory\"). ${fileCitation}</div>`;
+  answersList.innerHTML = '';
+  quiz.forEach((q, i) => {
+    const user = state.answers[i];
+    const correctIdx = q.correct;
+    const block = document.createElement('div');
+    block.style.marginBottom = '18px';
+    block.innerHTML = `<div style="font-weight:700;color:#e6eef8">Q${i+1}. ${q.q}</div>
+      <div style="margin-top:8px"><strong>Your answer:</strong> ${user===null ? '<em>— skipped —</em>' : String.fromCharCode(65+user) + '. ' + escapeHtml(q.choices[user])}</div>
+      <div style="margin-top:6px"><strong>Correct:</strong> ${String.fromCharCode(65+correctIdx)}. ${escapeHtml(q.choices[correctIdx])}</div>
+      <div class="${(user===correctIdx)?'correct':'wrong'}" style="margin-top:8px">${(user===correctIdx)?'Correct':'Incorrect'}</div>
+      <div class="explanation">${q.explanation}</div>`;
+    answersList.appendChild(block);
+  });
+  quizCard.style.display = 'none';
+  reviewCard.style.display = 'block';
+  reviewCard.scrollIntoView({ behavior: 'smooth' });
+}
+
+/* basic HTML escape */
+function escapeHtml(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+/* Init */
+renderNav();
+renderQuestion();
+updateAnsweredCount();
+updateTimer();
+
+</script>
+</body>
+</html>

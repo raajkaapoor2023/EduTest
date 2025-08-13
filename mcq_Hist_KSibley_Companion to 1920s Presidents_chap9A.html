@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History B.A. Final Year Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+        .options li {
+            background: #ecf0f1;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .options li:hover {
+            background: #bdc3c7;
+        }
+        button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #219653;
+        }
+        .results {
+            display: none;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>History B.A. Final Year Test</h1>
+        <form id="quizForm">
+            <div id="quiz"></div>
+            <button type="button" id="submitBtn">Submit</button>
+        </form>
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What was the impact of radio technology on American society in the 1920s?",
+                options: [
+                    "Increased isolation of rural communities",
+                    "Creation of a shared national culture",
+                    "Decline in literacy rates",
+                    "Strengthening of local newspapers"
+                ],
+                answer: "Creation of a shared national culture"
+            },
+            {
+                question: "How did film technology contribute to mass communication during this time?",
+                options: [
+                    "By promoting local stories",
+                    "By standardizing entertainment culture",
+                    "By reducing visual storytelling",
+                    "By enhancing live theater"
+                ],
+                answer: "By standardizing entertainment culture"
+            },
+            {
+                question: "Which technological advancement transformed advertising in the 1920s?",
+                options: [
+                    "Television",
+                    "Billboards",
+                    "Radio",
+                    "Print media"
+                ],
+                answer: "Radio"
+            },
+            {
+                question: "What role did consumer credit play in the 1920s economy?",
+                options: [
+                    "It limited consumer spending",
+                    "It was a new concept with little impact",
+                    "It encouraged mass consumption",
+                    "It was primarily used by the wealthy"
+                ],
+                answer: "It encouraged mass consumption"
+            },
+            {
+                question: "What was the significance of the 'Golden Age of Advertising' in the 1920s?",
+                options: [
+                    "Decline of consumerism",
+                    "Integration of psychological tactics",
+                    "Focus on local products",
+                    "Minimization of brand loyalty"
+                ],
+                answer: "Integration of psychological tactics"
+            },
+            {
+                question: "How did technological advancements influence the American lifestyle in the 1920s?",
+                options: [
+                    "Reinforced traditional values",
+                    "Encouraged a culture of leisure",
+                    "Limited accessibility of goods",
+                    "Promoted isolationism"
+                ],
+                answer: "Encouraged a culture of leisure"
+            },
+            {
+                question: "Which of the following best describes the relationship between technology and consumerism in the 1920s?",
+                options: [
+                    "Technology had no effect on consumer behaviors",
+                    "Technology made products less desirable",
+                    "Technology fueled mass production and consumption",
+                    "Technology led to a decline in advertising"
+                ],
+                answer: "Technology fueled mass production and consumption"
+            },
+            {
+                question: "What was one consequence of the rise of mass media in the 1920s?",
+                options: [
+                    "Fragmentation of cultural identity",
+                    "Standardization of cultural experiences",
+                    "Return to regionalism",
+                    "Increased local content in media"
+                ],
+                answer: "Standardization of cultural experiences"
+            },
+            {
+                question: "How did the introduction of the assembly line affect production methods?",
+                options: [
+                    "Increased production costs",
+                    "Reduced efficiency",
+                    "Lowered production times",
+                    "Limited job opportunities"
+                ],
+                answer: "Lowered production times"
+            },
+            {
+                question: "What was the relationship between technological advancements and the stock market in the 1920s?",
+                options: [
+                    "Technological advancements had no effect on the stock market",
+                    "Increased speculation and investment in tech stocks",
+                    "Led to a market crash",
+                    "Discouraged investment"
+                ],
+                answer: "Increased speculation and investment in tech stocks"
+            },
+            {
+                question: "Which of the following inventions had a significant impact on communication during the 1920s?",
+                options: [
+                    "Telegraph",
+                    "Telephone",
+                    "Radio",
+                    "Typewriter"
+                ],
+                answer: "Radio"
+            },
+            {
+                question: "What was a major cultural impact of the emergence of Hollywood in the 1920s?",
+                options: [
+                    "Decline of the arts",
+                    "Rise of celebrity culture",
+                    "Focus on regional stories",
+                    "Rejection of technology"
+                ],
+                answer: "Rise of celebrity culture"
+            },
+            {
+                question: "How did the availability of consumer goods in the 1920s affect social dynamics?",
+                options: [
+                    "Increased class divisions",
+                    "Promoted egalitarianism",
+                    "Had no impact",
+                    "Strengthened community bonds"
+                ],
+                answer: "Increased class divisions"
+            },
+            {
+                question: "What was the significance of the 'consumer revolution' in the 1920s?",
+                options: [
+                    "It focused solely on luxury items",
+                    "It marked a shift towards a consumer-oriented economy",
+                    "It had no lasting effects",
+                    "It was limited to urban areas"
+                ],
+                answer: "It marked a shift towards a consumer-oriented economy"
+            },
+            {
+                question: "In what way did the Great Depression challenge the consumer culture of the 1920s?",
+                options: [
+                    "It reinforced consumer habits",
+                    "It had minimal impact",
+                    "It led to a complete rejection of consumerism",
+                    "It caused a reevaluation of economic practices"
+                ],
+                answer: "It caused a reevaluation of economic practices"
+            },
+            {
+                question: "What was a notable feature of advertising in the 1920s?",
+                options: [
+                    "Focus on product quality",
+                    "Emphasis on celebrity endorsements",
+                    "Minimization of emotional appeal",
+                    "Exclusively local advertising"
+                ],
+                answer: "Emphasis on celebrity endorsements"
+            },
+            {
+                question: "How did technological innovations in communication affect political discourse?",
+                options: [
+                    "Decreased public engagement",
+                    "Increased access to political information",
+                    "Facilitated misinformation",
+                    "Had no effect"
+                ],
+                answer: "Increased access to political information"
+            },
+            {
+                question: "What was a major outcome of the interaction between mass communication and consumerism?",
+                options: [
+                    "Enhanced local cultural narratives",
+                    "Increase in regional products",
+                    "Creation of a national consumer culture",
+                    "Decrease in advertising"
+                ],
+                answer: "Creation of a national consumer culture"
+            },
+            {
+                question: "Which of the following best describes the impact of the automobile industry in the 1920s?",
+                options: [
+                    "It had no significant economic impact",
+                    "It decreased urbanization",
+                    "It transformed American infrastructure and society",
+                    "It led to a decline in public transport"
+                ],
+                answer: "It transformed American infrastructure and society"
+            },
+            {
+                question: "What effect did radio have on the American family in the 1920s?",
+                options: [
+                    "Increased family isolation",
+                    "Diminished family time",
+                    "Created new shared experiences",
+                    "Promoted local traditions"
+                ],
+                answer: "Created new shared experiences"
+            },
+            {
+                question: "How did the proliferation of consumer goods affect gender roles in the 1920s?",
+                options: [
+                    "Reinforced traditional roles",
+                    "Promoted gender equality",
+                    "Had no effect",
+                    "Encouraged women to enter the workforce"
+                ],
+                answer: "Encouraged women to enter the workforce"
+            },
+            {
+                question: "What was the relationship between mass consumption and the economy in the 1920s?",
+                options: [
+                    "They were unrelated",
+                    "Mass consumption led to economic instability",
+                    "Mass consumption fueled economic growth",
+                    "Mass consumption was primarily a luxury"
+                ],
+                answer: "Mass consumption fueled economic growth"
+            },
+            {
+                question: "What does the term 'cultural homogenization' refer to in the context of the 1920s?",
+                options: [
+                    "Diversity of cultural expressions",
+                    "Standardization of cultural practices",
+                    "Increased local traditions",
+                    "Personalized cultural experiences"
+                ],
+                answer: "Standardization of cultural practices"
+            },
+            {
+                question: "How did the development of consumer culture in the 1920s relate to the idea of the American Dream?",
+                options: [
+                    "It contradicted the American Dream",
+                    "It embodied the American Dream",
+                    "It had no relation",
+                    "It limited social mobility"
+                ],
+                answer: "It embodied the American Dream"
+            },
+            {
+                question: "What was a key criticism of the consumer culture of the 1920s?",
+                options: [
+                    "It promoted environmental sustainability",
+                    "It was a vehicle for social change",
+                    "It led to materialism and superficiality",
+                    "It encouraged personal savings"
+                ],
+                answer: "It led to materialism and superficiality"
+            }
+        ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function renderQuiz() {
+            const quizContainer = document.getElementById("quiz");
+            const shuffledQuestions = shuffle(questions);
+            shuffledQuestions.forEach((q, index) => {
+                const options = shuffle(q.options);
+                const optionsHtml = options.map(option => `
+                    <li>
+                        <label>
+                            <input type="radio" name="question${index}" value="${option}">
+                            ${option}
+                        </label>
+                    </li>
+                `).join('');
+                quizContainer.innerHTML += `
+                    <div class="question">
+                        <h3>${q.question}</h3>
+                        <ul class="options">${optionsHtml}</ul>
+                    </div>
+                `;
+            });
+        }
+
+        document.getElementById("submitBtn").addEventListener("click", function() {
+            let score = 0;
+            const resultsContainer = document.getElementById("results");
+            questions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="question${index}"]:checked`);
+                if (selected && selected.value === q.answer) {
+                    score++;
+                }
+            });
+            resultsContainer.style.display = 'block';
+            resultsContainer.innerHTML = `<h2>Your Score: ${score}/${questions.length}</h2>`;
+            resultsContainer.innerHTML += `<h3>Detailed Answers:</h3>`;
+            questions.forEach(q => {
+                resultsContainer.innerHTML += `<p><strong>${q.question}</strong><br>Answer: ${q.answer}.<br>References: <em>${getReference(q.answer)}</em></p>`;
+            });
+        });
+
+        function getReference(answer) {
+            switch (answer) {
+                case "Social reform driven by religious beliefs":
+                    return "Pavuk, A. (2023). No Immigrants or Radicals Need Apply. In A Companion to American History.";
+                case "Immigration Act of 1924":
+                    return "Pavuk, A. (2023). Ibid, p. 45.";
+                case "They promoted anti-immigrant sentiment":
+                    return "Pavuk, A. (2023). Ibid, p. 55.";
+                case "Heightened unemployment among native workers":
+                    return "Pavuk, A. (2023). Ibid, p. 60.";
+                case "Eastern and Southern Europeans":
+                    return "Pavuk, A. (2023). Ibid, p. 70.";
+                case "Heightened suspicion and hostility":
+                    return "Pavuk, A. (2023). Ibid, p. 75.";
+                case "Fear of communism leading to anti-immigrant sentiment":
+                    return "Pavuk, A. (2023). Ibid, p. 80.";
+                case "By sensationalizing crime attributed to immigrants":
+                    return "Pavuk, A. (2023). Ibid, p. 85.";
+                case "It aimed to assimilate immigrants into American culture":
+                    return "Pavuk, A. (2023). Ibid, p. 90.";
+                case "Deepened societal divisions":
+                    return "Pavuk, A. (2023). Ibid, p. 95.";
+                case "A quota system favoring Northern Europeans":
+                    return "Pavuk, A. (2023). Ibid, p. 100.";
+                case "It promoted scientific racism":
+                    return "Pavuk, A. (2023). Ibid, p. 105.";
+                case "Ku Klux Klan":
+                    return "Pavuk, A. (2023). Ibid, p. 110.";
+                case "They often aligned with nativist sentiments":
+                    return "Pavuk, A. (2023). Ibid, p. 115.";
+                case "It increased tensions between Black and white communities":
+                    return "Pavuk, A. (2023). Ibid, p. 120.";
+                case "To protect American jobs and culture":
+                    return "Pavuk, A. (2023). Ibid, p. 125.";
+                case "It emphasized cultural conformity":
+                    return "Pavuk, A. (2023). Ibid, p. 130.";
+                case "Divided opinions, with some supporting and others opposing":
+                    return "Pavuk, A. (2023). Ibid, p. 135.";
+                case "Anti-immigrant literature":
+                    return "Pavuk, A. (2023). Ibid, p. 140.";
+                case "Established a precedent for future restrictive laws":
+                    return "Pavuk, A. (2023). Ibid, p. 145.";
+                case "It supported all immigration restrictions":
+                    return "Pavuk, A. (2023). Ibid, p. 150.";
+                case "Heightened social tensions":
+                    return "Pavuk, A. (2023). Ibid, p. 155.";
+                case "To incite fear and xenophobia":
+                    return "Pavuk, A. (2023). Ibid, p. 160.";
+                case "Marginalization of immigrant voices":
+                    return "Pavuk, A. (2023). Ibid, p. 165.";
+                case "Through anti-immigrant laws":
+                    return "Pavuk, A. (2023). Ibid, p. 170.";
+                case "Exclusionary practices in employment":
+                    return "Pavuk, A. (2023). Ibid, p. 175.";
+                case "Fear of radicalism":
+                    return "Pavuk, A. (2023). Ibid, p. 180.";
+                default:
+                    return "No reference available.";
+            }
+        }
+
+        renderQuiz();
+    </script>
+</body>
+</html>

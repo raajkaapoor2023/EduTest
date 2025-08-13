@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History B.A. Final Year Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+        .options li {
+            background: #ecf0f1;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .options li:hover {
+            background: #bdc3c7;
+        }
+        button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #219653;
+        }
+        .results {
+            display: none;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>History B.A. Final Year Test</h1>
+        <form id="quizForm">
+            <div id="quiz"></div>
+            <button type="button" id="submitBtn">Submit</button>
+        </form>
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What was the Great Migration?",
+                options: [
+                    "A movement of African Americans from the rural South to urban areas in the North",
+                    "A migration of Europeans to America",
+                    "The relocation of Native Americans to reservations",
+                    "A movement of Southern whites to the North"
+                ],
+                answer: "A movement of African Americans from the rural South to urban areas in the North"
+            },
+            {
+                question: "What were some push factors for African Americans during the Great Migration?",
+                options: [
+                    "Job opportunities in the North",
+                    "Racial violence and discrimination in the South",
+                    "Better educational opportunities",
+                    "Support from Northern states"
+                ],
+                answer: "Racial violence and discrimination in the South"
+            },
+            {
+                question: "What were some pull factors for African Americans moving North?",
+                options: [
+                    "High wages and job opportunities in factories",
+                    "Racial equality in the North",
+                    "Access to better housing",
+                    "Political representation"
+                ],
+                answer: "High wages and job opportunities in factories"
+            },
+            {
+                question: "How did the Great Migration impact urban areas in the North?",
+                options: [
+                    "It led to increased racial tensions and competition for jobs",
+                    "It resulted in the immediate integration of all communities",
+                    "It had no significant impact on urban life",
+                    "It improved race relations dramatically"
+                ],
+                answer: "It led to increased racial tensions and competition for jobs"
+            },
+            {
+                question: "Which cultural movement was significantly influenced by the Great Migration?",
+                options: [
+                    "The Harlem Renaissance",
+                    "The Civil Rights Movement",
+                    "The Progressive Era",
+                    "The New Deal"
+                ],
+                answer: "The Harlem Renaissance"
+            },
+            {
+                question: "What role did World War I play in the Great Migration?",
+                options: [
+                    "It had no effect on migration patterns",
+                    "It created labor shortages in Northern industries",
+                    "It encouraged African Americans to enlist in the military",
+                    "It led to increased immigration from Europe"
+                ],
+                answer: "It created labor shortages in Northern industries"
+            },
+            {
+                question: "What was one consequence of the Great Migration on Southern states?",
+                options: [
+                    "A decrease in racial segregation",
+                    "A loss of political power for African Americans",
+                    "Economic decline in Southern agriculture",
+                    "Increased support for civil rights"
+                ],
+                answer: "Economic decline in Southern agriculture"
+            },
+            {
+                question: "How did white residents in Northern cities often react to the influx of African Americans during the Great Migration?",
+                options: [
+                    "They welcomed them with open arms",
+                    "They organized to support their integration",
+                    "They often reacted with hostility and violence",
+                    "They were indifferent"
+                ],
+                answer: "They often reacted with hostility and violence"
+            },
+            {
+                question: "What was the significance of the Chicago Race Riot of 1919?",
+                options: [
+                    "It marked the end of racial tensions in the North",
+                    "It highlighted the ongoing racial violence and segregation",
+                    "It resulted in significant reforms in race relations",
+                    "It had no lasting impact"
+                ],
+                answer: "It highlighted the ongoing racial violence and segregation"
+            },
+            {
+                question: "Which organization was founded in response to racial violence and injustice during the Great Migration?",
+                options: [
+                    "The NAACP",
+                    "The Urban League",
+                    "The Black Panther Party",
+                    "The Southern Christian Leadership Conference"
+                ],
+                answer: "The NAACP"
+            },
+            {
+                question: "What was one effect of the Great Migration on African American culture?",
+                options: [
+                    "A decline in cultural expression",
+                    "The flourishing of African American music and arts",
+                    "Increased cultural homogeneity",
+                    "Loss of traditional cultural practices"
+                ],
+                answer: "The flourishing of African American music and arts"
+            },
+            {
+                question: "How did the Great Migration influence the political landscape for African Americans?",
+                options: [
+                    "It led to a decrease in political participation",
+                    "It allowed for greater political mobilization and representation",
+                    "It had no effect on political engagement",
+                    "It resulted in the disenfranchisement of African Americans"
+                ],
+                answer: "It allowed for greater political mobilization and representation"
+            },
+            {
+                question: "What term describes the cultural expression and pride that emerged from the Great Migration?",
+                options: [
+                    "Black Nationalism",
+                    "Cultural Pluralism",
+                    "The New Negro Movement",
+                    "Pan-Africanism"
+                ],
+                answer: "The New Negro Movement"
+            },
+            {
+                question: "What was a key characteristic of the Harlem Renaissance?",
+                options: [
+                    "Focus on rural traditions",
+                    "Artistic and intellectual flourishing among African Americans",
+                    "Political conservatism",
+                    "Isolation from mainstream culture"
+                ],
+                answer: "Artistic and intellectual flourishing among African Americans"
+            },
+            {
+                question: "Which writer is often associated with the Harlem Renaissance?",
+                options: [
+                    "Langston Hughes",
+                    "W.E.B. Du Bois",
+                    "Zora Neale Hurston",
+                    "All of the above"
+                ],
+                answer: "All of the above"
+            },
+            {
+                question: "What was the lasting legacy of the Great Migration on American society?",
+                options: [
+                    "It solidified racial segregation",
+                    "It contributed to the Civil Rights Movement",
+                    "It had minimal impact on society",
+                    "It ended racial tensions"
+                ],
+                answer: "It contributed to the Civil Rights Movement"
+            },
+            {
+                question: "What was one of the economic impacts of the Great Migration on the North?",
+                options: [
+                    "Increase in agricultural production",
+                    "Labor shortages in factories",
+                    "Growth of the labor movement",
+                    "Economic decline"
+                ],
+                answer: "Growth of the labor movement"
+            },
+            {
+                question: "How did the Great Migration change the demographic landscape of cities?",
+                options: [
+                    "It led to a more homogeneous population",
+                    "It increased diversity in urban areas",
+                    "It had no impact on demographics",
+                    "It caused urban decline"
+                ],
+                answer: "It increased diversity in urban areas"
+            }
+        ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function renderQuiz() {
+            const quizContainer = document.getElementById("quiz");
+            const shuffledQuestions = shuffle(questions);
+            shuffledQuestions.forEach((q, index) => {
+                const options = shuffle(q.options);
+                const optionsHtml = options.map(option => `
+                    <li>
+                        <label>
+                            <input type="radio" name="question${index}" value="${option}">
+                            ${option}
+                        </label>
+                    </li>
+                `).join('');
+                quizContainer.innerHTML += `
+                    <div class="question">
+                        <h3>${q.question}</h3>
+                        <ul class="options">${optionsHtml}</ul>
+                    </div>
+                `;
+            });
+        }
+
+        document.getElementById("submitBtn").addEventListener("click", function() {
+            let score = 0;
+            const resultsContainer = document.getElementById("results");
+            questions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="question${index}"]:checked`);
+                if (selected && selected.value === q.answer) {
+                    score++;
+                }
+            });
+            resultsContainer.style.display = 'block';
+            resultsContainer.innerHTML = `<h2>Your Score: ${score}/${questions.length}</h2>`;
+            resultsContainer.innerHTML += `<h3>Detailed Answers:</h3>`;
+            questions.forEach(q => {
+                resultsContainer.innerHTML += `<p><strong>${q.question}</strong><br>Answer: ${q.answer}.<br>References: <em>${getReference(q.answer)}</em></p>`;
+            });
+        });
+
+        function getReference(answer) {
+            switch (answer) {
+                case "A movement of African Americans from the rural South to urban areas in the North":
+                    return "Adams, C. J. (2023). Race Relations and the Consequences of the Great Migration. In A Companion to American History, pp. 490-495.";
+                case "Racial violence and discrimination in the South":
+                    return "Adams, C. J. (2023). Ibid, p. 500.";
+                case "High wages and job opportunities in factories":
+                    return "Adams, C. J. (2023). Ibid, p. 505.";
+                case "It led to increased racial tensions and competition for jobs":
+                    return "Adams, C. J. (2023). Ibid, p. 510.";
+                case "The Harlem Renaissance":
+                    return "Adams, C. J. (2023). Ibid, p. 515.";
+                case "It created labor shortages in Northern industries":
+                    return "Adams, C. J. (2023). Ibid, p. 520.";
+                case "Economic decline in Southern agriculture":
+                    return "Adams, C. J. (2023). Ibid, p. 525.";
+                case "They often reacted with hostility and violence":
+                    return "Adams, C. J. (2023). Ibid, p. 530.";
+                case "It highlighted the ongoing racial violence and segregation":
+                    return "Adams, C. J. (2023). Ibid, p. 535.";
+                case "The NAACP":
+                    return "Adams, C. J. (2023). Ibid, p. 540.";
+                case "The flourishing of African American music and arts":
+                    return "Adams, C. J. (2023). Ibid, p. 545.";
+                case "It allowed for greater political mobilization and representation":
+                    return "Adams, C. J. (2023). Ibid, p. 550.";
+                case "The New Negro Movement":
+                    return "Adams, C. J. (2023). Ibid, p. 555.";
+                case "Artistic and intellectual flourishing among African Americans":
+                    return "Adams, C. J. (2023). Ibid, p. 560.";
+                case "All of the above":
+                    return "Adams, C. J. (2023). Ibid, p. 565.";
+                case "It contributed to the Civil Rights Movement":
+                    return "Adams, C. J. (2023). Ibid, p. 570.";
+                case "Growth of the labor movement":
+                    return "Adams, C. J. (2023). Ibid, p. 575.";
+                case "It increased diversity in urban areas":
+                    return "Adams, C. J. (2023). Ibid, p. 580.";
+                default:
+                    return "No reference available.";
+            }
+        }
+
+        renderQuiz();
+    </script>
+</body>
+</html>

@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Chapter 3 — US Foreign Relations under Harding, Coolidge & Hoover — 30-question Final BA Test</title>
+<style>
+  :root{
+    --bg:#071022; --card:#071827; --accent:#6ee7b7; --accent2:#60a5fa;
+    --muted:#9fb0c8; --good:#10b981; --bad:#fb7185; --glass: rgba(255,255,255,0.03);
+    --card-radius:12px; --maxw:1150px;
+  }
+  html,body{height:100%;margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;color:#e6eef8;background:
+    radial-gradient(600px 300px at 10% 10%, rgba(96,165,250,0.03), transparent),
+    linear-gradient(180deg,#071022,#03101a);}
+  .container{max-width:1150px;margin:26px auto;border-radius:14px;display:grid;grid-template-columns:320px 1fr;gap:18px;padding:18px;background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.00));box-shadow:0 18px 48px rgba(0,0,0,0.6);}
+  aside{padding:18px;border-right:1px solid rgba(255,255,255,0.02)}
+  header h1{margin:0;color:var(--accent);font-size:18px}
+  header p{margin:6px 0 0 0;color:var(--muted);font-size:13px}
+  .navTiles{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+  .tile{width:36px;height:36px;border-radius:8px;background:var(--glass);display:flex;align-items:center;justify-content:center;color:var(--muted);cursor:pointer;border:1px solid rgba(255,255,255,0.02);font-weight:700}
+  .tile.answered{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#071022}
+  main{padding:18px}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,0.015),rgba(255,255,255,0.01));padding:16px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
+  .question{font-size:18px;margin-bottom:12px}
+  .choices{display:flex;flex-direction:column;gap:10px}
+  .choice{padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);cursor:pointer;background:transparent;display:flex;gap:12px;align-items:center}
+  .choice input{margin-right:10px;cursor:pointer}
+  .controls{display:flex;justify-content:space-between;margin-top:14px;gap:8px;flex-wrap:wrap}
+  .btn{padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+  .btn.primary{background:var(--accent);color:#072029}
+  .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+  .explanation{background:rgba(255,255,255,0.02);padding:12px;border-radius:8px;color:var(--muted);margin-top:10px;line-height:1.4}
+  .correct{color:var(--good);font-weight:700}
+  .wrong{color:var(--bad);font-weight:700}
+  .review{margin-top:16px}
+  .meta {font-size:13px;color:var(--muted);margin-top:8px}
+  @media (max-width:980px){.container{grid-template-columns:1fr} aside{order:2;border-top:1px solid rgba(255,255,255,0.02)}}
+</style>
+</head>
+<body>
+<div class="container" role="application" aria-labelledby="title">
+  <aside>
+    <header>
+      <h1 id="title">Chapter 3 — US Foreign Relations</h1>
+      <p>“Power and Constraint” — Alex Goodall — 30 MCQs — Oxbridge / Ivy-level</p>
+    </header>
+
+    <div class="meta">
+      Source: Chapter 3 of uploaded PDF (A Companion to Warren G. Harding, Calvin Coolidge, and Herbert Hoover). Answers reference chapter passages. :contentReference[oaicite:0]{index=0} :contentReference[oaicite:1]{index=1} :contentReference[oaicite:2]{index=2}
+    </div>
+
+    <div class="navTiles" id="navTiles" aria-hidden="false"></div>
+  </aside>
+
+  <main>
+    <div class="card" id="quizCard">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-size:13px;color:var(--muted)">Question <span id="qnum">1</span> / 30</div>
+        <div style="font-size:13px;color:var(--muted)" id="answeredInfo">Answered: 0</div>
+      </div>
+
+      <div style="margin-top:12px">
+        <div class="question" id="questionText">Loading…</div>
+        <form id="choices" class="choices" aria-labelledby="questionText"></form>
+      </div>
+
+      <div class="controls">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn secondary" id="prevBtn" type="button">&larr; Prev</button>
+          <button class="btn secondary" id="nextBtn" type="button">Next &rarr;</button>
+          <button class="btn secondary" id="skipBtn" type="button">Skip</button>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn primary" id="submitBtn" type="button">Submit — Show Answers</button>
+          <button class="btn secondary" id="resetBtn" type="button">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="reviewCard" class="card" style="display:none">
+      <div id="scoreHeader"></div>
+      <div id="answersList" class="review"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+/* 30 carefully-crafted MCQs based on Chapter 3 (Alex Goodall). 
+   Explanations include file-citation markers from the uploaded PDF (file_search results). */
+
+const quiz = [
+  {
+    q: "Goodall argues the central contradiction of US foreign policy in the 1920s was:",
+    choices: [
+      "A deliberate withdrawal from all international economic activity.",
+      "A growing global economic power constrained by domestic politics and anti-entanglement culture.",
+      "A unified national consensus in favor of an expansive standing army.",
+      "A decision to make the League of Nations the sole instrument of policy."
+    ],
+    correct: 1,
+    explanation: "Goodall frames the era as one of 'dynamism and experimentation' but also 'disability': the United States had unparalleled economic reach yet faced strong domestic resistance to multilateral entanglements — a political constraint that shaped policy choices. :contentReference[oaicite:3]{index=3}"
+  },
+
+  {
+    q: "Which domestic figure and faction most consistently blocked multilateral commitments such as qualified participation in the World Court?",
+    choices: [
+      "Senator William E. Borah and the anti-interventionist Republicans.",
+      "Speaker of the House advocating full League entry.",
+      "Progressive Democrats seeking isolation.",
+      "Southern Democrats favoring European entanglement."
+    ],
+    correct: 0,
+    explanation: "Goodall identifies Senator William E. Borah and the anti-interventionist wing of the GOP as a decisive barrier to administration foreign-policy aims, often more constraining than party rivals. :contentReference[oaicite:4]{index=4}"
+  },
+
+  {
+    q: "The 1924 Foreign Service Act is important because it:",
+    choices: [
+      "Disbanded the diplomatic service and handed diplomacy to private firms.",
+      "Merged diplomatic and consular services, introduced competitive exams and reorganized personnel — but did not instantly erase old-boy influences.",
+      "Created the CIA.",
+      "Mandated senators personally run overseas posts."
+    ],
+    correct: 1,
+    explanation: "The 1924 Act merged services and introduced merit examinations and retirement ages, professionalizing the service; Goodall notes, however, that entrenched social biases and 'old boys' patterns persisted in practice. :contentReference[oaicite:5]{index=5}"
+  },
+
+  {
+    q: "How does Goodall read the Dawes Plan and similar credit arrangements of the early 1920s?",
+    choices: [
+      "As a durable political settlement that avoided future crises indefinitely.",
+      "As short-term economic stabilization that entrenched reliance on US loans and created fragile international financial linkages.",
+      "As an explicit military alliance with Germany.",
+      "As unrelated to US foreign policy."
+    ],
+    correct: 1,
+    explanation: "Goodall (building on scholarship cited in the chapter) treats the Dawes Plan as a temporary fix: it reconnected Europe financially to US capital but produced structural fragility when reparations and payments proved unsustainable. :contentReference[oaicite:6]{index=6}"
+  },
+
+  {
+    q: "The Stimson Doctrine (nonrecognition of Manchukuo) is best characterized, in Goodall’s account, as:",
+    choices: [
+      "An immediate and effective deterrent that reversed Japanese expansion.",
+      "A moral-legal statement of nonrecognition that was symbolically important but practically limited in preventing Japan’s consolidation in Manchuria.",
+      "A declaration that the US would invade Manchuria.",
+      "A domestic program of social reform."
+    ],
+    correct: 1,
+    explanation: "Goodall discusses the Stimson Doctrine as a principled nonrecognition stance; while notable diplomatically, it ultimately failed to halt Japan and exposed the limits of law-based policies absent enforcement. :contentReference[oaicite:7]{index=7}"
+  },
+
+  {
+    q: "What was Hoover’s principal tactical achievement at the London Naval Conference (1930), according to Goodall?",
+    choices: [
+      "A three-power agreement (US–UK–Japan) that slowed an Anglo-American naval race and temporarily reduced naval spending.",
+      "A plan to sink both the US and British navies.",
+      "A unilateral US decision to expand its fleet without consultation.",
+      "A binding guarantee of British colonial territories to the US."
+    ],
+    correct: 0,
+    explanation: "Goodall highlights Hoover (and Stimson’s delegation) convening London 1930 as consolidating the Washington system — securing cooperation between the largest naval powers and enabling brief reductions in naval armaments. :contentReference[oaicite:8]{index=8}"
+  },
+
+  {
+    q: "Goodall emphasizes a major internal contradiction in Republican-era economic diplomacy: that administrations simultaneously...",
+    choices: [
+      "Advocated free trade abroad while adopting protectionist measures at home, complicating international economic stability.",
+      "Refused all private business involvement overseas.",
+      "Nationalized foreign industries by treaty.",
+      "Sought to abolish US corporations operating abroad."
+    ],
+    correct: 0,
+    explanation: "The chapter stresses the tension between active capital export and investment overseas and recurring domestic protectionism (and later tariffs like Smoot–Hawley), producing mixed signals and policy fragility. :contentReference[oaicite:9]{index=9}"
+  },
+
+  {
+    q: "How does Goodall characterize Herbert Hoover’s pre-presidential and presidential approach to international problems?",
+    choices: [
+      "A faith in voluntary associationalism and private economic actors to manage international issues (economic modernization as diplomacy).",
+      "An insistence on full-scale military occupation everywhere.",
+      "A doctrinaire Wilsonian internationalism with immediate League membership.",
+      "An isolationist who cut all foreign trade ties."
+    ],
+    correct: 0,
+    explanation: "Goodall (citing Leffler and others) situates Hoover’s approach as transitional — relying on commerce, private actors, and voluntary coordination rather than grand diplomatic coercion. :contentReference[oaicite:10]{index=10}"
+  },
+
+  {
+    q: "Which policy toward Latin America does Goodall credit to Hoover’s administration?",
+    choices: [
+      "A strict increase of troop deployments to the region throughout 1929–1933.",
+      "Measured withdrawal of US troops from places like Nicaragua and Haiti, paired with economic modernization initiatives.",
+      "An immediate grant of independence to all Caribbean territories.",
+      "A policy of total disengagement with no diplomatic contact."
+    ],
+    correct: 1,
+    explanation: "Goodall notes Hoover’s efforts to improve relations in Latin America included troop withdrawals (e.g., Nicaragua, Haiti) and programs aimed at economic modernization, though strategic calculations remained central. :contentReference[oaicite:11]{index=11}"
+  },
+
+  {
+    q: "In Goodall’s chapter, the 1924 Immigration Act’s diplomatic consequence was to:",
+    choices: [
+      "Harmonize US–Japan relations permanently.",
+      "Create diplomatic friction with Japan (racial implications) though formal relations remained cordial through much of the 1920s.",
+      "Lead to immediate military alliance with Japan.",
+      "Have no effect on foreign policy."
+    ],
+    correct: 1,
+    explanation: "Goodall observes that the 1924 immigration law introduced tensions — particularly with Japan — even if bilateral relations remained outwardly stable until later crises. :contentReference[oaicite:12]{index=12}"
+  },
+
+  {
+    q: "Goodall and cited scholars argue that the US diplomatic corps in the 1920s was still constrained because:",
+    choices: [
+      "It was expansive and overprofessionalized.",
+      "It remained small, underpaid, and socially exclusive, limiting state capacity despite reforms like the Foreign Service Act.",
+      "All diplomats were selected by popular vote.",
+      "It had total control over domestic economic policy."
+    ],
+    correct: 1,
+    explanation: "Goodall stresses institutional limits: a compact, often socially elite diplomatic service that only slowly professionalized, constraining America’s ability to project power effectively. :contentReference[oaicite:13]{index=13}"
+  },
+
+  {
+    q: "Which strategic rationale underpinned some US reluctance to grant Philippine independence in the early 1930s?",
+    choices: [
+      "The belief that Philippine independence would strengthen the balance of power in East Asia.",
+      "Concerns that independence would weaken US naval and regional strategic posture (parity arguments) and complicate Pacific arrangements.",
+      "A plan to annex the Philippines into the continental US.",
+      "No strategic rationale — it was purely sentimental."
+    ],
+    correct: 1,
+    explanation: "Goodall (via analysis of Hoover and Stimson) indicates strategic concerns — maintaining Pacific naval capacity and regional balance — informed resistance to rapid decolonization (e.g., vetoes and debates over Hare–Hawes–Cutting). :contentReference[oaicite:14]{index=14}"
+  },
+
+  {
+    q: "Goodall treats the naval treaties of the 1920s–30s as:",
+    choices: [
+      "Irrelevant pageantry with no strategic outcome.",
+      "Important frameworks that limited expensive races and re-shaped naval strategy (and indirectly stimulated carrier and tactical innovation).",
+      "Direct causes of the Great Depression.",
+      "Solely British domestic politics."
+    ],
+    correct: 1,
+    explanation: "The chapter shows that arms-limitation treaties constrained budgets, shifted naval priorities, and encouraged tactical innovation (e.g., carriers and multi-role ships), while also having geopolitical side-effects. "
+  },
+
+  {
+    q: "How does Goodall characterize Henry Stimson’s attitude to treaty violations (e.g., Manchuria)?",
+    choices: [
+      "As indifferent and uninterested in treaty commitments.",
+      "As personally affronted — a moral and honor-driven statesman who believed treaties and international law mattered, and thus reacted strongly to Japanese moves.",
+      "As enthusiastically supportive of Japanese expansion.",
+      "As an isolationist who favored no diplomatic response."
+    ],
+    correct: 1,
+    explanation: "Goodall reports Stimson’s visceral reaction to Japan’s treaty breaches: for him, treaty obligations were a matter of principle and honor, shaping the force and tone of US protest. :contentReference[oaicite:16]{index=16}"
+  },
+
+  {
+    q: "The chapter suggests American corporate expansion abroad in the 1920s produced which mix of outcomes?",
+    choices: [
+      "Solely benevolent modernization for host societies.",
+      "Rapid profit and global market penetration for US firms, but also local dislocations, resentment, and geopolitical entanglements.",
+      "Complete elimination of all local industry worldwide.",
+      "Immediate global democracy as a result of corporate presence."
+    ],
+    correct: 1,
+    explanation: "Goodall documents how US firms (ITT, Ford, Standard Oil, United Fruit) expanded globally — powering US influence and exports but generating economic dependencies and local grievances (e.g., Fordlandia). :contentReference[oaicite:17]{index=17}"
+  },
+
+  {
+    q: "Which historiographical corrective does Goodall emphasize about the 1920s 'isolationism' label?",
+    choices: [
+      "That the label is entirely accurate and needs no nuance.",
+      "That the binary 'isolation vs internationalism' is misleading; the decade featured active international economic engagement and selective multilateralism even as entangling alliances were politically suspect.",
+      "That the US was completely isolationist with no foreign contacts.",
+      "That only cultural history matters for foreign policy."
+    ],
+    correct: 1,
+    explanation: "Goodall — echoing recent scholarship — rejects narrow binaries: though political anti-entanglement existed, the US engaged broadly through economic ties, treaty-building, and selective multilateral initiatives. "
+  },
+
+  {
+    q: "Goodall argues that one long-term effect of US loan and trade policies in the 1920s was:",
+    choices: [
+      "A perfectly balanced and self-correcting global financial system.",
+      "A global economic integration that increased short-term growth but left systemic vulnerabilities exposed by shocks (e.g., late-decade defaults).",
+      "Immediate world peace guaranteed by credit.",
+      "An isolationist economy impervious to external influence."
+    ],
+    correct: 1,
+    explanation: "The chapter explains how US credit and investment fueled exports and growth but also created fragile cross-border financial dependencies that could unravel under stress. :contentReference[oaicite:19]{index=19}"
+  },
+
+  {
+    q: "Goodall suggests the American military posture in the 1920s and early 1930s was best described as:",
+    choices: [
+      "Aggressively expansionist with maximum budgets for all services.",
+      "Constrained by cutbacks and arms-limitation agreements; forced to innovate tactically under budgetary limits.",
+      "Completely demobilized with no capabilities.",
+      "An immediate precursor to total global occupation policy."
+    ],
+    correct: 1,
+    explanation: "Goodall notes budget cuts and treaty constraints reduced conventional forces but stimulated tactical innovation (aircraft carriers, Marines' amphibious tactics), altering future military development. :contentReference[oaicite:20]{index=20}"
+  },
+
+  {
+    q: "Goodall discusses Anglo-American relations in the late 1920s — his view is that:",
+    choices: [
+      "They were uniformly antagonistic due to trade alone.",
+      "They contained cooperation on arms control and economic diplomacy but were frayed by divergent colonial and regional interests (Ireland, Middle East, debts).",
+      "The US surrendered all its interests to Britain.",
+      "They were irrelevant to Pacific strategy."
+    ],
+    correct: 1,
+    explanation: "The chapter records attempts at cooperation (naval conferences, Rapidan summit) but also stresses lingering bilateral disputes that limited deep alignment. "
+  },
+
+  {
+    q: "Which diplomatic instrument did Republicans often prefer to formal League membership?",
+    choices: [
+      "Qualified participation in international courts and selective treaty commitments; informal economic diplomacy and bilateral arrangements.",
+      "Immediate territorial annexation of all partners.",
+      "Universal unconditional submissions to the League.",
+      "No diplomacy at all."
+    ],
+    correct: 0,
+    explanation: "Goodall shows Republican governments frequently favored selective multilateralism (World Court, limited treaty engagement) and informal economic tools rather than full League commitment. "
+  },
+
+  {
+    q: "How does Goodall treat the role of legalism (e.g., Kellogg–Briand) in US policy?",
+    choices: [
+      "As a primary replacement for force — always decisive in crises.",
+      "As an aspirational language of international order that often lacked enforcement and therefore had mixed practical effect.",
+      "As an immediate cause of war.",
+      "As solely a domestic legal reform."
+    ],
+    correct: 1,
+    explanation: "The chapter argues that legal instruments expressed high-minded aims (Kellogg–Briand, Stimson’s reliance on treaty norms) but their lack of enforcement mechanisms limited their deterrent effect. :contentReference[oaicite:23]{index=23}"
+  },
+
+  {
+    q: "In Goodall's survey, what best explains the limits of US capacity to project power globally during the 1920s?",
+    choices: [
+      "Unlimited resources but no strategic imagination.",
+      "A combination of constrained institutional capacity (small diplomatic corps), domestic political resistance, and competing regional priorities.",
+      "A lack of any economic resources after World War I.",
+      "A conscious policy of universal empire-building everywhere."
+    ],
+    correct: 1,
+    explanation: "Goodall emphasizes multiple constraints — limited diplomatic manpower, domestic politics hostile to entanglement, and divergent regional demands — which together limited sustained power projection. "
+  },
+
+  {
+    q: "Goodall’s treatment of the 1920s suggests that the US cultural reach (films, consumption, corporations) produced:",
+    choices: [
+      "Only beneficial cultural exchange with no political consequence.",
+      "Soft-power influence that complemented economic penetration and complicated local politics abroad.",
+      "Immediate military alliances worldwide.",
+      "Total cultural isolation."
+    ],
+    correct: 1,
+    explanation: "The chapter notes the spread of American films, brands, and corporate presence as a form of soft power that reshaped foreign markets and perceptions and fed into diplomacy and economic policy. :contentReference[oaicite:25]{index=25}"
+  },
+
+  {
+    q: "Goodall places the Manchurian crisis (1931) in his narrative primarily to show:",
+    choices: [
+      "That Asian crises were irrelevant to US policy makers.",
+      "How legalistic doctrines, moral outrage, and limited enforcement exposed the limits of interwar American diplomacy.",
+      "That the US eagerly used military force in Manchuria.",
+      "That China had no role in US strategic thinking."
+    ],
+    correct: 1,
+    explanation: "Manchuria illustrates the gap between principle and capability: despite nonrecognition and moral protest, the US lacked the political will and means to reverse Japanese actions — a central Goodall theme. "
+  },
+
+  {
+    q: "Which long-term interpretive point about the 1920s does Goodall advance?",
+    choices: [
+      "That the decade was irrelevant and left no legacy.",
+      "That while the 1920s showed important continuities with Wilsonian institutionalism, it was also marked by distinct constraints that shaped later interwar outcomes.",
+      "That the 1920s were the absolute apogee of global democracy.",
+      "That nothing in the 1920s anticipated World War II."
+    ],
+    correct: 1,
+    explanation: "Goodall argues the decade cannot be reduced to simple 'decline' or 'isolation' — it combined continuities (institutions, treaties, economic globalization) with constraints and choices that affected later crises. "
+  },
+
+  {
+    q: "Goodall’s chapter suggests the US response to Japanese policy in China was complicated because:",
+    choices: [
+      "The US had no commercial or strategic interests in Asia.",
+      "The US balanced treaty principles, domestic politics, Anglo-American sensitivities, and limited enforcement options — producing hesitant, principle-led but weak responses.",
+      "The US immediately declared war on Japan in 1932.",
+      "The US ceded all influence to France."
+    ],
+    correct: 1,
+    explanation: "Competing priorities (treaty norms, public suspicion of entanglement, limited naval willingness, and Anglo-American disagreements) produced calibrated but ultimately ineffectual responses to Japanese actions. "
+  },
+
+  {
+    q: "According to Goodall, which institutional innovation in the 1920s helped to professionalize US diplomacy (even if imperfectly)?",
+    choices: [
+      "The creation of a presidential standing army with unelected generals.",
+      "Founding of Georgetown's School of Foreign Service (1919) and the 1924 Foreign Service Act reforms.",
+      "The abolition of all exams for diplomats.",
+      "The direct election of ambassadors by popular ballot."
+    ],
+    correct: 1,
+    explanation: "Goodall notes the emergence of the School of Foreign Service (1919) and the 1924 Act as steps toward professional training and merit-based personnel, though social and budgetary limits persisted. :contentReference[oaicite:29]{index=29}"
+  },
+
+  {
+    q: "Goodall uses examples of tariff politics and corporate behavior to argue that US foreign policy in the 1920s was:",
+    choices: [
+      "Purely driven by military officers with no commercial inputs.",
+      "Deeply intertwined with private economic interests whose global reach both enabled and complicated official policy.",
+      "Only a cultural project with no economic elements.",
+      "Entirely run by foreign governments."
+    ],
+    correct: 1,
+    explanation: "The chapter underscores how private capital, corporate expansion, and tariff politics shaped diplomatic priorities and constrained coherent policy-making. :contentReference[oaicite:30]{index=30}"
+  },
+
+  {
+    q: "Goodall’s assessment of the value of arms-limitation treaties for international order is best rendered as:",
+    choices: [
+      "They were decisive and prevented any future great-power tension.",
+      "They provided momentary restraint and institutional frameworks but did not eliminate geostrategic competition or long-term instability.",
+      "They were equivalent to unconditional world government.",
+      "They were purely symbolic with zero technical effect on navies."
+    ],
+    correct: 1,
+    explanation: "Goodall treats these treaties as real achievements that lowered immediate arms competition but could not resolve deeper rivalries or prevent future conflict. "
+  },
+
+  {
+    q: "Which best captures Goodall’s view of Henry Stimson’s legacy in the chapter?",
+    choices: [
+      "A uniformly praised diplomat whose every decision was uncontested.",
+      "A contested figure — widely respected for principle and competence but criticized for policies that some argue antagonized rivals and lacked realism.",
+      "A marginal footnote with no influence.",
+      "A purely domestic politician with no foreign policy role."
+    ],
+    correct: 1,
+    explanation: "Goodall surveys the literature: Stimson elicits admiration for his principled stance and administrative skill but also criticism that some of his actions (tone, legalism) may have had adverse consequences. "
+  },
+
+  {
+    q: "Goodall argues that the US attempted to manage international problems largely by:",
+    choices: [
+      "Deploying large standing armies on every continent.",
+      "Using economic leverage, treaties, limited naval diplomacy and selective multilateralism rather than broad military coalitions.",
+      "Surrendering all agency to the League.",
+      "Adopting a doctrine of complete unilateral conquest."
+    ],
+    correct: 1,
+    explanation: "The chapter emphasizes reliance on economic diplomacy, credit, selective treaty frameworks, and naval/consular presence — a 'commercial' and legalistic repertoire rather than expeditionary conquest. "
+  },
+
+  {
+    q: "In Goodall’s reading, what was a common shortcoming of interwar legal and moral condemnations (e.g., Stimson Doctrine, Kellogg–Briand)?",
+    choices: [
+      "They always required immediate military occupation.",
+      "They often lacked enforcement mechanisms and thus depended on political will that frequently proved absent.",
+      "They instantly solved underlying power politics.",
+      "They were universally implemented by all states without exception."
+    ],
+    correct: 1,
+    explanation: "Goodall stresses the recurring problem: moral-legal pronouncements signaled values but could not substitute for credible deterrence or collective action. "
+  },
+
+  {
+    q: "Goodall’s chapter links US business expansion to which diplomatic consequence in peripheral regions?",
+    choices: [
+      "Strengthened local democracies everywhere.",
+      "Economic penetration that sometimes provoked nationalist backlash and required protective naval or consular measures (e.g., in China and Latin America).",
+      "Immediate universal prosperity and no resistance.",
+      "Complete withdrawal of US companies from Latin America."
+    ],
+    correct: 1,
+    explanation: "Goodall shows corporate involvement often created local tensions — for which the US sometimes resorted to protective patrols, interventions, or diplomatic pressure. "
+  },
+
+  {
+    q: "Which phrase best summarizes Goodall’s final evaluative stance on the Republican-era foreign policy?",
+    choices: [
+      "Unambiguously triumphant and the model for all future policy.",
+      "A mixture of institutional continuity and practical constraint — competent in parts, limited in effect by domestic politics and structural weaknesses.",
+      "Total failure with no redeeming features.",
+      "Completely irrelevant to international history."
+    ],
+    correct: 1,
+    explanation: "Goodall urges a balanced reading: the era shows both important continuities (institutions, treaties) and clear limits due to politics and capacity, making it complex rather than wholly successful or failed. "
+  }
+]; // 30 items expected
+// Note: we intentionally created 30 questions — verify:
+if (quiz.length !== 30) console.error("Expect 30 questions — found", quiz.length);
+
+/* state */
+let state = { idx:0, answers: Array(quiz.length).fill(null) };
+
+/* DOM refs */
+const navTiles = document.getElementById('navTiles');
+const qnum = document.getElementById('qnum');
+const questionText = document.getElementById('questionText');
+const choicesForm = document.getElementById('choices');
+const answeredInfo = document.getElementById('answeredInfo');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const skipBtn = document.getElementById('skipBtn');
+const submitBtn = document.getElementById('submitBtn');
+const resetBtn = document.getElementById('resetBtn');
+const resultArea = document.getElementById('resultArea');
+const reviewCard = document.getElementById('reviewCard');
+const scoreHeader = document.getElementById('scoreHeader');
+const answersList = document.getElementById('answersList');
+const quizCard = document.getElementById('quizCard');
+
+function renderNav(){
+  navTiles.innerHTML = '';
+  for(let i=0;i<quiz.length;i++){
+    const b = document.createElement('button');
+    b.className = 'tile' + (state.answers[i]!==null ? ' answered':'');
+    b.textContent = i+1;
+    b.title = 'Go to Q' + (i+1);
+    b.addEventListener('click', ()=> { state.idx = i; renderQuestion(); });
+    navTiles.appendChild(b);
+  }
+}
+
+function renderQuestion(){
+  const q = quiz[state.idx];
+  qnum.textContent = state.idx+1;
+  // allow HTML in question text if needed:
+  questionText.innerHTML = q.q;
+  choicesForm.innerHTML = '';
+  q.choices.forEach((c,ci)=>{
+    const id = 'c_'+state.idx+'_'+ci;
+    const label = document.createElement('label');
+    label.className = 'choice';
+    label.htmlFor = id;
+    const inp = document.createElement('input');
+    inp.type = 'radio'; inp.name = 'choice'; inp.id = id; inp.value = ci;
+    inp.checked = (state.answers[state.idx] === ci);
+    inp.addEventListener('change', ()=>{
+      state.answers[state.idx] = ci;
+      renderNav(); updateAnsweredCount();
+    });
+    const span = document.createElement('div');
+    span.innerHTML = `<strong>${String.fromCharCode(65+ci)}.</strong> ${c}`;
+    label.appendChild(inp); label.appendChild(span);
+    choicesForm.appendChild(label);
+  });
+  renderNav();
+  updateAnsweredCount();
+  // auto-focus first input for accessibility if present
+  const firstInput = choicesForm.querySelector('input');
+  if(firstInput) firstInput.focus();
+}
+
+function updateAnsweredCount(){
+  const n = state.answers.filter(a=>a!==null).length;
+  answeredInfo.textContent = 'Answered: ' + n;
+}
+
+prevBtn.addEventListener('click', ()=> { state.idx = Math.max(0, state.idx-1); renderQuestion(); });
+nextBtn.addEventListener('click', ()=> { state.idx = Math.min(quiz.length-1, state.idx+1); renderQuestion(); });
+skipBtn.addEventListener('click', ()=> { state.idx = Math.min(quiz.length-1, state.idx+1); renderQuestion(); });
+
+submitBtn.addEventListener('click', ()=>{
+  if(!confirm("Submit and view full academically-referenced answers? You won't be able to change answers after submission.")) return;
+  showResults();
+});
+
+resetBtn.addEventListener('click', ()=> {
+  if(!confirm("Reset all answers and restart the quiz?")) return;
+  state.answers = Array(quiz.length).fill(null);
+  state.idx = 0;
+  quizCard.style.display = 'block';
+  reviewCard.style.display = 'none';
+  renderQuestion();
+  renderNav();
+  updateAnsweredCount();
+});
+
+function showResults(){
+  let correct = 0;
+  for(let i=0;i<quiz.length;i++){
+    if(state.answers[i] !== null && state.answers[i] === quiz[i].correct) correct++;
+  }
+  const pct = Math.round((correct/quiz.length)*100);
+  scoreHeader.innerHTML = `<h2 style="margin:0;color:var(--accent)">Result: ${correct} / ${quiz.length} (${pct}%)</h2>
+    <div style="color:var(--muted);margin-top:8px">All explanations cite the uploaded chapter (Goodall, Chapter 3). Key file references appear inline with each rationale (file markers from the uploaded PDF).</div>`;
+  answersList.innerHTML = '';
+  quiz.forEach((q,i)=>{
+    const user = state.answers[i];
+    const correctIdx = q.correct;
+    const block = document.createElement('div');
+    block.style.marginBottom='14px';
+    block.innerHTML = `<div style="font-weight:700;color:#e6eef8">Q${i+1}. ${q.q}</div>
+      <div style="margin-top:6px"><strong>Your answer:</strong> ${user===null?'<em>— skipped —</em>':String.fromCharCode(65+user)+'. '+q.choices[user]}</div>
+      <div style="margin-top:6px"><strong>Correct:</strong> ${String.fromCharCode(65+correctIdx)}. ${q.choices[correctIdx]}</div>
+      <div class="${(user===correctIdx)?'correct':'wrong'}" style="margin-top:8px">${(user===correctIdx)?'Correct':'Incorrect'}</div>
+      <div class="explanation">${q.explanation}</div>`;
+    answersList.appendChild(block);
+  });
+  quizCard.style.display = 'none';
+  reviewCard.style.display = 'block';
+  reviewCard.scrollIntoView({behavior:'smooth'});
+}
+
+/* init */
+renderNav(); renderQuestion(); updateAnsweredCount();
+</script>
+</body>
+</html>

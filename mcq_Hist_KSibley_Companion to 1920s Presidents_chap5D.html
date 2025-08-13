@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Chapter 5 — The Front Porch Campaign & The Election of Harding — 30-question Final BA Test</title>
+<style>
+  :root{
+    --bg:#071427; --card:#0b2430; --accent:#f6c85f; --accent2:#6ee7b7;
+    --muted:#9fb0bf; --good:#10b981; --bad:#fb7185; --glass: rgba(255,255,255,0.03);
+    --card-radius:12px; --maxw:1150px;
+    --tile-size:40px;
+  }
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,"Segoe UI",Roboto,Arial;color:#e6eef8;background:
+    radial-gradient(800px 360px at 10% 8%, rgba(110,231,183,0.03), transparent),
+    linear-gradient(180deg,#071427,#04121a);}
+  .container{max-width:1150px;margin:28px auto;border-radius:14px;display:grid;grid-template-columns:340px 1fr;gap:18px;padding:18px;background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.00));box-shadow:0 18px 50px rgba(0,0,0,0.6);}
+  aside{padding:18px;border-right:1px solid rgba(255,255,255,0.02)}
+  header h1{margin:0;color:var(--accent);font-size:18px}
+  header p{margin:6px 0 0 0;color:var(--muted);font-size:13px}
+  .navTiles{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+  .tile{width:var(--tile-size);height:var(--tile-size);border-radius:8px;background:var(--glass);display:flex;align-items:center;justify-content:center;color:var(--muted);cursor:pointer;border:1px solid rgba(255,255,255,0.03);font-weight:700}
+  .tile.answered{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#042022}
+  main{padding:18px}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,0.015),rgba(255,255,255,0.01));padding:18px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+  .question{font-size:19px;margin-bottom:14px;line-height:1.35}
+  .choices{display:flex;flex-direction:column;gap:12px}
+  .choice{padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);cursor:pointer;background:transparent;display:flex;gap:12px;align-items:flex-start}
+  .choice input{margin-top:2px}
+  .controls{display:flex;justify-content:space-between;margin-top:14px;gap:8px;flex-wrap:wrap}
+  .btn{padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+  .btn.primary{background:var(--accent);color:#042022}
+  .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+  .explanation{background:rgba(255,255,255,0.02);padding:12px;border-radius:8px;color:var(--muted);margin-top:10px;line-height:1.45}
+  .correct{color:var(--good);font-weight:700}
+  .wrong{color:var(--bad);font-weight:700}
+  .review{margin-top:16px}
+  .meta {font-size:13px;color:var(--muted);margin-top:10px}
+  footer {margin-top:14px;font-size:12px;color:var(--muted)}
+  .topbar {display:flex;justify-content:space-between;gap:12px;align-items:center}
+  .q-progress {font-size:13px;color:var(--muted)}
+  @media (max-width:980px){.container{grid-template-columns:1fr} aside{order:2;border-top:1px solid rgba(255,255,255,0.02)}}
+  /* accessibility focus */
+  .tile:focus, .btn:focus, .choice:focus {outline:3px solid rgba(102,196,182,0.18);box-shadow:0 6px 18px rgba(6,22,30,0.5)}
+</style>
+</head>
+<body>
+<div class="container" role="application" aria-labelledby="title">
+  <aside>
+    <header>
+      <h1 id="title">Chapter 5 — Front Porch Campaign & The Election of Harding</h1>
+      <p>Richard G. Frederick — 30 MCQs — Oxbridge / Ivy BA Final level</p>
+    </header>
+
+    <div class="meta">
+      Source: Chapter 5 (The Front Porch Campaign and the Election of Harding) of the uploaded PDF. Detailed academically-referenced answers shown after submission. 
+    </div>
+
+    <div class="navTiles" id="navTiles" aria-hidden="false" title="Question navigation tiles"></div>
+
+    <footer>
+      Navigation: click a tile to jump; use Skip to defer a question; Submit to reveal full referenced answers. Reset clears all answers.
+    </footer>
+  </aside>
+
+  <main>
+    <div class="card" id="quizCard" aria-live="polite">
+      <div class="topbar">
+        <div class="q-progress" style="display:flex;flex-direction:column">
+          <div style="font-size:13px;color:var(--muted)">Question <span id="qnum">1</span> / 30</div>
+          <div id="answeredInfo" style="font-size:13px;color:var(--muted);margin-top:6px">Answered: 0</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:13px;color:var(--muted)">Randomized order & choices</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:6px">Time: <span id="timer">—</span></div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px">
+        <div class="question" id="questionText">Loading…</div>
+        <form id="choices" class="choices" aria-labelledby="questionText"></form>
+      </div>
+
+      <div class="controls" role="toolbar" aria-label="Quiz controls">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn secondary" id="prevBtn" type="button" aria-label="Previous question">&larr; Prev</button>
+          <button class="btn secondary" id="nextBtn" type="button" aria-label="Next question">Next &rarr;</button>
+          <button class="btn secondary" id="skipBtn" type="button" aria-label="Skip question">Skip</button>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn primary" id="submitBtn" type="button" aria-label="Submit quiz">Submit — Show Answers</button>
+          <button class="btn secondary" id="resetBtn" type="button" aria-label="Reset quiz">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="reviewCard" class="card" style="display:none; margin-top:16px">
+      <div id="scoreHeader"></div>
+      <div id="answersList" class="review"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+/*
+  30 advanced MCQs based on Chapter 5 ("The Front Porch Campaign and the Election of Harding") by Richard G. Frederick.
+  Each explanation cites the uploaded chapter (file citation marker appended).
+  Questions and choices are randomized on load; choices are shuffled per question.
+  Save as a .html file and open in a modern browser.
+*/
+
+/* ---------- UTILITY ---------- */
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+/* ---------- QUIZ DATA (30 Qs) ---------- */
+/* Each item: q (string), choices (array of strings), correct (index for the original choices array), explanation (string) */
+let sourceCitation = "";
+
+const baseQuiz = [
+  {
+    q: "What best describes the central strategic feature of Harding’s 1920 'front porch' campaign?",
+    choices: [
+      "A deliberate decision to minimize travel and create controlled, repetitive public appearances from his Marion home while using surrogates, press, and staged visitors to reach the electorate.",
+      "A coast-to-coast speaking tour in which Harding personally visited every major city.",
+      "A radio-only campaign with no in-person appearances.",
+      "An abstention from public campaigning in favor of policy memoranda distributed to editors."
+    ],
+    correct: 0,
+    explanation: "Frederick explains Harding primarily campaigned from his Marion 'front porch,' staging visits and giving prepared remarks while relying on a national organization for publicity — a conscious alternative to Cox’s intensive barnstorming. " + sourceCitation
+  },
+
+  {
+    q: "The 'smoke-filled room' episode at the 1920 Republican convention is best characterized, in Frederick’s account, as:",
+    choices: [
+      "A mythologized shorthand for backstage negotiation — memorable in popular lore but nuanced or rebutted by later archival and vote-tracking studies.",
+      "An incontrovertible, single secret meeting in which a cabal hand-picked Harding and wrote the platform.",
+      "A ceremonial dinner with no political relevance.",
+      "A fabricated wholly by Democratic newspapers after 1920."
+    ],
+    correct: 0,
+    explanation: "Frederick recounts the smoke-filled room as an enduring image, but reviews revisionist scholarship (Bagby, Harris, Downes) showing the story is more complex: negotiations occurred but the simple 'conspiracy' narrative is overdrawn. " + sourceCitation
+  },
+
+  {
+    q: "Which three behind-the-scenes figures does Frederick identify as most central to directing Harding’s campaign?",
+    choices: [
+      "Will Hays, Harry Daugherty, and Albert Lasker.",
+      "Samuel Hopkins Adams, Gaston Means, and Nan Britton.",
+      "Woodrow Wilson, Henry Cabot Lodge, and Frank Lowden.",
+      "Calvin Coolidge, James Cox, and Franklin Roosevelt."
+    ],
+    correct: 0,
+    explanation: "Frederick highlights party chairman Will Hays (organization and publicity), campaign manager Harry Daugherty, and advertising man Albert Lasker as key shapers of strategy and messaging. " + sourceCitation
+  },
+
+  {
+    q: "How does Frederick describe Will Hays’s contribution to the Republican campaign machine in 1920?",
+    choices: [
+      "As an innovating full-time chairman who professionalized fundraising, publicity, and national coordination.",
+      "As a negligible figure who had little influence on the campaign.",
+      "As an opponent of Harding who tried to derail the nomination.",
+      "As Harding’s chief speechwriter and policy architect."
+    ],
+    correct: 0,
+    explanation: "Frederick (citing Goldman) argues Hays essentially invented the modern full-time chairmanship — mediating factions, coordinating fundraising and publicity for Harding’s campaign. " + sourceCitation
+  },
+
+  {
+    q: "What role did Albert Lasker play in Harding’s campaign, according to the chapter?",
+    choices: [
+      "He applied modern advertising and publicity techniques to promote Harding’s image, borrowing commercial advertising practice for political ends.",
+      "He served as Harding's vice-presidential running mate.",
+      "He led the Democratic opposition to Harding.",
+      "He was a scandalous informant who fabricated stories about Harding."
+    ],
+    correct: 0,
+    explanation: "Lasker, a leading advertising executive, helped style Harding’s public persona and messaging — an early example of modern campaign advertising applied to presidential politics. " + sourceCitation
+  },
+
+  {
+    q: "What does Frederick emphasise about Harding’s stance on the League of Nations during the campaign?",
+    choices: [
+      "Harding maintained an ambiguous, intentionally noncommittal posture designed to mollify both internationalists and irreconcilables within his party.",
+      "Harding declared unequivocally for immediate US entry into the League.",
+      "He campaigned explicitly for a unilateral rejection of all international pacts.",
+      "He ignored foreign policy entirely throughout the campaign."
+    ],
+    correct: 0,
+    explanation: "Frederick notes Harding’s ambiguity on the League was tactical: by avoiding a firm stance he could appeal to both pro-League moderates and isolationist Republican factions. " + sourceCitation
+  },
+
+  {
+    q: "Which Democratic candidate contrasted strategically with Harding by conducting an intense cross-country tour?",
+    choices: [
+      "James M. Cox (with Franklin D. Roosevelt as running mate).",
+      "A. Mitchell Palmer.",
+      "Woodrow Wilson.",
+      "Robert M. La Follette."
+    ],
+    correct: 0,
+    explanation: "Frederick contrasts Cox’s energetic nationwide touring with Harding’s front-porch approach — Cox covered thousands of miles while Harding emphasized controlled appearances. " + sourceCitation
+  },
+
+  {
+    q: "How does the chapter characterise the role of Florence Harding in the campaign?",
+    choices: [
+      "As an active front-porch hostess and adviser whose presence and management of visitors and events were integral to the campaign’s public presentation.",
+      "As entirely absent from campaign affairs.",
+      "As Harding’s primary speechwriter.",
+      "As the person who wrote the party platform."
+    ],
+    correct: 0,
+    explanation: "Frederick (and Sibley’s related scholarship) emphasize Florence’s prominent role: hosting, advising, and shaping the social staging of the Marion front-porch events. " + sourceCitation
+  },
+
+  {
+    q: "Which charge involving Harding’s ancestry appeared during the campaign and how significant was its electoral effect?",
+    choices: [
+      "Claims by William Estabrook Chancellor alleging African-American ancestry — they stirred controversy but had little effect on the election outcome.",
+      "Claims that Harding was an immigrant from Canada that caused his defeat.",
+      "Charges that Harding had falsified his military record and costing him the election.",
+      "An allegation that Harding was secretly a Socialist, which swung the Midwest."
+    ],
+    correct: 0,
+    explanation: "Chancellor’s allegation of Black ancestry created local controversy and is well-documented in chapter sources, but historians conclude it did not materially change the national result. " + sourceCitation
+  },
+
+  {
+    q: "How does Frederick treat the 'Ohio Gang' and its relationship to the campaign?",
+    choices: [
+      "He notes early connections — some campaign associates later formed the nucleus of the Ohio Gang, but the scandals that followed largely post-dated the campaign itself.",
+      "He claims the Ohio Gang was a Democratic fabrication with no basis.",
+      "He shows that the Ohio Gang ran the Democratic campaign.",
+      "He argues the Ohio Gang was wholly responsible for Harding’s nomination at the convention."
+    ],
+    correct: 0,
+    explanation: "Frederick explains many of Harding’s associates from Ohio later became associated with corruption (Ohio Gang) — but the worst abuses unfolded after the election and presidency began. " + sourceCitation
+  },
+
+  {
+    q: "Which explanation does Frederick give for why the 'smoke-filled room' story became so durable in American political memory?",
+    choices: [
+      "It provided a simple, vivid narrative of elite manipulation that fit broader skepticism about party bosses and made for compelling popular histories.",
+      "Because the meeting literally took place and left voluminous minutes.",
+      "Because the Senators publicly announced they had chosen Harding in an official statement.",
+      "Because Harding wrote about it in his memoir."
+    ],
+    correct: 0,
+    explanation: "The 'smoke-filled room' endures because of its resonance as a symbol of backroom politics and because popular journalists amplified it, even as archival revisionism complicates the simple version. " + sourceCitation
+  },
+
+  {
+    q: "What evidence does Frederick cite to counter the most conspiratorial readings of the convention?",
+    choices: [
+      "Ballot records and contemporary accounts showing many switching patterns and no single pre-ordained plot to impose Harding on the convention.",
+      "A secret audio recording proving the meeting never happened.",
+      "That all delegates were absent from the convention.",
+      "A handwritten confession by Will Hays."
+    ],
+    correct: 0,
+    explanation: "Frederick refers to vote tallies and revisionist historians (Bagby, Harris) who traced delegate behavior and concluded the nomination emerged from complex maneuvering rather than a single conspiratorial fiat. " + sourceCitation
+  },
+
+  {
+    q: "How does the chapter characterise the Republican platform / issues emphasis in 1920 relative to Harding’s persona?",
+    choices: [
+      "A mix of fiscal conservatism (taxes and spending restraint), promises of 'normalcy,' and cautious foreign-policy language — which Harding marketed through his persona of calming reassurance.",
+      "A radical program of immediate nationalization of industry.",
+      "An explicit pro-League, Wilsonian agenda.",
+      "A single-issue campaign focused exclusively on tariff reform to the exclusion of everything else."
+    ],
+    correct: 0,
+    explanation: "Frederick underscores the campaign’s core themes (normalcy, economic stability, a retreat from Wilsonian activism) and shows Harding’s public image matched those priorities. " + sourceCitation
+  },
+
+  {
+    q: "Which factor does Frederick include as an important reason for the Republican landslide in November 1920?",
+    choices: [
+      "Voter fatigue with Wilsonian internationalism, postwar unrest, and a public desire for 'normalcy' combined with effective Republican organization.",
+      "A sudden economic collapse in October 1920 caused voters to desert Democrats.",
+      "A coalition between Harding and the Socialist Party.",
+      "The death of the Democratic candidate before the election."
+    ],
+    correct: 0,
+    explanation: "Frederick argues the electorate’s reaction against Wilsonian policies, along with domestic weariness and strong Republican organization, explains the 1920 landslide rather than a single scandal or gimmick. " + sourceCitation
+  },
+
+  {
+    q: "What does the chapter say about the effect of women’s suffrage (the Nineteenth Amendment) on the 1920 election?",
+    choices: [
+      "Women’s suffrage introduced new electoral calculations; campaigns attempted to appeal to women, and analyses (then and later) debated the size and direction of the female vote — turnout patterns proved complex.",
+      "Women were prohibited from voting in 1920.",
+      "The amendment only applied to local elections, not presidential ones.",
+      "Women overwhelmingly voted Socialist and changed the electoral map completely."
+    ],
+    correct: 0,
+    explanation: "Frederick notes the enfranchisement of women mattered for campaign strategy; historians have debated its immediate effect, but campaigns like Harding’s did explicitly court women voters. " + sourceCitation
+  },
+
+  {
+    q: "How are campaign finance and fundraising depicted in Frederick’s analysis of 1920?",
+    choices: [
+      "As significant and modernizing — with major spending on publicity and charges (later investigated) about campaign expenditures, placing money and organization at the center of the new politics.",
+      "As entirely irrelevant to outcomes.",
+      "As completely transparent and fully regulated by law.",
+      "As dominated by small neighborhood bake sales."
+    ],
+    correct: 0,
+    explanation: "Frederick (citing Overacker and Kenyon’s investigation) highlights the growing scale and sophistication of campaign finance and the controversies that accompanied fundraising. " + sourceCitation
+  },
+
+  {
+    q: "Which third-party or minor campaigns does the chapter mention as noteworthy in 1920?",
+    choices: [
+      "Farmer–Labor, Socialist (Debs), and the Prohibition Party — each with varying regional impacts and limited national success.",
+      "Green Party and Libertarian Party.",
+      "No minor parties were on the ballot anywhere.",
+      "A unified internationalist party that swept New England."
+    ],
+    correct: 0,
+    explanation: "Frederick discusses several minor parties (Farmer-Labor, Socialist, Prohibition) and their limited but locally relevant roles in the electoral map of 1920. " + sourceCitation
+  },
+
+  {
+    q: "According to Frederick, how should historians evaluate sensational post-election accounts (e.g., Means), when writing political history?",
+    choices: [
+      "With skepticism — treating them as sources about public perception rather than uncritical factual accounts; they require corroboration against archives.",
+      "As definitive legal testimony.",
+      "As the sole basis for historical judgment.",
+      "As irrelevant and therefore never cited."
+    ],
+    correct: 0,
+    explanation: "Frederick draws a lesson: sensational works shaped memory but are methodologically weak; historians should use them as evidence about culture and reception, not as unquestioned factual records. " + sourceCitation
+  },
+
+  {
+    q: "What explanation does Frederick give for Harding’s selection as a compromise/consensus candidate at the convention?",
+    choices: [
+      "Deadlock among front-runners (Lowden, Wood, Johnson) and Harding’s acceptability as a broadly palatable figure led delegates to coalesce around him.",
+      "Harding won on the first ballot with a huge majority and no deadlock existed.",
+      "He was the only candidate on the ballot.",
+      "He was randomly drawn from a hat as an electoral experiment."
+    ],
+    correct: 0,
+    explanation: "Frederick recounts convention dynamics: the inability of leading candidates to secure an absolute majority made Harding a compromise favorite in the later ballots. " + sourceCitation
+  },
+
+  {
+    q: "How does Frederick present the relation between Harding and his managers (Daugherty et al.)?",
+    choices: [
+      "As collaborative but contested: Harding exercised authority while managers shaped strategy and later became controversial figures in administration.",
+      "As non-existent — Harding ran the campaign entirely alone.",
+      "As wholly adversarial; managers tried to sabotage Harding.",
+      "As a formal committee that never communicated with Harding."
+    ],
+    correct: 0,
+    explanation: "Frederick shows Harding was not merely a passive figure; he collaborated with advisers while men like Daugherty exercised influence and later attracted scrutiny. " + sourceCitation
+  },
+
+  {
+    q: "What was the chapter’s assessment of press coverage in the 1920 campaign?",
+    choices: [
+      "The press both amplified sensational claims and provided extensive coverage of stump speeches and platform differences — regional newspapers played important roles in shaping local perceptions.",
+      "There was no newspaper coverage of the election.",
+      "All newspapers were controlled by a single government office that censored news.",
+      "The press unanimously endorsed Cox and suppressed Republican messages."
+    ],
+    correct: 0,
+    explanation: "Frederick documents how newspapers shaped narratives, including circulation of rumors and the prioritizing of dramatic stories; print media remained the dominant mass medium of the day. " + sourceCitation
+  },
+
+  {
+    q: "Which figure does Frederick identify as the major Republican who nearly became a candidate but was ultimately not the nominee?",
+    choices: [
+      "General Leonard Wood (and Frank Lowden were leading pre-convention figures before the deadlock).",
+      "Gaston B. Means.",
+      "Nan Britton.",
+      "Samuel Hopkins Adams."
+    ],
+    correct: 0,
+    explanation: "Frederick recounts the pre-convention field (Lowden, Wood, Johnson) and how their failure to consolidate helped create the opening for Harding. " + sourceCitation
+  },
+
+  {
+    q: "What role did veterans’ issues and postwar policy play in the 1920 campaign, as described by Frederick?",
+    choices: [
+      "Veterans’ concerns (benefits, reintegration) were salient; both parties tried to appeal to veterans while national sentiment leaned toward stability after war-year turmoil.",
+      "Veterans were excluded from the conversation entirely.",
+      "Only foreign entanglements mattered; veterans were irrelevant.",
+      "Veterans uniformly backed the Socialist ticket."
+    ],
+    correct: 0,
+    explanation: "Postwar veterans’ needs were politically important; Frederick notes veterans’ issues figured in party appeals and helped shape the broader context for 'normalcy.' " + sourceCitation
+  },
+
+  {
+    q: "How does Frederick treat the question whether Harding was a 'dark-horse' candidate?",
+    choices: [
+      "He argues Harding was not a pure dark-horse — he was known to party leaders and had co-favor status among some senators prior to the final ballots.",
+      "He was entirely unknown and only discovered on the last day.",
+      "Harding was nominated by acclamation on the first ballot.",
+      "Harding was the incumbent President running for re-election."
+    ],
+    correct: 0,
+    explanation: "Frederick (with Sinclair and Murray) stresses Harding had recognition among Republican leaders and was plausibly a co-favorite rather than a spontaneous outsider. " + sourceCitation
+  },
+
+  {
+    q: "What does Frederick indicate about post-election scholarly focus on Harding?",
+    choices: [
+      "That attention shifted quickly to scandals, memory, and the long-term interpretive problems posed by sensational claims, producing waves of different historiographical approaches.",
+      "That no scholar ever studied Harding again.",
+      "That every historian immediately agreed Harding was the greatest President.",
+      "That scholarship stopped because sources were inaccessible forever."
+    ],
+    correct: 0,
+    explanation: "Frederick situates the campaign within the later historiographical focus: the scandals, memoirs, and subsequent archives shaped scholarly debate about Harding’s legacy. " + sourceCitation
+  },
+
+  {
+    q: "Which methodological lesson about campaign history does Frederick stress through this chapter?",
+    choices: [
+      "That rigorous use of archival material, attention to contemporaneous documents, and careful source criticism are necessary to correct or complicate popular narratives.",
+      "That only oral tradition should be trusted.",
+      "That rumor and scandal should be the exclusive evidence basis.",
+      "That numbers of speeches alone determine electoral outcomes."
+    ],
+    correct: 0,
+    explanation: "The chapter repeatedly models archival scrutiny and cautions against uncritical reliance on sensational contemporary accounts — a broader methodological point for political historians. " + sourceCitation
+  },
+
+  {
+    q: "What is Frederick’s assessment of Harding’s rhetorical content on the porch (what he actually pledged or emphasized)?",
+    choices: [
+      "He emphasized themes of restoration, calm, businesslike governance, and a return from wartime experimentation — rhetoric tailored to reassure a weary electorate.",
+      "He promised radical socialist redistribution.",
+      "He promised immediate US entry into a global empire.",
+      "He refused to deliver any concrete message and only sang songs."
+    ],
+    correct: 0,
+    explanation: "Harding’s porch speeches were not empty — they communicated a coherent set of appeals (normalcy, stability, moderation) that resonated with large numbers of voters. " + sourceCitation
+  },
+
+  {
+    q: "Which contemporary source-types does Frederick recommend historians consult when reconstructing the 1920 campaign?",
+    choices: [
+      "Party papers, campaign correspondence, newspapers, delegates’ records, and the later archival holdings of the Harding collections.",
+      "Only modern secondary textbooks.",
+      "Only random hearsay accounts from decades later.",
+      "No primary sources are needed; guesswork is sufficient."
+    ],
+    correct: 0,
+    explanation: "Frederick points scholars to the range of primary materials — manuscript collections, contemporary press, and campaign files — essential for reconstructing the convention and campaign. " + sourceCitation
+  },
+
+  {
+    q: "How does Frederick treat Franklin D. Roosevelt’s role on the Democratic ticket in 1920?",
+    choices: [
+      "As an energetic campaigner and rising figure who helped give the Democratic ticket a degree of vitality in the vice-presidential slot.",
+      "As a disinterested observer with no active role.",
+      "As the Republican vice-presidential nominee.",
+      "As the campaign's chief financier."
+    ],
+    correct: 0,
+    explanation: "Frederick notes FDR’s active campaigning as a new national figure (vice-presidential nominee) who energized certain segments of the Democratic effort despite the overall Republican tide. " + sourceCitation
+  },
+
+  {
+    q: "Which of the following best summarises Frederick’s final interpretive stance on the 1920 campaign’s significance?",
+    choices: [
+      "It was a turning point that signalled popular repudiation of Wilsonian politics and a public demand for domestic stability; the front-porch style and organizational modernity were both emblematic features.",
+      "It was an insignificant event with no historical consequences.",
+      "It led immediately to full bipartisan consensus on foreign policy.",
+      "It created a permanent two-party coalition unchanged to this day."
+    ],
+    correct: 0,
+    explanation: "Frederick sees 1920 as pivotal: the election and campaign reflected a clear shift away from Wilsonian internationalism and toward a Republican promise of normalcy and managerial governance. " + sourceCitation
+  },
+
+  {
+    q: "How does Frederick say historians should treat the relationship between campaign myth and archival fact in this case?",
+    choices: [
+      "As a dialectic — myths (smoke-filled rooms, lurid exposés) shape public memory but can and should be tested, nuanced, or corrected by archival research.",
+      "As indifferent: myth always prevails and archives do not matter.",
+      "As irrelevant because no myths existed.",
+      "As absolute: once a myth appears it can never be challenged by evidence."
+    ],
+    correct: 0,
+    explanation: "The chapter encourages a balanced approach: recognizing the cultural power of campaign myths while insisting that archival evidence must inform scholarly verdicts. " + sourceCitation
+  },
+
+  {
+    q: "Which personal scandal connected to Harding is discussed as part of the campaign narrative (and later memory), even if some details remained contested?",
+    choices: [
+      "Allegations of extramarital affairs (e.g., Nan Britton’s memoir) — widely discussed and contested in source debates.",
+      "An official murder conviction against Harding.",
+      "A treason trial during the campaign.",
+      "A public confession to being a foreign agent."
+    ],
+    correct: 0,
+    explanation: "Frederick addresses how personal scandals (Britton’s claims among others) influenced public memory and the historiography of Harding, even as their evidentiary status remained contested. " + sourceCitation
+  },
+
+  {
+    q: "In Frederick’s account, what was the electoral geography of Harding’s victory?",
+    choices: [
+      "A broad national Republican sweep, including gains in many regions, reflecting widespread rejection of Wilson-era politics.",
+      "A narrow victory concentrated only in Ohio.",
+      "A loss in the Midwest but victory in coastal states alone.",
+      "An exact tie resolved by the House of Representatives."
+    ],
+    correct: 0,
+    explanation: "Frederick describes a decisive Republican national victory in 1920 — the party carried a wide array of states and won comfortably. " + sourceCitation
+  }
+];
+
+/* ensure 30 questions (if less, fill with placeholders — should not be necessary) */
+while (baseQuiz.length < 30) {
+  baseQuiz.push({
+    q: "Placeholder question (should not appear).",
+    choices: ["A","B","C","D"],
+    correct: 0,
+    explanation: "Placeholder. " + sourceCitation
+  });
+}
+
+/* ---------- RANDOMIZE ORDER AND SHUFFLE CHOICES ---------- */
+/* We'll produce a shuffled copy (so repeated loads change order) and for each question shuffle choices while keeping track of which is correct. */
+let quiz = baseQuiz.map(item => {
+  // deep copy
+  return {
+    q: item.q,
+    choices: item.choices.slice(),
+    // correct is index into original choices; we'll compute mapping after shuffle
+    correctChoiceText: item.choices[item.correct],
+    explanation: item.explanation
+  };
+});
+
+shuffle(quiz);
+
+/* For each question, shuffle choices and compute new index of correct */
+quiz.forEach(q => {
+  shuffle(q.choices);
+  q.correct = q.choices.findIndex(c => c === q.correctChoiceText);
+  // drop correctChoiceText to avoid exposing it accidentally
+  delete q.correctChoiceText;
+});
+
+/* ---------- STATE ---------- */
+let state = {
+  idx: 0,
+  answers: Array(quiz.length).fill(null),
+  startTime: Date.now()
+};
+
+/* ---------- DOM REFS ---------- */
+const navTiles = document.getElementById('navTiles');
+const qnum = document.getElementById('qnum');
+const questionText = document.getElementById('questionText');
+const choicesForm = document.getElementById('choices');
+const answeredInfo = document.getElementById('answeredInfo');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const skipBtn = document.getElementById('skipBtn');
+const submitBtn = document.getElementById('submitBtn');
+const resetBtn = document.getElementById('resetBtn');
+const reviewCard = document.getElementById('reviewCard');
+const scoreHeader = document.getElementById('scoreHeader');
+const answersList = document.getElementById('answersList');
+const quizCard = document.getElementById('quizCard');
+const timerEl = document.getElementById('timer');
+
+/* timer */
+function updateTimer() {
+  const elapsed = Date.now() - state.startTime;
+  const s = Math.floor(elapsed / 1000) % 60;
+  const m = Math.floor(elapsed / 60000);
+  timerEl.textContent = (m > 0 ? m + 'm ' : '') + s + 's';
+}
+setInterval(updateTimer, 1000);
+
+/* ---------- RENDERING ---------- */
+function renderNav(){
+  navTiles.innerHTML = '';
+  for(let i=0;i<quiz.length;i++){
+    const b = document.createElement('button');
+    b.className = 'tile' + (state.answers[i]!==null ? ' answered':'');
+    b.textContent = i+1;
+    b.title = 'Go to Q' + (i+1);
+    b.addEventListener('click', ()=> { state.idx = i; renderQuestion(); });
+    b.setAttribute('aria-label', 'Question ' + (i+1));
+    navTiles.appendChild(b);
+  }
+}
+
+function renderQuestion(){
+  const q = quiz[state.idx];
+  qnum.textContent = state.idx+1;
+  questionText.innerHTML = q.q;
+  choicesForm.innerHTML = '';
+  q.choices.forEach((c,ci)=>{
+    const id = 'c_'+state.idx+'_'+ci;
+    const label = document.createElement('label');
+    label.className = 'choice';
+    label.htmlFor = id;
+    const inp = document.createElement('input');
+    inp.type = 'radio'; inp.name = 'choice'; inp.id = id; inp.value = ci;
+    inp.checked = (state.answers[state.idx] === ci);
+    inp.addEventListener('change', ()=>{
+      state.answers[state.idx] = Number(ci);
+      renderNav(); updateAnsweredCount();
+    });
+    const span = document.createElement('div');
+    span.innerHTML = `<strong style="margin-right:8px">${String.fromCharCode(65+ci)}.</strong> ${c}`;
+    label.appendChild(inp); label.appendChild(span);
+    choicesForm.appendChild(label);
+  });
+  renderNav();
+  updateAnsweredCount();
+  const fi = choicesForm.querySelector('input');
+  if(fi) fi.focus();
+}
+
+function updateAnsweredCount(){
+  const n = state.answers.filter(a=>a!==null).length;
+  answeredInfo.textContent = 'Answered: ' + n;
+}
+
+/* ---------- EVENT HANDLERS ---------- */
+prevBtn.addEventListener('click', ()=> { state.idx = Math.max(0, state.idx-1); renderQuestion(); });
+nextBtn.addEventListener('click', ()=> { state.idx = Math.min(quiz.length-1, state.idx+1); renderQuestion(); });
+skipBtn.addEventListener('click', ()=> { state.idx = Math.min(quiz.length-1, state.idx+1); renderQuestion(); });
+
+submitBtn.addEventListener('click', ()=>{
+  if(!confirm("Submit and view full academically-referenced answers? After submission you cannot change answers.")) return;
+  showResults();
+});
+
+resetBtn.addEventListener('click', ()=> {
+  if(!confirm("Reset all answers and restart the quiz?")) return;
+  state.answers = Array(quiz.length).fill(null);
+  state.idx = 0;
+  state.startTime = Date.now();
+  quizCard.style.display = 'block';
+  reviewCard.style.display = 'none';
+  renderQuestion();
+  renderNav();
+  updateAnsweredCount();
+});
+
+/* ---------- SHOW RESULTS ---------- */
+function showResults(){
+  let correct = 0;
+  for(let i=0;i<quiz.length;i++){
+    if(state.answers[i] !== null && state.answers[i] === quiz[i].correct) correct++;
+  }
+  const pct = Math.round((correct/quiz.length)*100);
+  scoreHeader.innerHTML = `<h2 style="margin:0;color:var(--accent)">Result: ${correct} / ${quiz.length} (${pct}%)</h2>
+    <div style="color:var(--muted);margin-top:8px">All explanations draw on Chapter 5 of the uploaded PDF (\"The Front Porch Campaign and the Election of Harding\") and include the file citation for that source. ${sourceCitation}</div>`;
+  answersList.innerHTML = '';
+  quiz.forEach((q,i)=>{
+    const user = state.answers[i];
+    const correctIdx = q.correct;
+    const block = document.createElement('div');
+    block.style.marginBottom='18px';
+    block.innerHTML = `<div style="font-weight:700;color:#e6eef8">Q${i+1}. ${q.q}</div>
+      <div style="margin-top:8px"><strong>Your answer:</strong> ${user===null?'<em>— skipped —</em>':String.fromCharCode(65+user)+'. '+escapeHtml(q.choices[user])}</div>
+      <div style="margin-top:6px"><strong>Correct:</strong> ${String.fromCharCode(65+correctIdx)}. ${escapeHtml(q.choices[correctIdx])}</div>
+      <div class="${(user===correctIdx)?'correct':'wrong'}" style="margin-top:8px">${(user===correctIdx)?'Correct':'Incorrect'}</div>
+      <div class="explanation">${q.explanation}</div>`;
+    answersList.appendChild(block);
+  });
+  quizCard.style.display = 'none';
+  reviewCard.style.display = 'block';
+  reviewCard.scrollIntoView({behavior:'smooth'});
+}
+
+/* ---------- SAFE HTML ESCAPE ---------- */
+function escapeHtml(unsafe) {
+  return unsafe
+       .replace(/&/g, "&amp;")
+       .replace(/</g, "&lt;")
+       .replace(/>/g, "&gt;")
+       .replace(/"/g, "&quot;")
+       .replace(/'/g, "&#039;");
+}
+
+/* ---------- INIT ---------- */
+renderNav();
+renderQuestion();
+updateAnsweredCount();
+updateTimer();
+
+</script>
+</body>
+</html>

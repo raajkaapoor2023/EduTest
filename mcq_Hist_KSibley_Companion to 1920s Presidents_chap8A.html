@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History B.A. Final Year Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+        .options li {
+            background: #ecf0f1;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .options li:hover {
+            background: #bdc3c7;
+        }
+        button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #219653;
+        }
+        .results {
+            display: none;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>History B.A. Final Year Test</h1>
+        <form id="quizForm">
+            <div id="quiz"></div>
+            <button type="button" id="submitBtn">Submit</button>
+        </form>
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What were the main motivations behind the nativism movement in the 1920s?",
+                options: [
+                    "Economic competition and social anxiety",
+                    "Cultural preservation and racial superiority",
+                    "Religious fundamentalism",
+                    "Political power struggles"
+                ],
+                answer: "Economic competition and social anxiety"
+            },
+            {
+                question: "Which legislation exemplified the nativist sentiment of the 1920s?",
+                options: [
+                    "Immigration Act of 1924",
+                    "Volstead Act",
+                    "Social Security Act",
+                    "National Origins Act"
+                ],
+                answer: "Immigration Act of 1924"
+            },
+            {
+                question: "What role did the Ku Klux Klan play in the nativist movements of the 1920s?",
+                options: [
+                    "They opposed nativist policies",
+                    "They promoted anti-immigrant sentiment",
+                    "They were indifferent to immigration issues",
+                    "They focused solely on African American oppression"
+                ],
+                answer: "They promoted anti-immigrant sentiment"
+            },
+            {
+                question: "How did economic factors contribute to the rise of nativism in the 1920s?",
+                options: [
+                    "Increased job opportunities for immigrants",
+                    "Heightened unemployment among native workers",
+                    "Economic prosperity led to more tolerance",
+                    "Immigrants were seen as economic saviors"
+                ],
+                answer: "Heightened unemployment among native workers"
+            },
+            {
+                question: "Which group was primarily targeted by nativist sentiments in the 1920s?",
+                options: [
+                    "Eastern and Southern Europeans",
+                    "Western Europeans",
+                    "African Americans",
+                    "Asian immigrants"
+                ],
+                answer: "Eastern and Southern Europeans"
+            },
+            {
+                question: "What impact did World War I have on American attitudes toward immigrants?",
+                options: [
+                    "Increased acceptance of immigrants",
+                    "Diminished fears of foreign influence",
+                    "Heightened suspicion and hostility",
+                    "Had no significant impact"
+                ],
+                answer: "Heightened suspicion and hostility"
+            },
+            {
+                question: "What was the 'Red Scare' and how did it relate to nativism?",
+                options: [
+                    "A period of increased labor rights",
+                    "Fear of communism leading to anti-immigrant sentiment",
+                    "A cultural renaissance",
+                    "None of the above"
+                ],
+                answer: "Fear of communism leading to anti-immigrant sentiment"
+            },
+            {
+                question: "How did the media contribute to the nativist sentiment in the 1920s?",
+                options: [
+                    "By promoting immigrant success stories",
+                    "By sensationalizing crime attributed to immigrants",
+                    "By ignoring immigration issues",
+                    "By advocating for immigrant rights"
+                ],
+                answer: "By sensationalizing crime attributed to immigrants"
+            },
+            {
+                question: "What was the significance of the 'Americanization' movement during this period?",
+                options: [
+                    "It aimed to assimilate immigrants into American culture",
+                    "It opposed immigration",
+                    "It promoted multiculturalism",
+                    "It had no real impact"
+                ],
+                answer: "It aimed to assimilate immigrants into American culture"
+            },
+            {
+                question: "Which of the following best describes the impact of nativism on American society?",
+                options: [
+                    "Increased cultural diversity",
+                    "Greater social cohesion",
+                    "Deepened societal divisions",
+                    "Strengthened labor movements"
+                ],
+                answer: "Deepened societal divisions"
+            },
+            {
+                question: "What was one of the major outcomes of the Immigration Act of 1924?",
+                options: [
+                    "Increased immigration from Southern Europe",
+                    "A quota system favoring Northern Europeans",
+                    "Elimination of all immigration",
+                    "Complete open borders"
+                ],
+                answer: "A quota system favoring Northern Europeans"
+            },
+            {
+                question: "How did nativism intersect with racial theories in the 1920s?",
+                options: [
+                    "It rejected racial theories",
+                    "It promoted scientific racism",
+                    "It united all racial groups",
+                    "It had no connection to racial theories"
+                ],
+                answer: "It promoted scientific racism"
+            },
+            {
+                question: "Which organization was formed in the 1920s to promote nativist ideals?",
+                options: [
+                    "American Civil Liberties Union",
+                    "Anti-Defamation League",
+                    "Ku Klux Klan",
+                    "NAACP"
+                ],
+                answer: "Ku Klux Klan"
+            },
+            {
+                question: "What role did labor organizations play in the nativism of the 1920s?",
+                options: [
+                    "They were strong supporters of immigration",
+                    "They opposed nativism",
+                    "They often aligned with nativist sentiments",
+                    "They were indifferent"
+                ],
+                answer: "They often aligned with nativist sentiments"
+            },
+            {
+                question: "How did the Great Migration contribute to nativist attitudes?",
+                options: [
+                    "It reduced competition for jobs",
+                    "It increased tensions between Black and white communities",
+                    "It had no effect on nativism",
+                    "It united various racial groups"
+                ],
+                answer: "It increased tensions between Black and white communities"
+            },
+            {
+                question: "What was the main argument of the proponents of the Immigration Act of 1924?",
+                options: [
+                    "To promote diversity",
+                    "To protect American jobs and culture",
+                    "To expand immigration",
+                    "To eliminate racial discrimination"
+                ],
+                answer: "To protect American jobs and culture"
+            },
+            {
+                question: "How did the concept of 'Americanism' relate to nativist policies?",
+                options: [
+                    "It promoted inclusivity",
+                    "It emphasized cultural conformity",
+                    "It had no relation",
+                    "It encouraged multiculturalism"
+                ],
+                answer: "It emphasized cultural conformity"
+            },
+            {
+                question: "What was the public reaction to the rise of nativism?",
+                options: [
+                    "Widespread support across all demographics",
+                    "Indifference from most Americans",
+                    "Divided opinions, with some supporting and others opposing",
+                    "Complete rejection of nativist sentiments"
+                ],
+                answer: "Divided opinions, with some supporting and others opposing"
+            },
+            {
+                question: "What was a significant cultural product of the nativism movement?",
+                options: [
+                    "Jazz music",
+                    "Hollywood films",
+                    "Anti-immigrant literature",
+                    "Civil rights movements"
+                ],
+                answer: "Anti-immigrant literature"
+            },
+            {
+                question: "What was the legacy of nativism in the 1920s for future immigration policy?",
+                options: [
+                    "It led to open immigration policies",
+                    "It established a precedent for future restrictive laws",
+                    "It had no lasting impact",
+                    "It promoted diversity in immigration"
+                ],
+                answer: "It established a precedent for future restrictive laws"
+            },
+            {
+                question: "How did the Supreme Court impact nativist policies in the 1920s?",
+                options: [
+                    "It supported all immigration restrictions",
+                    "It ruled against nativist policies",
+                    "It was indifferent to immigration issues",
+                    "It promoted immigration rights"
+                ],
+                answer: "It supported all immigration restrictions"
+            },
+            {
+                question: "What effect did nativism have on the social fabric of American cities?",
+                options: [
+                    "Increased integration",
+                    "Heightened social tensions",
+                    "Unified communities",
+                    "Had no effect"
+                ],
+                answer: "Heightened social tensions"
+            },
+            {
+                question: "What was the primary motivation behind anti-immigrant propaganda in the 1920s?",
+                options: [
+                    "To promote social cohesion",
+                    "To incite fear and xenophobia",
+                    "To celebrate diversity",
+                    "To encourage immigration"
+                ],
+                answer: "To incite fear and xenophobia"
+            },
+            {
+                question: "What was an effect of nativism on American politics during the 1920s?",
+                options: [
+                    "Increased bipartisan cooperation",
+                    "Strengthened the Democratic Party",
+                    "Marginalization of immigrant voices",
+                    "Greater support for civil rights"
+                ],
+                answer: "Marginalization of immigrant voices"
+            },
+            {
+                question: "How did nativist sentiments manifest in local politics?",
+                options: [
+                    "Through anti-immigrant laws",
+                    "By promoting immigrant rights",
+                    "Through increased representation of immigrants",
+                    "By ignoring immigration matters"
+                ],
+                answer: "Through anti-immigrant laws"
+            },
+            {
+                question: "What does the phrase 'No Immigrants or Radicals Need Apply' signify?",
+                options: [
+                    "A welcoming attitude toward immigrants",
+                    "Exclusionary practices in employment",
+                    "A commitment to diversity",
+                    "None of the above"
+                ],
+                answer: "Exclusionary practices in employment"
+            },
+            {
+                question: "What was a key factor in the opposition to immigration during the 1920s?",
+                options: [
+                    "Economic prosperity",
+                    "Fear of radicalism",
+                    "Desire for cultural enrichment",
+                    "Support for globalism"
+                ],
+                answer: "Fear of radicalism"
+            }
+        ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function renderQuiz() {
+            const quizContainer = document.getElementById("quiz");
+            const shuffledQuestions = shuffle(questions);
+            shuffledQuestions.forEach((q, index) => {
+                const options = shuffle(q.options);
+                const optionsHtml = options.map(option => `
+                    <li>
+                        <label>
+                            <input type="radio" name="question${index}" value="${option}">
+                            ${option}
+                        </label>
+                    </li>
+                `).join('');
+                quizContainer.innerHTML += `
+                    <div class="question">
+                        <h3>${q.question}</h3>
+                        <ul class="options">${optionsHtml}</ul>
+                    </div>
+                `;
+            });
+        }
+
+        document.getElementById("submitBtn").addEventListener("click", function() {
+            let score = 0;
+            const resultsContainer = document.getElementById("results");
+            questions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="question${index}"]:checked`);
+                if (selected && selected.value === q.answer) {
+                    score++;
+                }
+            });
+            resultsContainer.style.display = 'block';
+            resultsContainer.innerHTML = `<h2>Your Score: ${score}/${questions.length}</h2>`;
+            resultsContainer.innerHTML += `<h3>Detailed Answers:</h3>`;
+            questions.forEach(q => {
+                resultsContainer.innerHTML += `<p><strong>${q.question}</strong><br>Answer: ${q.answer}.</p>`;
+            });
+        });
+
+        renderQuiz();
+    </script>
+</body>
+</html>

@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Oxbridge-Level Quiz — Introduction & Chapter 1 (The Wilson Legacy)</title>
+<style>
+  :root{
+    --bg:#0f1724;
+    --card:#0b1220;
+    --accent:#60a5fa;
+    --accent2:#7c3aed;
+    --muted:#94a3b8;
+    --good:#10b981;
+    --bad:#ef4444;
+    --glass: rgba(255,255,255,0.04);
+    --card-radius:14px;
+    --maxw:1100px;
+  }
+  html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+  body{
+    background: radial-gradient(1000px 500px at 10% 10%, rgba(124,58,237,0.12), transparent),
+                radial-gradient(800px 400px at 90% 90%, rgba(96,165,250,0.08), transparent),
+                linear-gradient(180deg,var(--bg), #071022 80%);
+    color:#e6eef8;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:28px;
+  }
+  .wrap{width:100%;max-width:var(--maxw);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:20px;box-shadow:0 10px 30px rgba(2,6,23,0.7);overflow:hidden;display:grid;grid-template-columns:320px 1fr;min-height:640px;}
+  aside{
+    background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+    padding:20px;
+    border-right:1px solid rgba(255,255,255,0.03);
+  }
+  header h1{font-size:20px;margin:0 0 6px 0;color:var(--accent);}
+  header p{margin:0;font-size:13px;color:var(--muted)}
+  .meta{margin-top:14px;font-size:13px;color:var(--muted)}
+  .nav-nums{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px;}
+  .qnum{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:var(--glass);cursor:pointer;border:1px solid rgba(255,255,255,0.02);color:var(--muted);font-weight:600}
+  .qnum.answered{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#021029}
+  .qnum.current{outline:2px solid rgba(124,58,237,0.28);box-shadow:0 4px 18px rgba(124,58,237,0.12)}
+  main{padding:28px;}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:20px;border-radius:12px;min-height:420px;border:1px solid rgba(255,255,255,0.03)}
+  .question{font-size:18px;margin-bottom:14px}
+  .choices{display:flex;flex-direction:column;gap:10px}
+  .choice{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);cursor:pointer;display:flex;gap:12px;align-items:flex-start}
+  .choice input{margin-top:3px}
+  .choice:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+  .controls{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
+  .btn{background:var(--accent);color:#021029;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+  .btn.secondary{background:transparent;color:var(--accent);border:1px solid rgba(96,165,250,0.18)}
+  .btn.ghost{background:transparent;border:1px dashed rgba(255,255,255,0.03);color:var(--muted)}
+  .progress{height:8px;background:rgba(255,255,255,0.03);border-radius:999px;overflow:hidden;margin-top:12px}
+  .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+  .footer-small{font-size:13px;color:var(--muted);margin-top:10px}
+  .results{padding:18px;margin-top:14px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border:1px solid rgba(255,255,255,0.03)}
+  .explanation{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));padding:12px;border-radius:10px;border-left:4px solid rgba(255,255,255,0.03);color:var(--muted);font-size:14px;line-height:1.45}
+  .correct{color:var(--good);font-weight:700}
+  .wrong{color:var(--bad);font-weight:700}
+  .review-block{margin-top:16px}
+  .q-title{font-weight:700;margin-bottom:6px;color:#f1f5f9}
+  .citation{display:block;margin-top:8px;font-size:13px;color:#cbd5e1}
+  @media (max-width:980px){
+    .wrap{grid-template-columns:1fr;min-height:unset}
+    aside{order:2;border-right:none;border-top:1px solid rgba(255,255,255,0.03)}
+  }
+</style>
+</head>
+<body>
+<div class="wrap" role="application" aria-labelledby="title">
+  <aside>
+    <header>
+      <h1 id="title">Wilson Legacy — Final BA Test</h1>
+      <p>30 MCQs — Introduction + Chapter 1 (Nichols). Colourful, skippable, referenced answers.</p>
+    </header>
+
+    <div class="meta">
+      <div><strong>Time:</strong> untimed (optional)</div>
+      <div style="margin-top:8px"><strong>Source:</strong> Sibley, *A Companion…* (2014) — Introduction & Chapter 1. :contentReference[oaicite:5]{index=5} :contentReference[oaicite:6]{index=6}</div>
+    </div>
+
+    <div class="nav-nums" id="navNums" aria-hidden="false"></div>
+
+    <div class="footer-small">Use the numbered tiles to skip and return. Click "Submit" when finished to see full academically-referenced answers.</div>
+  </aside>
+
+  <main>
+    <div class="card" id="quizCard">
+      <div id="qHeader" style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-size:13px;color:var(--muted)">Question <span id="currentIdx">1</span> of 30</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:6px" id="themeHint">Source: Nichols, "The Wilson Legacy"</div>
+        </div>
+        <div style="text-align:right">
+          <div class="progress" aria-hidden="true" style="width:220px"><i id="progressBar" style="width:0%"></i></div>
+          <div style="font-size:12px;color:var(--muted);margin-top:8px" id="answeredCount">Answered: 0</div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px">
+        <div class="question" id="questionText">Loading…</div>
+        <form id="choicesForm" class="choices" aria-labelledby="questionText"></form>
+      </div>
+
+      <div class="controls">
+        <div style="display:flex;gap:8px">
+          <button class="btn secondary" id="prevBtn" type="button">&larr; Prev</button>
+          <button class="btn secondary" id="nextBtn" type="button">Next &rarr;</button>
+          <button class="btn ghost" id="skipBtn" type="button">Skip (move on)</button>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button class="btn" id="submitBtn" type="button">Submit / Finish</button>
+          <button class="btn secondary" id="resetBtn" type="button">Reset</button>
+        </div>
+      </div>
+
+      <div id="postArea"></div>
+    </div>
+
+    <div id="reviewCard" class="card" style="display:none;margin-top:16px">
+      <div id="scoreHeader"></div>
+      <div id="answersArea" class="review-block"></div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+/*
+  Quiz data: 30 MCQs based on the uploaded Sibley Companion (Introduction + Chapter 1).
+  Each item: q, choices[], correct (index), explanation (HTML string with citation markers).
+  Citations are the file_search markers from the uploaded PDF (e.g., :contentReference[oaicite:7]{index=7}).
+*/
+
+const quiz = [
+  {
+    q: "Christopher McKnight Nichols defines 'Wilsonianism' primarily as:",
+    choices: [
+      "A doctrine of strict isolation and non-intervention in European affairs.",
+      "An idealistic liberal internationalism emphasizing self-determination, collective security, and economic interconnection.",
+      "A domestic social program favoring decentralized governance and state autonomy.",
+      "A laissez-faire economic creed opposing federal regulation of finance and trade."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols, summarizing the chapter, clarifies that Wilsonianism denotes an idealistic, liberal internationalist posture — rooted in Wilson’s Fourteen Points, the League project, and an emphasis on self-determination and collective security rather than isolation. :contentReference[oaicite:8]{index=8}
+    `
+  },
+
+  {
+    q: "Which two major domestic institutions formed under Wilson that Nichols highlights as foundational to later federal policy?",
+    choices: [
+      "The Civilian Conservation Corps and Social Security.",
+      "The Federal Reserve System and the federal income tax (16th Amendment implementation).",
+      "The TVA and the Securities and Exchange Commission.",
+      "The Interstate Commerce Commission and the War Industries Board."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols highlights Wilson’s domestic legislative imprint — notably the creation of a modern Federal Reserve and the establishment of a federal income tax framework — as structural achievements that shaped later federal governance. :contentReference[oaicite:9]{index=9}
+    `
+  },
+
+  {
+    q: "The difference between Wilson's 'New Freedom' and Roosevelt’s 'New Nationalism' chiefly concerned:",
+    choices: [
+      "How to prosecute foreign wars and manage the League of Nations.",
+      "The role of the federal government in regulating and/or managing corporate consolidation.",
+      "Whether to grant women suffrage before or after 1920.",
+      "Tax rates on agricultural income."
+    ],
+    correct: 1,
+    explanation: `
+      The chapter emphasizes that Wilson’s 'New Freedom' and Roosevelt’s 'New Nationalism' diverged most sharply over corporate power: Wilson wanted to restore competition and break trusts; Roosevelt accepted a larger, regulatory federal role to manage big business. :contentReference[oaicite:10]{index=10}
+    `
+  },
+
+  {
+    q: "Which interpretive 'layer' of Wilson scholarship concerns debates about whether Wilson’s reforms were genuinely 'progressive' or were limited/corporatist in scope?",
+    choices: [
+      "The 'constitutional' layer.",
+      "The 'progressivism' layer (how progressive were the reforms?).",
+      "The 'economic determinism' layer.",
+      "The 'imperial nostalgia' layer."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols organizes Wilson historiography into several layers; the first explicitly interrogates how 'progressive' Wilson and his reforms truly were, balancing praise (Blum, Link) against critiques that emphasize limits or corporatist tendencies. :contentReference[oaicite:11]{index=11}
+    `
+  },
+
+  {
+    q: "According to Nichols, what role did Wilson's health play in his presidency, especially during the League ratification fight?",
+    choices: [
+      "No documented role; Wilson was in robust health throughout his term.",
+      "His deteriorating health (strokes/arteriosclerosis) contributed to political intransigence and affected the League fight's outcome.",
+      "His health problems enhanced his flexibility and openness to Senate compromise.",
+      "Health issues only surfaced after he left office and had no impact on policy."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols discusses research showing Wilson suffered progressive strokes/arteriosclerosis; these medical crises complicated his judgment and intractability during the crucial League of Nations ratification campaign. Scholars like Weinstein and Berg are cited for this view. :contentReference[oaicite:12]{index=12}
+    `
+  },
+
+  {
+    q: "Which historian’s phrase does Nichols cite to argue that the Wilsonian impulse persisted into later decades as an influential paradigm ('Wilsonian century')?",
+    choices: [
+      "Richard Hofstadter",
+      "Frank Ninkovich",
+      "Arthur Schlesinger Jr.",
+      "E.H. Carr"
+    ],
+    correct: 1,
+    explanation: `
+      Nichols cites Frank Ninkovich’s argument about a 'Wilsonian century' to show how Wilsonian ideas — particularly liberal internationalism — persisted as a governing paradigm well beyond 1921. :contentReference[oaicite:13]{index=13}
+    `
+  },
+
+  {
+    q: "Which critical view does E.H. Carr represent in Nichols’ chapter, regarding Wilson’s League project?",
+    choices: [
+      "That the League was flawless and should have been immediately universalized.",
+      "That Wilsonian legalism and aspiration overlooked power realities and therefore was naive.",
+      "That the League was mainly an American imperial tool to dominate Europe.",
+      "That Wilson simply wanted a peacetime jobs program disguised as diplomacy."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols invokes E.H. Carr’s realist critique: Wilson’s aspiration — a legalistic emphasis on norms and institutions — failed to accommodate power politics, rendering the League inadequate for the harder realities of interwar diplomacy. :contentReference[oaicite:14]{index=14}
+    `
+  },
+
+  {
+    q: "Which archival project substantially improved scholarship on Wilson by opening his papers to researchers and enabling fine-grained analysis?",
+    choices: [
+      "The Roosevelt Papers Project",
+      "The Papers of Woodrow Wilson (Arthur Link)",
+      "The Carnegie Endowment Diplomatic Papers",
+      "The Taft Papers Archive"
+    ],
+    correct: 1,
+    explanation: `
+      Nichols emphasizes Arthur Link’s multi-volume 'Papers of Woodrow Wilson' as transformative — enabling better analysis of Wilson’s decisions, health, and the Paris negotiations. :contentReference[oaicite:15]{index=15}
+    `
+  },
+
+  {
+    q: "Nichols suggests the reception of Wilson's legacy in the 1920s Republican administrations (Harding, Coolidge, Hoover) was best described as:",
+    choices: [
+      "Complete ideological continuity — the Republicans fully adopted Wilsonian foreign policy.",
+      "Rhetorical repudiation of Wilson in many respects, while retaining certain administrative/regulatory structures.",
+      "Total erasure of all Wilsonian domestic reforms and international commitments.",
+      "A secret bipartisan effort to immediately join the League of Nations."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols argues Republicans often rhetorically rejected Wilsonianism ('normalcy' rhetoric), yet many Wilsonian administrative achievements (tax machinery, regulatory institutions) persisted — the rejection was not absolute in practice. :contentReference[oaicite:16]{index=16}
+    `
+  },
+
+  {
+    q: "Which of the following best captures the 'moralism/idealist' historiographical layer Nichols describes?",
+    choices: [
+      "A focus on judicial decisions only.",
+      "Concern with Wilson’s religiously inflected rhetoric and the moralism underpinning his internationalism.",
+      "An economic analysis of tariff schedules.",
+      "A purely biographical interest in Wilson’s childhood."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols identifies a strand of scholarship that locates Wilsonian idealism in Wilson’s moral and religious language—scholars debate whether his 'redemptive' rhetoric was a virtue or a political flaw. :contentReference[oaicite:17]{index=17}
+    `
+  },
+
+  {
+    q: "When Nichols discusses 'legal fetishism' in relation to Wilson, he is referring to:",
+    choices: [
+      "Wilson's personal obsession with obscure statutory drafting rules.",
+      "A tendency in US foreign policy to over-rely on legal instruments and pronouncements (eg. League, Stimson Doctrine) as solutions to political conflict.",
+      "An academic debate about the constitutionality of wartime measures.",
+      "A preference for civil law systems in US legal reform."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols recounts critiques (Carr among them) that Wilsonian diplomacy promoted a faith in legalistic, declaratory solutions to complex power-politics problems — what he and others call a 'legal fetishism.' :contentReference[oaicite:18]{index=18}
+    `
+  },
+
+  {
+    q: "Which 1918 policy statement is closely associated with Wilson’s program for postwar order and is central to Nichols’ discussion?",
+    choices: [
+      "The Monroe Doctrine",
+      "The Fourteen Points",
+      "The Truman Doctrine",
+      "The Kellogg-Briand Pact"
+    ],
+    correct: 1,
+    explanation: `
+      The Fourteen Points (January 1918) are central to Nichols’ account: they encapsulated Wilson’s vision of a 'peace without victory,' self-determination, and a rules-based international order which fed into the League idea. :contentReference[oaicite:19]{index=19}
+    `
+  },
+
+  {
+    q: "A subtle interpretive point Nichols stresses about Wilson and progressive politics is that:",
+    choices: [
+      "All progressive reform during 1913–1916 originated exclusively in the White House.",
+      "Much legislative innovation pre-dated Wilson or emerged from Congress/state actors, complicating attributions of 'authorship' to the President alone.",
+      "Wilson invented progressivism single-handedly.",
+      "Progressivism disappeared entirely after 1916."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols acknowledges historiographical work showing that many reforms associated with Wilson had roots in earlier progressive efforts or were pushed by Congress/ states — complicating simplistic 'presidential credit' narratives. :contentReference[oaicite:20]{index=20}
+    `
+  },
+
+  {
+    q: "Which phrase best captures Nichols’ view of how Wilson functions in the politics of the 1920s?",
+    choices: [
+      "Wilson as forgotten footnote — entirely irrelevant to subsequent policy.",
+      "Wilson as a persistent rhetorical and conceptual touchstone; a foil and a model in different registers.",
+      "Wilson as a European monarchist.",
+      "Wilson as an agrarian populist opposed to modernization."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols frames Wilson as simultaneously a foil for the Republican 'normalcy' rhetoric and an enduring conceptual ancestor whose ideas continued to inform debates about federal power and international engagement. :contentReference[oaicite:21]{index=21}
+    `
+  },
+
+  {
+    q: "Which of the following is NOT one of the three historiographical layers Nichols lays out (progressivism; moralism; health/psychology)?",
+    choices: [
+      "Progressivism — was Wilson authentically progressive?",
+      "Moralism/Idealism — how moral and ideological was his internationalism?",
+      "Health/Psychology — did strokes/personality shape outcomes?",
+      "Economic determinism — an explicit Marxist materialist critique (as Nichols frames it)."
+    ],
+    correct: 3,
+    explanation: `
+      Nichols centers three interpretive layers (the progressivism question; the moralist/idealist reading; and the role of Wilson’s health/personality). A pure economic-determinist Marxist critique is not presented as one of his central three layers. :contentReference[oaicite:22]{index=22}
+    `
+  },
+
+  {
+    q: "Which piece of evidence does Nichols (and cited scholars) use to argue that Wilson’s health was politically relevant?",
+    choices: [
+      "The sudden collapse of the US economy in 1917.",
+      "Medical evidence and archival material documenting strokes and arteriosclerosis during 1919–1920 that correlate with political stubbornness.",
+      "Wilson’s immediate resignation in 1918, which left office vacant.",
+      "His decision to move the capital to Richmond."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols cites archival and medical scholarship (Weinstein, Berg, Link) that trace strokes/arteriosclerosis during 1919–1920 and link these to episodes of political intransigence such as his refusal to accept League reservations. :contentReference[oaicite:23]{index=23}
+    `
+  },
+
+  {
+    q: "Which later US administration does Nichols (via cited scholars) compare to Wilson in rhetorical ambition (not necessarily method), noting continuities in rhetoric about American global purpose?",
+    choices: [
+      "The Nixon administration",
+      "The George W. Bush administration",
+      "The Eisenhower administration",
+      "The Truman administration"
+    ],
+    correct: 1,
+    explanation: `
+      Nichols notes scholars (eg. Andrew Bacevich) who discern rhetorical continuities between Wilsonian claims of American international responsibility and later administrations such as George W. Bush — especially in terms of claims about US global indispensability. :contentReference[oaicite:24]{index=24}
+    `
+  },
+
+  {
+    q: "Which of the following best describes Nichols’ assessment of how historians’ views of Wilson have changed over the twentieth century?",
+    choices: [
+      "They became uniformly negative from the 1920s onward.",
+      "They have oscillated — early celebratory accounts, mid-century critiques, then later nuanced reassessments that recover complexity.",
+      "Historians have never revisited Wilson since 1924.",
+      "Consensus emerged immediately that Wilson was the best president of the century."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols traces shifting historiography: early praise, then criticism (mid-century), followed by later nuanced, archivally informed reassessments that complicate simple caricatures. :contentReference[oaicite:25]{index=25}
+    `
+  },
+
+  {
+    q: "Which of these claims about Wilson is supported by Nichols’ chapter?",
+    choices: [
+      "Wilson wholly abolished executive power in favor of Congress.",
+      "Wilson helped institutionalize modern federal capacities (taxation, central banking) that shaped twentieth-century governance.",
+      "Wilson advocated a permanent US military occupation of Europe.",
+      "Wilson was indifferent to international law and favored only economic isolation."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols argues Wilson’s presidency institutionalized key federal capacities (income tax machinery, Federal Reserve) that were consequential for later governance — a core claim about his domestic legacy. :contentReference[oaicite:26]{index=26}
+    `
+  },
+
+  {
+    q: "Nichols uses the example of the 1912 election to show:",
+    choices: [
+      "How Roosevelt’s third-party run (Progressive Party) helped split Republican votes and aided Wilson’s victory.",
+      "That Wilson lost the 1912 election overwhelmingly.",
+      "That Congress refused Wilson any legislative wins in 1913.",
+      "That the 1912 election was solely about tariff policy."
+    ],
+    correct: 0,
+    explanation: `
+      Nichols notes the 1912 split — Roosevelt’s Progressive insurgency split Republican support, which advantaged Wilson and allowed Democrats to take the White House. :contentReference[oaicite:27]{index=27}
+    `
+  },
+
+  {
+    q: "What is Nichols’ stance on whether the 1920s were 'anti-progressive' entirely?",
+    choices: [
+      "He insists progressivism vanished completely after World War I.",
+      "He suggests progressivism did not simply disappear; elements persisted in policy and administrative growth.",
+      "He claims the 1920s were an unbroken socialist decade.",
+      "He argues the 1920s are irrelevant to the study of progressivism."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols — citing scholars like Dumenil and Skowronek — warns against the notion that progressivism died in the 1920s: certain administrative and regulatory patterns and reforms persisted. :contentReference[oaicite:28]{index=28}
+    `
+  },
+
+  {
+    q: "Which methodological caution does Nichols identify when applying present-day categories to Wilson's ideas?",
+    choices: [
+      "Presentist misapplication — extracting modern meanings from Wilson without regard to his historical context.",
+      "That we should only use psychoanalysis as the sole tool for interpretation.",
+      "That only legal historians should read Wilson.",
+      "That Wilson wrote exclusively in Latin, complicating translation."
+    ],
+    correct: 0,
+    explanation: `
+      Nichols warns about presentist readings that reposition Wilson’s ideas to fit contemporary categories; archival context is crucial to accurate interpretation. :contentReference[oaicite:29]{index=29}
+    `
+  },
+
+  {
+    q: "Which evidence does Nichols (and the Introduction) point to in order to claim the Republican era preserved some Wilsonian administrative achievements?",
+    choices: [
+      "Complete repeal of the Federal Reserve.",
+      "Continuation of federal revenue mechanisms and regulatory institutions that Wilson helped consolidate.",
+      "An immediate return to pre-1913 tax codes.",
+      "The immediate admission of the US into the League of Nations under Harding."
+    ],
+    correct: 1,
+    explanation: `
+      The volume argues that despite rhetoric against Wilson, many institutional features (federal tax apparatus, regulatory elements) remained in place and continued to shape policy in the 1920s. :contentReference[oaicite:30]{index=30}
+    `
+  },
+
+  {
+    q: "Which of the following best expresses Nichols’ reading of the interplay between Wilson’s internationalism and domestic politics?",
+    choices: [
+      "They were wholly separate and had no mutual effect.",
+      "Wilsonian domestic reforms and international ambitions were intertwined; his domestic administrative expansion shaped his international program and vice versa.",
+      "His foreign policy only mattered to European scholars.",
+      "He had no domestic agenda at all."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols stresses the integration of domestic and international strands in Wilson’s program: domestic administrative reform reinforced his credibility and capacity to pursue an internationalist agenda. :contentReference[oaicite:31]{index=31}
+    `
+  },
+
+  {
+    q: "Which scholarly approach does Nichols highlight as useful for rethinking the Republican era (1921–1933)?",
+    choices: [
+      "Ignoring social and cultural history entirely.",
+      "Combining political history with social, cultural, and economic lenses to provide a multi-textured account.",
+      "Focusing only on foreign policy and disregarding domestic affairs.",
+      "Using only electoral statistics and nothing else."
+    ],
+    correct: 1,
+    explanation: `
+      The Companion (and Nichols) argues for an interdisciplinary historiography — political, cultural, social, and economic approaches — to recover the complexity of the 1920s. :contentReference[oaicite:32]{index=32}
+    `
+  },
+
+  {
+    q: "How does Nichols treat the charge that Wilson undermined civil liberties during WWI?",
+    choices: [
+      "He denies any such charge existed.",
+      "He acknowledges the charge and places it in the larger assessment of tensions between wartime exigency and liberal norms.",
+      "He claims Wilson expanded civil liberties dramatically during the war.",
+      "He argues civil liberties were solely a 1930s issue."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols recognizes critiques of Wilson’s wartime suppression of dissent and frames them within debates about the moral/idealistic presidency versus wartime repression. This forms part of the moralism/idealist historiography. :contentReference[oaicite:33]{index=33}
+    `
+  },
+
+  {
+    q: "Which scholar(s) does Nichols mention as instrumental in reviving interest in the Republican era and prompting reassessments of Harding and Hoover?",
+    choices: [
+      "William A. Williams and later New Left historians among others who prompted reconsideration.",
+      "No scholar ever reassessed Harding or Hoover.",
+      "Only foreign historians showed interest.",
+      "Contemporary journalists were the only ones."
+    ],
+    correct: 0,
+    explanation: `
+      Nichols notes that New Left historians (eg. William A. Williams) and later scholars revised earlier negative portraits and pushed for more nuanced reassessments of Republican-era presidents. :contentReference[oaicite:34]{index=34}
+    `
+  },
+
+  {
+    q: "Which of the following best characterizes Nichols’ concluding judgment on Wilsonian legacy?",
+    choices: [
+      "Irrelevant both domestically and internationally.",
+      "Enduring and contested: Wilson left structural institutional changes and an internationalist vocabulary that persisted and provoked debate.",
+      "Universally admired and beyond critique.",
+      "A purely local New Jersey political phenomenon."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols concludes Wilson’s legacy is enduring and contested — institutional legacies and an internationalist rhetorical framework persisted, generating ongoing historiographical debate. :contentReference[oaicite:35]{index=35}
+    `
+  },
+
+  {
+    q: "According to Nichols, which of the following best explains why Wilson became a 'foil' in the 1920s?",
+    choices: [
+      "Because he literally moved into a different country.",
+      "Republican politicians used Wilson as a rhetorical contrast to justify 'normalcy' while his institutional imprint nevertheless continued to operate.",
+      "Because Wilson endorsed all the Republican presidents of the 1920s.",
+      "Because the public had complete amnesia about Wilson by 1921."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols argues Wilson’s name functioned rhetorically — Republicans opposed his internationalism and reform rhetoric, making him a foil, yet they could not entirely erase the institutional changes his administration brought. :contentReference[oaicite:36]{index=36}
+    `
+  },
+
+  {
+    q: "Which of the following is an accurate methodological or historiographical claim Nichols makes about the study of Wilson?",
+    choices: [
+      "That no original documents exist for Wilson's presidency.",
+      "That the opening of Wilson’s papers and subsequent archival work facilitated a richer, more nuanced literature that complicates simple caricatures.",
+      "That all historians now agree on Wilson’s absolute greatness.",
+      "That Wilson’s papers are less useful than hearsay."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols credits archival projects (Link’s Papers, etc.) with enabling the elaborate scholarship that now underpins more nuanced assessments of Wilson’s achievements and failures. :contentReference[oaicite:37]{index=37}
+    `
+  },
+
+  {
+    q: "Which of these was a concrete international policy instrument associated with Wilson that Nichols discusses?",
+    choices: [
+      "The League of Nations covenant",
+      "The Marshall Plan",
+      "The Truman Doctrine",
+      "The NATO treaty"
+    ],
+    correct: 0,
+    explanation: `
+      The League of Nations covenant is central to Wilson’s international program and Nichols’ analysis of his efforts at a rules-based world order. :contentReference[oaicite:38]{index=38}
+    `
+  },
+
+  {
+    q: "Nichols suggests that understanding the Wilson legacy helps historians do what for the Republican era of the 1920s?",
+    choices: [
+      "Ignore the 1920s entirely.",
+      "See continuities and transformations — the 1920s are not merely a 'passive interlude' but part of a longer trajectory tied to Wilsonian precedents.",
+      "Conclude that only foreign relations matter for the 1920s.",
+      "Prove that historical analysis is impossible."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols argues engaging Wilson’s legacy enables historians to see continuities and transformations, showing the 1920s as consequential and connected to earlier Wilsonian developments. :contentReference[oaicite:39]{index=39}
+    `
+  },
+
+  {
+    q: "Which diagnostic source does Nichols mention as having controversially psychoanalyzed Wilson?",
+    choices: [
+      "Sigmund Freud and William C. Bullitt (their collaborative study)",
+      "Jean Piaget",
+      "No one — Wilson was never psychoanalyzed.",
+      "Only Wilson's dentist."
+    ],
+    correct: 0,
+    explanation: `
+      Nichols notes the Freud & Bullitt study (1967) as one early, controversial psychoanalytic treatment of Wilson — part of the historiographical engagement with his personality. :contentReference[oaicite:40]{index=40}
+    `
+  },
+
+  {
+    q: "Which claim about Wilson does Nichols treat as requiring nuance rather than blanket endorsement or rejection?",
+    choices: [
+      "That Wilson caused the Great Depression single-handedly.",
+      "That Wilson’s progressivism was simple and unambiguous — Nichols insists the record is more complex and contested.",
+      "That Wilson had nothing to do with foreign policy.",
+      "That Wilson invented radio broadcasting."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols insists on nuanced assessments: Wilson’s progressivism and internationalism have complex, contested valences — neither wholly heroic nor wholly failed. :contentReference[oaicite:41]{index=41}
+    `
+  },
+
+  {
+    q: "Nichols discusses tensions between idealism and practice. Which example best illustrates this tension?",
+    choices: [
+      "Wilson’s advocacy for the League and his compromises in Paris that undercut some idealistic rhetoric.",
+      "Wilson’s refusal to sign any treaties at all.",
+      "Wilson’s adoption of communism in 1919.",
+      "Wilson’s consistent implementation of laissez-faire economics without exception."
+    ],
+    correct: 0,
+    explanation: `
+      Nichols highlights the tension between Wilson’s high rhetoric (League, moral aims) and the realpolitik compromises and domestic constraints that complicated their implementation — especially in the Paris negotiations. :contentReference[oaicite:42]{index=42}
+    `
+  },
+
+  {
+    q: "Which of the following best summarizes Nichols’ advice to scholars studying Wilson and the 1920s?",
+    choices: [
+      "Rely solely on popular press caricatures.",
+      "Use archival research, multi-disciplinary methods, and careful contextualization to avoid presentism and simplistic judgments.",
+      "Ignore primary sources and only use online summaries.",
+      "Apply one theoretical lens only (e.g., pure economic determinism)."
+    ],
+    correct: 1,
+    explanation: `
+      Nichols advocates archival, contextual, and multi-disciplinary scholarship to capture the nuance of Wilson’s impact and the complexities of the 1920s. :contentReference[oaicite:43]{index=43}
+    `
+  }
+]; // END quiz array (30 items)
+
+if (quiz.length !== 30) {
+  console.error("Expected 30 questions, found", quiz.length);
+}
+
+/* State */
+let state = {
+  idx: 0,
+  answers: new Array(quiz.length).fill(null) // null = unanswered, otherwise index
+};
+
+/* DOM refs */
+const navNums = document.getElementById('navNums');
+const questionText = document.getElementById('questionText');
+const choicesForm = document.getElementById('choicesForm');
+const currentIdxEl = document.getElementById('currentIdx');
+const progressBar = document.getElementById('progressBar');
+const answeredCountEl = document.getElementById('answeredCount');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const skipBtn = document.getElementById('skipBtn');
+const submitBtn = document.getElementById('submitBtn');
+const resetBtn = document.getElementById('resetBtn');
+const postArea = document.getElementById('postArea');
+const reviewCard = document.getElementById('reviewCard');
+const scoreHeader = document.getElementById('scoreHeader');
+const answersArea = document.getElementById('answersArea');
+
+/* Initialize navigation tiles */
+function renderNav() {
+  navNums.innerHTML = '';
+  for (let i=0;i<quiz.length;i++){
+    const btn = document.createElement('button');
+    btn.className = 'qnum' + (state.answers[i] !== null ? ' answered' : '') + (i===state.idx ? ' current' : '');
+    btn.textContent = (i+1);
+    btn.title = 'Jump to question '+(i+1);
+    btn.addEventListener('click', ()=>{ goTo(i); });
+    navNums.appendChild(btn);
+  }
+}
+
+/* Render current question */
+function renderQuestion(){
+  const qobj = quiz[state.idx];
+  currentIdxEl.textContent = (state.idx+1);
+  questionText.innerHTML = qobj.q;
+  choicesForm.innerHTML = '';
+  qobj.choices.forEach((c,ci)=>{
+    const id = 'c_'+state.idx+'_'+ci;
+    const lab = document.createElement('label');
+    lab.className = 'choice';
+    lab.htmlFor = id;
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = 'choice';
+    radio.id = id;
+    radio.value = ci;
+    radio.checked = (state.answers[state.idx] === ci);
+    radio.addEventListener('change', ()=> {
+      state.answers[state.idx] = ci;
+      renderNav();
+      updateAnsweredCount();
+    });
+    const span = document.createElement('div');
+    span.style.flex='1';
+    span.innerHTML = `<strong>${String.fromCharCode(65+ci)}.</strong> ${c}`;
+    lab.appendChild(radio);
+    lab.appendChild(span);
+    choicesForm.appendChild(lab);
+  });
+  updateProgress();
+  renderNav();
+}
+
+/* Navigation helpers */
+function goTo(i){
+  if (i<0) i=0;
+  if (i>=quiz.length) i=quiz.length-1;
+  state.idx = i;
+  renderQuestion();
+}
+
+prevBtn.addEventListener('click', ()=> goTo(state.idx-1));
+nextBtn.addEventListener('click', ()=> goTo(state.idx+1));
+skipBtn.addEventListener('click', ()=> goTo(state.idx+1));
+resetBtn.addEventListener('click', resetQuiz);
+
+function updateProgress(){
+  const pct = Math.round(((state.idx)/(quiz.length-1))*100);
+  progressBar.style.width = pct+'%';
+}
+
+function updateAnsweredCount(){
+  const answered = state.answers.reduce((acc,a)=> a===null?acc:acc+1,0);
+  answeredCountEl.textContent = 'Answered: ' + answered;
+}
+
+/* Submit */
+submitBtn.addEventListener('click', ()=>{
+  const confirmFinish = confirm("Submit the test and view full answers? You cannot change answers after submission.");
+  if(!confirmFinish) return;
+  showResults();
+});
+
+function showResults(){
+  // Score
+  let correct=0;
+  for (let i=0;i<quiz.length;i++){
+    if (state.answers[i] !== null && state.answers[i] === quiz[i].correct) correct++;
+  }
+  const pct = Math.round((correct/quiz.length)*100);
+  scoreHeader.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
+    <div>
+      <h2 style="margin:0;color:var(--accent)">Result: ${correct} / ${quiz.length} (${pct}%)</h2>
+      <div style="color:var(--muted);margin-top:6px">Answered: ${state.answers.reduce((a,b)=>b===null?a:a+1,0)} &nbsp;•&nbsp; Unanswered count treated as incorrect</div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:13px;color:var(--muted)">Sources cited in each explanation: Sibley (Introduction) & Nichols, 'The Wilson Legacy', A Companion to Warren G. Harding, Calvin Coolidge, and Herbert Hoover (2014). :contentReference[oaicite:44]{index=44} :contentReference[oaicite:45]{index=45}</div>
+    </div>
+  </div>`;
+  answersArea.innerHTML = '';
+  // Detailed answers (show all)
+  quiz.forEach((q,i)=>{
+    const user = state.answers[i];
+    const correctIndex = q.correct;
+    const block = document.createElement('div');
+    block.style.marginBottom = '14px';
+    block.innerHTML = `
+      <div class="q-title">Q${i+1}. ${escapeHtml(q.q)}</div>
+      <div><strong>Your answer:</strong> ${user===null?'<em>— skipped —</em>': String.fromCharCode(65+user)+'. ' + escapeHtml(q.choices[user])}</div>
+      <div><strong>Correct:</strong> ${String.fromCharCode(65+correctIndex)}. ${escapeHtml(q.choices[correctIndex])}</div>
+      <div class="${(user===correctIndex) ? 'correct' : 'wrong'}" style="margin-top:8px">${(user===correctIndex)?'Correct':'Incorrect'}</div>
+      <div class="explanation">${q.explanation}</div>
+    `;
+    answersArea.appendChild(block);
+  });
+
+  reviewCard.style.display = 'block';
+  // Scroll to review
+  reviewCard.scrollIntoView({behavior:'smooth'});
+}
+
+/* Reset */
+function resetQuiz(){
+  if(!confirm("Reset the quiz? This will clear all answers.")) return;
+  state.answers = new Array(quiz.length).fill(null);
+  state.idx = 0;
+  renderQuestion();
+  reviewCard.style.display = 'none';
+  updateAnsweredCount();
+}
+
+/* Utility: escape HTML for safe insertion in review */
+function escapeHtml(s){
+  if(!s) return '';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* Initialize UI */
+renderNav();
+renderQuestion();
+updateAnsweredCount();
+
+/* Accessibility: keyboard navigation */
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'ArrowRight') goTo(state.idx+1);
+  if(e.key === 'ArrowLeft') goTo(state.idx-1);
+  if(e.key === 'Home') goTo(0);
+  if(e.key === 'End') goTo(quiz.length-1);
+});
+
+</script>
+</body>
+</html>

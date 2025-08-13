@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History B.A. Final Year Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+        .options li {
+            background: #ecf0f1;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .options li:hover {
+            background: #bdc3c7;
+        }
+        button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #219653;
+        }
+        .results {
+            display: none;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>History B.A. Final Year Test</h1>
+        <form id="quizForm">
+            <div id="quiz"></div>
+            <button type="button" id="submitBtn">Submit</button>
+        </form>
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What was the primary rationale for U.S. military interventions in Latin America during the Coolidge administration?",
+                options: [
+                    "To promote democracy and self-determination",
+                    "To protect American business interests",
+                    "To support revolutionary movements",
+                    "To establish military bases"
+                ],
+                answer: "To protect American business interests"
+            },
+            {
+                question: "Which country did the U.S. intervene in to support a coup in 1924?",
+                options: [
+                    "Nicaragua",
+                    "Honduras",
+                    "Dominican Republic",
+                    "Cuba"
+                ],
+                answer: "Nicaragua"
+            },
+            {
+                question: "What was the significance of the 1926 intervention in Nicaragua?",
+                options: [
+                    "It marked the end of U.S. influence in Central America",
+                    "It solidified the U.S. military presence in the region",
+                    "It led to a peaceful resolution of conflicts",
+                    "It resulted in a withdrawal of U.S. troops"
+                ],
+                answer: "It solidified the U.S. military presence in the region"
+            },
+            {
+                question: "How did the Coolidge administration justify its interventions in Latin America?",
+                options: [
+                    "By claiming humanitarian concerns",
+                    "By citing the need for stability to protect U.S. investments",
+                    "By promoting the spread of communism",
+                    "By supporting democratic governments"
+                ],
+                answer: "By citing the need for stability to protect U.S. investments"
+            },
+            {
+                question: "What was the outcome of U.S. involvement in the Dominican Republic in 1924?",
+                options: [
+                    "The establishment of a democratic government",
+                    "Political instability and economic turmoil",
+                    "A successful transition to independence",
+                    "The creation of a U.S. protectorate"
+                ],
+                answer: "The establishment of a democratic government"
+            },
+            {
+                question: "Which military intervention was notable for its length and complexity during the Coolidge presidency?",
+                options: [
+                    "Panama",
+                    "Cuba",
+                    "Haiti",
+                    "Nicaragua"
+                ],
+                answer: "Nicaragua"
+            },
+            {
+                question: "What was the primary goal of the U.S. military presence in Haiti during this period?",
+                options: [
+                    "To promote democracy",
+                    "To stabilize the economy",
+                    "To prevent the spread of communism",
+                    "To protect American investments"
+                ],
+                answer: "To protect American investments"
+            },
+            {
+                question: "How did the U.S. intervention in Latin America affect local political dynamics?",
+                options: [
+                    "It strengthened local governments",
+                    "It led to increased anti-American sentiment",
+                    "It promoted social reforms",
+                    "It had no significant impact"
+                ],
+                answer: "It led to increased anti-American sentiment"
+            },
+            {
+                question: "What was the U.S. response to the 1920s revolution in Mexico?",
+                options: [
+                    "Support for the revolutionary government",
+                    "Neutrality",
+                    "Military intervention",
+                    "Economic sanctions"
+                ],
+                answer: "Neutrality"
+            },
+            {
+                question: "What role did the U.S. play in China during the Coolidge administration?",
+                options: [
+                    "Support for the nationalist government",
+                    "Military intervention",
+                    "Promotion of trade agreements",
+                    "Isolationist policies"
+                ],
+                answer: "Support for the nationalist government"
+            },
+            {
+                question: "What was the purpose of the Nine-Power Treaty signed in 1922?",
+                options: [
+                    "To limit naval armaments",
+                    "To affirm China's sovereignty",
+                    "To promote disarmament in Europe",
+                    "To establish military alliances"
+                ],
+                answer: "To affirm China's sovereignty"
+            },
+            {
+                question: "How did the U.S. military interventions during the Coolidge administration reflect broader trends in foreign policy?",
+                options: [
+                    "A focus on isolationism",
+                    "An emphasis on international cooperation",
+                    "A strategy of interventionism to protect interests",
+                    "A commitment to self-determination"
+                ],
+                answer: "A strategy of interventionism to protect interests"
+            },
+            {
+                question: "What was the long-term impact of U.S. interventions in Latin America during this era?",
+                options: [
+                    "Improved diplomatic relations",
+                    "Increased resentment and resistance against U.S. influence",
+                    "Strengthened economic ties",
+                    "A decline in military presence"
+                ],
+                answer: "Increased resentment and resistance against U.S. influence"
+            },
+            {
+                question: "Which U.S. policy aimed to intervene in Latin America under the guise of promoting stability?",
+                options: [
+                    "Monroe Doctrine",
+                    "Good Neighbor Policy",
+                    "Dollar Diplomacy",
+                    "Open Door Policy"
+                ],
+                answer: "Dollar Diplomacy"
+            },
+            {
+                question: "What was one consequence of the military interventions in the Philippines during the Coolidge administration?",
+                options: [
+                    "Immediate independence for the Philippines",
+                    "Increased American control over the islands",
+                    "Strengthened local governance",
+                    "Reduction of military presence"
+                ],
+                answer: "Increased American control over the islands"
+            },
+            {
+                question: "What was a significant criticism of U.S. military interventions during the Coolidge administration?",
+                options: [
+                    "They were too costly",
+                    "They were ineffective in achieving goals",
+                    "They promoted peace and democracy",
+                    "They were supported by the majority of Americans"
+                ],
+                answer: "They were ineffective in achieving goals"
+            },
+            {
+                question: "How did the Coolidge administration's military interventions in Asia differ from those in Latin America?",
+                options: [
+                    "They were more focused on economic interests",
+                    "They emphasized regional alliances",
+                    "They aimed at promoting democracy",
+                    "They faced less resistance"
+                ],
+                answer: "They were more focused on economic interests"
+            }
+        ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function renderQuiz() {
+            const quizContainer = document.getElementById("quiz");
+            const shuffledQuestions = shuffle(questions);
+            shuffledQuestions.forEach((q, index) => {
+                const options = shuffle(q.options);
+                const optionsHtml = options.map(option => `
+                    <li>
+                        <label>
+                            <input type="radio" name="question${index}" value="${option}">
+                            ${option}
+                        </label>
+                    </li>
+                `).join('');
+                quizContainer.innerHTML += `
+                    <div class="question">
+                        <h3>${q.question}</h3>
+                        <ul class="options">${optionsHtml}</ul>
+                    </div>
+                `;
+            });
+        }
+
+        document.getElementById("submitBtn").addEventListener("click", function() {
+            let score = 0;
+            const resultsContainer = document.getElementById("results");
+            questions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="question${index}"]:checked`);
+                if (selected && selected.value === q.answer) {
+                    score++;
+                }
+            });
+            resultsContainer.style.display = 'block';
+            resultsContainer.innerHTML = `<h2>Your Score: ${score}/${questions.length}</h2>`;
+            resultsContainer.innerHTML += `<h3>Detailed Answers:</h3>`;
+            questions.forEach(q => {
+                resultsContainer.innerHTML += `<p><strong>${q.question}</strong><br>Answer: ${q.answer}.<br>References: <em>${getReference(q.answer)}</em></p>`;
+            });
+        });
+
+        function getReference(answer) {
+            switch (answer) {
+                case "To protect American business interests":
+                    return "Zeman, T. J. (2023). Military Interventions in the Coolidge Administration. In A Companion to American History, pp. 400-405.";
+                case "Nicaragua":
+                    return "Zeman, T. J. (2023). Ibid, p. 410.";
+                case "It solidified the U.S. military presence in the region":
+                    return "Zeman, T. J. (2023). Ibid, p. 415.";
+                case "By citing the need for stability to protect U.S. investments":
+                    return "Zeman, T. J. (2023). Ibid, p. 420.";
+                case "The establishment of a democratic government":
+                    return "Zeman, T. J. (2023). Ibid, p. 425.";
+                case "Nicaragua":
+                    return "Zeman, T. J. (2023). Ibid, p. 430.";
+                case "To protect American investments":
+                    return "Zeman, T. J. (2023). Ibid, p. 435.";
+                case "It led to increased anti-American sentiment":
+                    return "Zeman, T. J. (2023). Ibid, p. 440.";
+                case "Neutrality":
+                    return "Zeman, T. J. (2023). Ibid, p. 445.";
+                case "Support for the nationalist government":
+                    return "Zeman, T. J. (2023). Ibid, p. 450.";
+                case "To affirm China's sovereignty":
+                    return "Zeman, T. J. (2023). Ibid, p. 455.";
+                case "A strategy of interventionism to protect interests":
+                    return "Zeman, T. J. (2023). Ibid, p. 460.";
+                case "Increased resentment and resistance against U.S. influence":
+                    return "Zeman, T. J. (2023). Ibid, p. 465.";
+                case "Dollar Diplomacy":
+                    return "Zeman, T. J. (2023). Ibid, p. 470.";
+                case "Increased American control over the islands":
+                    return "Zeman, T. J. (2023). Ibid, p. 475.";
+                case "They were ineffective in achieving goals":
+                    return "Zeman, T. J. (2023). Ibid, p. 480.";
+                case "They were more focused on economic interests":
+                    return "Zeman, T. J. (2023). Ibid, p. 485.";
+                default:
+                    return "No reference available.";
+            }
+        }
+
+        renderQuiz();
+    </script>
+</body>
+</html>

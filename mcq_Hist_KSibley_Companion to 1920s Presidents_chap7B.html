@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History B.A. Final Year Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+        .options li {
+            background: #ecf0f1;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .options li:hover {
+            background: #bdc3c7;
+        }
+        button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #219653;
+        }
+        .results {
+            display: none;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>History B.A. Final Year Test</h1>
+        <form id="quizForm">
+            <div id="quiz"></div>
+            <button type="button" id="submitBtn">Submit</button>
+        </form>
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What was the primary motive behind the Prohibition movement in the early 20th century?",
+                options: [
+                    "Economic stability",
+                    "Social reform driven by religious beliefs",
+                    "Political power consolidation",
+                    "Cultural modernization"
+                ],
+                answer: "Social reform driven by religious beliefs"
+            },
+            {
+                question: "Who was a prominent leader of the Anti-Saloon League?",
+                options: [
+                    "Frances Willard",
+                    "Wayne Wheeler",
+                    "Samuel Gompers",
+                    "Al Smith"
+                ],
+                answer: "Wayne Wheeler"
+            },
+            {
+                question: "What impact did the Eighteenth Amendment have on American society?",
+                options: [
+                    "Increased alcohol consumption",
+                    "Growth of organized crime",
+                    "Decline in social morality",
+                    "Improved public health"
+                ],
+                answer: "Growth of organized crime"
+            },
+            {
+                question: "Which group primarily supported the Prohibition movement?",
+                options: [
+                    "Urban immigrants",
+                    "Rural, white Protestants",
+                    "Labor unions",
+                    "Business interests"
+                ],
+                answer: "Rural, white Protestants"
+            },
+            {
+                question: "What was the outcome of the 1924 Democratic National Convention?",
+                options: [
+                    "Unification of the party",
+                    "Nomination of Al Smith",
+                    "Complete rejection of Prohibition",
+                    "Formation of a new party"
+                ],
+                answer: "Nomination of Al Smith"
+            },
+            {
+                question: "What role did women play in the Prohibition movement?",
+                options: [
+                    "Passive supporters",
+                    "Active leaders in local campaigns",
+                    "Opponents of Prohibition",
+                    "Only figures in the background"
+                ],
+                answer: "Active leaders in local campaigns"
+            },
+            {
+                question: "What was the common sentiment among labor unions regarding Prohibition?",
+                options: [
+                    "Strong support",
+                    "Indifference",
+                    "Divided opinions",
+                    "Complete opposition"
+                ],
+                answer: "Divided opinions"
+            },
+            {
+                question: "How did Prohibition affect the political landscape of the 1920s?",
+                options: [
+                    "Strengthened the Democratic Party",
+                    "Unified voters across the country",
+                    "Created significant divisions",
+                    "Had no impact"
+                ],
+                answer: "Created significant divisions"
+            },
+            {
+                question: "What was one of the main criticisms of the enforcement of Prohibition?",
+                options: [
+                    "It was too stringent",
+                    "It was widely ignored",
+                    "It was well-funded",
+                    "It was universally accepted"
+                ],
+                answer: "It was widely ignored"
+            },
+            {
+                question: "What was the primary function of the Women’s Christian Temperance Union?",
+                options: [
+                    "Promoting alcohol consumption",
+                    "Advocating for women’s suffrage",
+                    "Campaigning for Prohibition",
+                    "Providing social services"
+                ],
+                answer: "Campaigning for Prohibition"
+            },
+            {
+                question: "Which political figure is often associated with the Prohibition movement?",
+                options: [
+                    "Warren G. Harding",
+                    "Franklin D. Roosevelt",
+                    "Woodrow Wilson",
+                    "Al Smith"
+                ],
+                answer: "Al Smith"
+            },
+            {
+                question: "What was the significance of the 'Red Summer' of 1919?",
+                options: [
+                    "An increase in racial violence",
+                    "A successful labor strike",
+                    "The end of Prohibition",
+                    "A rise in immigration"
+                ],
+                answer: "An increase in racial violence"
+            },
+            {
+                question: "What was the main goal of the Sacco and Vanzetti trial?",
+                options: [
+                    "To highlight immigration issues",
+                    "To enforce Prohibition laws",
+                    "To punish labor radicals",
+                    "To promote civil rights"
+                ],
+                answer: "To punish labor radicals"
+            },
+            {
+                question: "How did the Prohibition Act affect immigrant communities?",
+                options: [
+                    "Strengthened their political power",
+                    "Increased their isolation",
+                    "Unified them against the government",
+                    "Had little impact"
+                ],
+                answer: "Increased their isolation"
+            },
+            {
+                question: "What was the primary argument against Prohibition made by labor unions?",
+                options: [
+                    "It harmed worker solidarity",
+                    "It increased crime rates",
+                    "It was economically beneficial",
+                    "It upheld traditional values"
+                ],
+                answer: "It harmed worker solidarity"
+            },
+            {
+                question: "Which organization campaigned for the repeal of the Eighteenth Amendment?",
+                options: [
+                    "The Anti-Saloon League",
+                    "The Women’s Christian Temperance Union",
+                    "The Association Against the Prohibition Amendment",
+                    "The National Woman's Party"
+                ],
+                answer: "The Association Against the Prohibition Amendment"
+            },
+            {
+                question: "What was a significant consequence of the Prohibition era?",
+                options: [
+                    "Increased public health",
+                    "Diminished organized crime",
+                    "Rise in speakeasies",
+                    "Growth of the temperance movement"
+                ],
+                answer: "Rise in speakeasies"
+            },
+            {
+                question: "What did the 1924 Democratic Convention reveal about the party?",
+                options: [
+                    "Unity on Prohibition issues",
+                    "Deep divisions and factions",
+                    "Strong support for Wilson's policies",
+                    "A lack of interest in social issues"
+                ],
+                answer: "Deep divisions and factions"
+            },
+            {
+                question: "Which demographic group was primarily opposed to Prohibition?",
+                options: [
+                    "Rural Protestants",
+                    "Urban immigrants",
+                    "Wealthy business owners",
+                    "Labor workers"
+                ],
+                answer: "Urban immigrants"
+            },
+            {
+                question: "What did the term 'Ohio Gang' refer to?",
+                options: [
+                    "A group of radical labor activists",
+                    "Harding's corrupt political associates",
+                    "Prohibition enforcement agents",
+                    "A faction of the Democratic Party"
+                ],
+                answer: "Harding's corrupt political associates"
+            },
+            {
+                question: "What was the relationship between Prohibition and the Ku Klux Klan?",
+                options: [
+                    "The Klan supported Prohibition",
+                    "The Klan opposed Prohibition",
+                    "The Klan was indifferent to Prohibition",
+                    "Prohibition helped reduce Klan activities"
+                ],
+                answer: "The Klan supported Prohibition"
+            },
+            {
+                question: "How did Prohibition impact women's activism in the 1920s?",
+                options: [
+                    "Diminished their roles",
+                    "Increased their visibility",
+                    "Forced them into the private sphere",
+                    "Had no effect"
+                ],
+                answer: "Increased their visibility"
+            },
+            {
+                question: "What was one of the key failures of Prohibition?",
+                options: [
+                    "It reduced crime",
+                    "It was widely supported",
+                    "It was difficult to enforce",
+                    "It improved public health"
+                ],
+                answer: "It was difficult to enforce"
+            },
+            {
+                question: "Which Amendment repealed Prohibition?",
+                options: [
+                    "Seventeenth",
+                    "Nineteenth",
+                    "Twenty-first",
+                    "Twenty-third"
+                ],
+                answer: "Twenty-first"
+            },
+            {
+                question: "What was the primary focus of the Women's Joint Congressional Committee?",
+                options: [
+                    "Labor rights",
+                    "Prohibition enforcement",
+                    "Social welfare reforms",
+                    "Women's suffrage"
+                ],
+                answer: "Social welfare reforms"
+            },
+            {
+                question: "What was a major factor in the Democratic Party's decline in the 1920s?",
+                options: [
+                    "Strong leadership",
+                    "Internal divisions and infighting",
+                    "Support for Prohibition",
+                    "Rise of the Republican Party"
+                ],
+                answer: "Internal divisions and infighting"
+            },
+            {
+                question: "How did the economic conditions of the 1920s influence Prohibition?",
+                options: [
+                    "Increased support for Prohibition",
+                    "Reduced enforcement efforts",
+                    "Led to the rise of speakeasies",
+                    "Had no significant impact"
+                ],
+                answer: "Led to the rise of speakeasies"
+            },
+            {
+                question: "What was the general public sentiment towards Prohibition by the end of the 1920s?",
+                options: [
+                    "Strong support",
+                    "Indifference",
+                    "Widespread opposition",
+                    "Complete acceptance"
+                ],
+                answer: "Widespread opposition"
+            },
+            {
+                question: "Which event marked a significant backlash against Prohibition?",
+                options: [
+                    "The stock market crash",
+                    "The rise of organized crime",
+                    "The founding of the AAPA",
+                    "The repeal of the Nineteenth Amendment"
+                ],
+                answer: "The rise of organized crime"
+            },
+            {
+                question: "What was the primary argument in favor of Prohibition by its supporters?",
+                options: [
+                    "It would reduce crime",
+                    "It would increase economic productivity",
+                    "It was a moral imperative",
+                    "It would improve public health"
+                ],
+                answer: "It was a moral imperative"
+            },
+            {
+                question: "What was the role of the Prohibition Bureau?",
+                options: [
+                    "To promote alcohol consumption",
+                    "To enforce the Eighteenth Amendment",
+                    "To conduct research on alcohol",
+                    "To lobby for Prohibition repeal"
+                ],
+                answer: "To enforce the Eighteenth Amendment"
+            },
+            {
+                question: "How did Prohibition influence the rise of organized crime?",
+                options: [
+                    "It had no effect",
+                    "It decreased criminal activity",
+                    "It provided new opportunities for profit",
+                    "It strengthened law enforcement"
+                ],
+                answer: "It provided new opportunities for profit"
+            },
+            {
+                question: "What was the impact of Prohibition on public health?",
+                options: [
+                    "Improved overall health",
+                    "Increased alcohol-related deaths",
+                    "No significant impact",
+                    "Reduced alcohol consumption"
+                ],
+                answer: "Increased alcohol-related deaths"
+            },
+            {
+                question: "What was the significance of the Women's Christian Temperance Union during this period?",
+                options: [
+                    "It opposed women's suffrage",
+                    "It was a major force in the Prohibition movement",
+                    "It supported the saloon industry",
+                    "It had no political influence"
+                ],
+                answer: "It was a major force in the Prohibition movement"
+            },
+            {
+                question: "In what way did Prohibition serve as a cultural battleground in the 1920s?",
+                options: [
+                    "It united all social classes",
+                    "It highlighted urban vs. rural divides",
+                    "It had no cultural significance",
+                    "It was solely a political issue"
+                ],
+                answer: "It highlighted urban vs. rural divides"
+            },
+            {
+                question: "Which factor contributed to the eventual repeal of Prohibition?",
+                options: [
+                    "Strong public support",
+                    "Economic hardships of the Great Depression",
+                    "Political unity",
+                    "Social stability"
+                ],
+                answer: "Economic hardships of the Great Depression"
+            }
+        ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function renderQuiz() {
+            const quizContainer = document.getElementById("quiz");
+            const shuffledQuestions = shuffle(questions);
+            shuffledQuestions.forEach((q, index) => {
+                const options = shuffle(q.options);
+                const optionsHtml = options.map(option => `
+                    <li>
+                        <label>
+                            <input type="radio" name="question${index}" value="${option}">
+                            ${option}
+                        </label>
+                    </li>
+                `).join('');
+                quizContainer.innerHTML += `
+                    <div class="question">
+                        <h3>${q.question}</h3>
+                        <ul class="options">${optionsHtml}</ul>
+                    </div>
+                `;
+            });
+        }
+
+        document.getElementById("submitBtn").addEventListener("click", function() {
+            let score = 0;
+            const resultsContainer = document.getElementById("results");
+            questions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="question${index}"]:checked`);
+                if (selected && selected.value === q.answer) {
+                    score++;
+                }
+            });
+            resultsContainer.style.display = 'block';
+            resultsContainer.innerHTML = `<h2>Your Score: ${score}/${questions.length}</h2>`;
+            resultsContainer.innerHTML += `<h3>Detailed Answers:</h3>`;
+            questions.forEach(q => {
+                resultsContainer.innerHTML += `<p><strong>${q.question}</strong> Answer: ${q.answer}</p>`;
+            });
+        });
+
+        renderQuiz();
+    </script>
+</body>
+</html>

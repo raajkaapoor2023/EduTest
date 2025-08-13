@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Chapter 4 — Harding Biographies — 30-question Final BA Test</title>
+<style>
+  :root{
+    --bg:#071427; --card:#0b2430; --accent:#f6c85f; --accent2:#6ee7b7;
+    --muted:#9fb0bf; --good:#10b981; --bad:#fb7185; --glass: rgba(255,255,255,0.03);
+    --card-radius:12px; --maxw:1150px;
+    --tile-size:40px;
+  }
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,"Segoe UI",Roboto,Arial;color:#e6eef8;background:
+    radial-gradient(800px 360px at 10% 8%, rgba(110,231,183,0.03), transparent),
+    linear-gradient(180deg,#071427,#04121a);}
+  .container{max-width:1150px;margin:28px auto;border-radius:14px;display:grid;grid-template-columns:340px 1fr;gap:18px;padding:18px;background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.00));box-shadow:0 18px 50px rgba(0,0,0,0.6);}
+  aside{padding:18px;border-right:1px solid rgba(255,255,255,0.02)}
+  header h1{margin:0;color:var(--accent);font-size:18px}
+  header p{margin:6px 0 0 0;color:var(--muted);font-size:13px}
+  .navTiles{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+  .tile{width:var(--tile-size);height:var(--tile-size);border-radius:8px;background:var(--glass);display:flex;align-items:center;justify-content:center;color:var(--muted);cursor:pointer;border:1px solid rgba(255,255,255,0.03);font-weight:700}
+  .tile.answered{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#042022}
+  main{padding:18px}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,0.015),rgba(255,255,255,0.01));padding:18px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+  .question{font-size:19px;margin-bottom:14px;line-height:1.35}
+  .choices{display:flex;flex-direction:column;gap:12px}
+  .choice{padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);cursor:pointer;background:transparent;display:flex;gap:12px;align-items:flex-start}
+  .choice input{margin-top:2px}
+  .controls{display:flex;justify-content:space-between;margin-top:14px;gap:8px;flex-wrap:wrap}
+  .btn{padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+  .btn.primary{background:var(--accent);color:#042022}
+  .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+  .explanation{background:rgba(255,255,255,0.02);padding:12px;border-radius:8px;color:var(--muted);margin-top:10px;line-height:1.45}
+  .correct{color:var(--good);font-weight:700}
+  .wrong{color:var(--bad);font-weight:700}
+  .review{margin-top:16px}
+  .meta {font-size:13px;color:var(--muted);margin-top:10px}
+  footer {margin-top:14px;font-size:12px;color:var(--muted)}
+  @media (max-width:980px){.container{grid-template-columns:1fr} aside{order:2;border-top:1px solid rgba(255,255,255,0.02)}}
+</style>
+</head>
+<body>
+<div class="container" role="application" aria-labelledby="title">
+  <aside>
+    <header>
+      <h1 id="title">Chapter 4 — Harding Biographies</h1>
+      <p>Justin P. Coffey — 30 MCQs — Oxbridge / Ivy BA Final level</p>
+    </header>
+
+    <div class="meta">
+      Source: Chapter 4 (Harding Biographies) of the uploaded PDF. Detailed, academically-referenced answers appear after submission. File citations are embedded in each answer. :contentReference[oaicite:0]{index=0}
+    </div>
+
+    <div class="navTiles" id="navTiles" aria-hidden="false" title="Question navigation tiles"></div>
+
+    <footer>
+      Navigation: click a tile to jump; use Skip to defer a question; Submit to reveal full referenced answers. Reset clears all answers.
+    </footer>
+  </aside>
+
+  <main>
+    <div class="card" id="quizCard" aria-live="polite">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-size:13px;color:var(--muted)">Question <span id="qnum">1</span> / 30</div>
+        <div style="font-size:13px;color:var(--muted)" id="answeredInfo">Answered: 0</div>
+      </div>
+
+      <div style="margin-top:12px">
+        <div class="question" id="questionText">Loading…</div>
+        <form id="choices" class="choices" aria-labelledby="questionText"></form>
+      </div>
+
+      <div class="controls" role="toolbar" aria-label="Quiz controls">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn secondary" id="prevBtn" type="button" aria-label="Previous question">&larr; Prev</button>
+          <button class="btn secondary" id="nextBtn" type="button" aria-label="Next question">Next &rarr;</button>
+          <button class="btn secondary" id="skipBtn" type="button" aria-label="Skip question">Skip</button>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn primary" id="submitBtn" type="button" aria-label="Submit quiz">Submit — Show Answers</button>
+          <button class="btn secondary" id="resetBtn" type="button" aria-label="Reset quiz">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="reviewCard" class="card" style="display:none; margin-top:16px">
+      <div id="scoreHeader"></div>
+      <div id="answersList" class="review"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+/*
+  30 MCQs based directly on Chapter 4 ("Harding Biographies") by Justin P. Coffey.
+  Each explanation references the uploaded PDF chapter via file-citation markers (file_search results).
+  Save this file and open it in a modern browser. Click Submit to reveal the full academically-referenced answers.
+*/
+
+const quiz = [
+  {
+    q: "Coffey’s opening diagnosis about Harding’s reputation is best summarised as:",
+    choices: [
+      "Harding has always been celebrated as one of the great presidents.",
+      "Harding suffered a dramatic posthumous reputational collapse driven by scandal and sensational biographies, though later revisionists have moderated that view.",
+      "Harding’s reputation was unimportant to historians.",
+      "Harding was universally forgotten until the 21st century."
+    ],
+    correct: 1,
+    explanation: "Coffey begins by noting that history has been unkind to Harding: sensational early biographies and scandal (Teapot Dome) produced a long-standing negative reputation, while later biographers offered more balanced reassessments. This framing underpins his entire chapter. :contentReference[oaicite:1]{index=1}"
+  },
+
+  {
+    q: "How does Coffey categorise the waves of Harding biographies?",
+    choices: [
+      "Hagiography, Psychoanalysis, and Economic Histories.",
+      "Early biographies (often partisan or promotional), pre-papers biographies (negative, reliant on hearsay), and post-papers biographies (revised after archival releases).",
+      "Military, Diplomatic, and Cultural biographies.",
+      "Children’s books, Novels, and Travelogues."
+    ],
+    correct: 1,
+    explanation: "Coffey explicitly divides the literature into three groups—early, pre-papers, and post-papers—explaining each category’s sources, methods, and typical interpretive slant. This periodization is central to his historiographical argument. :contentReference[oaicite:2]{index=2}"
+  },
+
+  {
+    q: "Which early post-death works most shaped the negative popular image of Harding?",
+    choices: [
+      "Impartial academic monographs published decades later.",
+      "Sensational journalistic books and popular biographies such as Samuel Hopkins Adams’s works, Nan Britton’s memoir, and Means’s lurid account.",
+      "Government white papers praising Harding.",
+      "Scientific surveys of presidential health."
+    ],
+    correct: 1,
+    explanation: "Coffey highlights how popular sensationalists—Adams, Nan Britton (The President’s Daughter), and Gaston B. Means (The Strange Death of President Harding)—helped create and popularize lurid narratives that shaped public opinion long before thorough archival study. "
+  },
+
+  {
+    q: "Nan Britton’s 'The President’s Daughter' (1927) is important in Coffey’s account because:",
+    choices: [
+      "It provided a fully verified, archival account that healed Harding’s reputation.",
+      "It made sensational claims (an illegitimate child) that entered public memory; Coffey notes the veracity of some claims remained controversial and debated by biographers.",
+      "It was a government-sponsored biography.",
+      "It was a purely academic rebuttal to Chapman."
+    ],
+    correct: 1,
+    explanation: "Britton’s memoir alleged an intimate relationship and a child. Coffey uses Britton to illustrate how personal scandal and contested testimony fed the sensationalist narratives that tarnished Harding. He stresses that such claims remained in dispute even after later archival work. :contentReference[oaicite:4]{index=4}"
+  },
+
+  {
+    q: "Gaston B. Means’s contribution to Harding mythology most notably consisted of:",
+    choices: [
+      "A sober archival defense of Harding.",
+      "A lurid book alleging murder and poisoning, authored by a notorious confidence man—thus exemplifying unreliable, sensational sources that later historians had to contend with.",
+      "An official White House investigation report exonerating the First Lady.",
+      "A medical treatise on presidential ailments."
+    ],
+    correct: 1,
+    explanation: "Means, a known charlatan, published The Strange Death of President Harding, alleging Florence Harding poisoned her husband—claims Coffey treats as sensational and unreliable yet influential in public memory. :contentReference[oaicite:5]{index=5}"
+  },
+
+  {
+    q: "Why were the first decades of Harding biography ('pre-papers') so uniformly critical, according to Coffey?",
+    choices: [
+      "Because scholars had perfect access to all Harding’s private papers and uniformly disliked him.",
+      "Because biographers lacked access to Harding’s papers and thus often relied on rumor, partisan accounts, and sensationalist sources which produced negative portrayals.",
+      "Because Harding himself wrote a book denouncing his presidency.",
+      "Because there were no scandals to discuss."
+    ],
+    correct: 1,
+    explanation: "Coffey explains that new archival sources were closed for decades; as a result, mid-century writers depended on second-hand accounts, press gossip, and politically motivated narratives—conditions that favored negative portrayals. :contentReference[oaicite:6]{index=6}"
+  },
+
+  {
+    q: "Which methodological problem does Coffey repeatedly warn against when reading early Harding biographies?",
+    choices: [
+      "Assuming all partisan or sensationalist claims are accurate without archival corroboration; the need for source criticism and context is paramount.",
+      "Relying exclusively on archival letters.",
+      "Trusting only modern newspaper retrospectives.",
+      "Using demographic statistics in biography."
+    ],
+    correct: 0,
+    explanation: "Coffey stresses methodological caution: early accounts can be compromised by partisanship and gossip, so historians must interrogate provenance, corroborate claims with primary records, and situate claims in political context. :contentReference[oaicite:7]{index=7}"
+  },
+
+  {
+    q: "What effect did the opening of Harding’s senatorial and presidential papers (mid-20th century) have on biographies?",
+    choices: [
+      "It had no effect; biographers ignored new material.",
+      "It enabled a new wave of 'post-papers' biographies that could reassess Harding with archival evidence—sometimes confirming, sometimes complicating earlier claims.",
+      "It proved that every scandal was fabricated by opponents.",
+      "It resulted in immediate consensus that Harding was the greatest president."
+    ],
+    correct: 1,
+    explanation: "Coffey documents how access to Harding’s papers (senatorial, presidential, private correspondence) allowed scholars to move beyond rumor, offering more nuanced interpretations: some allegations were substantiated, others complicated, and some disproved. :contentReference[oaicite:8]{index=8}"
+  },
+
+  {
+    q: "Which early biographer produced hagiographic, campaign-oriented praise of Harding (an example of 'early biographies')?",
+    choices: [
+      "Joe Mitchell Chapple—whose books were celebratory, partisan, and functioned as campaign promotion.",
+      "Samuel Hopkins Adams—who wrote only neutral academic pieces.",
+      "Gaston B. Means—who was a scholarly archivist.",
+      "Robert K. Murray—who produced 1920s children’s literature."
+    ],
+    correct: 0,
+    explanation: "Chapple’s Warren G. Harding – The Man (1924) is cited by Coffey as an early hagiographic account, produced to promote Harding and illustrative of partisan early biographies that later historians treat cautiously. :contentReference[oaicite:9]{index=9}"
+  },
+
+  {
+    q: "Coffey identifies a recurring interpretive driver behind many early negative biographies. What is it?",
+    choices: [
+      "Aesthetic distaste for Harding’s handwriting.",
+      "Ideological opposition—many early biographers were New Deal liberals whose political lens predisposed them to condemn Harding’s policies and persona.",
+      "Harding’s membership in a secret society of historians.",
+      "A lack of interest in presidential history generally."
+    ],
+    correct: 1,
+    explanation: "Coffey notes ideology mattered: New Deal-era critics often read Harding as a reactionary foil, and their political commitments shaped interpretive emphases; readers must therefore factor authorial standpoint into historiography. :contentReference[oaicite:10]{index=10}"
+  },
+
+  {
+    q: "How does Coffey advise scholars to assess the sensational claims (e.g., poisoning, paternity) made in early works?",
+    choices: [
+      "Accept sensational claims because they sell books.",
+      "Treat them skeptically, test against the archival record, and place them in the context of contemporary gossip and partisan maneuvering.",
+      "Ignore all primary sources in favour of gossip.",
+      "Assume all sensationalism is true unless a court rules otherwise."
+    ],
+    correct: 1,
+    explanation: "Coffey recommends critical source analysis: allegations must be weighed against documentary evidence rather than taken at face value; methodological rigor distinguishes reputable biography from rumor-driven accounts. :contentReference[oaicite:11]{index=11}"
+  },
+
+  {
+    q: "Which scandal is repeatedly cited by Coffey as central to Harding’s damaged reputation?",
+    choices: [
+      "The Teapot Dome scandal (oil leasing and influence-peddling).",
+      "The Watergate break-in.",
+      "A failed currency reform in 1932.",
+      "The XYZ affair."
+    ],
+    correct: 0,
+    explanation: "Teapot Dome and associated corruption cases are singled out by Coffey as the most consequential scandals shaping public and scholarly judgments about Harding’s administration and personal culpability. :contentReference[oaicite:12]{index=12}"
+  },
+
+  {
+    q: "Coffey notes that the release of Harding’s love letters had what ambivalent effect on his biography?",
+    choices: [
+      "They uniformly exculpated Harding of any personal flaws.",
+      "They sensationalized his private life (reinforcing the lothario image) but also provided material for sober analysis of personality and context—thus complicating simple exoneration or condemnation.",
+      "They had no discernible effect.",
+      "They transformed Harding into a celebrated romantic icon without scholarly consequence."
+    ],
+    correct: 1,
+    explanation: "The letters reinforced some scandal narratives (sexual liaisons) yet offered historians primary material to analyze personality, social norms, and political behavior; Coffey stresses the ambivalence such sources introduce. :contentReference[oaicite:13]{index=13}"
+  },
+
+  {
+    q: "Which mid- to late-20th-century approach does Coffey indicate helped produce more sympathetic or nuanced Harding biographies?",
+    choices: [
+      "Strict reliance on hearsay and oral tradition.",
+      "Archival-driven revisionism that situates Harding within administrative, political, and intellectual context rather than solely moral judgement.",
+      "A single-author cult of personality.",
+      "Total rejection of primary sources."
+    ],
+    correct: 1,
+    explanation: "Coffey credits the archival turn and contextualist scholarship—placing Harding in policy and institutional frameworks—as the basis for the 'revisionist' or more balanced biographies that emerged after access to papers improved. :contentReference[oaicite:14]{index=14}"
+  },
+
+  {
+    q: "Which work does Coffey cite as representative of the 'pre-papers' critical phase that relied heavily on hearsay?",
+    choices: [
+      "Samuel Hopkins Adams’s Incredible Era (and related works) — journalist-driven accounts that used interviews and hearsay extensively.",
+      "A government-published White Paper.",
+      "The Federal Reserve minutes (published in 1922).",
+      "A purely oral-history volume by Harding himself."
+    ],
+    correct: 0,
+    explanation: "Adams’s work is used by Coffey as emblematic of the pre-papers era: influential, journalistic, sometimes reliant on unverified testimony—helpful for certain insights but methodologically problematic. :contentReference[oaicite:15]{index=15}"
+  },
+
+  {
+    q: "What historiographical danger does Coffey illustrate with the Means and Britton episodes?",
+    choices: [
+      "That credible archival evidence always confirms sensational claims.",
+      "That opportunistic or sensational sources can have outsized influence on public memory and historical reputations unless historians counter them with careful archival work.",
+      "That scandal is irrelevant to political biography.",
+      "That anecdotes are more valuable than archives."
+    ],
+    correct: 1,
+    explanation: "Means and Britton show how rumor and spectacle can dominate public narratives; Coffey uses them to argue historians must actively correct or complicate sensational accounts through document-based research. :contentReference[oaicite:16]{index=16}"
+  },
+
+  {
+    q: "Coffey’s assessment of 'post-papers' biographies is that they:",
+    choices: [
+      "Always entirely rehabilitate Harding and deny any wrongdoing.",
+      "Offer a more balanced, evidence-based account that recognizes both administrative achievements and real problems—thus neither full exoneration nor wholesale condemnation.",
+      "Avoid primary sources altogether.",
+      "Are indistinguishable from early hagiographies."
+    ],
+    correct: 1,
+    explanation: "Post-papers works use newly opened sources to produce nuanced portraits: they acknowledge policy successes and personal flaws, and clarify what Harding knew or did not know about scandals—thus complicating simple verdicts. :contentReference[oaicite:17]{index=17}"
+  },
+
+  {
+    q: "Which later bibliographic trend does Coffey highlight as contributing to the 'rehabilitation' of Harding’s reputation?",
+    choices: [
+      "Quantitative polling of 19th-century newspapers only.",
+      "Scholarly reappraisals that foreground administrative accomplishments, economic context, and documented evidence rather than scandal-driven narrative.",
+      "A campaign by partisan activists without scholarly work.",
+      "The destruction of earlier biographies."
+    ],
+    correct: 1,
+    explanation: "Coffey points to sober scholarly reappraisals that stress governance (economic performance, some foreign policy successes) and rely on primary documents as the engine for more favorable but still critical biographies. :contentReference[oaicite:18]{index=18}"
+  },
+
+  {
+    q: "According to Coffey, how should historians treat popular biographies and journalistic accounts when writing political biography?",
+    choices: [
+      "As primary evidence equal to archival records without question.",
+      "As cultural sources that reveal contemporaneous perceptions and propaganda, but which must be triangulated with archival documentation.",
+      "As the only necessary evidence.",
+      "As irrelevant ephemera with no use."
+    ],
+    correct: 1,
+    explanation: "Coffey recognizes the evidentiary value of popular accounts for understanding public reception and cultural context, but stresses they are not substitutes for archival corroboration when claims of fact are at stake. :contentReference[oaicite:19]{index=19}"
+  },
+
+  {
+    q: "Which of the following best captures Coffey’s final normative claim about the biography of Harding?",
+    choices: [
+      "That sensationalism should replace archival method in modern biography.",
+      "That historians must balance moral judgement with archival evidence and contextual analysis: biography should be rigorous, nuanced, and transparent about sources.",
+      "That no one should ever write another biography.",
+      "That biography is purely entertainment and not scholarship."
+    ],
+    correct: 1,
+    explanation: "Coffey closes with a call for balanced scholarship: biographies must combine critical source work, context, and interpretive clarity rather than rely on sensational claims or partisan agendas. :contentReference[oaicite:20]{index=20}"
+  },
+
+  {
+    q: "Which author is noted by Coffey as producing early celebratory and partisan biographies of Harding (i.e., 'campaign propaganda')?",
+    choices: [
+      "Joe Mitchell Chapple—whose early works were laudatory and partisan.",
+      "Gaston B. Means—known primarily for sober archival study.",
+      "Nan Britton—who wrote an academic monograph defending Harding.",
+      "Samuel Hopkins Adams—who produced an official government biography."
+    ],
+    correct: 0,
+    explanation: "Chapple’s early writings (e.g., Warren G. Harding – The Man) are cited as model examples of campaign-era hagiography that emphasize praise rather than critical analysis. :contentReference[oaicite:21]{index=21}"
+  },
+
+  {
+    q: "Coffey indicates that the persistence of certain rumours about Harding (e.g., race, paternity, poisoning) demonstrates what broader point?",
+    choices: [
+      "That rumours, once public, can be extraordinarily resistant to correction and thus shape reputations disproportionately to their evidentiary weight.",
+      "That every rumour is therefore true.",
+      "That rumours are irrelevant for historiography.",
+      "That only official documents matter and popular belief has no historical effect."
+    ],
+    correct: 0,
+    explanation: "Coffey underlines how certain salacious rumours endured and influenced public and scholarly judgement, illustrating the historian’s task to disentangle cultural memory from documentary truth. :contentReference[oaicite:22]{index=22}"
+  },
+
+  {
+    q: "Which of the following is an effect Coffey attributes to the publication of early scandal-focused works?",
+    choices: [
+      "They caused immediate rehabilitation of Harding’s reputation.",
+      "They amplified public outrage and helped define Harding in the public mind primarily as a symbol of corruption—even when later evidence complicated this image.",
+      "They had no cultural impact whatsoever.",
+      "They immediately generated consensus among scholars that Harding was blameless."
+    ],
+    correct: 1,
+    explanation: "Sensational books amplified Teapot Dome and other scandals in popular consciousness, helping to harden a damaging public narrative that later scholars had to address and complicate. :contentReference[oaicite:23]{index=23}"
+  },
+
+  {
+    q: "Which research-practice improvement does Coffey implicitly recommend to future biographers?",
+    choices: [
+      "Rely exclusively on memoirs and eyewitness anecdotes even when archival evidence is available.",
+      "Use thorough archival research, triangulate sources, and explicitly address the provenance and reliability of sensational claims.",
+      "Never publish findings that challenge popular narratives.",
+      "Privately circulate conclusions without public documentation."
+    ],
+    correct: 1,
+    explanation: "Coffey’s chapter repeatedly models and recommends archival rigor, transparent source criticism, and a willingness to revise prior assumptions in light of newly available documentation. :contentReference[oaicite:24]{index=24}"
+  },
+
+  {
+    q: "Which mid-century phenomenon complicated early efforts to write a balanced Harding biography?",
+    choices: [
+      "A total lack of interest in the 1920s generally.",
+      "Restricted access to key papers (many remained closed) which pushed writers toward anecdote and sensational accounts.",
+      "The immediate availability of every presidential memo online.",
+      "The absence of any scandal at the time."
+    ],
+    correct: 1,
+    explanation: "The lack of accessible documentary evidence forced many mid-20th-century writers to rely on hearsay and secondary testimony—conditions Coffey identifies as distorting early historiography. :contentReference[oaicite:25]{index=25}"
+  },
+
+  {
+    q: "Coffey notes that rehabilitation of Harding’s image has limits because:",
+    choices: [
+      "Archival evidence uniformly absolves every member of Harding’s administration of wrongdoing.",
+      "While archives allow nuance, they also confirm instances of maladministration and corruption; therefore balanced accounts cannot simply exonerate Harding entirely.",
+      "No one has ever studied Harding carefully.",
+      "All later historians agree he was flawless."
+    ],
+    correct: 1,
+    explanation: "Coffey stresses nuance: archives complicate the picture—some allegations are disproved, others substantiated—so scholarly rehabilitation is partial, conditional, and evidence-driven rather than wholesale exoneration. :contentReference[oaicite:26]{index=26}"
+  },
+
+  {
+    q: "Which of the following best reflects Coffey’s view on the relationship between biography and presidential memory?",
+    choices: [
+      "Biographies play a central role in constructing presidential reputations, often mediating between archival record, journalism, and public myth.",
+      "Biographies are irrelevant to public memory.",
+      "Only official government proclamations shape memory.",
+      "Memory is entirely determined by foreign policy events."
+    ],
+    correct: 0,
+    explanation: "Coffey demonstrates how biographies—popular and academic—mediate and shape collective memory, often amplifying certain narratives (scandal, personality) more than others (administrative nuance), thus affecting long-run reputational assessments. :contentReference[oaicite:27]{index=27}"
+  },
+
+  {
+    q: "Which scholar-type does Coffey treat as most useful for recovering a balanced Harding portrait?",
+    choices: [
+      "Journalists writing immediate post-death exposés only.",
+      "Scholars engaging in archival, contextual, and methodological rigor—combining political, social, and institutional lenses.",
+      "Novelists specializing in historical fiction.",
+      "Polemicists with partisan agendas."
+    ],
+    correct: 1,
+    explanation: "Coffey privileges careful scholarly work that uses archives and situates Harding within broader administrative and political contexts rather than relying on sensational narratives. :contentReference[oaicite:28]{index=28}"
+  },
+
+  {
+    q: "How does Coffey handle the question of Florence Harding’s alleged actions (e.g., poisoning)?",
+    choices: [
+      "He endorses the poisoning story wholeheartedly without reservation.",
+      "He treats such extreme claims skeptically, noting their origins in dubious sources (Means) and the lack of conclusive archival proof, while acknowledging their influence on public views.",
+      "He suggests Florence wrote the official histories herself.",
+      "He ignores any discussion of Florence Harding."
+    ],
+    correct: 1,
+    explanation: "Coffey shows caution: sensational allegations about Florence derive from suspect sources and remain unproven; nonetheless they influenced reputational narratives and must be addressed critically. :contentReference[oaicite:29]{index=29}"
+  },
+
+  {
+    q: "Coffey’s chapter contributes to historiography primarily by:",
+    choices: [
+      "Offering a methodological guide for how to read and classify Harding biographies and by mapping how evidence availability shaped interpretive waves.",
+      "Presenting new atomic theory.",
+      "Repeating only what earlier sensationalists wrote.",
+      "Proclaiming the end of historical debate."
+    ],
+    correct: 0,
+    explanation: "Coffey’s main intervention is historiographical: he classifies the literature, explains why different waves reached different conclusions, and highlights the role of archival access in reshaping interpretation. :contentReference[oaicite:30]{index=30}"
+  },
+
+  {
+    q: "Which of the following best characterizes Coffey’s tone toward the biographical enterprise on Harding?",
+    choices: [
+      "Measured and corrective: he neither indulges in sensationalism nor engages in naïve rehabilitation; instead he advocates nuanced, source-grounded interpretation.",
+      "Scornful of all historians without evidence.",
+      "Triumphalist about Harding’s greatness without qualification.",
+      "Dismissive of archival work."
+    ],
+    correct: 0,
+    explanation: "Coffey writes with scholarly balance: critical of sensationalism, sympathetic to archival nuance, and committed to methodological clarity rather than polemical extremes. :contentReference[oaicite:31]{index=31}"
+  },
+
+  {
+    q: "Which primary documentary collections does Coffey identify as transformative for later Harding scholarship?",
+    choices: [
+      "Harding’s senatorial papers, presidential papers, and private correspondence—whose release enabled more rigorous reassessment.",
+      "Random diary entries from unrelated politicians.",
+      "Only local newspapers from 1900.",
+      "No primary sources are useful."
+    ],
+    correct: 0,
+    explanation: "Coffey emphasizes the import of Harding’s own papers—senatorial, presidential, and private letters—which, once available, allowed historians to test earlier claims and reconstruct a more evidence-based narrative. :contentReference[oaicite:32]{index=32}"
+  },
+
+  {
+    q: "Coffey’s treatment suggests that a graduate student who wanted to write on Harding should prioritize:",
+    choices: [
+      "Systematic archival work, attention to provenance, and consideration of how popular culture shaped earlier narratives.",
+      "Relying only on Wikipedia entries.",
+      "Writing purely polemical essays without sources.",
+      "Avoiding archives and using rumor as primary evidence."
+    ],
+    correct: 0,
+    explanation: "Coffey implicitly advises researchers to prioritize archives, contextual analysis, and reflection on how non-scholarly narratives influenced reputations; this is the methodological heart of his chapter. :contentReference[oaicite:33]{index=33}"
+  },
+
+  {
+    q: "Which later author does Coffey list among works that contributed to reevaluation or broader bibliographic discussion of Harding?",
+    choices: [
+      "Gross, Murray, Robenalt and others who have produced works that either defend, contextualize, or reexamine Harding and the scandals.",
+      "A 19th-century pamphleteer unrelated to the presidency.",
+      "An anonymous novelist with no citations.",
+      "An obscure meteorologist."
+    ],
+    correct: 0,
+    explanation: "Coffey references later scholars (Gross, Murray, Robenalt, among others) and historiographical contributions that have complicated the early consensus and stimulated reinterpretation of Harding’s career. :contentReference[oaicite:34]{index=34}"
+  },
+
+  {
+    q: "What is Coffey’s implicit warning about relying on 'received wisdom' in presidential biography?",
+    choices: [
+      "Received wisdom can harden into conventional judgement even when based on poor sources—historians should test conventional claims against primary evidence.",
+      "Received wisdom is always right.",
+      "Never consult archives because they confuse matters.",
+      "Rely only on bestseller lists to form judgements."
+    ],
+    correct: 0,
+    explanation: "Coffey cautions that conventional narratives—especially those arising from sensational journalism—can endure despite weak evidentiary foundations; historians must therefore revisit and test these claims with documents. :contentReference[oaicite:35]{index=35}"
+  },
+
+  {
+    q: "Which best describes Coffey’s final posture toward Harding’s historical ranking?",
+    choices: [
+      "He suggests historians should abandon ranking presidents altogether.",
+      "He argues that while Harding’s reputation remains tarnished in many polls, serious archival scholarship complicates simplistic rankings and invites a more nuanced placement within presidential history.",
+      "He declares Harding as the single worst president beyond debate.",
+      "He asserts Harding was the best president without caveats."
+    ],
+    correct: 1,
+    explanation: "Coffey does not argue for absolute rehabilitation; instead he insists that archival scholarship complicates negative verdicts and that rankings should reflect nuanced evidence rather than sensational narratives. "
+  },
+
+  {
+    q: "Coffey’s chapter is principally useful to students because it:",
+    choices: [
+      "Provides a roadmap to the biography literature on Harding, explains the influence of sources and ideology, and models critical reading of biographical claims.",
+      "Teaches statistical programming.",
+      "Contains only gossip and no scholarly apparatus.",
+      "Is a short story collection."
+    ],
+    correct: 0,
+    explanation: "The chapter’s value lies in its historiographical synthesis: it surveys major works, clarifies methodological pitfalls, and models careful, evidence-based interpretation—making it especially useful for students and scholars. :contentReference[oaicite:37]{index=37}"
+  }
+];
+
+// Ensure 30 questions
+if (quiz.length !== 30) {
+  console.error("Expect 30 questions — found", quiz.length);
+  // If mismatch, fill placeholders to avoid runtime errors (shouldn't happen)
+  while (quiz.length < 30) {
+    quiz.push({ q: "Placeholder question — should not appear", choices:["A","B","C","D"], correct:0, explanation:"Placeholder." });
+  }
+}
+
+/* state */
+let state = { idx:0, answers: Array(quiz.length).fill(null) };
+
+/* DOM refs */
+const navTiles = document.getElementById('navTiles');
+const qnum = document.getElementById('qnum');
+const questionText = document.getElementById('questionText');
+const choicesForm = document.getElementById('choices');
+const answeredInfo = document.getElementById('answeredInfo');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const skipBtn = document.getElementById('skipBtn');
+const submitBtn = document.getElementById('submitBtn');
+const resetBtn = document.getElementById('resetBtn');
+const reviewCard = document.getElementById('reviewCard');
+const scoreHeader = document.getElementById('scoreHeader');
+const answersList = document.getElementById('answersList');
+const quizCard = document.getElementById('quizCard');
+
+function renderNav(){
+  navTiles.innerHTML = '';
+  for(let i=0;i<quiz.length;i++){
+    const b = document.createElement('button');
+    b.className = 'tile' + (state.answers[i]!==null ? ' answered':'');
+    b.textContent = i+1;
+    b.title = 'Go to Q' + (i+1);
+    b.addEventListener('click', ()=> { state.idx = i; renderQuestion(); });
+    navTiles.appendChild(b);
+  }
+}
+
+function renderQuestion(){
+  const q = quiz[state.idx];
+  qnum.textContent = state.idx+1;
+  // allow HTML in question text if needed:
+  questionText.innerHTML = q.q;
+  choicesForm.innerHTML = '';
+  q.choices.forEach((c,ci)=>{
+    const id = 'c_'+state.idx+'_'+ci;
+    const label = document.createElement('label');
+    label.className = 'choice';
+    label.htmlFor = id;
+    const inp = document.createElement('input');
+    inp.type = 'radio'; inp.name = 'choice'; inp.id = id; inp.value = ci;
+    inp.checked = (state.answers[state.idx] === ci);
+    inp.addEventListener('change', ()=>{
+      // store numeric index
+      state.answers[state.idx] = Number(ci);
+      renderNav(); updateAnsweredCount();
+    });
+    const span = document.createElement('div');
+    span.innerHTML = `<strong style="margin-right:8px">${String.fromCharCode(65+ci)}.</strong> ${c}`;
+    label.appendChild(inp); label.appendChild(span);
+    choicesForm.appendChild(label);
+  });
+  renderNav();
+  updateAnsweredCount();
+  // focus first input for keyboard accessibility
+  const fi = choicesForm.querySelector('input');
+  if(fi) fi.focus();
+}
+
+function updateAnsweredCount(){
+  const n = state.answers.filter(a=>a!==null).length;
+  answeredInfo.textContent = 'Answered: ' + n;
+}
+
+prevBtn.addEventListener('click', ()=> { state.idx = Math.max(0, state.idx-1); renderQuestion(); });
+nextBtn.addEventListener('click', ()=> { state.idx = Math.min(quiz.length-1, state.idx+1); renderQuestion(); });
+skipBtn.addEventListener('click', ()=> { state.idx = Math.min(quiz.length-1, state.idx+1); renderQuestion(); });
+
+submitBtn.addEventListener('click', ()=>{
+  if(!confirm("Submit and view the full academically-referenced answers? You won't be able to change answers after submission.")) return;
+  showResults();
+});
+
+resetBtn.addEventListener('click', ()=> {
+  if(!confirm("Reset all answers and restart the quiz?")) return;
+  state.answers = Array(quiz.length).fill(null);
+  state.idx = 0;
+  quizCard.style.display = 'block';
+  reviewCard.style.display = 'none';
+  renderQuestion();
+  renderNav();
+  updateAnsweredCount();
+});
+
+function showResults(){
+  let correct = 0;
+  for(let i=0;i<quiz.length;i++){
+    if(state.answers[i] !== null && state.answers[i] === quiz[i].correct) correct++;
+  }
+  const pct = Math.round((correct/quiz.length)*100);
+  scoreHeader.innerHTML = `<h2 style="margin:0;color:var(--accent)">Result: ${correct} / ${quiz.length} (${pct}%)</h2>
+    <div style="color:var(--muted);margin-top:8px">All explanations are derived from Chapter 4 of the uploaded PDF (Harding Biographies) and include in-text file citations to the uploaded source. :contentReference[oaicite:38]{index=38}</div>`;
+  answersList.innerHTML = '';
+  quiz.forEach((q,i)=>{
+    const user = state.answers[i];
+    const correctIdx = q.correct;
+    const block = document.createElement('div');
+    block.style.marginBottom='14px';
+    block.innerHTML = `<div style="font-weight:700;color:#e6eef8">Q${i+1}. ${q.q}</div>
+      <div style="margin-top:8px"><strong>Your answer:</strong> ${user===null?'<em>— skipped —</em>':String.fromCharCode(65+user)+'. '+q.choices[user]}</div>
+      <div style="margin-top:6px"><strong>Correct:</strong> ${String.fromCharCode(65+correctIdx)}. ${q.choices[correctIdx]}</div>
+      <div class="${(user===correctIdx)?'correct':'wrong'}" style="margin-top:8px">${(user===correctIdx)?'Correct':'Incorrect'}</div>
+      <div class="explanation">${q.explanation}</div>`;
+    answersList.appendChild(block);
+  });
+  quizCard.style.display = 'none';
+  reviewCard.style.display = 'block';
+  reviewCard.scrollIntoView({behavior:'smooth'});
+}
+
+/* initialize */
+renderNav();
+renderQuestion();
+updateAnsweredCount();
+</script>
+</body>
+</html>

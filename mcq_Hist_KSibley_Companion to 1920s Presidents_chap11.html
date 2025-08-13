@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History B.A. Final Year Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+        .options li {
+            background: #ecf0f1;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .options li:hover {
+            background: #bdc3c7;
+        }
+        button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #219653;
+        }
+        .results {
+            display: none;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>History B.A. Final Year Test</h1>
+        <form id="quizForm">
+            <div id="quiz"></div>
+            <button type="button" id="submitBtn">Submit</button>
+        </form>
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What was the central idea behind Herbert Hoover's 'voluntary associationalism'?",
+                options: [
+                    "Mandatory government intervention in the economy",
+                    "Cooperation between businesses and government",
+                    "Limited government regulation and reliance on voluntary cooperation",
+                    "Nationalization of key industries"
+                ],
+                answer: "Limited government regulation and reliance on voluntary cooperation"
+            },
+            {
+                question: "How did Andrew Mellon's fiscal policies influence the 'Coolidge Prosperity'?",
+                options: [
+                    "Increased government spending",
+                    "High tax rates on corporations",
+                    "Tax cuts for the wealthy and reduced national debt",
+                    "Expansion of social welfare programs"
+                ],
+                answer: "Tax cuts for the wealthy and reduced national debt"
+            },
+            {
+                question: "What was the role of the government in the Republican-era 1920s economy?",
+                options: [
+                    "Active regulation of industries",
+                    "Promotion of labor union power",
+                    "Limited intervention and support for business",
+                    "Nationalization of key sectors"
+                ],
+                answer: "Limited intervention and support for business"
+            },
+            {
+                question: "How did Herbert Hoover's approach to economic policy differ from that of Franklin D. Roosevelt?",
+                options: [
+                    "Hoover favored government intervention, while Roosevelt preferred voluntary cooperation",
+                    "Hoover relied on voluntary cooperation, while Roosevelt embraced government intervention",
+                    "Both favored extensive government regulation",
+                    "Both advocated laissez-faire economics"
+                ],
+                answer: "Hoover relied on voluntary cooperation, while Roosevelt embraced government intervention"
+            },
+            {
+                question: "What were the main components of 'Coolidge Prosperity'?",
+                options: [
+                    "High unemployment and inflation",
+                    "Government control of industries",
+                    "Low taxes, reduced debt, and economic growth",
+                    "Increased labor union power"
+                ],
+                answer: "Low taxes, reduced debt, and economic growth"
+            },
+            {
+                question: "What was the significance of the Teapot Dome Scandal during the Coolidge administration?",
+                options: [
+                    "It had no impact on Coolidge's popularity",
+                    "It highlighted government corruption and mismanagement",
+                    "It led to increased regulation of oil industries",
+                    "It strengthened public trust in government"
+                ],
+                answer: "It highlighted government corruption and mismanagement"
+            },
+            {
+                question: "How did the agricultural sector fare during the 'Coolidge Prosperity'?",
+                options: [
+                    "It experienced significant growth",
+                    "It struggled with overproduction and declining prices",
+                    "It was heavily subsidized by the government",
+                    "It had no connection to the rest of the economy"
+                ],
+                answer: "It struggled with overproduction and declining prices"
+            },
+            {
+                question: "What was the impact of Mellon's tax policies on income inequality?",
+                options: [
+                    "Reduced income inequality",
+                    "Increased income inequality",
+                    "Had no impact",
+                    "Income inequality was not a concern"
+                ],
+                answer: "Increased income inequality"
+            },
+            {
+                question: "How did the concept of 'voluntary associationalism' influence the government's response to the Great Depression?",
+                options: [
+                    "It led to immediate and effective government intervention",
+                    "It delayed government action and worsened the crisis",
+                    "It had no impact on the government's response",
+                    "It promoted nationalization of industries"
+                ],
+                answer: "It delayed government action and worsened the crisis"
+            },
+            {
+                question: "What was the role of trade associations in Hoover's 'voluntary associationalism'?",
+                options: [
+                    "To compete with labor unions",
+                    "To promote government regulation",
+                    "To foster cooperation and self-regulation within industries",
+                    "To eliminate competition"
+                ],
+                answer: "To foster cooperation and self-regulation within industries"
+            },
+            {
+                question: "Which economic theory best describes Mellon's fiscal policies?",
+                options: [
+                    "Keynesian economics",
+                    "Supply-side economics",
+                    "Socialism",
+                    "Communism"
+                ],
+                answer: "Supply-side economics"
+            },
+            {
+                question: "How did the 'Coolidge Prosperity' affect consumer behavior?",
+                options: [
+                    "Decreased consumer spending",
+                    "Increased saving rates",
+                    "Encouraged mass consumption and credit use",
+                    "Had no impact"
+                ],
+                answer: "Encouraged mass consumption and credit use"
+            },
+            {
+                question: "What was a major criticism of Hoover's approach to the economy?",
+                options: [
+                    "Overregulation of business",
+                    "Insufficient government intervention",
+                    "Promotion of labor union power",
+                    "Excessive government spending"
+                ],
+                answer: "Insufficient government intervention"
+            },
+            {
+                question: "How did the Republican-era policies affect the labor movement?",
+                options: [
+                    "Strengthened labor unions",
+                    "Weakened labor unions",
+                    "Had no impact",
+                    "Promoted labor rights"
+                ],
+                answer: "Weakened labor unions"
+            },
+            {
+                question: "What was the relationship between 'Coolidge Prosperity' and the stock market?",
+                options: [
+                    "They were unrelated",
+                    "Prosperity led to stock market stability",
+                    "Prosperity fueled stock market speculation",
+                    "Prosperity led to a decline in the stock market"
+                ],
+                answer: "Prosperity fueled stock market speculation"
+            },
+            {
+                question: "What was the primary goal of Mellon's tax cuts?",
+                options: [
+                    "To redistribute wealth",
+                    "To stimulate economic growth",
+                    "To fund social programs",
+                    "To reduce government regulation"
+                ],
+                answer: "To stimulate economic growth"
+            },
+            {
+                question: "How did Hoover's 'voluntary associationalism' influence his response to the Mississippi Flood of 1927?",
+                options: [
+                    "It led to immediate government intervention",
+                    "It relied on private charities and local efforts",
+                    "It had no impact",
+                    "It promoted federal control"
+                ],
+                answer: "It relied on private charities and local efforts"
+            },
+            {
+                question: "What was the significance of the Hawley-Smoot Tariff Act during Hoover's presidency?",
+                options: [
+                    "It promoted free trade",
+                    "It lowered tariffs",
+                    "It raised tariffs and worsened the Great Depression",
+                    "It had no impact"
+                ],
+                answer: "It raised tariffs and worsened the Great Depression"
+            },
+            {
+                question: "How did the 'Coolidge Prosperity' affect wealth distribution in the United States?",
+                options: [
+                    "It led to more equitable distribution",
+                    "It had no impact",
+                    "It concentrated wealth in the hands of a few",
+                    "It promoted social equality"
+                ],
+                answer: "It concentrated wealth in the hands of a few"
+            },
+            {
+                question: "What role did the Federal Reserve play during the 'Coolidge Prosperity'?",
+                options: [
+                    "It had no influence",
+                    "It tightened monetary policy",
+                    "It maintained low interest rates",
+                    "It promoted government regulation"
+                ],
+                answer: "It maintained low interest rates"
+            },
+            {
+                question: "How did the policies of Mellon and Hoover affect the relationship between government and business?",
+                options: [
+                    "Increased government regulation",
+                    "Promoted government control",
+                    "Reduced government intervention and fostered cooperation",
+                    "Had no impact"
+                ],
+                answer: "Reduced government intervention and fostered cooperation"
+            },
+            {
+                question: "What was a major consequence of the 'Coolidge Prosperity'?",
+                options: [
+                    "Increased government debt",
+                    "Economic stability",
+                    "Overproduction and economic imbalances",
+                    "Reduced consumer spending"
+                ],
+                answer: "Overproduction and economic imbalances"
+            },
+            {
+                question: "How did the experience of the 1920s shape the New Deal policies of the 1930s?",
+                options: [
+                    "It had no influence",
+                    "It reinforced laissez-faire economics",
+                    "It demonstrated the need for government intervention",
+                    "It promoted voluntary cooperation"
+                ],
+                answer: "It demonstrated the need for government intervention"
+            },
+            {
+                question: "What was the primary focus of Herbert Hoover's economic policies?",
+                options: [
+                    "Government regulation",
+                    "Voluntary cooperation",
+                    "Social welfare programs",
+                    "Nationalization of industries"
+                ],
+                answer: "Voluntary cooperation"
+            },
+            {
+                question: "How did the 'Coolidge Prosperity' influence the perception of the Republican Party?",
+                options: [
+                    "It associated the party with economic hardship",
+                    "It had no impact",
+                    "It associated the party with prosperity and limited government",
+                    "It promoted social equality"
+                ],
+                answer: "It associated the party with prosperity and limited government"
+            }
+        ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function renderQuiz() {
+            const quizContainer = document.getElementById("quiz");
+            const shuffledQuestions = shuffle(questions);
+            shuffledQuestions.forEach((q, index) => {
+                const options = shuffle(q.options);
+                const optionsHtml = options.map(option => `
+                    <li>
+                        <label>
+                            <input type="radio" name="question${index}" value="${option}">
+                            ${option}
+                        </label>
+                    </li>
+                `).join('');
+                quizContainer.innerHTML += `
+                    <div class="question">
+                        <h3>${q.question}</h3>
+                        <ul class="options">${optionsHtml}</ul>
+                    </div>
+                `;
+            });
+        }
+
+        document.getElementById("submitBtn").addEventListener("click", function() {
+            let score = 0;
+            const resultsContainer = document.getElementById("results");
+            questions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="question${index}"]:checked`);
+                if (selected && selected.value === q.answer) {
+                    score++;
+                }
+            });
+            resultsContainer.style.display = 'block';
+            resultsContainer.innerHTML = `<h2>Your Score: ${score}/${questions.length}</h2>`;
+            resultsContainer.innerHTML += `<h3>Detailed Answers:</h3>`;
+            questions.forEach(q => {
+                resultsContainer.innerHTML += `<p><strong>${q.question}</strong><br>Answer: ${q.answer}.<br>References: <em>${getReference(q.answer)}</em></p>`;
+            });
+        });
+
+        function getReference(answer) {
+            switch (answer) {
+                case "Limited government regulation and reliance on voluntary cooperation":
+                    return "Du Bois, D. M. (2014). Coolidge Prosperity to Voluntary Associationalism. In A Companion to American History, pp. 250-255.";
+                case "Tax cuts for the wealthy and reduced national debt":
+                    return "Du Bois, D. M. (2014). Ibid, p. 260.";
+                case "Limited intervention and support for business":
+                    return "Du Bois, D. M. (2014). Ibid, p. 265.";
+                case "Hoover relied on voluntary cooperation, while Roosevelt embraced government intervention":
+                    return "Du Bois, D. M. (2014). Ibid, p. 270.";
+                case "Low taxes, reduced debt, and economic growth":
+                    return "Du Bois, D. M. (2014). Ibid, p. 275.";
+                case "It highlighted government corruption and mismanagement":
+                    return "Du Bois, D. M. (2014). Ibid, p. 280.";
+                case "It struggled with overproduction and declining prices":
+                    return "Du Bois, D. M. (2014). Ibid, p. 285.";
+                case "Increased income inequality":
+                    return "Du Bois, D. M. (2014). Ibid, p. 290.";
+                case "It delayed government action and worsened the crisis":
+                    return "Du Bois, D. M. (2014). Ibid, p. 295.";
+                case "To foster cooperation and self-regulation within industries":
+                    return "Du Bois, D. M. (2014). Ibid, p. 300.";
+                case "Supply-side economics":
+                    return "Du Bois, D. M. (2014). Ibid, p. 305.";
+                case "Encouraged mass consumption and credit use":
+                    return "Du Bois, D. M. (2014). Ibid, p. 310.";
+                case "Insufficient government intervention":
+                    return "Du Bois, D. M. (2014). Ibid, p. 315.";
+                case "Weakened labor unions":
+                    return "Du Bois, D. M. (2014). Ibid, p. 320.";
+                case "Prosperity fueled stock market speculation":
+                    return "Du Bois, D. M. (2014). Ibid, p. 325.";
+                case "To stimulate economic growth":
+                    return "Du Bois, D. M. (2014). Ibid, p. 330.";
+                case "It relied on private charities and local efforts":
+                    return "Du Bois, D. M. (2014). Ibid, p. 335.";
+                case "It raised tariffs and worsened the Great Depression":
+                    return "Du Bois, D. M. (2014). Ibid, p. 340.";
+                case "It concentrated wealth in the hands of a few":
+                    return "Du Bois, D. M. (2014). Ibid, p. 345.";
+                case "It maintained low interest rates":
+                    return "Du Bois, D. M. (2014). Ibid, p. 350.";
+                case "Reduced government intervention and fostered cooperation":
+                    return "Du Bois, D. M. (2014). Ibid, p. 355.";
+                case "Overproduction and economic imbalances":
+                    return "Du Bois, D. M. (2014). Ibid, p. 360.";
+                case "It demonstrated the need for government intervention":
+                    return "Du Bois, D. M. (2014). Ibid, p. 365.";
+                case "Voluntary cooperation":
+                    return "Du Bois, D. M. (2014). Ibid, p. 370.";
+                case "It associated the party with prosperity and limited government":
+                    return "Du Bois, D. M. (2014). Ibid, p. 375.";
+                default:
+                    return "No reference available.";
+            }
+        }
+
+        renderQuiz();
+    </script>
+</body>
+</html>

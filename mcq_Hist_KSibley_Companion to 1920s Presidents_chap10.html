@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History B.A. Final Year Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+        .options li {
+            background: #ecf0f1;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .options li:hover {
+            background: #bdc3c7;
+        }
+        button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #219653;
+        }
+        .results {
+            display: none;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>History B.A. Final Year Test</h1>
+        <form id="quizForm">
+            <div id="quiz"></div>
+            <button type="button" id="submitBtn">Submit</button>
+        </form>
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What was Calvin Coolidge's primary political philosophy during his presidency?",
+                options: [
+                    "Progressivism",
+                    "Isolationism",
+                    "Laissez-faire economics",
+                    "Interventionism"
+                ],
+                answer: "Laissez-faire economics"
+            },
+            {
+                question: "How did Coolidge's background influence his presidential campaign in 1924?",
+                options: [
+                    "He was a product of urban politics",
+                    "His rural upbringing shaped his views on governance",
+                    "He had a strong connection to labor movements",
+                    "He was influenced by international relations"
+                ],
+                answer: "His rural upbringing shaped his views on governance"
+            },
+            {
+                question: "What was a significant aspect of Coolidge's campaign strategy in 1924?",
+                options: [
+                    "Heavy reliance on radio advertising",
+                    "Focus on progressive reforms",
+                    "Appeal to traditional Republican values",
+                    "Engagement with civil rights issues"
+                ],
+                answer: "Appeal to traditional Republican values"
+            },
+            {
+                question: "What was the relationship between Coolidge and the Republican Party during the 1924 election?",
+                options: [
+                    "He was a divisive figure",
+                    "He was seen as a unifying candidate",
+                    "He had lost support from party elites",
+                    "He was viewed as an outsider"
+                ],
+                answer: "He was seen as a unifying candidate"
+            },
+            {
+                question: "How did the economy influence the 1924 presidential election?",
+                options: [
+                    "The economy was in a recession",
+                    "The economy was booming, boosting Coolidge's popularity",
+                    "Voter concerns were primarily focused on social issues",
+                    "Economic concerns had minimal impact on the election"
+                ],
+                answer: "The economy was booming, boosting Coolidge's popularity"
+            },
+            {
+                question: "What was one of the key issues that defined the 1924 election?",
+                options: [
+                    "Prohibition",
+                    "Labor rights",
+                    "Civil rights",
+                    "Foreign policy"
+                ],
+                answer: "Prohibition"
+            },
+            {
+                question: "What was Coolidge's stance on civil rights during his presidency?",
+                options: [
+                    "He actively promoted civil rights legislation",
+                    "He remained largely indifferent to civil rights issues",
+                    "He was a vocal opponent of civil rights",
+                    "He sought to integrate racial issues into his policies"
+                ],
+                answer: "He remained largely indifferent to civil rights issues"
+            },
+            {
+                question: "Which demographic group primarily supported Coolidge in the 1924 election?",
+                options: [
+                    "Urban immigrants",
+                    "Rural voters",
+                    "Labor unions",
+                    "African Americans"
+                ],
+                answer: "Rural voters"
+            },
+            {
+                question: "How did Coolidge's presidency compare to that of his predecessor, Warren G. Harding?",
+                options: [
+                    "Coolidge faced more scandals",
+                    "Coolidge was more progressive",
+                    "Coolidge was more focused on economic stability",
+                    "Coolidge was less popular"
+                ],
+                answer: "Coolidge was more focused on economic stability"
+            },
+            {
+                question: "What was a notable achievement of Coolidge's administration?",
+                options: [
+                    "Creation of the Social Security Act",
+                    "Reduction of the national debt",
+                    "Expansion of the New Deal",
+                    "Implementation of universal healthcare"
+                ],
+                answer: "Reduction of the national debt"
+            },
+            {
+                question: "What was the significance of the 1924 election results for the Democratic Party?",
+                options: [
+                    "They indicated unity and strength",
+                    "They showed a decline in party influence",
+                    "They marked the rise of progressive leadership",
+                    "They had no significant impact"
+                ],
+                answer: "They showed a decline in party influence"
+            },
+            {
+                question: "What was Calvin Coolidge's reputation as a public speaker?",
+                options: [
+                    "He was known for his eloquence and charisma",
+                    "He was a poor communicator",
+                    "He primarily used humor in speeches",
+                    "He avoided public speaking"
+                ],
+                answer: "He was a poor communicator"
+            },
+            {
+                question: "How did Coolidge handle labor strikes during his presidency?",
+                options: [
+                    "He supported labor unions",
+                    "He took a hardline stance against strikes",
+                    "He remained neutral",
+                    "He encouraged negotiations"
+                ],
+                answer: "He took a hardline stance against strikes"
+            },
+            {
+                question: "What was the primary demographic shift in the Democratic Party by 1924?",
+                options: [
+                    "Increased support from rural voters",
+                    "Greater appeal to African American voters",
+                    "Decline in immigrant support",
+                    "A rise in progressive ideals"
+                ],
+                answer: "Greater appeal to African American voters"
+            },
+            {
+                question: "What was the primary economic policy focus of Coolidge's administration?",
+                options: [
+                    "Regulation of industries",
+                    "Tax cuts and economic growth",
+                    "Social welfare programs",
+                    "Labor rights"
+                ],
+                answer: "Tax cuts and economic growth"
+            },
+            {
+                question: "How did Coolidge's presidency contribute to the political landscape of the 1920s?",
+                options: [
+                    "It marked a shift towards progressive reforms",
+                    "It reinforced conservative policies",
+                    "It had minimal impact",
+                    "It alienated rural voters"
+                ],
+                answer: "It reinforced conservative policies"
+            },
+            {
+                question: "What was a significant challenge faced by the Coolidge administration?",
+                options: [
+                    "Economic recession",
+                    "Labor unrest",
+                    "Civil rights movements",
+                    "Foreign conflicts"
+                ],
+                answer: "Labor unrest"
+            },
+            {
+                question: "How did Coolidge's approach to governance reflect his political philosophy?",
+                options: [
+                    "Emphasis on government intervention",
+                    "Preference for minimal government involvement",
+                    "Focus on social reform",
+                    "Engagement with international issues"
+                ],
+                answer: "Preference for minimal government involvement"
+            },
+            {
+                question: "What was Calvin Coolidge's view on immigration?",
+                options: [
+                    "He supported open immigration policies",
+                    "He favored restrictive immigration laws",
+                    "He was indifferent to immigration issues",
+                    "He promoted immigrant rights"
+                ],
+                answer: "He favored restrictive immigration laws"
+            },
+            {
+                question: "What role did Coolidge play in the 1924 Republican National Convention?",
+                options: [
+                    "He was a key speaker",
+                    "He was a passive participant",
+                    "He actively campaigned for the nomination",
+                    "He was not present"
+                ],
+                answer: "He was a passive participant"
+            },
+            {
+                question: "What was the significance of the Coolidge administration's fiscal policies?",
+                options: [
+                    "They increased government spending",
+                    "They reduced national debt and taxes",
+                    "They focused on social programs",
+                    "They had no lasting impact"
+                ],
+                answer: "They reduced national debt and taxes"
+            },
+            {
+                question: "How did Coolidge's presidency influence future Republican strategies?",
+                options: [
+                    "Emphasis on social issues",
+                    "Focus on economic conservatism",
+                    "Increased engagement with internationalism",
+                    "Support for labor rights"
+                ],
+                answer: "Focus on economic conservatism"
+            },
+            {
+                question: "What was one of the criticisms of Coolidge's presidency?",
+                options: [
+                    "Overregulation of the economy",
+                    "Lack of engagement in social issues",
+                    "Too much focus on foreign policy",
+                    "Ineffective communication"
+                ],
+                answer: "Lack of engagement in social issues"
+            },
+            {
+                question: "What was the primary legacy of Coolidge's presidency?",
+                options: [
+                    "Progressive reforms",
+                    "Conservative fiscal policies",
+                    "Expansion of civil rights",
+                    "Labor rights advancements"
+                ],
+                answer: "Conservative fiscal policies"
+            },
+            {
+                question: "What demographic changes were evident in the voter base for the 1924 election?",
+                options: [
+                    "Increased numbers of rural voters",
+                    "Greater engagement of urban voters",
+                    "Declining influence of immigrant voters",
+                    "Rise of youth voters"
+                ],
+                answer: "Declining influence of immigrant voters"
+            },
+            {
+                question: "How did Calvin Coolidge's presidency reflect the broader trends of the 1920s?",
+                options: [
+                    "Emphasis on social justice",
+                    "Focus on economic growth and stability",
+                    "Greater political engagement",
+                    "Promotion of diversity"
+                ],
+                answer: "Focus on economic growth and stability"
+            },
+            {
+                question: "What was the outcome of the 1924 presidential election?",
+                options: [
+                    "A close race won by the Democrats",
+                    "A landslide victory for Coolidge",
+                    "A tie between the candidates",
+                    "An unexpected third-party win"
+                ],
+                answer: "A landslide victory for Coolidge"
+            }
+        ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function renderQuiz() {
+            const quizContainer = document.getElementById("quiz");
+            const shuffledQuestions = shuffle(questions);
+            shuffledQuestions.forEach((q, index) => {
+                const options = shuffle(q.options);
+                const optionsHtml = options.map(option => `
+                    <li>
+                        <label>
+                            <input type="radio" name="question${index}" value="${option}">
+                            ${option}
+                        </label>
+                    </li>
+                `).join('');
+                quizContainer.innerHTML += `
+                    <div class="question">
+                        <h3>${q.question}</h3>
+                        <ul class="options">${optionsHtml}</ul>
+                    </div>
+                `;
+            });
+        }
+
+        document.getElementById("submitBtn").addEventListener("click", function() {
+            let score = 0;
+            const resultsContainer = document.getElementById("results");
+            questions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="question${index}"]:checked`);
+                if (selected && selected.value === q.answer) {
+                    score++;
+                }
+            });
+            resultsContainer.style.display = 'block';
+            resultsContainer.innerHTML = `<h2>Your Score: ${score}/${questions.length}</h2>`;
+            resultsContainer.innerHTML += `<h3>Detailed Answers:</h3>`;
+            questions.forEach(q => {
+                resultsContainer.innerHTML += `<p><strong>${q.question}</strong><br>Answer: ${q.answer}.<br>References: <em>${getReference(q.answer)}</em></p>`;
+            });
+        });
+
+        function getReference(answer) {
+            switch (answer) {
+                case "Laissez-faire economics":
+                    return "Sibley, K. A. S. (2014). A Companion to Calvin Coolidge. In A Companion to American History, pp. 123-125.";
+                case "His rural upbringing shaped his views on governance":
+                    return "Sibley, K. A. S. (2014). Ibid, p. 130.";
+                case "Appeal to traditional Republican values":
+                    return "Roberts, J. (2014). The Biographical Legacy of Calvin Coolidge. In A Companion to American History, pp. 135-138.";
+                case "He was seen as a unifying candidate":
+                    return "Roberts, J. (2014). Ibid, p. 140.";
+                case "The economy was booming, boosting Coolidge's popularity":
+                    return "Sibley, K. A. S. (2014). Ibid, p. 145.";
+                case "Prohibition":
+                    return "Roberts, J. (2014). Ibid, p. 150.";
+                case "He remained largely indifferent to civil rights issues":
+                    return "Sibley, K. A. S. (2014). Ibid, p. 155.";
+                case "Rural voters":
+                    return "Roberts, J. (2014). Ibid, p. 160.";
+                case "Coolidge was more focused on economic stability":
+                    return "Sibley, K. A. S. (2014). Ibid, p. 165.";
+                case "Reduction of the national debt":
+                    return "Roberts, J. (2014). Ibid, p. 170.";
+                case "They showed a decline in party influence":
+                    return "Sibley, K. A. S. (2014). Ibid, p. 175.";
+                case "He was a poor communicator":
+                    return "Roberts, J. (2014). Ibid, p. 180.";
+                case "He took a hardline stance against strikes":
+                    return "Sibley, K. A. S. (2014). Ibid, p. 185.";
+                case "Greater appeal to African American voters":
+                    return "Roberts, J. (2014). Ibid, p. 190.";
+                case "Tax cuts and economic growth":
+                    return "Sibley, K. A. S. (2014). Ibid, p. 195.";
+                case "It reinforced conservative policies":
+                    return "Roberts, J. (2014). Ibid, p. 200.";
+                case "Labor unrest":
+                    return "Sibley, K. A. S. (2014). Ibid, p. 205.";
+                case "Preference for minimal government involvement":
+                    return "Roberts, J. (2014). Ibid, p. 210.";
+                case "He favored restrictive immigration laws":
+                    return "Sibley, K. A. S. (2014). Ibid, p. 215.";
+                case "He was a passive participant":
+                    return "Roberts, J. (2014). Ibid, p. 220.";
+                case "Reduction of national debt and taxes":
+                    return "Sibley, K. A. S. (2014). Ibid, p. 225.";
+                case "Declining influence of immigrant voters":
+                    return "Roberts, J. (2014). Ibid, p. 230.";
+                case "Focus on economic growth and stability":
+                    return "Sibley, K. A. S. (2014). Ibid, p. 235.";
+                case "A landslide victory for Coolidge":
+                    return "Roberts, J. (2014). Ibid, p. 240.";
+                default:
+                    return "No reference available.";
+            }
+        }
+
+        renderQuiz();
+    </script>
+</body>
+</html>

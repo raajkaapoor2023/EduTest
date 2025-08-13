@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Chapter 2 — Progressivism in an Age of Normalcy — Final BA Test</title>
+<style>
+  :root{
+    --bg:#071022; --card:#071827; --accent:#f59e0b; --accent2:#ef4444;
+    --muted:#98a2b3; --good:#10b981; --bad:#ef4444; --glass: rgba(255,255,255,0.03);
+    --card-radius:12px; --maxw:1100px;
+  }
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;color:#e6eef8;background:
+    radial-gradient(600px 300px at 10% 10%, rgba(245,158,11,0.06), transparent),
+    linear-gradient(180deg,#071022,#03101a);}
+  .container{max-width:1100px;margin:28px auto;border-radius:14px;display:grid;grid-template-columns:320px 1fr;gap:18px;padding:18px;background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.00));box-shadow:0 14px 40px rgba(0,0,0,0.6);}
+  aside{padding:18px;border-right:1px solid rgba(255,255,255,0.02)}
+  header h1{margin:0;color:var(--accent);font-size:18px}
+  header p{margin:6px 0 0 0;color:var(--muted);font-size:13px}
+  .navTiles{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+  .tile{width:36px;height:36px;border-radius:8px;background:var(--glass);display:flex;align-items:center;justify-content:center;color:var(--muted);cursor:pointer;border:1px solid rgba(255,255,255,0.02)}
+  .tile.answered{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#071022}
+  main{padding:18px}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,0.015),rgba(255,255,255,0.01));padding:16px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
+  .question{font-size:18px;margin-bottom:12px}
+  .choices{display:flex;flex-direction:column;gap:10px}
+  .choice{padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);cursor:pointer;background:transparent;display:flex;gap:12px;align-items:flex-start}
+  .controls{display:flex;justify-content:space-between;margin-top:14px}
+  .btn{padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+  .btn.primary{background:var(--accent);color:#071022}
+  .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+  .explanation{background:rgba(255,255,255,0.02);padding:12px;border-radius:8px;color:var(--muted);margin-top:10px}
+  .correct{color:var(--good);font-weight:700}
+  .wrong{color:var(--bad);font-weight:700}
+  .review{margin-top:16px}
+  @media (max-width:980px){.container{grid-template-columns:1fr} aside{order:2;border-top:1px solid rgba(255,255,255,0.02)}}
+</style>
+</head>
+<body>
+<div class="container" role="application" aria-labelledby="title">
+  <aside>
+    <header>
+      <h1 id="title">Chapter 2 — Progressivism in an Age of Normalcy</h1>
+      <p>30 MCQs — Women’s rights, Civil Service, Veterans, Child Welfare — (John F. Fox, Jr.)</p>
+    </header>
+    <div style="margin-top:12px;color:var(--muted);font-size:13px">
+      <div><strong>Source:</strong> Uploaded PDF — Chapter 2. See file citations in answers. :contentReference[oaicite:0]{index=0} :contentReference[oaicite:1]{index=1}</div>
+      <div style="margin-top:10px">Tiles show answered status. Use them to skip and return. Submit to see full academically-referenced answers.</div>
+    </div>
+    <div class="navTiles" id="navTiles" aria-hidden="false"></div>
+  </aside>
+
+  <main>
+    <div class="card" id="quizCard">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-size:13px;color:var(--muted)">Question <span id="qnum">1</span> / 30</div>
+        <div style="font-size:13px;color:var(--muted)" id="answeredInfo">Answered: 0</div>
+      </div>
+
+      <div style="margin-top:12px">
+        <div class="question" id="questionText">Loading…</div>
+        <form id="choices" class="choices" aria-labelledby="questionText"></form>
+      </div>
+
+      <div class="controls">
+        <div style="display:flex;gap:8px">
+          <button class="btn secondary" id="prevBtn" type="button">&larr; Prev</button>
+          <button class="btn secondary" id="nextBtn" type="button">Next &rarr;</button>
+          <button class="btn secondary" id="skipBtn" type="button">Skip</button>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn primary" id="submitBtn" type="button">Submit — Show Answers</button>
+          <button class="btn secondary" id="resetBtn" type="button">Reset</button>
+        </div>
+      </div>
+
+      <div id="resultArea"></div>
+    </div>
+
+    <div id="reviewCard" class="card" style="display:none">
+      <div id="scoreHeader"></div>
+      <div id="answersList" class="review"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+/* 30 Qs derived from Chapter 2 of the uploaded PDF.
+   Explanations include file citations returned by file_search (e.g., :contentReference[oaicite:2]{index=2}).
+*/
+
+const quiz = [
+  { q: "Harding’s slogan 'Return to Normalcy' primarily signified:", choices:[
+      "A call for rapid radical reforms and intensified federal activism.",
+      "A desire to reverse World War I social upheavals and slow Progressive experimentation.",
+      "An appeal for immediate US membership in the League of Nations.",
+      "A program of aggressive economic nationalization."
+    ], correct:1, explanation:"Harding’s 'normalcy' promised readjustment after war, pandemic, and strikes — signaling retreat from Progressive-era experimentation toward stability. :contentReference[oaicite:3]{index=3}" },
+
+  { q: "Which two Constitutional / major political victories from the Progressive Era are noted as carrying into the 1920s?", choices:[
+      "The 18th and 19th Amendments (Prohibition and Women’s suffrage).",
+      "Repeal of the 16th Amendment and abolition of the Supreme Court.",
+      "Introduction of the direct election of senators and lowering the voting age to 18.",
+      "Establishment of an imperial presidency and universal basic income."
+    ], correct:0, explanation:"Chapter 2 highlights Prohibition (18th) and the Nineteenth Amendment as crucial Progressive legacies that shaped 1920s politics and the electorate. :contentReference[oaicite:4]{index=4}" },
+
+  { q: "The Sheppard–Towner Act (maternal/child health) in the early 1920s is best described as:", choices:[
+      "A federal maternal and child health program passed during Warren G. Harding’s administration (supporting maternalist policy).",
+      "A law abolishing child welfare programs.",
+      "A tariff regulating imported children’s toys.",
+      "A Supreme Court decision restricting federal health policy."
+    ], correct:0, explanation:"The Sheppard–Towner Act (1921) represented a maternalist welfare measure and is discussed as evidence that some Progressive-era reforms continued into the 1920s. :contentReference[oaicite:5]{index=5}" },
+
+  { q: "Which institutional reform consolidated veterans’ programs into a single administration under Harding?", choices:[
+      "The Social Security Administration.",
+      "The Veterans Bureau (Sweet Bill) consolidating benefits and programs.",
+      "The Works Progress Administration.",
+      "The Department of Homeland Security."
+    ], correct:1, explanation:"Harding supported centralizing veteran benefits via the Veterans Bureau (sometimes called the Sweet Bill) though its director Charles Forbes later faced corruption charges. :contentReference[oaicite:6]{index=6}" },
+
+  { q: "What scandal associated with the Veterans Bureau is highlighted in Chapter 2?", choices:[
+      "Charles Forbes’s corruption and kickbacks at the Veterans Bureau.",
+      "An espionage ring selling veterans’ identities.",
+      "A successful, scandal-free veterans program.",
+      "The Bureau’s refusal to serve any veterans at all."
+    ], correct:0, explanation:"Chapter 2 highlights the corruption scandal involving Charles Forbes, which undermined public confidence in veterans’ administration. :contentReference[oaicite:7]{index=7}" },
+
+  { q: "The vocational rehabilitation program for WWI veterans was established by which act?", choices:[
+      "The GI Bill of 1944.",
+      "The Vocational Rehabilitation Act of 1918 (later amended 1920).",
+      "The Bonus Army Act of 1932.",
+      "The Federal Reserve Act."
+    ], correct:1, explanation:"Congress passed the Vocational Rehabilitation Act of 1918 to provide training and rehabilitation for wounded veterans; it was amended in 1920. :contentReference[oaicite:8]{index=8}" },
+
+  { q: "How does Chapter 2 treat Republican-era attitudes toward veterans’ benefits?", choices:[
+      "Republicans uniformly expanded benefits without controversy.",
+      "Republican administrations created institutions for veterans but often faced fiscal parsimony and controversy over distribution and corruption.",
+      "Republicans abolished all veterans’ benefits.",
+      "Veterans’ benefits were irrelevant to 1920s politics."
+    ], correct:1, explanation:"The chapter shows an ambivalent Republican record: institutional creation (Veterans Bureau) but parsimony and distributional controversies, plus corruption episodes. :contentReference[oaicite:9]{index=9}" },
+
+  { q: "Which organization was chartered in 1919 and became pivotal in veteran politics?", choices:[
+      "The National Recovery Administration.",
+      "The American Legion.",
+      "The Ku Klux Klan.",
+      "The Federal Reserve."
+    ], correct:1, explanation:"The American Legion (chartered 1919) played a major role in veteran advocacy and politics in the postwar era. :contentReference[oaicite:10]{index=10}" },
+
+  { q: "What main historiographical question frames Chapter 2?", choices:[
+      "Whether the Progressive Era had any meaningful reforms.",
+      "What happened to progressivism during the 1920s — did it end, persist, or mutate under 'normalcy'?",
+      "Whether the 1920s were the first digital age.",
+      "If Harding secretly supported Wilson’s League of Nations."
+    ], correct:1, explanation:"Fox frames the chapter by asking whether progressivism collapsed or persisted under the rhetoric of normalcy — a long-standing historiographical question (Link, Hofstadter, McGerr). :contentReference[oaicite:11]{index=11}" },
+
+  { q: "Which historian coined the question 'Whatever Happened to the Progressive Movement in the 1920s?' cited in the chapter?", choices:[
+      "Arthur Link",
+      "Richard Hofstadter",
+      "Michael McGerr",
+      "Theda Skocpol"
+    ], correct:0, explanation:"Arthur Link's influential 1959 essay poses that titular question about the fate of progressivism in the 1920s. :contentReference[oaicite:12]{index=12}" },
+
+  { q: "How does the chapter describe women’s political role immediately after suffrage?", choices:[
+      "Women disappeared from all political activity.",
+      "Women’s suffrage reshaped electorates and gave women new political leverage, but their policy priorities and organization varied and produced mixed policy outcomes.",
+      "Women formed a single unified political party that controlled Congress.",
+      "Women were immediately granted equal representation in all offices."
+    ], correct:1, explanation:"The chapter notes the transformative but complicated effects of women’s suffrage: expanded electorate and continued diverse activism; outcomes were uneven. :contentReference[oaicite:13]{index=13}" },
+
+  { q: "Which policy area does the Sheppard–Towner Act specifically address?", choices:[
+      "Veteran pensions.",
+      "Maternal and child health (public health/welfare for mothers and infants).",
+      "Corporate taxation reform.",
+      "Prohibition enforcement."
+    ], correct:1, explanation:"Sheppard–Towner addressed maternal and child health (a maternalist welfare measure carried into the early 1920s). :contentReference[oaicite:14]{index=14}" },
+
+  { q: "What tension about the civil service does Chapter 2 emphasize?", choices:[
+      "The growth of the civil service to implement welfare policies vs. corruption and calls for reform.",
+      "That civil servants unanimously supported radical socialism.",
+      "The immediate privatization of all civil service jobs.",
+      "That civil service didn’t exist before 1930."
+    ], correct:0, explanation:"Fox examines how an expanding civil service was needed to implement reforms even as scandals and reform calls complicated its development. :contentReference[oaicite:15]{index=15}" },
+
+  { q: "Which critical interpretation of progressivism (mid-20th century) is discussed in the chapter — arguing reforms were social-control by the middle class?", choices:[
+      "Gabriel Kolko / New Left Marxist capture thesis",
+      "Richard Hofstadter’s status-anxiety model and Kolko’s critique that reforms could be conservative or social-control mechanisms.",
+      "The Consensus School of the 1950s celebrating progressives as near-perfect democrats.",
+      "A purely technological explanation."
+    ], correct:1, explanation:"The chapter surveys Hofstadter’s status-anxiety thesis and Kolko’s capture critique among other historiographical positions on the motives and outcomes of progressives. :contentReference[oaicite:16]{index=16}" },
+
+  { q: "How does Fox treat the idea that the 1920s were simply an 'interregnum' between Progressive Era and New Deal?", choices:[
+      "He endorses it without nuance.",
+      "He questions the simplicity of that label and shows that some reforms persisted while the decade had its own distinct patterns.",
+      "He claims the 1920s invented the New Deal.",
+      "He argues the 1920s were wholly identical to the Gilded Age."
+    ], correct:1, explanation:"Fox acknowledges the 'interregnum' idea but argues the decade contained continuities and unique reforms; progressivism didn't wholly vanish. :contentReference[oaicite:17]{index=17}" },
+
+  { q: "Which major public policy area saw a prominent maternalist reform in the early 1920s?", choices:[
+      "Monetary policy",
+      "Maternal and child health (Sheppard–Towner)",
+      "Abolition of child labor entirely nationwide in 1921",
+      "The New Deal pensions"
+    ], correct:1, explanation:"Chapter 2 highlights maternalist policy (e.g., Sheppard–Towner) as a key realm where Progressive-era concerns resurfaced or continued into the 1920s. :contentReference[oaicite:18]{index=18}" },
+
+  { q: "Which problem complicated flood relief efforts under Hoover (as discussed in the chapter)?", choices:[
+      "Excellent and equitable distribution to all races",
+      "Relief was sometimes insufficient and unequally distributed, disadvantaging African Americans.",
+      "He refused to organize any relief.",
+      "He nationalized all private property in the flood zone."
+    ], correct:1, explanation:"Hoover’s Mississippi flood relief efforts were rapid and organizationally impressive, but scholars show distributional failures that disadvantaged African Americans. :contentReference[oaicite:19]{index=19}" },
+
+  { q: "What does Fox say about Republican rhetoric vs. administrative reality in the 1920s?", choices:[
+      "Republicans rhetorically rejected progressivism yet retained many of its administrative innovations.",
+      "Republicans were completely uninterested in administrative governance.",
+      "Republicans immediately dismantled all federal institutions.",
+      "Republicans embraced socialism."
+    ], correct:0, explanation:"The chapter notes a gap: anti-Wilsonian rhetoric but practical retention of federal institutions and some reforms. :contentReference[oaicite:20]{index=20}" },
+
+  { q: "How does the chapter treat the issue of veterans’ parsimony in the 1920s?", choices:[
+      "As a myth that never occurred.",
+      "As a real tendency — public stinginess and contested politics over veteran relief prior to the New Deal-era GI benefits.",
+      "As evidence that veterans were universally wealthy.",
+      "As something unrelated to politics."
+    ], correct:1, explanation:"Fox documents contested politics and fiscal parsimony toward veterans in the 1920s, clarifying long-term causes for later demands (e.g., Bonus Army). :contentReference[oaicite:21]{index=21}" },
+
+  { q: "Which framework does Theda Skocpol bring into scholarship that Fox references?", choices:[
+      "Social science-informed institutional analysis of associations, state capacity and welfare development.",
+      "A purely literary approach.",
+      "An astrology-based periodization.",
+      "A claim that progressivism began in the 1940s."
+    ], correct:0, explanation:"Fox references Skocpol’s institutionalist, comparative approach tracing associations, state capacity, and welfare politics. :contentReference[oaicite:22]{index=22}" },
+
+  { q: "Fox’s treatment of women’s organizations in the 1920s emphasizes:", choices:[
+      "Their uniform and singular agenda across all groups.",
+      "Diverse agendas — some pursued maternalist welfare, others professional rights or legal reforms — producing uneven policy effects.",
+      "That women organized only for temperance and then stopped.",
+      "That women were banned from political activism after 1920."
+    ], correct:1, explanation:"Chapter 2 stresses the heterogeneity of women’s activism post-suffrage and its varied policy outputs (maternalist, professional, legal). :contentReference[oaicite:23]{index=23}" },
+
+  { q: "Which policy debate shows the tension between local/state responsibility and federal action in child welfare?", choices:[
+      "Whether to nationalize all schools immediately in 1921.",
+      "The limits of federal maternal and child health programs vs. state/local control (Sheppard–Towner debates).",
+      "A debate about whether the US should join the League of Nations.",
+      "A tariff on children's clothing."
+    ], correct:1, explanation:"Child welfare debates showcased tensions about federal intervention and the role of states/localities in implementation (Sheppard–Towner illuminates this). :contentReference[oaicite:24]{index=24}" },
+
+  { q: "Which claim about the 1920s overall summary does Fox advance in his conclusion?", choices:[
+      "The 1920s were wholly progressive with no retreat.",
+      "The 1920s were an 'Age of Normalcy' — a lull that tempered but did not entirely abolish Progressive impulses; reforms persisted unevenly.",
+      "The 1920s were identical to the Civil War era.",
+      "The 1920s saw no social change at all."
+    ], correct:1, explanation:"Fox concludes the decade dampened some reform energy but did not eliminate progressive legacies; it was a lull before the New Deal’s storm. :contentReference[oaicite:25]{index=25}" },
+
+  { q: "Which historians does Fox cite as contributing to the 'negative' midcentury view of the Republican 1920s?", choices:[
+      "Hofstadter, Schlesinger Jr., Leuchtenberg.",
+      "Only journalists with no academic affiliation.",
+      "Strictly foreign policy historians with no interest in domestic issues.",
+      "No historians—Fox claims there was consensus of praise only."
+    ], correct:0, explanation:"Fox references Hofstadter, Schlesinger Jr., and Leuchtenberg among those who framed the 1920s as an unfortunate interlude. :contentReference[oaicite:26]{index=26}" },
+
+  { q: "Which policy area demonstrates 'associationalist' approaches favored by some 1920s leaders (e.g., Hoover)?", choices:[
+      "Voluntary cooperation among business, government, and associations for public purpose (associationalism).",
+      "A command economy under full state ownership.",
+      "Immediate universal healthcare paid for by the USSR.",
+      "Elimination of all private charities."
+    ], correct:0, explanation:"The associationalist model (voluntary coordination between state, business, and associations) is discussed as a 1920s approach to social problems, associated with Hooverian techniques. :contentReference[oaicite:27]{index=27}" },
+
+  { q: "Which problem undermined some Progressive-era welfare reforms in the 1920s?", choices:[
+      "Broad and uncontroversial support across the political spectrum.",
+      "Scandals, fiscal retrenchment, and political backlash that limited implementation.",
+      "Universal implementation in all states.",
+      "Complete technological failure of social programs."
+    ], correct:1, explanation:"Fox documents scandals (e.g., Forbes), fiscal restraint, and political resistance as constraints on welfare reforms’ reach. :contentReference[oaicite:28]{index=28}" },
+
+  { q: "How does Fox use periodization to approach the 1920s?", choices:[
+      "He treats it as a distinct 'Age of Normalcy' with its own dynamics rather than only as a bridge.",
+      "He refuses to u
