@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Calvin Coolidge and the Last Arcadia – Advanced History MCQ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      background: #f4f7fa;
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+      color: #222;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 820px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 32px 28px 24px 28px;
+    }
+    h1 {
+      color: #2a4d69;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .progress {
+      margin: 18px 0 24px 0;
+      font-size: 1.1em;
+      color: #4b86b4;
+      text-align: right;
+    }
+    .question {
+      font-size: 1.18em;
+      font-weight: 600;
+      margin-bottom: 18px;
+      color: #1b2a49;
+    }
+    .choices {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 18px;
+    }
+    .choices li {
+      margin-bottom: 10px;
+    }
+    .choice-btn {
+      display: block;
+      width: 100%;
+      background: #e7eff6;
+      border: 2px solid #b3cde0;
+      border-radius: 7px;
+      padding: 12px 16px;
+      font-size: 1em;
+      color: #1b2a49;
+      cursor: pointer;
+      transition: background 0.2s, border 0.2s;
+      text-align: left;
+    }
+    .choice-btn.selected {
+      background: #4b86b4;
+      color: #fff;
+      border-color: #2a4d69;
+    }
+    .choice-btn:hover:not(.selected) {
+      background: #dbe9f6;
+    }
+    .nav-btns {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 18px;
+    }
+    .nav-btns button {
+      background: #2a4d69;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 22px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin: 0 4px;
+    }
+    .nav-btns button:disabled {
+      background: #b3cde0;
+      cursor: not-allowed;
+    }
+    .nav-btns .skip-btn {
+      background: #f7b733;
+      color: #222;
+    }
+    .nav-btns .skip-btn:hover {
+      background: #f9d776;
+    }
+    .nav-btns .submit-btn {
+      background: #3fc380;
+    }
+    .nav-btns .submit-btn:hover {
+      background: #2ecc71;
+    }
+    .results {
+      margin-top: 32px;
+      background: #e7eff6;
+      border-radius: 10px;
+      padding: 24px 18px;
+    }
+    .score {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #2a4d69;
+      margin-bottom: 18px;
+    }
+    .explanation {
+      margin-top: 12px;
+      background: #f9f9f9;
+      border-left: 5px solid #4b86b4;
+      padding: 12px 18px;
+      border-radius: 6px;
+      font-size: 1em;
+      color: #333;
+    }
+    .correct {
+      color: #3fc380;
+      font-weight: bold;
+    }
+    .incorrect {
+      color: #e94e77;
+      font-weight: bold;
+    }
+    .reference {
+      font-size: 0.98em;
+      color: #888;
+      margin-top: 6px;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 12px 4px; }
+      .question { font-size: 1em; }
+      .choice-btn { font-size: 0.98em; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="quiz-container">
+    <h1>Calvin Coolidge and the Last Arcadia<br><span style="font-size:0.7em;font-weight:400;">Advanced History MCQ Quiz</span></h1>
+    <div id="quiz-content"></div>
+  </div>
+  <script>
+    // 30 MCQ questions, each with 4 serious options and a detailed explanation
+    const questions = [
+      {
+        q: "Which of the following best encapsulates Calvin Coolidge's philosophy of governance during his presidency?",
+        options: [
+          "A minimalist approach emphasizing limited government and the rule of law.",
+          "An interventionist policy modeled after European social democracies.",
+          "A focus on rapid military expansion and global intervention.",
+          "A populist approach prioritizing direct democracy and referenda."
+        ],
+        answer: 0,
+        explanation: `Coolidge's presidency was marked by a belief in limited government, constitutional restraint, and the rule of law, contrasting sharply with the interventionist and populist trends elsewhere. <span class="reference">[Johnson, "Calvin Coolidge and the Last Arcadia", p.1-3]</span>`
+      },
+      {
+        q: "The term 'Last Arcadia' in the context of Coolidge's era refers to:",
+        options: [
+          "A period of American prosperity and optimism before the Great Depression.",
+          "The final phase of the Progressive Era reforms.",
+          "The last major expansion of American territory.",
+          "A utopian movement led by Coolidge's supporters."
+        ],
+        answer: 0,
+        explanation: `The 'Last Arcadia' describes the 1920s as a time of unprecedented prosperity and cultural confidence, which ended with the onset of the Great Depression. <span class="reference">[Johnson, p.1]</span>`
+      },
+      {
+        q: "How did Coolidge's approach to economic policy differ from that of European leaders like Mussolini and Stalin?",
+        options: [
+          "He favored market self-regulation and minimal state intervention.",
+          "He implemented state ownership of major industries.",
+          "He promoted autarky and economic isolation.",
+          "He established centralized economic planning."
+        ],
+        answer: 0,
+        explanation: `Unlike Mussolini's fascist corporatism or Stalin's command economy, Coolidge trusted in free enterprise and limited government interference. <span class="reference">[Johnson, p.2]</span>`
+      },
+      {
+        q: "Which statement best describes the economic landscape of the United States during Coolidge's presidency?",
+        options: [
+          "Widespread economic growth and industrial supremacy.",
+          "Persistent recession and high unemployment.",
+          "Declining industrial output and agricultural collapse.",
+          "Hyperinflation and currency devaluation."
+        ],
+        answer: 0,
+        explanation: `The 1920s under Coolidge saw robust economic expansion, making the U.S. the world's leading industrial power. <span class="reference">[Johnson, p.2]</span>`
+      },
+      {
+        q: "What was a significant social tension in the United States during the 1920s?",
+        options: [
+          "The clash between traditional values and modernity.",
+          "A nationwide movement for monarchy restoration.",
+          "The abolition of the federal government.",
+          "A mass migration to rural areas."
+        ],
+        answer: 0,
+        explanation: `The era was marked by cultural conflict between traditional rural values and the new urban modernity, especially in gender roles and consumer culture. <span class="reference">[Johnson, p.3]</span>`
+      },
+      {
+        q: "Coolidge's famous statement 'the business of America is business' reflects his:",
+        options: [
+          "Belief in the centrality of commerce and free enterprise.",
+          "Advocacy for government ownership of industry.",
+          "Support for isolationist foreign policy.",
+          "Commitment to agricultural subsidies."
+        ],
+        answer: 0,
+        explanation: `This phrase encapsulates Coolidge's economic philosophy, prioritizing business and market freedom. <span class="reference">[Johnson, p.4]</span>`
+      },
+      {
+        q: "Which technological innovation most contributed to the cultural changes of the 1920s?",
+        options: [
+          "The rise of mass media such as radio and cinema.",
+          "The widespread adoption of steam engines.",
+          "The invention of the telegraph.",
+          "The development of nuclear power."
+        ],
+        answer: 0,
+        explanation: `Radio and cinema transformed American culture, spreading new ideas and entertainment nationwide. <span class="reference">[Johnson, p.3]</span>`
+      },
+      {
+        q: "How did Coolidge's personal style influence his presidency?",
+        options: [
+          "His reticence and focus on consequences shaped a restrained leadership.",
+          "He was known for fiery oratory and populist rallies.",
+          "He frequently bypassed Congress through executive orders.",
+          "He sought constant media attention and publicity."
+        ],
+        answer: 0,
+        explanation: `Coolidge's reserved demeanor and emphasis on practical outcomes defined his approach to governance. <span class="reference">[Johnson, p.4]</span>`
+      },
+      {
+        q: "Which of the following best characterizes the role of women in American society during the Coolidge era?",
+        options: [
+          "Increasing participation in public life following the 19th Amendment.",
+          "A return to exclusively domestic roles.",
+          "Legal prohibition from employment.",
+          "Universal suffrage for women was still denied."
+        ],
+        answer: 0,
+        explanation: `The 1920s saw women gain the right to vote and greater social visibility, though full equality was not achieved. <span class="reference">[Johnson, p.3]</span>`
+      },
+      {
+        q: "Coolidge's decision not to seek re-election in 1928 was primarily motivated by:",
+        options: [
+          "His belief in the temporary nature of political power and democratic transition.",
+          "A major scandal forcing his resignation.",
+          "A desire to pursue a career in business.",
+          "Pressure from foreign governments."
+        ],
+        answer: 0,
+        explanation: `Coolidge voluntarily stepped aside, reflecting his commitment to limited government and the principle of rotation in office. <span class="reference">[Johnson, p.5]</span>`
+      },
+      {
+        q: "Which of the following was NOT a feature of the American economy during the 1920s?",
+        options: [
+          "State ownership of major industries.",
+          "Mass production techniques.",
+          "Consumer culture expansion.",
+          "Rising stock market participation."
+        ],
+        answer: 0,
+        explanation: `Unlike some European economies, the U.S. maintained private ownership and promoted mass production and consumerism. <span class="reference">[Johnson, p.2]</span>`
+      },
+      {
+        q: "The Coolidge era is often contrasted with which major global developments?",
+        options: [
+          "The rise of fascism and economic instability in Europe.",
+          "The collapse of the British Empire.",
+          "The spread of communism in Latin America.",
+          "The unification of Germany and Italy."
+        ],
+        answer: 0,
+        explanation: `While Europe faced turmoil, the U.S. under Coolidge enjoyed relative stability and growth. <span class="reference">[Johnson, p.5]</span>`
+      },
+      {
+        q: "Which best describes Coolidge's attitude toward government intervention in the economy?",
+        options: [
+          "Skeptical, favoring minimal interference.",
+          "Supportive of large-scale public works.",
+          "Advocating for nationalization of banks.",
+          "Promoting price controls and rationing."
+        ],
+        answer: 0,
+        explanation: `Coolidge believed in the self-regulating power of markets and was wary of government overreach. <span class="reference">[Johnson, p.2]</span>`
+      },
+      {
+        q: "What was a key reason for the widespread prosperity experienced by ordinary American families in the 1920s?",
+        options: [
+          "Industrial expansion and new consumer goods.",
+          "Massive government welfare programs.",
+          "Abolition of income tax.",
+          "Universal basic income."
+        ],
+        answer: 0,
+        explanation: `The economic boom was driven by industrial growth and the availability of affordable consumer products. <span class="reference">[Johnson, p.2]</span>`
+      },
+      {
+        q: "Which of the following best summarizes the legacy of the 'Last Arcadia'?",
+        options: [
+          "A fleeting period of optimism before the Great Depression.",
+          "The beginning of American imperial decline.",
+          "A permanent era of prosperity.",
+          "The establishment of a planned economy."
+        ],
+        answer: 0,
+        explanation: `The 'Last Arcadia' was a brief golden age, soon ended by the economic crisis of the 1930s. <span class="reference">[Johnson, p.6]</span>`
+      },
+      {
+        q: "Coolidge's leadership style can be described as:",
+        options: [
+          "Philosophical, restrained, and focused on character.",
+          "Charismatic and expansionist.",
+          "Authoritarian and interventionist.",
+          "Radical and revolutionary."
+        ],
+        answer: 0,
+        explanation: `Coolidge was known for his philosophical approach and personal restraint, emphasizing character and constitutional limits. <span class="reference">[Johnson, p.4]</span>`
+      },
+      {
+        q: "Which of the following was a major cultural innovation of the 1920s?",
+        options: [
+          "The proliferation of jazz music and dance.",
+          "The introduction of feudal land tenure.",
+          "The revival of Puritan religious practices.",
+          "The banning of all foreign literature."
+        ],
+        answer: 0,
+        explanation: `Jazz became a defining feature of the era's cultural dynamism. <span class="reference">[Johnson, p.3]</span>`
+      },
+      {
+        q: "How did Coolidge's presidency reflect a return to 'normalcy'?",
+        options: [
+          "By emphasizing stability after the upheavals of the Progressive Era and World War I.",
+          "By initiating a series of radical constitutional amendments.",
+          "By abolishing the federal reserve system.",
+          "By instituting martial law in major cities."
+        ],
+        answer: 0,
+        explanation: `Coolidge's era was seen as a period of calm and order following earlier reforms and wartime disruptions. <span class="reference">[Johnson, p.5]</span>`
+      },
+      {
+        q: "Which of the following best describes the distribution of prosperity during the Coolidge era?",
+        options: [
+          "Widespread but not universal; some groups remained marginalized.",
+          "Equally shared by all Americans.",
+          "Limited only to rural populations.",
+          "Concentrated solely among recent immigrants."
+        ],
+        answer: 0,
+        explanation: `While many benefited, economic gains were not evenly distributed, and disparities persisted. <span class="reference">[Johnson, p.2]</span>`
+      },
+      {
+        q: "What was a significant limitation of the economic boom of the 1920s?",
+        options: [
+          "Its temporary nature, ending with the Great Depression.",
+          "A complete lack of technological innovation.",
+          "Total elimination of poverty.",
+          "Permanent eradication of business cycles."
+        ],
+        answer: 0,
+        explanation: `The prosperity of the 1920s proved unsustainable, culminating in the 1929 crash. <span class="reference">[Johnson, p.6]</span>`
+      },
+      {
+        q: "Coolidge's approach to foreign policy was characterized by:",
+        options: [
+          "Caution and a focus on domestic affairs.",
+          "Aggressive military intervention abroad.",
+          "A campaign for global disarmament.",
+          "The annexation of new territories."
+        ],
+        answer: 0,
+        explanation: `Coolidge prioritized domestic stability and avoided entangling foreign commitments. <span class="reference">[Johnson, p.5]</span>`
+      },
+      {
+        q: "Which of the following best describes the relationship between Coolidge's personal character and his public policies?",
+        options: [
+          "His restraint and integrity informed his commitment to limited government.",
+          "He frequently compromised his principles for political gain.",
+          "He was known for erratic and impulsive decision-making.",
+          "He prioritized personal enrichment over public service."
+        ],
+        answer: 0,
+        explanation: `Coolidge's personal virtues were reflected in his cautious, principled approach to governance. <span class="reference">[Johnson, p.4]</span>`
+      },
+      {
+        q: "The rise of which social phenomenon was particularly notable during the Coolidge era?",
+        options: [
+          "Consumerism and mass advertising.",
+          "The abolition of private property.",
+          "The establishment of a state religion.",
+          "The decline of urbanization."
+        ],
+        answer: 0,
+        explanation: `Consumer culture and advertising became central to American life in the 1920s. <span class="reference">[Johnson, p.2]</span>`
+      },
+      {
+        q: "Which of the following was a key feature of Coolidge's economic philosophy?",
+        options: [
+          "Faith in the self-regulating market.",
+          "Support for protectionist tariffs.",
+          "Advocacy for government monopolies.",
+          "Promotion of agricultural collectivization."
+        ],
+        answer: 0,
+        explanation: `Coolidge trusted in the market's ability to allocate resources efficiently with minimal state interference. <span class="reference">[Johnson, p.2]</span>`
+      },
+      {
+        q: "How did the Coolidge era differ from the preceding Progressive Era?",
+        options: [
+          "It marked a shift from reform and intervention to stability and restraint.",
+          "It intensified government regulation of business.",
+          "It saw the expansion of direct democracy.",
+          "It was characterized by widespread social unrest."
+        ],
+        answer: 0,
+        explanation: `Coolidge's presidency represented a conservative reaction to earlier reformist impulses. <span class="reference">[Johnson, p.5]</span>`
+      },
+      {
+        q: "Which of the following best describes Coolidge's view on the role of the president?",
+        options: [
+          "A constitutional guardian with limited powers.",
+          "A charismatic leader shaping public opinion.",
+          "A revolutionary figure transforming society.",
+          "A commander-in-chief with unchecked authority."
+        ],
+        answer: 0,
+        explanation: `Coolidge saw the presidency as a role defined by constitutional limits and restraint. <span class="reference">[Johnson, p.4]</span>`
+      },
+      {
+        q: "What was a major consequence of the cultural and technological innovations of the 1920s?",
+        options: [
+          "A transformation of social norms and daily life.",
+          "A return to pre-industrial lifestyles.",
+          "The collapse of urban centers.",
+          "The end of public education."
+        ],
+        answer: 0,
+        explanation: `Innovations like radio, cinema, and automobiles reshaped American society. <span class="reference">[Johnson, p.3]</span>`
+      },
+      {
+        q: "Which of the following best explains the 'optimism' of the Coolidge era?",
+        options: [
+          "Widespread belief in progress and prosperity.",
+          "Fear of imminent war.",
+          "Expectation of economic collapse.",
+          "Widespread political apathy."
+        ],
+        answer: 0,
+        explanation: `The 1920s were marked by confidence in continued growth and improvement. <span class="reference">[Johnson, p.1]</span>`
+      },
+      {
+        q: "How did Coolidge's presidency address the issue of social change?",
+        options: [
+          "By maintaining order while allowing gradual adaptation.",
+          "By forcibly suppressing all new cultural trends.",
+          "By mandating uniformity in social practices.",
+          "By abolishing all traditional institutions."
+        ],
+        answer: 0,
+        explanation: `Coolidge's restraint allowed for social evolution without radical disruption. <span class="reference">[Johnson, p.3]</span>`
+      },
+      {
+        q: "Which of the following was a limitation of Coolidge's minimalist approach?",
+        options: [
+          "It left some social and economic problems unaddressed.",
+          "It led to the expansion of federal bureaucracy.",
+          "It resulted in frequent constitutional crises.",
+          "It caused widespread political violence."
+        ],
+        answer: 0,
+        explanation: `While effective in some respects, Coolidge's limited intervention meant certain issues persisted. <span class="reference">[Johnson, p.6]</span>`
+      },
+      {
+        q: "The end of the 'Last Arcadia' is most closely associated with:",
+        options: [
+          "The onset of the Great Depression.",
+          "The passage of the New Deal.",
+          "The outbreak of World War II.",
+          "The ratification of the 21st Amendment."
+        ],
+        answer: 0,
+        explanation: `The stock market crash of 1929 marked the end of the era's optimism and prosperity. <span class="reference">[Johnson, p.6]</span>`
+      }
+    ];
+
+    // Shuffle utility
+    function shuffle(array) {
+      let arr = array.slice();
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    // Prepare quiz state
+    let quizOrder = shuffle([...Array(questions.length).keys()]);
+    let userAnswers = Array(questions.length).fill(null);
+    let skipped = [];
+    let current = 0;
+    let optionOrders = quizOrder.map(idx => shuffle([0,1,2,3]));
+
+    function renderQuiz() {
+      const qIdx = quizOrder[current];
+      const qObj = questions[qIdx];
+      const optOrder = optionOrders[current];
+      const selected = userAnswers[qIdx];
+
+      let html = `
+        <div class="progress">Question ${current+1} of ${questions.length}</div>
+        <div class="question">${qObj.q}</div>
+        <ul class="choices">
+      `;
+      for (let i=0; i<4; ++i) {
+        const optIdx = optOrder[i];
+        html += `
+          <li>
+            <button class="choice-btn${selected===optIdx?' selected':''}" onclick="selectOption(${optIdx})">
+              ${qObj.options[optIdx]}
+            </button>
+          </li>
+        `;
+      }
+      html += `</ul>
+        <div class="nav-btns">
+          <button onclick="prevQ()" ${current===0?'disabled':''}>Previous</button>
+          <button class="skip-btn" onclick="skipQ()">Skip</button>
+          <button onclick="nextQ()" ${current===questions.length-1?'disabled':''}>Next</button>
+          <button class="submit-btn" onclick="submitQuiz()">Submit</button>
+        </div>
+      `;
+      document.getElementById('quiz-content').innerHTML = html;
+    }
+
+    function selectOption(optIdx) {
+      const qIdx = quizOrder[current];
+      userAnswers[qIdx] = optIdx;
+      renderQuiz();
+    }
+
+    function prevQ() {
+      if (current > 0) current--;
+      renderQuiz();
+    }
+
+    function nextQ() {
+      if (current < questions.length-1) current++;
+      renderQuiz();
+    }
+
+    function skipQ() {
+      skipped.push(current);
+      nextQ();
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      let resultsHtml = `<div class="results"><div class="score">Your Score: `;
+      for (let i=0; i<questions.length; ++i) {
+        if (userAnswers[i] === questions[i].answer) score++;
+      }
+      resultsHtml += `${score} / ${questions.length}</div>`;
+      for (let i=0; i<questions.length; ++i) {
+        const q = questions[i];
+        const user = userAnswers[i];
+        const correct = q.answer;
+        resultsHtml += `
+          <div style="margin-bottom:18px;">
+            <div class="question">${i+1}. ${q.q}</div>
+            <div>
+              <span class="${user===correct?'correct':'incorrect'}">
+                Your answer: ${user!==null?q.options[user]:'<em>Skipped</em>'}
+              </span>
+              <br>
+              <span class="correct">Correct answer: ${q.options[correct]}</span>
+            </div>
+            <div class="explanation">${q.explanation}</div>
+          </div>
+        `;
+      }
+      resultsHtml += `</div>`;
+      document.getElementById('quiz-content').innerHTML = resultsHtml;
+      window.scrollTo(0,0);
+    }
+
+    // Expose functions for inline onclick
+    window.selectOption = selectOption;
+    window.prevQ = prevQ;
+    window.nextQ = nextQ;
+    window.skipQ = skipQ;
+    window.submitQuiz = submitQuiz;
+
+    // Initial render
+    renderQuiz();
+  </script>
+</body>
+</html>

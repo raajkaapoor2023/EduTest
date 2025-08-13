@@ -1,0 +1,513 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <title>Coolidge and the Last Arcadia Quiz</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            line-height: 1.6;  
+            margin: 20px;  
+            background-color: #f4f4f4;  
+            color: #333;  
+        }  
+  
+        h1 {  
+            text-align: center;  
+            color: #0056b3; /* Darker Blue */  
+        }  
+  
+        .question-container {  
+            background-color: #fff;  
+            padding: 20px;  
+            margin-bottom: 20px;  
+            border-radius: 8px;  
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  
+        }  
+  
+        .question-number {  
+            font-weight: bold;  
+            margin-bottom: 10px;  
+            color: #0056b3;  
+        }  
+  
+        .question-text {  
+            margin-bottom: 15px;  
+        }  
+  
+        .choices label {  
+            display: block;  
+            margin-bottom: 8px;  
+            cursor: pointer;  
+        }  
+  
+        .choices input[type="radio"] {  
+            margin-right: 5px;  
+        }  
+  
+        #submit-button {  
+            background-color: #0056b3;  
+            color: white;  
+            padding: 10px 20px;  
+            border: none;  
+            border-radius: 5px;  
+            cursor: pointer;  
+            display: block;  
+            margin: 20px auto;  
+        }  
+  
+        #submit-button:hover {  
+            background-color: #003a75; /* Darker shade for hover */  
+        }  
+  
+        #results-container {  
+            margin-top: 30px;  
+            padding: 20px;  
+            background-color: #e9ecef;  
+            border-radius: 8px;  
+        }  
+  
+        .correct {  
+            color: green;  
+        }  
+  
+        .incorrect {  
+            color: red;  
+        }  
+  
+        .explanation {  
+            margin-top: 10px;  
+            font-style: italic;  
+            color: #555;  
+        }  
+    </style>  
+</head>  
+<body>  
+  
+    <h1>Coolidge and the Last Arcadia Quiz</h1>  
+  
+    <div id="quiz-container"></div>  
+  
+    <button id="submit-button">Submit Quiz</button>  
+  
+    <div id="results-container" style="display: none;">  
+        <h2>Results:</h2>  
+        <div id="results"></div>  
+    </div>  
+  
+    <script>  
+        const questions = [  
+           {  
+                question: "Which of the following best characterizes the state of the American economy in the early 1920s, according to Amity Shlaes?",  
+                choices: [  
+                    "A period of unprecedented and universal prosperity, marked by an absence of economic anxiety.",  
+                    "A period of relative prosperity marked by deep sectoral inequalities and a sense of unease about the future.",  
+                    "A period of stagnation and decline, with high unemployment and widespread poverty.",  
+                    "A brief period of boom followed immediately by a devastating recession."  
+                ],  
+                correctAnswer: 1,  
+                explanation: "Shlaes emphasizes that while the 1920s are often viewed through rose-tinted glasses, significant inequalities persisted.  Farmers, in particular, struggled, and there was a pervasive sense that the prosperity was fragile.  This unease played a role in Coolidge's policies.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+           {  
+                question: "What was the primary economic challenge faced by American farmers in the early 1920s, as detailed by Shlaes?",  
+                choices: [  
+                    "Excessive government regulation hindering production and innovation.",  
+                    "A lack of access to credit and financial services.",  
+                    "Overproduction and falling agricultural prices due to global competition.",  
+                    "Widespread drought and crop failures across the Midwest."  
+                ],  
+                correctAnswer: 2,  
+                explanation: "Shlaes notes that technological advancements during and after World War I led to a surge in agricultural production.  However, demand did not keep pace, resulting in a glut and a sharp decline in prices, which devastated many farmers.  This was exacerbated by increased competition from agricultural producers in other parts of the world.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+            {  
+                question: "What was the significance of the Fordney-McCumber Tariff Act of 1922 in the context of Coolidge's 'Last Arcadia,' according to Shlaes?",  
+                choices: [  
+                    "It provided significant relief to struggling American farmers by raising tariffs on agricultural imports.",  
+                    "It exacerbated the economic problems of farmers by further restricting international trade and limiting export opportunities.",  
+                    "It had little impact on the agricultural sector, focusing primarily on protecting manufacturing industries.",  
+                    "It represented a major step towards free trade and global economic integration."  
+                ],  
+                correctAnswer: 1,  
+                explanation: "While often criticized, the Fordney-McCumber Tariff Act was seen by many at the time as a way to protect American industries, including agriculture, from foreign competition.  However, Shlaes nuances this by suggesting that it also had unintended consequences, such as making it harder for European nations to repay their war debts to the US.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+            {  
+                question: "According to Shlaes, what was Coolidge's general philosophy regarding government intervention in the economy?",  
+                choices: [  
+                    "He believed in active government intervention to regulate markets and promote social welfare.",  
+                    "He advocated for a completely laissez-faire approach, with minimal government involvement.",  
+                    "He favored a balanced approach, with limited government intervention focused on maintaining a stable currency and enforcing contracts.",  
+                    "He supported government ownership of key industries to ensure efficiency and equitable distribution of resources."  
+                ],  
+                correctAnswer: 2,  
+                explanation: "Shlaes presents Coolidge as a staunch believer in limited government and individual responsibility. He saw government intervention as often creating more problems than it solved and preferred to rely on the market to allocate resources efficiently.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+             {  
+                question: "What role did technological advancements play in shaping the economic landscape of the 'Last Arcadia' era, as described by Shlaes?",  
+                choices: [  
+                    "They primarily benefited urban areas, widening the gap between rural and urban prosperity.",  
+                    "They had little impact on the overall economy, as their adoption was slow and uneven.",  
+                    "They led to increased agricultural productivity and lower prices, contributing to the farmers' economic struggles.",  
+                    "They primarily focused on improving transportation infrastructure, benefiting all sectors of the economy equally."  
+                ],  
+                correctAnswer: 0,  
+                explanation: "Shlaes highlights the paradox of technological progress. While advancements like tractors and improved farming techniques increased output, they also exacerbated the problem of overproduction and falling prices, creating hardship for farmers who couldn't compete.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+            {  
+                question: "What was the political climate surrounding the issue of farm relief in the early 1920s, as depicted by Shlaes?",  
+                choices: [  
+                    "There was a broad consensus among politicians that the government should provide direct financial assistance to farmers.",  
+                    "The issue was highly divisive, with significant disagreements over the appropriate role of government and the best course of action.",  
+                    "The issue was largely ignored by politicians, who were more focused on other economic and social problems.",  
+                    "There was unanimous support for raising tariffs on agricultural imports to protect American farmers."  
+                ],  
+                correctAnswer: 1,  
+                explanation: "Shlaes illustrates that the debate over farm relief was a major point of contention.  Some politicians favored government intervention and price supports, while others, like Coolidge, were wary of such measures, believing they would distort the market and create unintended consequences. This created a gridlocked political environment.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+            {  
+                question: "According to Shlaes, how did the experience of World War I shape the economic expectations and anxieties of Americans in the early 1920s?",  
+                choices: [  
+                    "It instilled a deep sense of optimism and confidence in the American economy's ability to overcome any challenge.",  
+                    "It led to widespread fears of hyperinflation and economic collapse, as had occurred in some European countries.",  
+                    "It created a sense of disillusionment with government intervention and a desire to return to a more laissez-faire approach.",  
+                    "It had little impact on economic expectations, as most Americans quickly forgot about the war's economic consequences."  
+                ],  
+                correctAnswer: 2,  
+                explanation: "The war led to a period of heavy government intervention in the economy. After the war, there was a strong reaction against this, with many Americans, including Coolidge, wanting to return to a system with less government involvement and greater individual freedom.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+            {  
+                question: "Which of the following statements best reflects Coolidge's view on the role of government in promoting social welfare, as described by Shlaes?",  
+                choices: [  
+                    "He believed that the government should provide a comprehensive safety net for all citizens, ensuring a minimum standard of living.",  
+                    "He favored private charity and individual initiative over government programs, believing that they were more effective and less prone to abuse.",  
+                    "He supported targeted government assistance to specific groups, such as veterans and the disabled, while opposing broad-based welfare programs.",  
+                    "He believed that the government should actively redistribute wealth to reduce inequality and promote social justice."  
+                ],  
+                correctAnswer: 1,  
+                explanation: "Coolidge believed in the power of individual initiative and private charity. He was wary of government programs, fearing they would create dependency and undermine individual responsibility. He saw private organizations as better equipped to address social needs.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+            {  
+                question: "How did the rise of consumer culture in the 1920s contribute to the sense of unease and uncertainty described by Shlaes?",  
+                choices: [  
+                    "It fostered a sense of social solidarity and shared purpose, uniting Americans in their pursuit of material goods.",  
+                    "It created a pervasive sense of anxiety and dissatisfaction, as people constantly compared themselves to others and strived for unattainable standards.",  
+                    "It had little impact on the overall mood of the country, as most Americans were content with their existing standard of living.",  
+                    "It led to a decline in savings and investment, threatening the long-term stability of the economy."  
+                ],  
+                correctAnswer: 1,  
+                explanation: "The rise of consumer culture, fueled by advertising and installment buying, created a sense of wanting more. This could lead to anxiety and dissatisfaction, as people felt pressured to keep up with the latest trends and acquire material possessions. The relentless pursuit of consumption created a sense of underlying tension.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+            {  
+                question: "What was the prevailing attitude towards debt and credit in the early 1920s, according to Shlaes?",  
+                choices: [  
+                    "Debt was widely viewed as a dangerous and irresponsible practice to be avoided at all costs.",  
+                    "Credit was increasingly seen as a convenient and acceptable way to finance consumption and improve living standards.",  
+                    "There was little awareness of debt and credit, as most transactions were still conducted in cash.",  
+                    "Debt was primarily used by businesses to finance investment, with consumers rarely using credit."  
+                ],  
+                correctAnswer: 1,  
+                explanation: "The 1920s saw a significant increase in the use of consumer credit. Installment buying allowed people to purchase goods they couldn't afford outright, fueling consumption and contributing to the economic boom. This marked a shift in attitudes towards debt.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+           {  
+                question: "What does Shlaes mean by referring to the early 1920s as the 'Last Arcadia'?",  
+                choices: [  
+                    "A utopian society where everyone lived in harmony and prosperity.",  
+                    "An idyllic rural landscape untouched by modern technology and urbanization.",  
+                    "A nostalgic reference to a past era of simplicity and self-reliance, now threatened by economic and social change.",  
+                    "A satirical commentary on the superficiality and materialism of American culture."  
+                ],  
+                correctAnswer: 2,  
+                explanation: "The term 'Last Arcadia' refers to a perceived loss of traditional values and a simpler way of life. It reflects a sense of nostalgia for a past era of self-reliance and community, contrasted with the emerging consumer culture and economic complexities of the 1920s.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+            {  
+                question: "What role did Andrew Mellon, Coolidge's Secretary of the Treasury, play in shaping the economic policies of the era, according to Shlaes?",  
+                choices: [  
+                    "He advocated for increased government spending and social programs to alleviate poverty and reduce inequality.",  
+                    "He championed tax cuts and deregulation to stimulate economic growth and promote investment.",  
+                    "He favored a more protectionist trade policy to shield American industries from foreign competition.",  
+                    "He advocated for a strong central bank to regulate the money supply and prevent financial crises."  
+                ],  
+                correctAnswer: 1,  
+                explanation: "Mellon, a staunch fiscal conservative, believed that lower taxes would stimulate investment and create jobs. His policies, which were largely supported by Coolidge, focused on reducing government debt and promoting economic growth through private enterprise.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+            {  
+                question: "According to Shlaes, what was the impact of the Federal Reserve's monetary policy in the early 1920s?",  
+                choices: [  
+                    "It successfully stabilized the economy and prevented inflation, contributing to a period of sustained growth.",  
+                    "It inadvertently fueled speculation and asset bubbles, contributing to the eventual stock market crash.",  
+                    "It had little impact on the overall economy, as the Federal Reserve was still a relatively new and untested institution.",  
+                    "It primarily focused on providing credit to farmers, helping to alleviate their economic distress."  
+                ],  
+                correctAnswer: 1,  
+                explanation: "Shlaes suggests that the Federal Reserve's easy money policies may have contributed to the speculative boom in the stock market. By keeping interest rates low, the Fed made it easier for investors to borrow money and invest in risky assets.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+            {  
+                question: "Which of the following best describes Coolidge's approach to foreign policy, according to Shlaes?",  
+                choices: [  
+                    "He advocated for aggressive interventionism to promote democracy and protect American interests around the world.",  
+                    "He favored a policy of isolationism, avoiding entangling alliances and focusing on domestic affairs.",  
+                    "He pursued a policy of cautious engagement, promoting international cooperation while avoiding military commitments.",  
+                    "He prioritized military spending and building up the American military to deter potential adversaries."  
+                ],  
+                correctAnswer: 2,  
+                explanation: "Coolidge generally favored a cautious approach to foreign policy. He believed in international cooperation and arms reduction but was wary of entangling alliances and large-scale military interventions. He prioritized peace and economic stability.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+            {  
+                question: "How did the changing demographics of the United States in the early 1920s contribute to the sense of social and cultural tension described by Shlaes?",  
+                choices: [  
+                    "Increased immigration led to greater cultural diversity and tolerance, fostering a more inclusive society.",  
+                    "The Great Migration of African Americans to northern cities led to greater racial harmony and integration.",  
+                    "Increased urbanization and immigration led to cultural clashes and anxieties about the loss of traditional values.",  
+                    "The population remained largely homogenous and rural, with little significant demographic change."  
+                ],  
+                correctAnswer: 2,  
+                explanation: "The rapid urbanization and increased immigration of the 1920s led to significant demographic shifts. This created cultural clashes and anxieties as traditional values were challenged by new ideas and ways of life. The rise of nativism and anti-immigrant sentiment reflected these tensions.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+            {  
+                question: "What was the role of advertising in shaping consumer behavior and economic activity during the 'Last Arcadia' era, as detailed by Shlaes?",  
+                choices: [  
+                    "Advertising played a minor role, as most consumers relied on word-of-mouth and personal recommendations.",  
+                    "Advertising primarily focused on providing accurate and objective information about products.",  
+                    "Advertising became a powerful tool for shaping consumer desires and stimulating demand for new products.",  
+                    "Advertising was heavily regulated by the government to prevent deceptive and misleading practices."  
+                ],  
+                correctAnswer: 2,  
+                explanation: "Advertising became a major industry in the 1920s, employing sophisticated techniques to persuade consumers to buy goods. It played a significant role in shaping consumer behavior and driving the demand for new products, contributing to the consumer culture of the era.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+            {  
+                question: "According to Shlaes, how did Coolidge's personal character and background influence his approach to the presidency and his economic policies?",  
+                choices: [  
+                    "His aristocratic upbringing and Ivy League education instilled in him a belief in government intervention and social engineering.",  
+                    "His humble origins and experience as a small-town lawyer shaped his belief in individual responsibility and limited government.",  
+                    "His military service during World War I instilled in him a strong belief in national defense and interventionist foreign policy.",  
+                    "His background had little influence on his political views, as he was primarily driven by pragmatic considerations."  
+                ],  
+                correctAnswer: 1,  
+                explanation: "Coolidge's humble origins and experience as a small-town lawyer instilled in him a strong belief in individual responsibility, fiscal conservatism, and limited government. He believed that people should be self-reliant and that government should not interfere excessively in the economy or in people's lives.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+            {  
+                question: "What was the impact of the automobile on American society during the 'Last Arcadia' era, as described by Shlaes?",  
+                choices: [  
+                    "It had little impact on rural areas, as most farmers continued to rely on horses and wagons for transportation.",  
+                    "It led to the decline of cities, as people moved to the suburbs and commuted to work by car.",  
+                    "It transformed American society, creating new industries, expanding personal mobility, and altering social patterns.",  
+                    "It primarily benefited wealthy elites, as most Americans could not afford to purchase and maintain automobiles."  
+                ],  
+                correctAnswer: 2,  
+                explanation: "The automobile had a transformative impact on American society in the 1920s. It created new industries (automotive manufacturing, rubber, gasoline), expanded personal mobility, facilitated the growth of suburbs, and altered social patterns (dating, leisure activities). It became a symbol of the era's prosperity and changing lifestyles.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+            {  
+                question: "According to Shlaes, how did the Scopes Trial reflect the cultural tensions and anxieties of the 'Last Arcadia' era?",  
+                choices: [  
+                    "It demonstrated the growing acceptance of modern scientific ideas and the decline of religious fundamentalism.",  
+                    "It highlighted the deep divisions between urban and rural America, and between modernists and traditionalists.",  
+                    "It had little impact on public opinion, as most Americans were indifferent to the debate over evolution.",  
+                    "It primarily focused on the legal technicalities of the case, with little attention paid to the broader cultural implications."  
+                ],  
+                correctAnswer: 1,  
+                explanation: "The Scopes Trial symbolized the clash between modernism and traditionalism, between science and religion, and between urban and rural values. It highlighted the cultural anxieties and tensions of the era as Americans grappled with rapid social and intellectual changes.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+            {  
+                question: "What was the role of the Ku Klux Klan in the social and political landscape of the early 1920s, as described by Shlaes?",  
+                choices: [  
+                    "It had little influence outside of the South, as most Americans rejected its message of hate and intolerance.",  
+                    "It was a powerful force in many parts of the country, promoting nativism, white supremacy, and anti-immigrant sentiment.",  
+                    "It primarily focused on promoting law and order, and combating crime and corruption.",  
+                    "It was a fringe group with little political influence, largely confined to the margins of society."  
+                ],  
+                correctAnswer: 1,  
+                explanation: "The Ku Klux Klan experienced a resurgence in the 1920s, expanding its reach beyond the South and promoting nativism, white supremacy, and anti-immigrant sentiment. It reflected the anxieties and prejudices of the era, particularly in response to increased immigration and social change.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+            {  
+                question: "According to Shlaes, how did the economic boom of the 1920s affect the distribution of wealth in the United States?",  
+                choices: [  
+                    "It led to a more equitable distribution of wealth, as the benefits of economic growth were shared by all segments of society.",  
+                    "It exacerbated existing inequalities, with the wealthy benefiting disproportionately from the economic expansion.",  
+                    "It had little impact on the distribution of wealth, as the gap between rich and poor remained relatively constant.",  
+                    "It led to a decline in overall wealth, as the economic boom was unsustainable and ultimately collapsed."  
+                ],  
+                correctAnswer: 1,  
+                explanation: "While the 1920s were a period of economic growth, the benefits were not evenly distributed. The wealthy benefited disproportionately from the economic expansion, leading to increased income inequality and a concentration of wealth at the top.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+            {  
+                question: "What was the role of jazz music in challenging traditional social norms and cultural values during the 'Last Arcadia' era, as described by Shlaes?",  
+                choices: [  
+                    "Jazz music had little impact on American society, as it was primarily confined to African American communities.",  
+                    "Jazz music became a symbol of rebellion and cultural change, challenging traditional social norms and values.",  
+                    "Jazz music primarily reinforced traditional values, promoting patriotism and social harmony.",  
+                    "Jazz music was widely embraced by all segments of American society, fostering greater cultural understanding and tolerance."  
+                ],  
+                correctAnswer: 1,  
+                explanation: "Jazz music, originating in African American communities, became a symbol of rebellion and cultural change in the 1920s. It challenged traditional social norms and values, particularly in terms of race relations, gender roles, and social etiquette. It represented a break from the past and an embrace of modernity.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+            {  
+                question: "According to Shlaes, how did the prohibition of alcohol contribute to the social and political tensions of the 'Last Arcadia' era?",  
+                choices: [  
+                    "Prohibition successfully eliminated alcohol consumption and reduced crime rates across the country.",  
+                    "Prohibition led to widespread disregard for the law, the rise of organized crime, and increased social and political corruption.",  
+                    "Prohibition had little impact on American society, as most people continued to drink alcohol despite the ban.",  
+                    "Prohibition primarily benefited small businesses, as they were able to control the illegal alcohol market."  
+                ],  
+                correctAnswer: 1,  
+                explanation: "Prohibition, intended to curb alcohol consumption, had the unintended consequence of fostering widespread disregard for the law, the rise of organized crime (bootlegging, speakeasies), and increased social and political corruption. It became a source of social division and political controversy.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+             {  
+                question: "Which of the following best describes the relationship between Coolidge and the press, as depicted by Shlaes?",  
+                choices: [  
+                    "He actively cultivated a close and friendly relationship with journalists, seeking to shape public opinion through propaganda.",  
+                    "He maintained a distant and formal relationship with the press, rarely giving interviews or making public statements.",  
+                    "He was skilled at using the press to his advantage, cultivating a reputation for honesty and integrity while controlling the flow of information.",  
+                    "He was often at odds with the press, who frequently criticized his policies and portrayed him in a negative light."  
+                ],  
+                correctAnswer: 2,  
+                explanation: "Coolidge was known for his taciturn personality and his ability to control the flow of information. While he maintained a formal relationship with the press, he was skilled at using it to his advantage, cultivating a reputation for honesty and integrity while carefully managing his public image.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+            {  
+                question: "According to Shlaes, how did the stock market boom of the late 1920s contribute to the sense of optimism and prosperity that characterized the 'Last Arcadia' era?",  
+                choices: [  
+                    "It had little impact on the overall economy, as most Americans did not invest in the stock market.",  
+                    "It created a sense of euphoria and easy wealth, leading many people to believe that prosperity would last forever.",  
+                    "It primarily benefited large corporations, with little impact on the average American worker.",  
+                    "It led to a more cautious and conservative approach to investment, as people became wary of speculative bubbles."  
+                ],  
+                correctAnswer: 1,  
+                explanation: "The stock market boom of the late 1920s created a sense of euphoria and easy wealth, leading many people to believe that prosperity would last forever. It fueled speculation and excessive risk-taking, contributing to the eventual stock market crash and the Great Depression.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            },  
+             {  
+                question: "Which of the following is a key theme explored by Shlaes in the first chapter of *Coolidge*?",  
+                choices: [  
+                    "The triumph of government intervention in solving economic problems.",  
+                    "The inherent stability and resilience of the American economy.",  
+                    "The tension between traditional values and the forces of modernity.",  
+                    "The inevitability of economic progress and social advancement."  
+                ],  
+                correctAnswer: 2,  
+                explanation: "A central theme in Shlaes' depiction of the early 1920s is the tension between traditional values and the forces of modernity. The era was marked by rapid social, economic, and cultural changes, leading to anxieties about the loss of a simpler, more self-reliant way of life. This tension shaped Coolidge's policies and his understanding of the challenges facing the nation.",  
+                reference: "Amity Shlaes, Coolidge (New York: HarperCollins, 2013), Chapter 1."  
+            }  
+        ];  
+  
+        function shuffleArray(array) {  
+            for (let i = array.length - 1; i > 0; i--) {  
+                const j = Math.floor(Math.random() * (i + 1));  
+                [array[i], array[j]] = [array[j], array[i]];  
+            }  
+        }  
+  
+        function generateQuiz() {  
+            const quizContainer = document.getElementById("quiz-container");  
+            let output = [];  
+  
+            const shuffledQuestions = [...questions];  
+            shuffleArray(shuffledQuestions);  
+  
+            shuffledQuestions.forEach((question, questionIndex) => {  
+                const choices = [...question.choices];  
+                shuffleArray(choices);  
+  
+                let choicesHTML = choices.map((choice, choiceIndex) => `  
+                    <label>  
+                        <input type="radio" name="question${questionIndex}" value="${choiceIndex}">  
+                        ${choice}  
+                    </label>  
+                `).join("");  
+  
+                output.push(`  
+                    <div class="question-container">  
+                        <div class="question-number">Question ${questionIndex + 1}:</div>  
+                        <div class="question-text">${question.question}</div>  
+                        <div class="choices">${choicesHTML}</div>  
+                    </div>  
+                `);  
+            });  
+  
+            quizContainer.innerHTML = output.join("");  
+        }  
+  
+        function showResults() {  
+            const quizContainer = document.getElementById("quiz-container");  
+            const resultsContainer = document.getElementById("results-container");  
+            const resultsDiv = document.getElementById("results");  
+            let answers = [];  
+            let numCorrect = 0;  
+  
+            const shuffledQuestions = [...questions]; //Keep shuffled to be coherent  
+            //Do NOT reshuffle here.  
+            //shuffleArray(shuffledQuestions);  
+  
+            shuffledQuestions.forEach((question, questionIndex) => {  
+                const answerContainers = quizContainer.querySelectorAll(`.question-container:nth-child(${questionIndex + 1}) .choices`);  
+                const selector = `input[name=question${questionIndex}]:checked`;  
+                const userAnswer = (answerContainers[0].querySelector(selector) || {}).value;  
+                answers.push(userAnswer);  
+  
+                if (parseInt(userAnswer) === question.correctAnswer) {  
+                    numCorrect++;  
+                }  
+            });  
+  
+            let resultsHTML = shuffledQuestions.map((question, questionIndex) => {  
+                const userAnswer = answers[questionIndex];  
+                const isCorrect = parseInt(userAnswer) === question.correctAnswer;  
+                let correctAnswerText = question.choices[question.correctAnswer];  
+  
+                let userAnswerText = "Not Answered"; //Default if question skipped  
+  
+                if(userAnswer !== undefined && userAnswer !== null){  
+                    userAnswerText = question.choices[parseInt(userAnswer)];  
+                }  
+  
+                return `  
+                    <div class="question-container">  
+                        <div class="question-number">Question ${questionIndex + 1}:</div>  
+                        <div class="question-text">${question.question}</div>  
+                        <div class="${isCorrect ? 'correct' : 'incorrect'}">  
+                            Your Answer: ${userAnswerText}  
+                        </div>  
+                        <div>  
+                            Correct Answer: ${correctAnswerText}  
+                        </div>  
+                        <div class="explanation">${question.explanation} <br> <em>Reference: ${question.reference}</em></div>  
+                    </div>  
+                `;  
+            }).join("");  
+  
+            resultsDiv.innerHTML = resultsHTML;  
+  
+            resultsContainer.style.display = "block";  
+  
+            alert(`You got ${numCorrect} out of ${questions.length} questions correct!`);  
+        }  
+  
+        // Event Listeners  
+        document.getElementById("submit-button").addEventListener("click", showResults);  
+  
+        // Generate Quiz on Load  
+        generateQuiz();  
+    </script>  
+  
+</body>  
+</html>  

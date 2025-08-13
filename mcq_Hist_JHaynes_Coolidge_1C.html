@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ivy/Oxbridge BA Final – MCQ: “Calvin Coolidge and the Last Arcadia”</title>
+  <style>
+    :root{
+      --bg:#0f172a;           /* slate-900 */
+      --panel:#111827ee;      /* near-black */
+      --card:#111827;         /* slate-900 */
+      --ink:#e5e7eb;          /* gray-200 */
+      --muted:#9ca3af;        /* gray-400 */
+      --accent:#38bdf8;       /* sky-400 */
+      --accent-2:#22c55e;     /* green-500 */
+      --warn:#f59e0b;         /* amber-500 */
+      --danger:#ef4444;       /* red-500 */
+      --good:#10b981;         /* emerald-500 */
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    html,body{height:100%}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 80% -10%, #1f2937, var(--bg));
+      color:var(--ink);
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    }
+    .wrap{max-width:1100px; margin:0 auto; padding:28px;}
+    header{display:flex; gap:18px; align-items:center; justify-content:space-between;}
+    .title{font-size: clamp(1.4rem, 3vw, 2.1rem); font-weight:800; letter-spacing:.2px}
+    .subtitle{color:var(--muted); font-weight:500}
+    .card{background:linear-gradient(180deg, #0b1220, var(--card)); border:1px solid #1f2937; border-radius:20px; padding:24px; box-shadow:var(--shadow)}
+    .controls{display:flex; gap:10px; flex-wrap:wrap}
+    button{appearance:none; border:none; border-radius:14px; padding:12px 16px; font-weight:700; cursor:pointer; transition:transform .05s ease, filter .2s ease;}
+    button:active{transform:translateY(1px)}
+    .btn{background:#0b5; color:#001;}
+    .btn.primary{background:linear-gradient(180deg, #45cfff, var(--accent)); color:#001;}
+    .btn.secondary{background:#0b2239; color:#cde; border:1px solid #1f3b59}
+    .btn.warn{background:linear-gradient(180deg,#ffd479,var(--warn)); color:#230;}
+    .btn.danger{background:linear-gradient(180deg,#ffaba8,var(--danger)); color:#200}
+    .btn.ghost{background:transparent; border:1px solid #334155; color:#d0d6e1}
+    .btn:disabled{opacity:.5; cursor:not-allowed}
+    .grid{display:grid; gap:18px}
+    .q-area{display:grid; gap:14px}
+    .q-text{font-size: clamp(1.05rem, 2.2vw, 1.35rem); font-weight:700}
+    .option{display:flex; gap:12px; align-items:flex-start; padding:12px 14px; border:1px solid #1f2937; border-radius:14px; background:#0b1220; cursor:pointer; transition: border-color .2s, background .2s}
+    .option:hover{border-color:#2b3a4f; background:#0c1627}
+    .option input{margin-top:2px}
+    .option.selected{outline:2px solid var(--accent); background:#0a1a2b}
+    .option.correct{border-color:var(--good); box-shadow:inset 0 0 0 2px var(--good)}
+    .option.incorrect{border-color:var(--danger); box-shadow:inset 0 0 0 2px var(--danger)}
+    .meta{display:flex; align-items:center; gap:12px; color:var(--muted); font-size:.95rem}
+    .pill{border:1px solid #334155; padding:6px 10px; border-radius:999px}
+    .progress{height:10px; background:#0b1220; border:1px solid #1f2937; border-radius:999px; overflow:hidden}
+    .bar{height:100%; width:0%; background:linear-gradient(90deg, var(--accent), #a78bfa); transition:width .3s ease}
+    .flagged{background:linear-gradient(180deg,#edc7ff,#a78bfa); color:#2b1047}
+    .answersheet{display:grid; gap:12px}
+    details{background:#0b1220; border:1px solid #1f2937; border-radius:14px; padding:14px}
+    details > summary{cursor:pointer; font-weight:700}
+    .score{font-size:1.25rem; font-weight:800}
+    .kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size:.9rem; border:1px solid #334155; padding:.15rem .45rem; border-radius:8px; background:#0b1220}
+    footer{margin-top:28px; color:var(--muted); font-size:.9rem}
+    .tag{font-size:.8rem; padding:4px 8px; border-radius:999px; border:1px solid #334155; color:#cbd5e1}
+    .hidden{display:none !important}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <div class="title">“Calvin Coolidge and the Last Arcadia” — 30‑Question MCQ</div>
+        <div class="subtitle">Level: Ivy League / Oxbridge (BA Finals). Randomized order & options. Skipping enabled. Explanations with academic references appear after submission.</div>
+      </div>
+      <div class="controls">
+        <button id="btnStart" class="btn primary">Start</button>
+        <button id="btnReview" class="btn secondary" disabled>Review Unanswered</button>
+        <button id="btnSubmit" class="btn warn" disabled>Submit</button>
+      </div>
+    </header>
+
+    <section class="card grid" style="margin-top:18px">
+      <div class="meta">
+        <span id="counter" class="pill">Question 0 / 30</span>
+        <span id="statusPill" class="pill">Unanswered: 30 • Flagged: 0</span>
+        <span class="pill">Tip: press <span class="kbd">J</span>/<span class="kbd">K</span> to move • <span class="kbd">S</span> to skip • <span class="kbd">F</span> to flag</span>
+      </div>
+      <div class="progress"><div id="progressBar" class="bar"></div></div>
+
+      <div id="quiz" class="q-area">
+        <div class="q-text">Press <strong>Start</strong> to begin.</div>
+      </div>
+
+      <div class="controls">
+        <button id="btnPrev" class="btn ghost" disabled>← Prev</button>
+        <button id="btnSkip" class="btn secondary" disabled>Skip</button>
+        <button id="btnFlag" class="btn ghost" disabled>Flag</button>
+        <button id="btnNext" class="btn primary" disabled>Next →</button>
+      </div>
+    </section>
+
+    <section id="results" class="card grid hidden" style="margin-top:18px">
+      <div class="score" id="score"></div>
+      <div id="scoreMeta" class="meta"></div>
+      <div class="answersheet" id="answersheet"></div>
+      <footer>
+        <div class="meta">References in explanations draw on primary documents (Coolidge speeches, statutes, and diplomatic texts) and leading scholarship (e.g., Shlaes, Greenberg, Allen, McCoy, Ferrell, Parker, Brinkley). Page/section identifiers are provided where appropriate for scholarly follow‑up.</div>
+      </footer>
+    </section>
+  </div>
+
+<script>
+// Utility: Fisher–Yates shuffle
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+// Question bank (30). Each explanation includes concise academic references.
+const QUESTION_BANK = [
+  {
+    id:1,
+    q:"Which feature of Calvin Coolidge’s political style most strongly fed the image of a ‘last Arcadia’—a republic of frugality and restraint—projected in the mid‑1920s?",
+    options:[
+      "A consistent rhetoric of economy in government paired with regular budget surpluses",
+      "Aggressive trust‑busting and unprecedented regulatory expansion",
+      "A sweeping federal relief state constructed through New Deal–style agencies",
+      "A global crusade for democracy with large peacetime armies"
+    ],
+    answer:0,
+    explain:`Coolidge made "economy is idealism in its most practical form" a refrain, pressed the Bureau of the Budget, and presided over repeated surpluses—key to the bucolic, chastened image of public life. See Calvin Coolidge, Annual Message, Dec. 6, 1923; Inaugural Address, Mar. 4, 1925. Scholarship: Amity Shlaes, *Coolidge* (2013), chs. 16–18; David Greenberg, *Calvin Coolidge* (2006), pp. 66–77.`
+  },
+  {
+    id:2,
+    q:"As President, Coolidge’s stance toward agricultural price supports in the McNary–Haugen bills (1927–1928) was to…",
+    options:[
+      "veto them as unsound interference with markets and international trade",
+      "sign them as emergency measures for the farm crisis",
+      "pocket‑veto in 1927 but sign a modified bill in 1928",
+      "support them but delegate signing to the Vice President"
+    ],
+    answer:0,
+    explain:`Coolidge twice vetoed McNary–Haugen, arguing equalization fees and export debentures distorted markets and harmed foreign relations. See Veto Messages, Feb. 25, 1927 & May 23, 1928; Richard Lowitt, *The New Deal and the West* (for background); Greenberg, *Calvin Coolidge*, pp. 92–95.`
+  },
+  {
+    id:3,
+    q:"Which statute most altered America’s demographic pathway under Coolidge by imposing national‑origins quotas?",
+    options:[
+      "Immigration Act of 1924 (Johnson–Reed)",
+      "Immigration and Nationality Act of 1965",
+      "Emergency Quota Act of 1921",
+      "Chinese Exclusion Act of 1882"
+    ],
+    answer:0,
+    explain:`The 1924 Johnson–Reed Act codified restrictive national‑origins quotas and barred Asian immigration (with limited exceptions). Coolidge signed it May 26, 1924. See U.S. Statutes at Large, 43 Stat. 153; Mae Ngai, *Impossible Subjects* (2004), ch. 1.`
+  },
+  {
+    id:4,
+    q:"Which diplomatic initiative of the Coolidge years sought to renounce war as an instrument of national policy?",
+    options:[
+      "Kellogg–Briand Pact (1928)",
+      "Four‑Power Treaty (1921)",
+      "Atlantic Charter (1941)",
+      "NATO Treaty (1949)"
+    ],
+    answer:0,
+    explain:`Negotiated by Secretary Frank B. Kellogg and French FM Aristide Briand, the 1928 Paris Pact renounced war; Coolidge signed and proclaimed it. See 46 Stat. 2343; Oona Hathaway & Scott Shapiro, *The Internationalists* (2017), chs. 6–7.`
+  },
+  {
+    id:5,
+    q:"Coolidge’s ascent to national prominence before the vice‑presidency turned on which confrontation?",
+    options:[
+      "The 1919 Boston Police Strike",
+      "The 1912 Bull Moose schism",
+      "The 1921 Budget and Accounting Act fight",
+      "The 1913 Federal Reserve debate"
+    ],
+    answer:0,
+    explain:`As Massachusetts Governor, Coolidge's firm stance—"There is no right to strike against the public safety by anybody, anywhere, any time"—galvanized national attention. See Proclamation & correspondence (Sept. 1919); Robert M. Sobel, *Coolidge* (1998), ch. 7.`
+  },
+  {
+    id:6,
+    q:"Which revenue measures most emblematic of the Coolidge–Mellon program reduced wartime rates and, officials argued, broadened the base?",
+    options:[
+      "Revenue Acts of 1924 and 1926",
+      "Revenue Act of 1932",
+      "Sixteenth Amendment and Underwood Tariff (1913)",
+      "Tax Reform Act of 1986"
+    ],
+    answer:0,
+    explain:`The 1924 and 1926 Acts lowered individual and corporate rates and reduced surtaxes, in line with Treasury Sec. Andrew Mellon's "scientific taxation". See U.S. Stat. 43 Stat. 253; 44 Stat. 9; Mellon, *Taxation: The People's Business* (1924).`
+  },
+  {
+    id:7,
+    q:"Which 1924 statute, signed by Coolidge, conferred U.S. citizenship broadly upon Native Americans?",
+    options:[
+      "Indian Citizenship Act (Snyder Act)",
+      "Dawes Act",
+      "Indian Reorganization Act",
+      "Meriam Report"
+    ],
+    answer:0,
+    explain:`The Indian Citizenship Act (June 2, 1924) made all non‑citizen Native Americans born in the U.S. citizens while retaining tribal rights. See 43 Stat. 253, ch. 233; Frederick Hoxie, *A Final Promise* (1984), epilogue.`
+  },
+  {
+    id:8,
+    q:"Coolidge’s judicial appointments included elevating which future civil‑liberties notable to the Supreme Court in 1925?",
+    options:[
+      "Harlan F. Stone",
+      "Felix Frankfurter",
+      "Louis Brandeis",
+      "Earl Warren"
+    ],
+    answer:0,
+    explain:`Coolidge appointed Harlan Fiske Stone (then Attorney General, formerly Columbia Law dean) as Associate Justice in 1925; Stone later became Chief Justice (1941). See Senate Exec. Journal, 68th Cong., Mar. 2, 1925; Alpheus Thomas Mason, *Harlan Fiske Stone* (1956).`
+  },
+  {
+    id:9,
+    q:"Which communications statute did Coolidge sign that systematized federal radio regulation?",
+    options:[
+      "Radio Act of 1927",
+      "Communications Act of 1934",
+      "Telecommunications Act of 1996",
+      "Wireless Ship Act of 1910"
+    ],
+    answer:0,
+    explain:`The Radio Act of 1927 created the Federal Radio Commission and introduced public‑interest licensing. See 44 Stat. 1162; Hugh Slotten, *Radio's Hidden Voice* (2009), ch. 2.`
+  },
+  {
+    id:10,
+    q:"Which financial stabilization plan for German reparations was launched during Coolidge’s first year in office?",
+    options:[
+      "Dawes Plan (1924)",
+      "Young Plan (1929)",
+      "Marshall Plan (1948)",
+      "Morgenthau Plan (1944)"
+    ],
+    answer:0,
+    explain:`The Dawes Plan restructured reparations and facilitated U.S. lending to Germany; it was central to mid‑1920s financial diplomacy. See Charles S. Maier, *Recasting Bourgeois Europe* (1975), pp. 339–55.`
+  },
+  {
+    id:11,
+    q:"Coolidge’s public persona—often summarized as “Silent Cal”—was reinforced by which press practice?",
+    options:[
+      "Frequent but off‑the‑record press conferences with ground rules",
+      "Refusal to engage with reporters entirely",
+      "Only written statements released quarterly",
+      "Daily fireside radio chats"
+    ],
+    answer:0,
+    explain:`Coolidge held many press conferences, but with the understanding that remarks were not for attribution, fostering an aura of reticence while remaining accessible. See Greenberg, *Calvin Coolidge*, pp. 54–58; Press Conference transcripts (1923–1929).`
+  },
+  {
+    id:12,
+    q:"In Coolidge’s idiom, ‘economy’ in government was most directly tied to which moral or civic claim?",
+    options:[
+      "Economy is a form of public virtue safeguarding liberty",
+      "Economy chiefly maximizes GDP growth",
+      "Economy serves foreign policy prestige rather than citizens",
+      "Economy means zero federal involvement in any sphere"
+    ],
+    answer:0,
+    explain:`Coolidge framed frugality as moral restraint to preserve liberty and self‑government; not laissez‑faire absolutism. See Inaugural Address (1925); *Foundations of the Republic* (1926).`
+  },
+  {
+    id:13,
+    q:"Which catastrophic event tested Coolidge’s philosophy of limited federal relief and coordination?",
+    options:[
+      "Great Mississippi Flood of 1927",
+      "San Francisco Earthquake of 1906",
+      "Dust Bowl of 1934",
+      "Hurricane Carla of 1961"
+    ],
+    answer:0,
+    explain:`During the 1927 flood, Coolidge emphasized Red Cross leadership and limited federal role, dispatching Herbert Hoover to coordinate. See John M. Barry, *Rising Tide* (1997), chs. 24–29; Coolidge messages, 1927.`
+  },
+  {
+    id:14,
+    q:"Which act laid the groundwork for federal civil‑aviation oversight under Coolidge?",
+    options:[
+      "Air Commerce Act of 1926",
+      "Civil Aeronautics Act of 1938",
+      "Air Mail Act of 1934",
+      "Federal Aviation Act of 1958"
+    ],
+    answer:0,
+    explain:`The Air Commerce Act (May 20, 1926) authorized licensing, airway development, and accident investigation under the Commerce Department. See 44 Stat. 568; Nick Compagno, *The Origins of Federal Aviation Policy* (J. Policy Hist.).`
+  },
+  {
+    id:15,
+    q:"Coolidge’s 1924 election message most centrally promised…",
+    options:[
+      "Normalcy with probity: low taxes, budget restraint, and business stability",
+      "A moralistic crusade for Prohibition enforcement above all",
+      "Immediate U.S. entry into the League of Nations",
+      "An isolationist tariff war against Europe"
+    ],
+    answer:0,
+    explain:`The 1924 campaign stressed fiscal steadiness, integrity after scandal, and a friendly climate for enterprise. See Republican Platform (1924); Shlaes, *Coolidge*, ch. 18.`
+  },
+  {
+    id:16,
+    q:"Which statement best captures the Coolidge administration’s posture toward organized labor in the mid‑1920s?",
+    options:[
+      "Sympathy for collective bargaining within law, skepticism toward strikes disrupting public order",
+      "Wholesale embrace of sit‑down strikes and closed shops",
+      "Federalization of wage boards across key industries",
+      "Abolition of the Labor Department"
+    ],
+    answer:0,
+    explain:`Coolidge’s earlier Boston stance and later rhetoric combined order and voluntarism rather than statist labor policy. See *Foundations of the Republic*; Melvyn Dubofsky, *The State & Labor in Modern America*, pp. 109–114.`
+  },
+  {
+    id:17,
+    q:"Which naval conference during Coolidge’s term failed to extend the Washington system and revealed limits of U.S. arms control leadership?",
+    options:[
+      "Geneva Naval Conference (1927)",
+      "London Naval Conference (1930)",
+      "Washington Naval Conference (1921–22)",
+      "Second Hague Conference (1907)"
+    ],
+    answer:0,
+    explain:`The 1927 Geneva talks on cruiser ratios broke down, underscoring frictions with Britain and Japan. See Ernest May, *The World War and American Isolation*; FRUS, 1927, vol. I.`
+  },
+  {
+    id:18,
+    q:"Coolidge’s decision not to run in 1928 was announced via…",
+    options:[
+      "A terse note to reporters: “I do not choose to run for President in 1928.”",
+      "A radio address drafted by Herbert Hoover",
+      "A floor statement at the Republican Convention",
+      "A Supreme Court opinion"
+    ],
+    answer:0,
+    explain:`On Aug. 2, 1927, Coolidge handed reporters a slip with the famous sentence. See contemporaneous press accounts; Greenberg, *Calvin Coolidge*, p. 107.`
+  },
+  {
+    id:19,
+    q:"Which of the following best describes Coolidge’s relation to Teapot Dome?",
+    options:[
+      "He inherited the scandal from Harding and supported thorough prosecutions and civil suits.",
+      "He designed the oil‑lease scheme as Vice President.",
+      "He granted sweeping pardons to implicated officials.",
+      "He ordered congressional investigations halted."
+    ],
+    answer:0,
+    explain:`Teapot Dome predated his presidency; Coolidge pushed for legal redress, leading to convictions and Supreme Court voiding of leases. See *Mammoth Oil Co. v. United States* (1927); Robert K. Murray, *The Harding Era*, ch. 15.`
+  },
+  {
+    id:20,
+    q:"In the imagery of ‘Last Arcadia,’ Coolidge’s Vermont roots functioned to signal…",
+    options:[
+      "Republican simplicity and agrarian virtue amidst urban modernity",
+      "Imperial expansion as manifest destiny",
+      "Technocratic central planning",
+      "Revolutionary syndicalism"
+    ],
+    answer:0,
+    explain:`Coolidge’s oft‑invoked New England upbringing framed him as frugal, honest, and pastoral—a moral counterpoint to the Jazz Age. See Claude Fuess, *Calvin Coolidge: The Man from Vermont* (1940).`
+  },
+  {
+    id:21,
+    q:"Which corporate‑state relationship did Coolidge most famously condense in aphorism?",
+    options:[
+      "“The chief business of the American people is business.”",
+      "“What’s good for General Motors is good for America.”",
+      "“Government is the problem.”",
+      "“We have nothing to fear but fear itself.”"
+    ],
+    answer:0,
+    explain:`From Coolidge’s 1925 speech to the American Society of Newspaper Editors. See *Foundations of the Republic*, “The Press Under a Free Government.”`
+  },
+  {
+    id:22,
+    q:"Which policy area saw Coolidge most willing to use federal power for systemic coordination rather than redistribution?",
+    options:[
+      "Standard‑setting in communications and aviation",
+      "National unemployment insurance",
+      "Massive public housing programs",
+      "Federal takeover of public schools"
+    ],
+    answer:0,
+    explain:`Radio Act (1927) and Air Commerce Act (1926) show a regulatory/coordination state rather than fiscal transfer state. See statutes cited above; Ellis Hawley, *The Great War and the Search for a Modern Order*.`
+  },
+  {
+    id:23,
+    q:"Which statement best characterizes Coolidge’s approach to foreign debt and reparations?",
+    options:[
+      "Support for structured settlements and stabilization, avoiding formal League entanglement",
+      "Repudiation of all allied debts to foster goodwill",
+      "Direct U.S. assumption of German reparations",
+      "Immediate military enforcement of reparations"
+    ],
+    answer:0,
+    explain:`Coolidge favored repayment and negotiated settlements; U.S. acted through plans like Dawes while staying outside the League. See Maier; FRUS debt settlements volumes.`
+  },
+  {
+    id:24,
+    q:"Which Supreme Court case during Coolidge’s tenure constrained child‑labor regulation but left space for later federal approaches?",
+    options:[
+      "Bailey v. Drexel Furniture Co. (1922) and related decisions",
+      "West Coast Hotel v. Parrish (1937)",
+      "Brown v. Board of Education (1954)",
+      "Miranda v. Arizona (1966)"
+    ],
+    answer:0,
+    explain:`Though pre‑presidency, the 1922 Child Labor Tax Case set limits later navigated by the New Deal; the climate of constitutional federalism framed Coolidge’s limited program. See 259 U.S. 20 (1922); Barry Cushman, *Rethinking the New Deal Court*.`
+  },
+  {
+    id:25,
+    q:"Coolidge’s rhetoric drew on which intellectual tradition to justify limited government?",
+    options:[
+      "A blend of classical republicanism and Protestant moral economy",
+      "Marxist historical materialism",
+      "French revolutionary Jacobinism",
+      "German historicism of the Prussian state"
+    ],
+    answer:0,
+    explain:`His speeches yoke civic virtue, thrift, and self‑rule—echoing civic republican idioms and Protestant stewardship—rather than laissez‑faire dogma alone. See *Foundations of the Republic*; Robert K. Faulkner, *Calvin Coolidge and the Moral Economy*.`
+  },
+  {
+    id:26,
+    q:"Which institutional reform from the Harding era did Coolidge entrench to advance budget discipline?",
+    options:[
+      "The Budget and Accounting Act’s Bureau of the Budget",
+      "Creation of a central national sales tax agency",
+      "Establishment of the Federal Deposit Insurance Corporation",
+      "Creation of the National Security Council"
+    ],
+    answer:0,
+    explain:`Coolidge leveraged the Bureau of the Budget (created 1921) for economies and executive review. See 42 Stat. 20; W. Elliot Brownlee, *Federal Taxation in America*.`
+  },
+  {
+    id:27,
+    q:"Which cultural tension most complicates the notion of a tranquil ‘Last Arcadia’ in the Coolidge years?",
+    options:[
+      "Urban consumer modernity and the culture wars of the 1920s (Scopes, Klan resurgence, Prohibition)",
+      "Pacific settlements ending all naval rivalries",
+      "Broad rural prosperity without indebtedness",
+      "Complete racial equality in the South"
+    ],
+    answer:0,
+    explain:`The decade saw intense conflict over evolution, nativism, and Prohibition; prosperity was uneven and racial inequality entrenched. See Lynn Dumenil, *The Modern Temper* (1995); Nancy MacLean, *Behind the Mask of Chivalry* (1994).`
+  },
+  {
+    id:28,
+    q:"Which statement best captures Coolidge’s philosophy regarding humanitarian relief abroad (e.g., post‑war Europe, 1920s)?",
+    options:[
+      "Favor private relief and limited official commitments, short of treaty obligations",
+      "Pursue large‑scale federal grants to foreign governments",
+      "Tie all relief to League mandates and U.S. membership",
+      "Condition relief on colonial acquisitions"
+    ],
+    answer:0,
+    explain:`Consistent with his voluntarist instincts, Coolidge favored private leadership (e.g., Hoover’s networks) and limited official assistance. See Herbert Hoover, *An American Epic*; Coolidge messages on relief.`
+  },
+  {
+    id:29,
+    q:"The Coolidge administration’s approach to civil rights is best described as…",
+    options:[
+      "Symbolic gestures (e.g., support for anti‑lynching statements) without securing federal enforcement legislation",
+      "Passage of a federal anti‑lynching law",
+      "Desegregation of the U.S. military",
+      "Abolition of poll taxes by executive order"
+    ],
+    answer:0,
+    explain:`Coolidge denounced lynching and met with Black leaders but did not marshal passage of the Dyer anti‑lynching bill. See Presidential messages (1923–1925); Gilbert King, *Devil in the Grove*, context.`
+  },
+  {
+    id:30,
+    q:"Which economic vulnerability of the late 1920s lay largely outside the Coolidge administration’s stabilizing toolkit?",
+    options:[
+      "Speculative leverage and weak margin regulation in securities markets",
+      "Overly generous federal deposit insurance",
+      "Large automatic stabilizers",
+      "Comprehensive macroeconomic counter‑cyclical budgeting"
+    ],
+    answer:0,
+    explain:`The 1920s had thin federal levers over stock margins and monetary coordination; automatic stabilizers and modern macro policy were undeveloped. See Christina Romer, “The Prewar Business Cycle Reconsidered”; Eugene White, work on margin lending.`
+  }
+];
+
+// State
+let questions = [];
+let current = 0;
+const responses = new Map(); // qId -> {choiceIndex, isFlagged}
+
+function prepareQuestions(){
+  // deep copy and shuffle options per question
+  questions = shuffle(QUESTION_BANK.map(q => {
+    const idxs = [...q.options.keys()];
+    shuffle(idxs);
+    const shuffledOptions = idxs.map(i => q.options[i]);
+    const newCorrect = idxs.indexOf(q.answer);
+    return { ...q, options: shuffledOptions, answer: newCorrect };
+  }));
+}
+
+function render(){
+  const q = questions[current];
+  const quiz = document.getElementById('quiz');
+  quiz.innerHTML = '';
+
+  const qEl = document.createElement('div');
+  qEl.className = 'q-text';
+  qEl.textContent = q.q;
+  quiz.appendChild(qEl);
+
+  q.options.forEach((opt, i) => {
+    const id = `opt-${q.id}-${i}`;
+    const wrap = document.createElement('label');
+    wrap.className = 'option';
+
+    const radio = document.createElement('input');
+    radio.type = 'radio'; radio.name = `q-${q.id}`; radio.id = id;
+    radio.checked = responses.get(q.id)?.choiceIndex === i;
+    radio.addEventListener('change', () => {
+      responses.set(q.id, { choiceIndex: i, isFlagged: responses.get(q.id)?.isFlagged || false });
+      updateMeta();
+      wrap.classList.add('selected');
+      [...quiz.querySelectorAll('.option')].forEach(el=>{ if(el!==wrap) el.classList.remove('selected'); });
+    });
+
+    const text = document.createElement('div');
+    text.innerHTML = opt;
+
+    wrap.appendChild(radio);
+    wrap.appendChild(text);
+    quiz.appendChild(wrap);
+  });
+
+  document.getElementById('counter').textContent = `Question ${current+1} / ${questions.length}`;
+  document.getElementById('btnPrev').disabled = current===0;
+  document.getElementById('btnNext').disabled = current===questions.length-1;
+  document.getElementById('btnSkip').disabled = false;
+  document.getElementById('btnFlag').disabled = false;
+}
+
+function updateMeta(){
+  const answered = [...responses.keys()].filter(id => typeof responses.get(id)?.choiceIndex === 'number').length;
+  const flagged = [...responses.keys()].filter(id => responses.get(id)?.isFlagged).length;
+  const total = questions.length;
+  document.getElementById('statusPill').textContent = `Unanswered: ${total-answered} • Flagged: ${flagged}`;
+  const pct = Math.round((answered/total)*100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('btnSubmit').disabled = answered===0; // allow submit anytime after at least 1 answer
+}
+
+function next(){ if(current<questions.length-1){ current++; render(); } }
+function prev(){ if(current>0){ current--; render(); } }
+function skip(){
+  // move to next unanswered; if all answered, just next
+  const total = questions.length;
+  for(let i=1;i<=total;i++){
+    const idx = (current + i) % total;
+    const id = questions[idx].id;
+    if(typeof responses.get(id)?.choiceIndex !== 'number'){ current = idx; render(); return; }
+  }
+  next();
+}
+function toggleFlag(){
+  const q = questions[current];
+  const prev = responses.get(q.id) || { choiceIndex: undefined, isFlagged:false };
+  responses.set(q.id, { ...prev, isFlagged: !prev.isFlagged });
+  updateMeta();
+  // visual toast
+  const pill = document.getElementById('statusPill');
+  pill.classList.add('flagged');
+  setTimeout(()=>pill.classList.remove('flagged'), 500);
+}
+
+function reviewUnanswered(){
+  const idx = questions.findIndex(q => typeof responses.get(q.id)?.choiceIndex !== 'number');
+  if(idx>=0){ current = idx; render(); }
+}
+
+function submit(){
+  // lock UI and show results
+  document.getElementById('results').classList.remove('hidden');
+  const container = document.getElementById('answersheet');
+  container.innerHTML='';
+
+  let correct = 0;
+  questions.forEach(q => {
+    const user = responses.get(q.id)?.choiceIndex;
+    const isCorrect = user === q.answer;
+    if(isCorrect) correct++;
+
+    const det = document.createElement('details');
+    det.open = false;
+
+    const sum = document.createElement('summary');
+    sum.innerHTML = `${isCorrect ? '✅' : '❌'} <strong>${q.q}</strong>`;
+
+    const body = document.createElement('div');
+    body.style.marginTop = '10px';
+    const optionsList = document.createElement('div');
+
+    q.options.forEach((opt, i) => {
+      const row = document.createElement('div');
+      row.className = 'option ' + (i===q.answer?'correct': (i===user?'incorrect':''));
+      row.style.cursor='default';
+      row.innerHTML = (i===q.answer?'<strong>Correct:</strong> ':'') + opt + (i===user && i!==q.answer ? ' <em>(your choice)</em>' : '');
+      optionsList.appendChild(row);
+    });
+
+    const exp = document.createElement('div');
+    exp.style.marginTop='10px';
+    exp.innerHTML = `<div style="font-weight:700; margin-bottom:6px">Explanation & References</div>${q.explain}`;
+
+    body.appendChild(optionsList);
+    body.appendChild(exp);
+    det.appendChild(sum);
+    det.appendChild(body);
+    container.appendChild(det);
+  });
+
+  const total = questions.length;
+  const percent = Math.round((correct/total)*100);
+  const score = document.getElementById('score');
+  score.textContent = `Score: ${correct} / ${total} (${percent}%)`;
+  const scoreMeta = document.getElementById('scoreMeta');
+  const flagged = [...responses.keys()].filter(id => responses.get(id)?.isFlagged).length;
+  const unanswered = total - [...responses.keys()].filter(id => typeof responses.get(id)?.choiceIndex === 'number').length;
+  scoreMeta.textContent = `Unanswered: ${unanswered} • Flagged: ${flagged}. Click each item for a full explanation and sources.`;
+
+  // scroll to results
+  document.getElementById('results').scrollIntoView({behavior:'smooth'});
+}
+
+// Keyboard shortcuts
+window.addEventListener('keydown', (e)=>{
+  if(e.key.toLowerCase()==='j'){ next(); }
+  if(e.key.toLowerCase()==='k'){ prev(); }
+  if(e.key.toLowerCase()==='s'){ skip(); }
+  if(e.key.toLowerCase()==='f'){ toggleFlag(); }
+});
+
+// Wire buttons
+const btnStart = document.getElementById('btnStart');
+const btnPrev = document.getElementById('btnPrev');
+const btnNext = document.getElementById('btnNext');
+const btnSkip = document.getElementById('btnSkip');
+const btnFlag = document.getElementById('btnFlag');
+const btnSubmit = document.getElementById('btnSubmit');
+const btnReview = document.getElementById('btnReview');
+
+btnStart.addEventListener('click', ()=>{
+  prepareQuestions();
+  current = 0; responses.clear();
+  btnStart.disabled = true; btnReview.disabled=false; btnSubmit.disabled=true;
+  [btnPrev, btnNext, btnSkip, btnFlag].forEach(b=> b.disabled=false);
+  render(); updateMeta();
+});
+btnPrev.addEventListener('click', prev);
+btnNext.addEventListener('click', next);
+btnSkip.addEventListener('click', ()=>{ skip(); updateMeta(); });
+btnFlag.addEventListener('click', toggleFlag);
+btnSubmit.addEventListener('click', submit);
+btnReview.addEventListener('click', reviewUnanswered);
+</script>
+</body>
+</html>

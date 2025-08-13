@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calvin Coolidge & The Last Arcadia - MCQ</title>
+  <style>
+    body {
+      font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      max-width: 900px;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2.2em;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #7f8c8d;
+      margin-bottom: 30px;
+      font-style: italic;
+    }
+
+    #question-area {
+      margin-bottom: 30px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 20px;
+      user-select: none;
+    }
+
+    #question-number {
+      color: #34495e;
+      font-size: 1.5em;
+      margin-bottom: 15px;
+    }
+
+    #question-text {
+      font-size: 1.3em;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .option {
+      background-color: #ecf0f1;
+      border: 1px solid #bdc3c7;
+      border-radius: 5px;
+      padding: 15px 20px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+      font-size: 1.1em;
+      line-height: 1.4;
+    }
+
+    .option:hover {
+      background-color: #dbe4e6;
+      border-color: #95a5a6;
+    }
+
+    .option.selected {
+      background-color: #a2d9ce; /* Light teal for selected */
+      border-color: #1abc9c; /* Stronger teal */
+      font-weight: bold;
+    }
+
+    .option.correct {
+      background-color: #d4edda; /* Light green */
+      border-color: #28a745; /* Stronger green */
+    }
+
+    .option.incorrect {
+      background-color: #f8d7da; /* Light red */
+      border-color: #dc3545; /* Stronger red */
+    }
+
+    .navigation-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .nav-btn {
+      background-color: #3498db; /* Blue */
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1.1em;
+      transition: background-color 0.3s ease;
+      flex-grow: 1;
+      min-width: 80px;
+      user-select: none;
+    }
+
+    .nav-btn:hover:not(:disabled) {
+      background-color: #2980b9; /* Darker blue */
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    #submit-btn {
+      background-color: #27ae60; /* Green */
+      flex-grow: 2;
+    }
+
+    #submit-btn:hover:not(:disabled) {
+      background-color: #229954; /* Darker green */
+    }
+
+    #restart-btn {
+      background-color: #e67e22; /* Orange */
+      margin-top: 30px;
+      display: block;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 12px 35px;
+      font-size: 1.2em;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    #restart-btn:hover {
+      background-color: #d35400; /* Darker orange */
+    }
+
+    #results-container {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    #results-container h2 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #score {
+      font-size: 1.8em;
+      text-align: center;
+      margin-bottom: 30px;
+      color: #27ae60;
+      font-weight: bold;
+    }
+
+    .answer-review-item {
+      background-color: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .answer-review-item h3 {
+      color: #34495e;
+      margin-top: 0;
+      font-size: 1.2em;
+    }
+
+    .answer-review-item p {
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .answer-review-item .your-answer {
+      font-weight: bold;
+      color: #e67e22; /* Orange for user's answer */
+    }
+
+    .answer-review-item .correct-answer {
+      font-weight: bold;
+      color: #28a745; /* Green for correct answer */
+    }
+
+    .answer-review-item .explanation {
+      background-color: #ecf0f1;
+      border-left: 4px solid #3498db;
+      padding: 15px;
+      margin-top: 15px;
+      font-size: 0.95em;
+      line-height: 1.6;
+      color: #555;
+    }
+
+    .citation {
+      font-size: 0.85em;
+      color: #7f8c8d;
+      margin-top: 10px;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calvin Coolidge and The Last Arcadia: A Historical Examination</h1>
+    <p class="subtitle">Based on Chapter 1 of "Calvin Coolidge and the Coolidge Era" by John Earl Haynes</p>
+
+    <div id="question-area">
+      <div id="question-number"></div>
+      <div id="question-text"></div>
+      <div id="options-container"></div>
+    </div>
+
+    <div class="navigation-buttons">
+      <button class="nav-btn" id="previous-btn" disabled>Previous</button>
+      <button class="nav-btn" id="skip-btn">Skip</button>
+      <button class="nav-btn" id="next-btn">Next</button>
+      <button class="nav-btn" id="submit-btn">Submit</button>
+    </div>
+
+    <button id="restart-btn" style="display:none;">Restart Quiz</button>
+
+    <div id="results-container" style="display:none;">
+      <h2>Quiz Results</h2>
+      <div id="score"></div>
+      <div id="answer-review"></div>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Haynes argues that Coolidge's public image as 'Silent Cal' was not merely a personal trait but also a **carefully cultivated political strategy**. Which of the following best supports this assertion?",
+        options: [
+          "Coolidge's extensive private correspondence revealing a highly gregarious personality.",
+          "His frequent, lengthy, and unscripted public speeches.",
+          "The deliberate use of silence and brevity in public appearances to project an image of wisdom and stability.",
+          "His early career as a flamboyant and outspoken debater in the Massachusetts legislature."
+        ],
+        answer: "The deliberate use of silence and brevity in public appearances to project an image of wisdom and stability.",
+        explanation: "Haynes emphasizes that Coolidge's 'Silent Cal' persona was a deliberate political tool. It allowed him to avoid missteps, project an image of thoughtful deliberation, and contrast with the perceived garrulousness of other politicians. This was a calculated strategy, not just an innate characteristic. Haynes cites examples of Coolidge's controlled public interactions and his understanding of how silence could convey strength and reliability. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "Chapter 1 discusses the concept of 'Arcadia' in relation to Coolidge. What does Haynes primarily suggest this 'Arcadia' represented for Coolidge and his supporters?",
+        options: [
+          "A utopian vision of a technologically advanced future.",
+          "A nostalgic ideal of a simpler, rural, and morally upright America, rooted in his Vermont upbringing.",
+          "A call for aggressive American expansionism and global dominance.",
+          "A philosophical movement advocating for radical social change."
+        ],
+        answer: "A nostalgic ideal of a simpler, rural, and morally upright America, rooted in his Vermont upbringing.",
+        explanation: "Haynes uses 'Arcadia' to symbolize the idealized, traditional American values that Coolidge embodied and championed. This was deeply connected to his Vermont roots, representing a pre-industrial, virtuous, and self-reliant way of life that many Americans felt was being lost in the rapidly modernizing 1920s. It was a vision of stability and continuity amidst change. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "Haynes challenges the simplistic view of Coolidge as merely a passive, do-nothing president. What evidence does he present to argue for Coolidge's active, albeit understated, approach to governance?",
+        options: [
+          "His frequent use of executive orders to bypass Congress.",
+          "His aggressive legislative agenda pushing for new social programs.",
+          "His strategic use of vetoes, appointments, and public statements to shape policy and influence public opinion.",
+          "His direct intervention in international conflicts without congressional approval."
+        ],
+        answer: "His strategic use of vetoes, appointments, and public statements to shape policy and influence public opinion.",
+        explanation: "Haynes argues against the 'do-nothing' caricature by highlighting Coolidge's effective, if quiet, exercise of presidential power. He points to Coolidge's judicious use of the veto to curb spending, his careful selection of cabinet members and judges, and his well-timed, often brief, public remarks that subtly guided policy and public discourse. This demonstrates a deliberate and effective, rather than passive, approach to governance. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "The chapter discusses Coolidge's relationship with the burgeoning consumer culture of the 1920s. How does Haynes characterize Coolidge's stance on this economic development?",
+        options: [
+          "He actively condemned it as morally corrupting.",
+          "He embraced it enthusiastically, promoting unrestrained spending.",
+          "He viewed it with a degree of skepticism, emphasizing thrift and traditional values, yet acknowledged its role in prosperity.",
+          "He ignored it completely, focusing solely on agricultural issues."
+        ],
+        answer: "He viewed it with a degree of skepticism, emphasizing thrift and traditional values, yet acknowledged its role in prosperity.",
+        explanation: "Coolidge, rooted in his 'Arcadian' values of thrift and self-reliance, was not an uncritical cheerleader for the consumer boom. Haynes notes that while he understood the economic benefits of mass production and consumption, his personal philosophy remained grounded in frugality. He sought to balance modern economic realities with traditional moral principles. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "Haynes explores the historiographical debate surrounding Coolidge. Which of the following best describes the traditional, often critical, view of Coolidge that Haynes seeks to re-evaluate?",
+        options: [
+          "He was a visionary leader who laid the groundwork for the New Deal.",
+          "He was an ineffective, pro-business president whose policies contributed to the Great Depression.",
+          "He was a radical progressive who challenged corporate power.",
+          "He was a charismatic populist who championed the working class."
+        ],
+        answer: "He was an ineffective, pro-business president whose policies contributed to the Great Depression.",
+        explanation: "Haynes explicitly aims to challenge the prevailing negative historiography of Coolidge, which often portrays him as a passive, pro-business figure whose policies were either irrelevant or directly contributed to the economic downturn of the 1930s. Haynes argues for a more nuanced understanding of his presidency. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "The chapter touches upon Coolidge's approach to federal spending and taxation. What was a cornerstone of his economic philosophy?",
+        options: [
+          "Increased government spending on social welfare programs.",
+          "High protective tariffs and nationalization of key industries.",
+          "Fiscal conservatism, tax cuts, and reduction of the national debt.",
+          "Massive infrastructure projects funded by deficit spending."
+        ],
+        answer: "Fiscal conservatism, tax cuts, and reduction of the national debt.",
+        explanation: "Coolidge was a staunch advocate for fiscal conservatism. Haynes highlights his commitment to reducing government expenditures, cutting taxes (particularly on income), and significantly paying down the national debt accumulated during World War I. This was central to his belief in limited government and individual economic freedom. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "Haynes suggests that Coolidge's appeal to the American public during the 1920s was partly due to his perceived embodiment of **traditional American virtues**. Which of the following virtues is most emphasized?",
+        options: [
+          "Charisma and oratorical prowess.",
+          "Innovation and technological foresight.",
+          "Thrift, industry, honesty, and self-reliance.",
+          "Aggressive international diplomacy."
+        ],
+        answer: "Thrift, industry, honesty, and self-reliance.",
+        explanation: "Coolidge's 'Arcadian' image was built upon these core virtues. Haynes argues that in a rapidly changing era, many Americans found comfort and reassurance in a leader who seemed to embody the enduring values of hard work, financial prudence, integrity, and individual responsibility, harking back to an earlier, simpler America. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "The chapter discusses the political climate in which Coolidge rose to power. What significant event immediately preceded his presidency and shaped the public's desire for stability?",
+        options: [
+          "The end of the Civil War.",
+          "The economic boom of the Roaring Twenties.",
+          "The aftermath of World War I and the Harding administration's scandals.",
+          "The Great Depression."
+        ],
+        answer: "The aftermath of World War I and the Harding administration's scandals.",
+        explanation: "Coolidge ascended to the presidency after the sudden death of Warren G. Harding, whose administration was plagued by scandals (most notably Teapot Dome). This, combined with the lingering effects of World War I and a desire for a return to 'normalcy,' created a public yearning for stability, integrity, and quiet competence, which Coolidge seemed to offer. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "Haynes suggests that Coolidge's political philosophy was deeply influenced by his **Yankee heritage**. What aspect of this heritage is highlighted as particularly formative?",
+        options: [
+          "A strong belief in centralized federal power.",
+          "An emphasis on community welfare over individual liberty.",
+          "A pragmatic, cautious approach to change and a respect for established institutions.",
+          "A revolutionary zeal for social reform."
+        ],
+        answer: "A pragmatic, cautious approach to change and a respect for established institutions.",
+        explanation: "Coolidge's Yankee background instilled in him a deep-seated pragmatism, a distrust of grand schemes, and a profound respect for tradition, law, and existing institutions. Haynes argues this shaped his conservative approach to governance and his preference for incremental rather than radical change. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "The chapter examines Coolidge's relationship with the press. How does Haynes describe his interaction with journalists?",
+        options: [
+          "He held daily, lengthy, and informal press conferences.",
+          "He was highly accessible and frequently granted exclusive interviews.",
+          "He maintained a formal, often terse, relationship, preferring written statements or brief, controlled exchanges.",
+          "He actively avoided all contact with the press."
+        ],
+        answer: "He maintained a formal, often terse, relationship, preferring written statements or brief, controlled exchanges.",
+        explanation: "Consistent with his 'Silent Cal' persona, Coolidge managed his interactions with the press carefully. Haynes notes that he preferred formal, structured exchanges, often providing written answers or very brief, controlled responses, rather than engaging in the freewheeling press conferences that became common later. This allowed him to control his message and avoid misinterpretation. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "Haynes discusses the public's perception of Coolidge's character. Which of the following traits was most commonly attributed to him by the public, contributing to his popularity?",
+        options: [
+          "His flamboyant lifestyle.",
+          "His intellectual brilliance and academic achievements.",
+          "His honesty, integrity, and common sense.",
+          "His dynamic and inspiring public speaking."
+        ],
+        answer: "His honesty, integrity, and common sense.",
+        explanation: "In the wake of the Harding scandals, the American public yearned for a leader of unimpeachable character. Haynes argues that Coolidge's perceived honesty, integrity, and practical common sense resonated deeply, offering a stark contrast to the corruption that had preceded him. These traits were central to his public appeal. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "The chapter delves into Coolidge's views on the role of government in the economy. What was his predominant belief?",
+        options: [
+          "Extensive government regulation and intervention to manage economic cycles.",
+          "A laissez-faire approach, minimizing government interference to allow free markets to flourish.",
+          "Government ownership of major industries.",
+          "Centralized economic planning by federal agencies."
+        ],
+        answer: "A laissez-faire approach, minimizing government interference to allow free markets to flourish.",
+        explanation: "Coolidge was a strong proponent of limited government intervention in the economy. Haynes emphasizes his belief that free markets, unburdened by excessive regulation or taxation, were the most effective engines of prosperity. This laissez-faire philosophy was a hallmark of his administration. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "Haynes mentions Coolidge's background as a lawyer. How did this professional training influence his approach to the presidency?",
+        options: [
+          "It made him prone to impulsive decisions.",
+          "It fostered a meticulous, logical, and constitutionally grounded approach to policy and law.",
+          "It led him to prioritize litigation over legislative action.",
+          "It encouraged a highly emotional and rhetorical style of leadership."
+        ],
+        answer: "It fostered a meticulous, logical, and constitutionally grounded approach to policy and law.",
+        explanation: "Coolidge's legal training instilled in him a methodical and precise way of thinking. Haynes suggests this background contributed to his careful consideration of constitutional limits, his respect for legal precedent, and his logical, rather than emotional, approach to policy-making and governance. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "The chapter discusses the 'Coolidge prosperity' of the 1920s. While acknowledging the economic growth, what nuance does Haynes introduce regarding this prosperity?",
+        options: [
+          "He argues it was entirely a myth, with no real economic growth.",
+          "He suggests it was unevenly distributed, with certain sectors and regions lagging behind.",
+          "He attributes it solely to government spending programs.",
+          "He claims it was primarily driven by agricultural exports."
+        ],
+        answer: "He suggests it was unevenly distributed, with certain sectors and regions lagging behind.",
+        explanation: "While the 1920s are often associated with widespread prosperity, Haynes, like many historians, points out that this economic boom was not universal. He acknowledges that sectors like agriculture and certain regions did not fully share in the prosperity, introducing a more complex view of the era's economic landscape. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "Haynes contrasts Coolidge with his predecessor, Warren G. Harding. What key difference does Haynes highlight in their presidential styles?",
+        options: [
+          "Harding was known for his strict adherence to constitutional principles, while Coolidge was more flexible.",
+          "Harding was a highly disciplined and private individual, whereas Coolidge was gregarious and public.",
+          "Harding was characterized by a more relaxed, less disciplined approach to governance, contrasting with Coolidge's methodical and reserved style.",
+          "Harding was a strong advocate for government intervention, while Coolidge favored deregulation."
+        ],
+        answer: "Harding was characterized by a more relaxed, less disciplined approach to governance, contrasting with Coolidge's methodical and reserved style.",
+        explanation: "Haynes draws a clear distinction between the two presidents. Harding's administration was marked by a more informal, sometimes chaotic, atmosphere that contributed to the scandals. Coolidge, in contrast, brought a disciplined, reserved, and methodical approach to the White House, restoring a sense of order and rectitude. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "The chapter discusses Coolidge's decision not to seek re-election in 1928. What reason does Haynes suggest was primary for this decision?",
+        options: [
+          "Fear of losing to a strong Democratic challenger.",
+          "A desire to pursue a career in international diplomacy.",
+          "A belief that ten years in the presidency (including Harding's term) was sufficient, and a desire to avoid overstaying his welcome.",
+          "Poor health that prevented him from continuing."
+        ],
+        answer: "A belief that ten years in the presidency (including Harding's term) was sufficient, and a desire to avoid overstaying his welcome.",
+        explanation: "Haynes, along with many historians, points to Coolidge's statement, 'I do not choose to run,' as reflecting a deep-seated belief that a president should not serve too long. He had already served a full term plus the remainder of Harding's, and he felt that a decade in the White House was enough, adhering to a principle of rotation in office. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "Haynes argues that Coolidge's presidency represented a **culmination of the Progressive Era's administrative reforms**, rather than a rejection of them. How does he support this?",
+        options: [
+          "By showing Coolidge's expansion of federal regulatory agencies.",
+          "By demonstrating his commitment to efficient, non-partisan administration and fiscal responsibility.",
+          "By highlighting his support for direct democracy initiatives.",
+          "By detailing his efforts to break up large trusts and monopolies."
+        ],
+        answer: "By demonstrating his commitment to efficient, non-partisan administration and fiscal responsibility.",
+        explanation: "While often seen as anti-Progressive, Haynes argues that Coolidge embodied certain aspects of Progressive reform, particularly the emphasis on efficient, non-corrupt, and fiscally responsible government. His focus on reducing debt, cutting waste, and ensuring competent administration aligned with the Progressive ideal of good government, even if he rejected their social reform agenda. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "The chapter discusses the role of **Calvin Coolidge's personal background** in shaping his political identity. Which aspect is given significant weight?",
+        options: [
+          "His urban upbringing in Boston.",
+          "His privileged education at an elite private school.",
+          "His humble, rural New England roots and strong family values.",
+          "His extensive travels abroad in his youth."
+        ],
+        answer: "His humble, rural New England roots and strong family values.",
+        explanation: "Haynes repeatedly emphasizes the formative influence of Coolidge's upbringing in Plymouth Notch, Vermont. This rural, self-reliant, and morally grounded environment is presented as the crucible for his character and political philosophy, deeply connecting him to the 'Arcadian' ideal. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "Haynes suggests that Coolidge's appeal was partly due to his ability to represent a **sense of continuity and tradition** in a rapidly changing America. What specific societal changes of the 1920s made this particularly appealing?",
+        options: [
+          "The rise of jazz, flappers, and urban modernity.",
+          "The expansion of the federal government's power.",
+          "The decline of industrialization.",
+          "The shift from a service economy to an agricultural one."
+        ],
+        answer: "The rise of jazz, flappers, and urban modernity.",
+        explanation: "The 1920s were a period of significant social and cultural upheaval, marked by the emergence of new lifestyles, technologies, and urban centers. Haynes argues that Coolidge, with his traditional values and 'Arcadian' image, offered a reassuring anchor for many Americans who felt disoriented by these rapid changes, representing stability amidst modernity. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "The chapter discusses Coolidge's approach to foreign policy. How does Haynes generally characterize it?",
+        options: [
+          "Aggressive interventionism and military expansion.",
+          "Isolationist, with a complete withdrawal from international affairs.",
+          "Cautious, emphasizing economic diplomacy and limited international commitments.",
+          "A focus on forming strong military alliances."
+        ],
+        answer: "Cautious, emphasizing economic diplomacy and limited international commitments.",
+        explanation: "Coolidge's foreign policy, consistent with his domestic philosophy, was generally cautious. Haynes notes his emphasis on promoting American economic interests abroad and participating in international agreements (like the Kellogg-Briand Pact) that did not entail significant military or political entanglements, reflecting a post-WWI desire for peace and non-intervention. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "Haynes argues that Coolidge's presidency was a period of **consolidation rather than innovation**. What does this imply about his leadership?",
+        options: [
+          "He introduced numerous groundbreaking legislative reforms.",
+          "He focused on solidifying existing structures and principles rather than initiating radical new policies.",
+          "He was unable to adapt to new challenges.",
+          "He sought to dismantle all previous government programs."
+        ],
+        answer: "He focused on solidifying existing structures and principles rather than initiating radical new policies.",
+        explanation: "This phrase captures Coolidge's conservative approach. Haynes suggests that instead of proposing sweeping new initiatives, Coolidge's strength lay in reinforcing traditional American values, ensuring fiscal stability, and allowing the economy to grow with minimal government interference. His leadership was about maintaining and refining, not revolutionizing. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "The chapter highlights Coolidge's relationship with business leaders. How does Haynes portray this relationship?",
+        options: [
+          "Antagonistic, with Coolidge frequently challenging corporate power.",
+          "Distant, with little interaction or influence.",
+          "Cooperative, based on a shared belief in free enterprise and limited government intervention.",
+          "He favored small businesses over large corporations."
+        ],
+        answer: "Cooperative, based on a shared belief in free enterprise and limited government intervention.",
+        explanation: "Coolidge's administration was notably pro-business, reflecting his belief that a thriving private sector was essential for national prosperity. Haynes describes a cooperative relationship, where Coolidge's policies of tax cuts and deregulation were welcomed by business leaders, who in turn supported his agenda. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "Haynes discusses the impact of Coolidge's personal tragedy (the death of his son) on his presidency. What effect does Haynes suggest this had?",
+        options: [
+          "It led him to abandon his political career.",
+          "It made him more outwardly emotional and expressive.",
+          "It deepened his already reserved nature and reinforced his stoicism, possibly affecting his public engagement.",
+          "It prompted him to initiate new social welfare programs."
+        ],
+        answer: "It deepened his already reserved nature and reinforced his stoicism, possibly affecting his public engagement.",
+        explanation: "The death of Calvin Jr. deeply affected Coolidge. Haynes suggests that while he was already a reserved man, this tragedy intensified his stoicism and withdrawal, making him even more private and less inclined to engage in the more public aspects of the presidency. This personal grief is seen as reinforcing his 'Silent Cal' image. [1]",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era: Essays on the History of the 1920s*. Washington, D.C.: Library of Congress, 1998, pp. 3-25."
+      },
+      {
+        question: "The chapter analyzes Coolidge's relationship with the concept of 'progress.' How does Haynes characterize Coolidge's view of progress?",
+        options: [
+          "He believed progress was solely defined by technological advancement.",
+          "He saw progress primarily in moral and spiritual terms.",
+          "He rejected the idea of progress altogether.",
+          "He viewed progress only in economic terms."
+        ],
+        answer: "He saw progress primarily in moral and spiritual terms.",
+        explanation: "Haynes suggests that Coolidge understood progress not just as technological or economic growth but more importantly as moral and spiritual development in society.",
+        citation: "Haynes, John Earl. 'Calvin Coolidge and the Last Arcadia.' In *Calvin Coolidge and the Coolidge Era*, 1998."
+      }
+    ];
+
+    // ===== JavaScript Quiz Logic ======
+
+    let currentQuestionIndex = 0;
+    const userAnswers = Array(questions.length).fill(null);
+    let quizSubmitted = false;
+
+    // DOM elements
+    const questionNumberEl = document.getElementById('question-number');
+    const questionTextEl = document.getElementById('question-text');
+    const optionsContainerEl = document.getElementById('options-container');
+    const previousBtn = document.getElementById('previous-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const skipBtn = document.getElementById('skip-btn');
+    const submitBtn = document.getElementById('submit-btn');
+    const restartBtn = document.getElementById('restart-btn');
+    const resultsContainer = document.getElementById('results-container');
+    const scoreEl = document.getElementById('score');
+    const answerReviewEl = document.getElementById('answer-review');
+
+    // Render current question
+    function renderQuestion() {
+      const q = questions[currentQuestionIndex];
+
+      questionNumberEl.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+      questionTextEl.innerHTML = q.question;
+
+      // Clear previous options
+      optionsContainerEl.innerHTML = '';
+
+      // Render options
+      q.options.forEach((opt, idx) => {
+        const optionDiv = document.createElement('div');
+        optionDiv.classList.add('option');
+        optionDiv.textContent = opt;
+
+        // Mark selected option
+        if (userAnswers[currentQuestionIndex] === opt) {
+          optionDiv.classList.add('selected');
+        }
+
+        // If quiz submitted, mark correct/incorrect
+        if (quizSubmitted) {
+          if (opt === q.answer) {
+            optionDiv.classList.add('correct');
+          } else if (userAnswers[currentQuestionIndex] === opt) {
+            optionDiv.classList.add('incorrect');
+          }
+          optionDiv.style.cursor = 'default';
+        } else {
+          // If not submitted, enable clicking
+          optionDiv.addEventListener('click', () => {
+            selectOption(opt);
+          });
+        }
+
+        optionsContainerEl.appendChild(optionDiv);
+      });
+
+      updateNavigationButtons();
+    }
+
+    // Select an option
+    function selectOption(optionText) {
+      if (quizSubmitted) return; // No selection after submission
+
+      userAnswers[currentQuestionIndex] = optionText;
+      renderQuestion();
+    }
+
+    // Update navigation buttons state
+    function updateNavigationButtons() {
+      previousBtn.disabled = currentQuestionIndex === 0;
+      nextBtn.disabled = currentQuestionIndex === questions.length - 1;
+    }
+
+    // Show results
+    function showResults() {
+      let correctCount = 0;
+      for (let i = 0; i < questions.length; i++) {
+        if (userAnswers[i] === questions[i].answer) {
+          correctCount++;
+        }
+      }
+
+      scoreEl.textContent = `Your score: ${correctCount} / ${questions.length}`;
+
+      // Clear previous review
+      answerReviewEl.innerHTML = '';
+
+      // Detailed review
+      questions.forEach((q, i) => {
+        const reviewItem = document.createElement('div');
+        reviewItem.classList.add('answer-review-item');
+
+        const questionHeader = document.createElement('h3');
+        questionHeader.textContent = `Q${i + 1}:`;
+
+        const questionText = document.createElement('p');
+        questionText.innerHTML = q.question;
+
+        const yourAnswer = document.createElement('p');
+        yourAnswer.innerHTML = `Your answer: <span class="your-answer">${userAnswers[i] ?? 'No answer'}</span>`;
+
+        const correctAnswer = document.createElement('p');
+        correctAnswer.innerHTML = `Correct answer: <span class="correct-answer">${q.answer}</span>`;
+
+        const explanation = document.createElement('p');
+        explanation.classList.add('explanation');
+        explanation.textContent = q.explanation;
+
+        const citation = document.createElement('p');
+        citation.classList.add('citation');
+        citation.textContent = q.citation;
+
+        reviewItem.appendChild(questionHeader);
+        reviewItem.appendChild(questionText);
+        reviewItem.appendChild(yourAnswer);
+        if (userAnswers[i] !== q.answer) {
+          reviewItem.appendChild(correctAnswer);
+        }
+        reviewItem.appendChild(explanation);
+        reviewItem.appendChild(citation);
+
+        answerReviewEl.appendChild(reviewItem);
+      });
+
+      resultsContainer.style.display = 'block';
+      restartBtn.style.display = 'block';
+
+      // Hide quiz controls
+      submitBtn.style.display = 'none';
+      previousBtn.style.display = 'none';
+      nextBtn.style.display = 'none';
+      skipBtn.style.display = 'none';
+      document.getElementById('question-area').style.display = 'none';
+    }
+
+    // Event listeners
+    previousBtn.addEventListener('click', () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderQuestion();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        renderQuestion();
+      }
+    });
+
+    skipBtn.addEventListener('click', () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        renderQuestion();
+      }
+    });
+
+    submitBtn.addEventListener('click', () => {
+      // If no answers selected, confirm submission
+      const unanswered = userAnswers.some(a => a === null);
+      if (unanswered) {
+        if (!confirm("You have unanswered questions. Submit anyway?")) {
+          return;
+        }
+      }
+      quizSubmitted = true;
+      renderQuestion();
+      showResults();
+    });
+
+    restartBtn.addEventListener('click', () => {
+      currentQuestionIndex = 0;
+      userAnswers.fill(null);
+      quizSubmitted = false;
+
+      // Show quiz controls and question area
+      submitBtn.style.display = 'inline-block';
+      previousBtn.style.display = 'inline-block';
+      nextBtn.style.display = 'inline-block';
+      skipBtn.style.display = 'inline-block';
+      document.getElementById('question-area').style.display = 'block';
+
+      resultsContainer.style.display = 'none';
+      restartBtn.style.display = 'none';
+
+      renderQuestion();
+    });
+
+    // Initialize quiz
+    renderQuestion();
+  </script>
+</body>
+</html>
