@@ -1,0 +1,684 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Only Yesterday — Ch. 10: ALCOHOL AND AL CAPONE — 30-Question MCQ</title>
+<style>
+  :root{
+    --bg:#071021;
+    --card:#0f1a34;
+    --ink:#eaf0ff;
+    --muted:#b6c8e8;
+    --accent:#7fb7ff;
+    --accent-2:#8ef3c6;
+    --danger:#fa7a7a;
+    --warn:#f6c65a;
+    --ok:#4dd7a1;
+    --shadow:0 14px 36px rgba(0,0,0,.5), 0 6px 14px rgba(0,0,0,.28);
+    --radius:14px;
+    --glass: rgba(255,255,255,0.03);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:
+      radial-gradient(800px 420px at 12% 10%, rgba(15,30,60,.5), transparent),
+      linear-gradient(180deg,#07172b 0%, #041024 100%);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  header{
+    position:sticky; top:0; z-index:60;
+    border-bottom:1px solid rgba(127,183,255,.08);
+    backdrop-filter: blur(6px);
+    background:linear-gradient(180deg, rgba(8,18,36,.88), rgba(6,12,26,.72));
+  }
+  .wrap{max-width:1180px; margin:0 auto; padding:14px;}
+  h1{margin:0; font-size:clamp(1.3rem, 1rem + 1.6vw, 1.9rem)}
+  .subtitle{color:var(--muted); font-size:.95rem; margin-top:6px}
+  main{max-width:1180px; margin:18px auto; padding:18px; display:grid; grid-template-columns:1.25fr .9fr; gap:18px}
+  @media (max-width:980px){ main{grid-template-columns:1fr} }
+  .card{
+    background: linear-gradient(180deg, rgba(11,22,39,.72), rgba(8,14,28,.6));
+    border-radius:var(--radius);
+    border:1px solid rgba(127,183,255,.06);
+    box-shadow:var(--shadow);
+  }
+  .panel{padding:16px}
+  .controls{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+  button{
+    border:0; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:700;
+    background:var(--accent); color:#042033; box-shadow:0 10px 26px rgba(127,183,255,.10);
+  }
+  button.secondary{ background:transparent; color:var(--ink); border:1px solid rgba(127,183,255,.06); box-shadow:none }
+  button.ghost{ background:transparent; color:var(--muted); border:1px dashed rgba(127,183,255,.04) }
+  button.warn{ background:var(--warn); color:#071021 }
+  button.danger{ background:var(--danger); color:#071021 }
+  button.ok{ background:var(--ok); color:#071021 }
+  .meter{height:10px; background:rgba(255,255,255,0.03); border-radius:999px; overflow:hidden; border:1px solid rgba(127,183,255,.04)}
+  .meter > span{display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--accent), var(--accent-2)); transition:width .28s cubic-bezier(.2,.9,.2,1)}
+  .q{padding:18px; margin:14px 0; border-radius:12px; background:linear-gradient(180deg, rgba(7,14,28,.45), rgba(6,10,20,.35)); border:1px solid rgba(127,183,255,.04)}
+  .q-header{display:flex; justify-content:space-between; gap:12px; align-items:baseline}
+  .q-title{font-weight:800}
+  .q-meta{color:var(--muted); font-size:.95rem}
+  .choices{margin-top:12px; display:grid; gap:10px}
+  .choice{padding:12px; border-radius:10px; cursor:pointer; border:1px solid rgba(127,183,255,.06); background:var(--glass); transition:transform .06s ease, border-color .12s ease}
+  .choice:hover{ transform:translateY(-2px); border-color:rgba(127,183,255,.16) }
+  .choice.selected{ outline:2px solid rgba(127,183,255,.18); background:linear-gradient(180deg, rgba(21,36,64,.45), rgba(14,24,44,.45)) }
+  .choice.correct{ border-color: rgba(77,215,161,.5); background: rgba(20,60,42,.28) }
+  .choice.incorrect{ border-color: rgba(250,122,122,.5); background: rgba(60,20,24,.28) }
+  .aside{display:grid; gap:14px; align-content:start; position:sticky; top:82px}
+  .stat{display:flex; justify-content:space-between; align-items:center; padding:12px; border-radius:10px; border:1px solid rgba(127,183,255,.04)}
+  .grid{display:grid; gap:8px; grid-template-columns:repeat(6,1fr); padding:8px}
+  .dot{padding:8px 0; text-align:center; border-radius:8px; cursor:pointer; background:transparent; border:1px solid rgba(127,183,255,.04); color:var(--muted)}
+  .dot.answered{color:var(--ink); border-color:rgba(127,183,255,.12)}
+  .dot.current{outline:2px solid rgba(127,183,255,.14)}
+  .dot.correct{background:rgba(77,215,161,.12); border-color:rgba(77,215,161,.24); color:var(--ink)}
+  .dot.incorrect{background:rgba(250,122,122,.12); border-color:rgba(250,122,122,.2); color:var(--ink)}
+  .results{padding:14px; margin-top:12px; border-radius:10px; border:1px solid rgba(127,183,255,.04)}
+  .explain{margin-top:10px; border-left:3px solid var(--accent); padding:10px 12px; border-radius:8px; background:rgba(127,183,255,.03); color:var(--muted); font-size:0.95rem}
+  .tag{display:inline-block; font-size:.79rem; padding:4px 8px; border-radius:999px; background:rgba(127,183,255,.06); margin-right:8px}
+  .muted{color:var(--muted)}
+  .kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; background:rgba(255,255,255,.03); padding:2px 6px; border-radius:6px; border:1px solid rgba(127,183,255,.04)}
+  .references{font-size:.88rem; color:var(--muted); margin-top:10px; line-height:1.4}
+  footer{max-width:1180px; margin:18px auto; color:var(--muted); font-size:.9rem; text-align:center}
+</style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Only Yesterday — Chapter 10: <em>Alcohol and Al Capone</em></h1>
+      <div class="subtitle">30-question MCQ • Oxbridge / Ivy BA Final • Randomize Qs & choices • Skip & submit anytime • Detailed academic explanations (Allen, Ch. 10).</div>
+    </div>
+  </header>
+  <main>
+    <section class="card panel" id="quizCard">
+      <div class="controls" style="margin-bottom:12px">
+        <button id="startBtn" class="ok">Start / Re-randomize</button>
+        <button id="prevBtn" class="secondary">Prev</button>
+        <button id="nextBtn" class="secondary">Next</button>
+        <button id="skipBtn" class="ghost">Skip</button>
+        <button id="submitBtn" class="warn">Submit Now</button>
+        <span class="muted" style="margin-left:8px">Hotkeys: <span class="kbd">←</span>/<span class="kbd">→</span> • <span class="kbd">S</span> skip • <span class="kbd">Enter</span> quick-select</span>
+      </div>
+      <div style="margin-bottom:10px">
+        <div class="meter" aria-hidden="true"><span id="meterBar"></span></div>
+        <div class="stat" style="margin-top:8px"><strong id="progressText">0/30 answered</strong><span id="scorePreview" class="muted">Score: —</span></div>
+      </div>
+      <div id="questionHost"></div>
+      <div id="postSubmit" class="results" style="display:none"></div>
+    </section>
+    <aside class="aside">
+      <section class="card panel">
+        <div style="display:flex; justify-content:space-between; align-items:center">
+          <div>
+            <div style="font-weight:800">Navigator</div>
+            <div class="muted" style="font-size:.92rem">Jump to any question</div>
+          </div>
+          <button id="clearBtn" class="danger">Clear</button>
+        </div>
+        <div class="grid" id="grid"></div>
+      </section>
+      <section class="card panel">
+        <div style="font-weight:800">Settings</div>
+        <div class="muted" style="margin:6px 0 10px">Attempt-level randomization & option shuffle enabled.</div>
+        <label><input type="checkbox" id="toggleInstant" /> Instant feedback mode</label><br/>
+        <label><input type="checkbox" id="toggleExplainOnSelect" /> Show explanation on selection</label>
+      </section>
+      <section class="card panel">
+        <div style="font-weight:800">Source note</div>
+        <div class="muted" style="margin-top:8px">Explanations cite Frederick L. Allen, <em>Only Yesterday</em>, Chapter 10. File citations point to the uploaded PDF segments.</div>
+      </section>
+    </aside>
+  </main>
+
+<script>
+/* Chapter 10 — Alcohol and Al Capone
+   30 rigorous MCQs for BA final level. Each explanation cites the uploaded file segments.
+*/
+
+const QUESTIONS_BASE = [
+  {
+    id: 'q1',
+    prompt: 'What immediate legislative instrument implemented the Eighteenth Amendment and framed national enforcement?',
+    choices: [
+      { text: 'The Volstead Act', correct: true },
+      { text: 'The Sherman Antitrust Act', correct: false },
+      { text: 'The Mann Act', correct: false },
+      { text: 'The Harrison Narcotics Act', correct: false }
+    ],
+    explain: 'Allen emphasises that the Volstead Act operationalized the Eighteenth Amendment and set the national terms for prohibition enforcement and its ambiguities. :contentReference[oaicite:0]{index=0}'
+  },
+  {
+    id: 'q2',
+    prompt: 'Which phrase best describes Allen’s initial assessment of Prohibition’s adoption by the American public?',
+    choices: [
+      { text: 'A grudging and contested acceptance', correct: false },
+      { text: 'An almost absent-minded and rapid acceptance', correct: true },
+      { text: 'A violently resisted and never adopted policy', correct: false },
+      { text: 'A long, multi-decade ratification process', correct: false }
+    ],
+    explain: 'Allen notes the Amendment was written into law with surprising swiftness and public acquiescence—passed rapidly by Congress and quickly ratified by states. :contentReference[oaicite:1]{index=1}'
+  },
+  {
+    id: 'q3',
+    prompt: 'According to Allen, why did smuggling (rum-running) flourish despite enforcement efforts?',
+    choices: [
+      { text: 'Because the U.S. Navy actively protected smugglers', correct: false },
+      { text: 'Because the sea border and creative concealment made interception difficult', correct: true },
+      { text: 'Because Canada had ratified Prohibition', correct: false },
+      { text: 'Because motor vehicles were banned', correct: false }
+    ],
+    explain: 'Allen documents rum-ships, fast launches, and concealment techniques that made interception hard; Treasury estimated enforcement captured only a tiny fraction. :contentReference[oaicite:2]{index=2}'
+  },
+  {
+    id: 'q4',
+    prompt: 'What quantitative indicator does Allen use to show the scale of diverted industrial alcohol?',
+    choices: [
+      { text: 'A decline in corn-sugar output', correct: false },
+      { text: 'A sixfold increase in corn-sugar production between 1919 and 1929', correct: true },
+      { text: 'A halving of beer production nationwide', correct: false },
+      { text: 'A 90% drop in wine imports', correct: false }
+    ],
+    explain: 'Allen cites corn-sugar production rising sixfold (1919–1929) as evidence of massive illicit distilling feeding the illegal liquor trade. :contentReference[oaicite:3]{index=3}'
+  },
+  {
+    id: 'q5',
+    prompt: 'Which Chicago figure does Allen identify as the central bootleg overlord who rose from Torrio’s machine?',
+    choices: [
+      { text: 'Lucky Luciano', correct: false },
+      { text: 'Alphonse (Al) Capone', correct: true },
+      { text: 'Dutch Schultz', correct: false },
+      { text: 'Meyer Lansky', correct: false }
+    ],
+    explain: 'Allen traces Capone\'s ascent from Torrio\'s recruit to Chicago\'s dominant bootlegger and political fixer, illustrating the gangsterization of the liquor trade. '
+  },
+  {
+    id: 'q6',
+    prompt: 'How does Allen characterise the principal economic driver of organized crime under Prohibition?',
+    choices: [
+      { text: 'Small-scale artisanal production', correct: false },
+      { text: 'Enormous profit margins from beer-running and illicit distilling', correct: true },
+      { text: 'Government subsidies to bootleggers', correct: false },
+      { text: 'Agricultural tariffs', correct: false }
+    ],
+    explain: 'Allen highlights the prodigious profits—Pasley and federal estimates indicate Capone\'s operations produced tens of millions annually, largely from beer and alky-cooking. '
+  },
+  {
+    id: 'q7',
+    prompt: 'Allen argues that the rise of the gangs cannot be attributed solely to Prohibition. Which factor does he also emphasise?',
+    choices: [
+      { text: 'The invention of radio broadcasting', correct: false },
+      { text: 'The automobile and modern weapons easing escape and violence', correct: true },
+      { text: 'A mass exodus to rural areas', correct: false },
+      { text: 'An epidemic of illiteracy', correct: false }
+    ],
+    explain: 'Allen notes automobiles and new weaponry (e.g., Thompson sub-machine guns), plus imported Mafia violence and urban scale, as co-factors enabling gangster power. :contentReference[oaicite:6]{index=6}'
+  },
+  {
+    id: 'q8',
+    prompt: 'What enforcement paradox does Allen identify in the Wickersham Commission findings?',
+    choices: [
+      { text: 'Uniform agreement that enforcement was perfect', correct: false },
+      { text: 'A paradoxical report: evidence of failure yet a recommendation to continue the experiment', correct: true },
+      { text: 'A call for immediate expansion of the Eighteenth Amendment', correct: false },
+      { text: 'A unanimous recommendation for outright repeal', correct: false }
+    ],
+    explain: 'Allen summarises the Wickersham Report as paradoxical: documenting enforcement failure while many commissioners still called for continuation or cautious trial modifications. :contentReference[oaicite:7]{index=7}'
+  },
+  {
+    id: 'q9',
+    prompt: 'Which practical problem of enforcement does Allen emphasise with respect to beer compared to whisky?',
+    choices: [
+      { text: 'Beer required refrigeration that law could not control', correct: false },
+      { text: 'Beer was bulky and transported by trucks, requiring protection and bribery', correct: true },
+      { text: 'Beer was never contraband according to Volstead', correct: false },
+      { text: 'Beer dissolved police vehicles on contact', correct: false }
+    ],
+    explain: 'Allen explains beer-running\'s bulk required truck transport—exposing shipments to hijackings and necessitating protection rackets and bribery to operate profitably. :contentReference[oaicite:8]{index=8}'
+  },
+  {
+    id: 'q10',
+    prompt: 'How does Allen portray the social habits of affluent classes under Prohibition?',
+    choices: [
+      { text: 'They entirely abstained and policed others strictly', correct: false },
+      { text: 'They often consumed contraband cocktails overtly in private and club life', correct: true },
+      { text: 'They reverted to home-brewed cider only', correct: false },
+      { text: 'They emigrated en masse', correct: false }
+    ],
+    explain: 'Allen documents speakeasies, cocktail culture in clubs, and private flasks—Prohibition altered public norms but produced widespread clandestine consumption among the well-off. '
+  },
+  {
+    id: 'q11',
+    prompt: 'Which statistic does Allen cite (via Pasley/federal agents) about Capone\'s revenue source circa 1927?',
+    choices: [
+      { text: '$60 million annually from booze', correct: true },
+      { text: '$1 million annually from bootlegging', correct: false },
+      { text: '$500,000 annually from gambling only', correct: false },
+      { text: '$200 million annually from all crimes', correct: false }
+    ],
+    explain: 'Allen (citing Pasley and federal estimates) states Capone\'s operation derived roughly $60 million a year from booze-related enterprises in the mid-1920s. :contentReference[oaicite:10]{index=10}'
+  },
+  {
+    id: 'q12',
+    prompt: 'What violence method described by Allen helped create a new “technique of wholesale murder” in Chicago?',
+    choices: [
+      { text: 'Poisoning via contaminated corn-sugar', correct: false },
+      { text: 'Coordinated ambushes with stolen cars and sub-machine guns', correct: true },
+      { text: 'Naval blockades', correct: false },
+      { text: 'Biochemical warfare', correct: false }
+    ],
+    explain: 'Allen chronicles coordinated ambushes, drive-up shootings, and mass machine-gun attacks that transformed organized crime lethal tactics in Chicago. '
+  },
+  {
+    id: 'q13',
+    prompt: 'The St. Valentine\'s Day Massacre (Feb 14, 1929) is presented by Allen as:',
+    choices: [
+      { text: 'A minor skirmish with little publicity', correct: false },
+      { text: 'The climactic and most gruesome episode of the Chicago gang wars', correct: true },
+      { text: 'A government-organised raid', correct: false },
+      { text: 'A peaceful protest disguised as a massacre', correct: false }
+    ],
+    explain: 'Allen recounts the St. Valentine\'s Day Massacre as the climactic spectacle of brutality in Chicago\'s gang wars and a turning point in public shock at lawlessness. '
+  },
+  {
+    id: 'q14',
+    prompt: 'Which corruption mechanism does Allen emphasize as enabling gang dominance?',
+    choices: [
+      { text: 'Systematic bribery and political influence over local officials', correct: true },
+      { text: 'Transparent elections free of coercion', correct: false },
+      { text: 'Complete absence of any political involvement', correct: false },
+      { text: 'Direct rule by federal marshals only', correct: false }
+    ],
+    explain: 'Allen highlights how bribery, political manipulation, and control of local offices (e.g., Cicero) allowed figures like Capone to operate with impunity. '
+  },
+  {
+    id: 'q15',
+    prompt: 'How does Allen characterise the relationship between racketeering and legitimate business?',
+    choices: [
+      { text: 'They remained completely separate and antagonistic', correct: false },
+      { text: 'Rackets often masqueraded as trade associations and extorted legitimate businesses', correct: true },
+      { text: 'Legitimate businesses uniformly resisted racketeers without consequence', correct: false },
+      { text: 'Racketeering was limited to rural areas', correct: false }
+    ],
+    explain: 'Allen describes rackets that extorted cleaners, garages, and trades—sometimes organized as associations—imposing protection payments through violence or bombing. :contentReference[oaicite:14]{index=14}'
+  },
+  {
+    id: 'q16',
+    prompt: 'Which enforcement oddity does Allen recount that became famous for disguise and capture?',
+    choices: [
+      { text: 'The use of radio broadcasts to broadcast arrests', correct: false },
+      { text: 'Izzy Einstein and Moe Smith using comic-opera disguises to arrest bootleggers', correct: true },
+      { text: 'Federal agents using poison on import ships', correct: false },
+      { text: 'The Navy towing rum-ships into harbor', correct: false }
+    ],
+    explain: 'Allen recounts the colourful exploits of Izzy Einstein and Moe Smith, prohibition agents who employed disguises to make dramatic arrests. :contentReference[oaicite:15]{index=15}'
+  },
+  {
+    id: 'q17',
+    prompt: 'Allen suggests Prohibition had a paradoxical effect on total drinking. Which summary does he offer?',
+    choices: [
+      { text: 'It clearly increased drinking across all classes without exception', correct: false },
+      { text: 'It likely reduced drinking among working classes but increased clandestine consumption among prosperous classes', correct: true },
+      { text: 'It eliminated drinking entirely', correct: false },
+      { text: 'It only affected rural populations', correct: false }
+    ],
+    explain: 'Allen notes evidence that drinking fell among certain groups (e.g., some students, workingmen) but flourished clandestinely among the prosperous, changing social habits rather than eliminating consumption. :contentReference[oaicite:16]{index=16}'
+  },
+  {
+    id: 'q18',
+    prompt: 'What tactic did bootleggers use to disguise contraband in freight to evade detection?',
+    choices: [
+      { text: 'Marking crates with government seals legitimately', correct: false },
+      { text: 'Hiding liquor among other lawful shipments and manipulating seals', correct: true },
+      { text: 'Registering contraband as livestock', correct: false },
+      { text: 'Radio jamming of enforcement communications', correct: false }
+    ],
+    explain: 'Allen details concealment techniques: liquor mixed with lawful cargo, manipulated seals, and transshipment practices that made interception difficult. :contentReference[oaicite:17]{index=17}'
+  },
+  {
+    id: 'q19',
+    prompt: 'How does Allen evaluate the Government\'s attempt to render industrial alcohol undrinkable (denaturing) as a policy?',
+    choices: [
+      { text: 'Unambiguously effective and without controversy', correct: false },
+      { text: 'Contentious: it reduced diversion somewhat but provoked charges of poisoning and was imperfect', correct: true },
+      { text: 'Never attempted during the decade', correct: false },
+      { text: 'Lauded by all medical authorities as foolproof', correct: false }
+    ],
+    explain: 'Allen records attempts to denature industrial alcohol and the controversy that followed (accusations of poisoning) alongside the partial effectiveness of such measures. :contentReference[oaicite:18]{index=18}'
+  },
+  {
+    id: 'q20',
+    prompt: 'Which element of the bootlegging business does Allen link directly to the proliferation of urban bombings?',
+    choices: [
+      { text: 'Competition over theatrical enterprises', correct: false },
+      { text: 'Racketeering and the enforcement of protection schemes against resistant businessmen', correct: true },
+      { text: 'A decline in manufacturing', correct: false },
+      { text: 'A government-sponsored bombing campaign', correct: false }
+    ],
+    explain: 'Allen connects rackets\' enforcement methods—bombing, arson, and intimidation—to protection extortion and the expansion of criminal enterprises. :contentReference[oaicite:19]{index=19}'
+  },
+  {
+    id: 'q21',
+    prompt: 'What does Allen identify as one civic consequence of widely publicized gangster spectacles?',
+    choices: [
+      { text: 'Increased trust in municipal police', correct: false },
+      { text: 'Public fascination with gangster glamour and a destabilising sense of lawlessness', correct: true },
+      { text: 'A complete turn away from tabloid journalism', correct: false },
+      { text: 'Universal support for stricter prohibition enforcement', correct: false }
+    ],
+    explain: 'Allen comments on tabloid readers finding adventure and romance in gangster stories, which complicated civic reactions and sometimes glamorised criminals. '
+  },
+  {
+    id: 'q22',
+    prompt: 'Allen names several cities affected by gang rule besides Chicago. Which were among them?',
+    choices: [
+      { text: 'Toledo, Detroit, New York', correct: true },
+      { text: 'Burlington, Helena, and Juneau', correct: false },
+      { text: 'Only Chicago experienced such problems', correct: false },
+      { text: 'Los Angeles exclusively', correct: false }
+    ],
+    explain: 'Allen notes gang rule and racketeering spread to Toledo, Detroit, New York, and other urban centres—Chicago led but was not alone. :contentReference[oaicite:21]{index=21}'
+  },
+  {
+    id: 'q23',
+    prompt: 'Which descriptive term does Allen use for the wholesale violence that accompanied Chicago gang wars?',
+    choices: [
+      { text: 'A quaint disagreement', correct: false },
+      { text: 'An epidemic of killings', correct: true },
+      { text: 'A minor nuisance', correct: false },
+      { text: 'A ceremonial duel tradition', correct: false }
+    ],
+    explain: 'Allen describes Chicago\'s era as afflicted by an "epidemic of killings"—a phrase capturing the unprecedented scale and brazenness of the violence. :contentReference[oaicite:22]{index=22}'
+  },
+  {
+    id: 'q24',
+    prompt: 'Allen recounts the use of a particular deceptive tableau in the St. Valentine’s Massacre. What was it?',
+    choices: [
+      { text: 'Perpetrators dressed as nurses', correct: false },
+      { text: 'Perpetrators posing as policemen to secure victims\' compliance', correct: true },
+      { text: 'Perpetrators pretending to be newspaper vendors', correct: false },
+      { text: 'Perpetrators posing as firefighters', correct: false }
+    ],
+    explain: 'Allen relates how killers in the massacre posed as policemen, disarmed victims, and then executed them—an appalling tableau of law-and-order mimicry. :contentReference[oaicite:23]{index=23}'
+  },
+  {
+    id: 'q25',
+    prompt: 'Which estimate about enforcement success does Allen report from Assistant Secretary Lincoln C. Andrews (mid-1920s)?',
+    choices: [
+      { text: 'Enforcement intercepted roughly 95% of smuggled liquor', correct: false },
+      { text: 'Enforcement intercepted about 5% of liquor smuggled into the country', correct: true },
+      { text: 'Enforcement had eliminated rum-running entirely', correct: false },
+      { text: 'Enforcement focused only on domestic distilling', correct: false }
+    ],
+    explain: 'Allen cites Andrews\' grim estimate that only ~5% of smuggled liquor was intercepted, indicating massive porousness in enforcement. :contentReference[oaicite:24]{index=24}'
+  },
+  {
+    id: 'q26',
+    prompt: 'Allen points out a cultural effect of Prohibition on manners. Which change does he emphasise?',
+    choices: [
+      { text: 'A stricter, more formal pattern of social interaction', correct: false },
+      { text: 'Greater informality, mixing of sexes, and public frankness lubricated by cocktails', correct: true },
+      { text: 'A complete reversion to Victorian etiquette', correct: false },
+      { text: 'A prohibition on mixed-gender socializing', correct: false }
+    ],
+    explain: 'Allen notes the cocktail culture produced informality and more open interactions between men and women, aided by clandestine drinking at social gatherings. :contentReference[oaicite:25]{index=25}'
+  },
+  {
+    id: 'q27',
+    prompt: 'What, according to Allen, was one unintended occupational consequence for some union leaders and businessmen due to Prohibition?',
+    choices: [
+      { text: 'They found new lawful markets and gave up all illicit activities', correct: false },
+      { text: 'Some unions and businessmen were co-opted into rackets or criminal enterprises', correct: true },
+      { text: 'They universally joined federal enforcement agencies', correct: false },
+      { text: 'They left for agricultural work', correct: false }
+    ],
+    explain: 'Allen documents how racketeering sometimes perverted unions and pulled businessmen into conspiracies of extortion and protection, blurring legal/informal economies. :contentReference[oaicite:26]{index=26}'
+  },
+  {
+    id: 'q28',
+    prompt: 'Which of the following best captures Allen\'s overall judgement about Prohibition by decade\'s end?',
+    choices: [
+      { text: 'A clear and unqualified success in moral reform', correct: false },
+      { text: 'A policy that produced complex unintended consequences including crime and corruption', correct: true },
+      { text: 'An unmitigated economic boon with no social costs', correct: false },
+      { text: 'A purely symbolic law with no enforcement provisions', correct: false }
+    ],
+    explain: 'Allen characterizes Prohibition as producing mixed results—some reduction in certain types of drinking but major unintended outcomes: crime, corruption, and policy confusion. '
+  },
+  {
+    id: 'q29',
+    prompt: 'Which of the following operations does Allen list as part of Capone\'s extended enterprise beyond booze?',
+    choices: [
+      { text: 'Gambling, vice trades, rackets, and control of political offices', correct: true },
+      { text: 'Only legitimate restaurants and hotels', correct: false },
+      { text: 'Agricultural cooperatives exclusively', correct: false },
+      { text: 'Educational reform campaigns', correct: false }
+    ],
+    explain: 'Allen records Capone\'s income streams: gambling, vice, rackets, and the installation of compliant politicians—an integrated criminal-commercial complex. '
+  },
+  {
+    id: 'q30',
+    prompt: 'How does Allen situate the problems of alcohol policy and gangsterism for the coming decade (1930s)?',
+    choices: [
+      { text: 'As solved problems requiring no further statesmanship', correct: false },
+      { text: 'As unsolved and urgent challenges that would demand serious statesmanship in the 1930s', correct: true },
+      { text: 'As irrelevant to national life', correct: false },
+      { text: 'As already resolved by local governments alone', correct: false }
+    ],
+    explain: 'Allen closes by noting prohibition, gangsterism, and rackets remained unresolved at decade\'s end—posing major policy challenges for the 1930s. '
+  }
+];
+
+// State
+let QUESTIONS = [];
+let current = 0;
+const answers = new Map(); // Map<questionId, choiceIndex>
+let submitted = false;
+
+// Elements
+const questionHost = document.getElementById('questionHost');
+const grid = document.getElementById('grid');
+const meterBar = document.getElementById('meterBar');
+const progressText = document.getElementById('progressText');
+const scorePreview = document.getElementById('scorePreview');
+const postSubmit = document.getElementById('postSubmit');
+
+// Buttons
+const startBtn = document.getElementById('startBtn');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const skipBtn = document.getElementById('skipBtn');
+const submitBtn = document.getElementById('submitBtn');
+const clearBtn = document.getElementById('clearBtn');
+
+// Settings toggles
+const toggleInstant = document.getElementById('toggleInstant');
+const toggleExplainOnSelect = document.getElementById('toggleExplainOnSelect');
+
+// Utilities
+function shuffle(a) {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function deepClone(o) { return JSON.parse(JSON.stringify(o)); }
+
+// Quiz functions
+function startAttempt() {
+  submitted = false;
+  answers.clear();
+  postSubmit.style.display = 'none';
+
+  QUESTIONS = deepClone(QUESTIONS_BASE).map(q => {
+    q.choices = shuffle(q.choices);
+    return q;
+  });
+  shuffle(QUESTIONS);
+  current = 0;
+  renderAll();
+}
+
+function answeredCount() {
+  return QUESTIONS.filter(q => answers.has(q.id)).length;
+}
+
+function scoreNow() {
+  return QUESTIONS.reduce((score, q) => {
+    const selectedIdx = answers.get(q.id);
+    if (selectedIdx != null && q.choices[selectedIdx].correct) return score + 1;
+    return score;
+  }, 0);
+}
+
+function updateProgress() {
+  const answered = answeredCount();
+  progressText.textContent = `${answered}/${QUESTIONS.length} answered`;
+  meterBar.style.width = `${Math.round(100 * answered / QUESTIONS.length)}%`;
+  scorePreview.textContent = submitted ? `Score: ${scoreNow()} / ${QUESTIONS.length}` : 'Score: —';
+}
+
+function renderNavigator() {
+  grid.innerHTML = '';
+  QUESTIONS.forEach((q, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'dot';
+    btn.textContent = i + 1;
+    if (answers.has(q.id)) btn.classList.add('answered');
+    if (i === current) btn.classList.add('current');
+    if (submitted) {
+      const idx = answers.get(q.id);
+      if (idx != null) btn.classList.add(q.choices[idx].correct ? 'correct' : 'incorrect');
+    }
+    btn.onclick = () => { current = i; renderAll(); };
+    grid.appendChild(btn);
+  });
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  const wrap = document.createElement('div');
+  wrap.className = 'q';
+  wrap.innerHTML = `<div class="q-header"><div class="q-title">Q${current + 1}. ${q.prompt}</div><div class="q-meta">${submitted ? '<span class="tag">Post-submit review</span>' : ''}</div></div>`;
+
+  const choicesContainer = document.createElement('div');
+  choicesContainer.className = 'choices';
+
+  q.choices.forEach((c, idx) => {
+    const node = document.createElement('div');
+    node.className = 'choice';
+    node.innerHTML = `<div>${c.text}</div>`;
+    const selectedIdx = answers.get(q.id);
+    if (selectedIdx === idx) node.classList.add('selected');
+
+    if (submitted) {
+      if (c.correct) node.classList.add('correct');
+      if (selectedIdx === idx && !c.correct) node.classList.add('incorrect');
+    }
+
+    node.onclick = () => {
+      if (submitted) return;
+      answers.set(q.id, idx);
+      renderAll();
+      if (toggleInstant.checked && toggleExplainOnSelect.checked) {
+        const existingExplain = wrap.querySelector('.explain');
+        if (existingExplain) existingExplain.remove();
+        const ex = document.createElement('div');
+        ex.className = 'explain';
+        ex.innerHTML = `<strong>Explanation:</strong> ${q.explain}`;
+        wrap.appendChild(ex);
+      }
+    };
+    choicesContainer.appendChild(node);
+  });
+
+  wrap.appendChild(choicesContainer);
+
+  if (submitted) {
+    const exp = document.createElement('div');
+    exp.className = 'explain';
+    exp.innerHTML = `<strong>Explanation:</strong> ${q.explain}`;
+    wrap.appendChild(exp);
+  }
+
+  questionHost.innerHTML = '';
+  questionHost.appendChild(wrap);
+}
+
+function renderAll() {
+  updateProgress();
+  renderNavigator();
+  renderQuestion();
+}
+
+function submitQuiz() {
+  submitted = true;
+  renderAll();
+
+  const correct = scoreNow();
+  const total = QUESTIONS.length;
+  const pct = Math.round(100 * correct / total);
+  let level;
+  if (pct >= 85) level = 'Distinction';
+  else if (pct >= 70) level = 'Merit';
+  else if (pct >= 50) level = 'Pass';
+  else level = 'Below Pass';
+
+  // Build post-submit detailed report with file citations
+  let details = `<div><strong>Results:</strong> ${correct}/${total} (${pct}%) — ${level}</div>`;
+  details += `<div class="muted" style="margin-top:10px">Elaborated answers citing Frederick L. Allen, <em>Only Yesterday</em>, Chapter 10 (uploaded PDF segments).</div>`;
+  details += `<div style="margin-top:12px">`;
+  QUESTIONS.forEach((q, i) => {
+    const sel = answers.get(q.id);
+    const chosenText = sel != null ? q.choices[sel].text : '<em>No answer</em>';
+    const correctChoice = q.choices.find(ch => ch.correct).text;
+    const correctness = (sel != null && q.choices[sel].correct) ? '<span style="color:var(--ok);font-weight:700">Correct</span>' : '<span style="color:var(--danger);font-weight:700">Incorrect</span>';
+    details += `<div style="margin-top:12px;padding:12px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(127,183,255,0.04)"><div style="font-weight:800">Q${i+1}. ${q.prompt}</div><div style="margin-top:6px"><strong>Your answer:</strong> ${chosenText} — ${correctness}</div><div style="margin-top:6px"><strong>Correct answer:</strong> ${correctChoice}</div><div class="explain" style="margin-top:10px"><strong>Elaboration & sources:</strong> ${q.explain}</div></div>`;
+  });
+  details += `</div>`;
+  details += `<div class="references" style="margin-top:12px">Primary file citations used above: :contentReference[oaicite:30]{index=30} :contentReference[oaicite:31]{index=31} :contentReference[oaicite:32]{index=32} :contentReference[oaicite:33]{index=33} :contentReference[oaicite:34]{index=34} :contentReference[oaicite:35]{index=35}</div>`;
+
+  postSubmit.innerHTML = details;
+  postSubmit.style.display = 'block';
+}
+
+// Event bindings
+startBtn.onclick = startAttempt;
+prevBtn.onclick = () => { current = Math.max(0, current - 1); renderAll(); };
+nextBtn.onclick = () => { current = Math.min(QUESTIONS.length - 1, current + 1); renderAll(); };
+skipBtn.onclick = () => { current = Math.min(QUESTIONS.length - 1, current + 1); renderAll(); };
+submitBtn.onclick = submitQuiz;
+clearBtn.onclick = () => {
+  if (confirm('Are you sure you want to clear all your answers and restart the quiz? This action cannot be undone.')) {
+    answers.clear();
+    submitted = false;
+    startAttempt();
+  }
+};
+
+// Keyboard event listener for hotkeys
+window.addEventListener('keydown', e => {
+  if (e.target.closest('input, textarea')) return;
+  if (e.key === 'ArrowRight') { e.preventDefault(); nextBtn.click(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); prevBtn.click(); }
+  if (e.key.toLowerCase() === 's') { e.preventDefault(); skipBtn.click(); }
+  if (e.key === 'Enter') {
+    if (!submitted && !answers.has(QUESTIONS[current].id)) {
+      answers.set(QUESTIONS[current].id, 0);
+      renderAll();
+    }
+  }
+});
+
+// Auto start the quiz when the page loads
+startAttempt();
+</script>
+<footer>— End of exam —</footer>
+</body>
+</html>
+```

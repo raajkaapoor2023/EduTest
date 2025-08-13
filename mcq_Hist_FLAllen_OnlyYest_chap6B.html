@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Only Yesterday — Ch. 6: Harding and the Scandals — 30-Question MCQ</title>
+<style>
+  :root{
+    --bg:#0b1020;
+    --card:#111735;
+    --ink:#e9eefc;
+    --muted:#b7c2ea;
+    --accent:#7aa2ff;
+    --accent-2:#86efac;
+    --danger:#f87171;
+    --warn:#fbbf24;
+    --ok:#34d399;
+    --shadow:0 10px 25px rgba(0,0,0,.35), 0 2px 8px rgba(0,0,0,.25);
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:radial-gradient(1200px 600px at 10% 0%,#141a3a 0%, var(--bg) 60%),
+               radial-gradient(800px 400px at 90% 10%,#1b2149 0%, var(--bg) 60%),
+               var(--bg);
+    color:var(--ink);
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    line-height:1.5;
+  }
+  header{
+    position:sticky; top:0; z-index:50;
+    background:linear-gradient(180deg, rgba(17,23,53,.95), rgba(17,23,53,.75));
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid rgba(122,162,255,.18);
+  }
+  .wrap{max-width:1200px; margin:0 auto; padding:16px;}
+  h1{font-size: clamp(1.4rem, 1rem + 2vw, 2rem); margin:0 0 6px 0; letter-spacing:.2px}
+  .subtitle{color:var(--muted); font-size:.95rem}
+  main{max-width:1200px; margin:18px auto; padding:16px; display:grid; grid-template-columns: 1.25fr .9fr; gap:18px}
+  @media (max-width: 960px){ main{grid-template-columns:1fr} }
+
+  .card{
+    background:linear-gradient(180deg, rgba(17,23,53,.9), rgba(12,18,40,.9));
+    border:1px solid rgba(122,162,255,.18);
+    box-shadow:var(--shadow);
+    border-radius:var(--radius);
+  }
+  .panel{padding:16px 18px}
+  .controls{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+  button{
+    border:0; color:#081022; background:var(--accent); padding:10px 14px; border-radius:12px; font-weight:600; cursor:pointer;
+    transition: transform .06s ease, box-shadow .2s ease, background .2s ease;
+    box-shadow:0 6px 16px rgba(122,162,255,.28);
+  }
+  button:hover{ transform: translateY(-1px) }
+  button.secondary{ background:#2b356b; color:var(--ink); box-shadow:none; border:1px solid rgba(122,162,255,.18) }
+  button.ghost{ background:transparent; color:var(--ink); border:1px solid rgba(122,162,255,.22) }
+  button.warn{ background:var(--warn); color:#0c1024 }
+  button.danger{ background:var(--danger); color:#0c1024 }
+  button.ok{ background:var(--ok); color:#0b1020 }
+  .meter{
+    height:10px; background:#1a2148; border-radius:999px; overflow:hidden; border:1px solid rgba(122,162,255,.2)
+  }
+  .meter > span{ display:block; height:100%; background:linear-gradient(90deg, var(--accent), #9b8aff); width:0%; transition:width .3s ease }
+
+  .q{
+    padding:18px; margin:14px 0; border-radius:14px; border:1px solid rgba(122,162,255,.16); background:rgba(10,15,34,.6)
+  }
+  .q-header{ display:flex; justify-content:space-between; align-items:baseline; gap:12px}
+  .q-title{ font-size:1.05rem; font-weight:700; letter-spacing:.2px}
+  .q-meta{ color:var(--muted); font-size:.9rem}
+  .choices{margin-top:10px; display:grid; gap:10px}
+  .choice{
+    border:1px solid rgba(122,162,255,.22);
+    border-radius:12px; padding:12px; cursor:pointer; user-select:none;
+    background:linear-gradient(180deg, rgba(19,25,57,.8), rgba(15,20,47,.7));
+    transition: border .15s ease, transform .05s ease, background .2s ease;
+  }
+  .choice:hover{ border-color: rgba(122,162,255,.45) }
+  .choice.selected{ outline:2px solid var(--accent); background:linear-gradient(180deg, rgba(27,36,82,.9), rgba(21,28,66,.85)) }
+  .choice.correct{ border-color: rgba(52,211,153,.8); background:rgba(16,65,56,.35) }
+  .choice.incorrect{ border-color: rgba(248,113,113,.7); background:rgba(65,24,32,.35) }
+
+  .aside{
+    display:grid; gap:14px; align-content:start; position:sticky; top:84px
+  }
+  .stat{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:12px 14px; border-radius:12px; background:rgba(10,15,34,.6); border:1px solid rgba(122,162,255,.16)
+  }
+  .progress-row{ display:grid; gap:10px }
+  .grid{
+    display:grid; grid-template-columns: repeat(6, 1fr); gap:8px; padding:8px
+  }
+  @media (max-width: 1200px){ .grid{grid-template-columns:repeat(8,1fr)} }
+  @media (max-width: 600px){ .grid{grid-template-columns:repeat(6,1fr)} }
+  .dot{
+    padding:8px 0; border-radius:10px; text-align:center; font-weight:700; font-size:.95rem; cursor:pointer;
+    border:1px solid rgba(122,162,255,.2); background:rgba(17,23,53,.6); color:var(--muted)
+  }
+  .dot.answered{ color:var(--ink); border-color:rgba(122,162,255,.38) }
+  .dot.current{ outline:2px solid var(--accent); color:var(--ink) }
+  .dot.correct{ background:rgba(16,65,56,.4); border-color:rgba(52,211,153,.7); color:var(--ink) }
+  .dot.incorrect{ background:rgba(65,24,32,.45); border-color:rgba(248,113,113,.7); color:var(--ink) }
+
+  .results{
+    padding:16px; border-radius:14px; background:rgba(10,15,34,.75); border:1px solid rgba(122,162,255,.18); margin-top:16px
+  }
+  .explain{
+    margin-top:10px; border-left:3px solid var(--accent); padding:10px 12px; background:rgba(122,162,255,.08); border-radius:10px;
+    color:#dfe6ff; font-size:.98rem
+  }
+  .tag{ display:inline-block; font-size:.75rem; padding:2px 8px; border-radius:999px; background:rgba(122,162,255,.18); color:var(--ink); margin-right:6px }
+  .muted{ color:var(--muted) }
+  .footer-note{ color:var(--muted); font-size:.9rem; margin-top:12px }
+  .kbd{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,"Liberation Mono","Courier New", monospace; background:rgba(122,162,255,.15); border:1px solid rgba(122,162,255,.28); padding:2px 6px; border-radius:6px }
+</style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Only Yesterday — Chapter 6: <em>Harding and the Scandals</em></h1>
+      <div class="subtitle">30-question MCQ | Ivy League / Oxbridge BA (Final Year) level • Randomized order & options • Skip freely • Submit anytime • In-depth, academically referenced explanations (Allen, <em>Only Yesterday</em>, ch. 6)</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="card panel" id="quizCard">
+      <div class="controls" style="margin-bottom:10px">
+        <button id="startBtn" class="ok">Start / Re-randomize</button>
+        <button id="prevBtn" class="secondary">Prev</button>
+        <button id="nextBtn" class="secondary">Next</button>
+        <button id="skipBtn" class="ghost">Skip</button>
+        <button id="submitBtn" class="warn">Submit Now</button>
+        <span class="muted">Hotkeys: <span class="kbd">←</span>/<span class="kbd">→</span>, <span class="kbd">S</span> skip, <span class="kbd">Enter</span> select</span>
+      </div>
+      <div class="progress-row">
+        <div class="meter" aria-label="progress"><span id="meterBar"></span></div>
+        <div class="stat"><strong id="progressText">0/30 answered</strong><span id="scorePreview" class="muted">Score: —</span></div>
+      </div>
+      <div id="questionHost"></div>
+      <div id="postSubmit" class="results" style="display:none"></div>
+    </section>
+
+    <aside class="aside">
+      <section class="card panel">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px">
+          <div>
+            <div style="font-weight:800; letter-spacing:.3px">Navigator</div>
+            <div class="muted">Jump to any item</div>
+          </div>
+          <button id="clearBtn" class="danger">Clear Selections</button>
+        </div>
+        <div class="grid" id="grid"></div>
+      </section>
+
+      <section class="card panel">
+        <div style="font-weight:800">Settings</div>
+        <div class="muted" style="margin:6px 0 10px">Per-attempt randomization & option shuffle are enabled by default.</div>
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap">
+          <label><input type="checkbox" id="toggleInstant" /> Instant feedback mode</label>
+          <label><input type="checkbox" id="toggleExplainOnSelect" /> Show explanation on select</label>
+        </div>
+      </section>
+
+      <section class="card panel">
+        <div style="font-weight:800">About the Sources</div>
+        <div class="muted">
+          All explanations cite Frederick Lewis Allen, <em>Only Yesterday: An Informal History of the 1920's</em>, Chapter 6 (“Harding and the Scandals”). In-app citation markers reflect the provided study PDF.
+        </div>
+      </section>
+    </aside>
+  </main>
+
+<script>
+/**
+ *  DATA: 30 rigorous questions on Chapter 6 (Harding and the Scandals)
+ *  Each explanation string includes in-text citation markers for the uploaded file:
+ *  Use form:  (as provided by the file search results).
+ */
+const QUESTIONS_BASE = [
+  {
+    id: 1,
+    prompt: "Which executive action enabled Interior Secretary Albert B. Fall—not the Navy—to control the Naval Oil Reserves prior to the Teapot Dome leases?",
+    choices: [
+      {text:"A presidential Executive Order transferring custody from Navy to Interior", correct:true},
+      {text:"A joint resolution of Congress authorizing emergency custodianship by Interior", correct:false},
+      {text:"A Supreme Court injunction reallocating authority due to national security", correct:false},
+      {text:"A temporary wartime measure under the Overman Act of 1918", correct:false},
+    ],
+    explain: "Less than three months after Harding took office, he signed an Executive Order moving the Reserves from the Navy to the Interior, clearing the way for Fall’s secret leases. :contentReference[oaicite:1]{index=1}"
+  },
+  {
+    id: 2,
+    prompt: "On what dates did Fall secretly lease the Teapot Dome and Elk Hills reserves, and to whom?",
+    choices: [
+      {text:"Teapot Dome (Reserve No. 3) to Sinclair’s Mammoth Oil on April 7, 1922; Elk Hills (No. 1) to Doheny’s Pan-American on December 11, 1922.", correct:true},
+      {text:"Teapot Dome to Doheny on December 11, 1922; Elk Hills to Sinclair on April 7, 1922.", correct:false},
+      {text:"Both reserves to Sinclair on April 7, 1922, later reassigned to Doheny in 1924.", correct:false},
+      {text:"Elk Hills to Sinclair on April 7, 1921; Teapot Dome to Doheny on December 11, 1923.", correct:false},
+    ],
+    explain: "Fall leased Reserve No. 3 (Teapot Dome) to Harry F. Sinclair’s Mammoth Oil (April 7, 1922) and Reserve No. 1 (Elk Hills) to Edward L. Doheny’s Pan-American (Dec. 11, 1922), both in secrecy and without competitive bidding. :contentReference[oaicite:2]{index=2}"
+  },
+  {
+    id: 3,
+    prompt: "Which payments to Fall were later uncovered and became central to the scandal’s criminal dimensions?",
+    choices: [
+      {text:"~$260,000 in Liberty bonds from Sinclair and a $100,000 cash “loan” from Doheny.", correct:true},
+      {text:"A $500,000 stock grant from Standard Oil (Indiana) and $50,000 in gold from Blackmer.", correct:false},
+      {text:"A $200,000 cashier’s check from the RNC and $68,000 from Archie Roosevelt.", correct:false},
+      {text:"A $185,000 wire transfer from the Continental Trading Co. and $40,000 in bearer coupons.", correct:false},
+    ],
+    explain: "Investigators found Fall received approximately $260,000 in Liberty bonds traced to Sinclair and a $100,000 cash loan from Doheny—ostensibly a personal accommodation. :contentReference[oaicite:3]{index=3} :contentReference[oaicite:4]{index=4}"
+  },
+  {
+    id: 4,
+    prompt: "What were the principal judicial outcomes of the Elk Hills and Teapot Dome leases and of prosecutions of the key industrialists?",
+    choices: [
+      {text:"Supreme Court voided both leases; Fall convicted for accepting a bribe; Doheny and Sinclair acquitted on bribery—but Sinclair later jailed for contempt of Senate and court.", correct:true},
+      {text:"Both leases upheld; all three men (Fall, Doheny, Sinclair) acquitted; Denby reinstated as Navy Secretary.", correct:false},
+      {text:"Leases voided only at Elk Hills; Fall acquitted; Doheny convicted; Sinclair fined but not imprisoned.", correct:false},
+      {text:"Cases dismissed due to national security; Congress issued a censure only.", correct:false},
+    ],
+    explain: "The Supreme Court voided the Doheny and Sinclair leases as illegal; Fall was convicted; paradoxically, Doheny and Sinclair were acquitted on bribery, while Sinclair served time in 1929 for contempt of Senate and court. :contentReference[oaicite:5]{index=5}"
+  },
+  {
+    id: 5,
+    prompt: "Which Cabinet officer besides Fall was forced from office under public pressure due to the oil scandals?",
+    choices: [
+      {text:"Edwin Denby, Secretary of the Navy", correct:true},
+      {text:"Andrew Mellon, Secretary of the Treasury", correct:false},
+      {text:"Herbert Hoover, Secretary of Commerce", correct:false},
+      {text:"Charles Evans Hughes, Secretary of State", correct:false},
+    ],
+    explain: "Denby approved the transfer of the Reserves and faced intense criticism, leading to his resignation. :contentReference[oaicite:6]{index=6}"
+  },
+  {
+    id: 6,
+    prompt: "Which pair did President Coolidge appoint as special government counsel in early 1924, and how does Allen characterize them?",
+    choices: [
+      {text:"Owen Roberts (useful) and Atlee Pomerene (ornamental), as a bipartisan team.", correct:true},
+      {text:"Harlan F. Stone (forensic) and Felix Frankfurter (academic), as a progressive duo.", correct:false},
+      {text:"Charles Evans Hughes and William J. Donovan, as an internationalist tandem.", correct:false},
+      {text:"John J. Parker and Learned Hand, as a nonpartisan bench.", correct:false},
+    ],
+    explain: "Allen calls Roberts “useful” and Pomerene “ornamental” in describing the Coolidge-appointed bipartisan counsel. :contentReference[oaicite:7]{index=7}"
+  },
+  {
+    id: 7,
+    prompt: "What was the Continental Trading Company, Ltd., and why is its history revealing in Allen’s narrative?",
+    choices: [
+      {text:"A Canadian shell through which oil men routed a massive bond profit from a Mexia field deal, illuminating contemporary business ethics.", correct:true},
+      {text:"A British naval contractor that financed Pearl Harbor fuel tanks, exposing inter-Allied corruption.", correct:false},
+      {text:"A Pan-American subsidiary that legally warehoused royalty oil, showing benign corporate governance.", correct:false},
+      {text:"A Swiss holding tied to reparations that vindicated Doheny’s accounting, challenging Senate claims.", correct:false},
+    ],
+    explain: "Roberts and Pomerene traced Sinclair-to-Fall bonds to the Canadian Continental Trading Co., created around a November 17, 1921 Hotel Vanderbilt meeting, revealing how profits and bond flows were concealed. :contentReference[oaicite:8]{index=8}"
+  },
+  {
+    id: 8,
+    prompt: "Which industry leaders attended the Hotel Vanderbilt meeting central to the Continental Trading arrangement?",
+    choices: [
+      {text:"E. A. Humphreys, Harry M. Blackmer, James E. O’Neil, Robert W. Stewart, and Harry F. Sinclair.", correct:true},
+      {text:"Edward L. Doheny, Edwin Denby, Andrew Mellon, Charles Evans Hughes, and William H. Hays.", correct:false},
+      {text:"Harlan Stone, Burton Wheeler, Thomas Walsh, Herbert Hoover, and Will Rogers.", correct:false},
+      {text:"Calvin Coolidge, Charles G. Dawes, Henry Ford, Bernard Baruch, and Thomas Lamont.", correct:false},
+    ],
+    explain: "Allen lists Humphreys (Mexia field), Blackmer (Midwest), O’Neil (Prairie), Stewart (Standard Oil of Indiana), and Sinclair at the November 17, 1921 session. :contentReference[oaicite:9]{index=9}"
+  },
+  {
+    id: 9,
+    prompt: "How did Will H. Hays attempt to use Sinclair bonds in relation to the Republican Party’s 1920 campaign deficit?",
+    choices: [
+      {text:"He “loaned” bonds to wealthy donors who would contribute cash and briefly hold the bonds—masking the scale of Sinclair’s contribution.", correct:true},
+      {text:"He sold the bonds on the open market and retired the entire deficit in one transaction.", correct:false},
+      {text:"He pledged the bonds as collateral for a Treasury loan administered by Andrew Mellon.", correct:false},
+      {text:"He donated the bonds to the Red Cross as a public charity gesture.", correct:false},
+    ],
+    explain: "Allen recounts Hays’s method of ‘using the bonds’ to raise funds—effectively concealing Sinclair’s enormous contribution. :contentReference[oaicite:10]{index=10} :contentReference[oaicite:11]{index=11}"
+  },
+  {
+    id: 10,
+    prompt: "Which cryptic evidence drew Andrew Mellon into the bond trail and what was his eventual explanation?",
+    choices: [
+      {text:"A penciled card listing “Weeks, DuPont, Butler, Andy/Candy”; Mellon later said Hays had offered him Sinclair-sourced bonds in 1923, which he returned while making his own $50,000 contribution.", correct:true},
+      {text:"A telegram from Blackmer to Mellon; Mellon admitted buying Continental bonds at par under duress.", correct:false},
+      {text:"A diary from Denby; Mellon said he converted bonds into Liberty Loans for the DNC.", correct:false},
+      {text:"A canceled check from O’Neil; Mellon denied any knowledge of bonds in 1923.", correct:false},
+    ],
+    explain: "The Pratt Co. cashier’s notation led to Mellon; he said he declined to hold Sinclair bonds and instead contributed independently—though he only revealed this in 1928. :contentReference[oaicite:12]{index=12} :contentReference[oaicite:13]{index=13}"
+  },
+  {
+    id: 11,
+    prompt: "Which colorful miscommunication did G. D. Wahlberg offer to explain away a report of $68,000 connected to Fall’s ranch?",
+    choices: [
+      {text:"He claimed he had said “six or eight cows,” not “sixty-eight thous[and],” referring to livestock sent to Fall.", correct:true},
+      {text:"He said “six or eight plows,” meaning farm equipment, not payments.", correct:false},
+      {text:"He insisted he had said “$6,800,” not $68,000, a stenographer’s error.", correct:false},
+      {text:"He argued he meant “six or eight colts,” a breeding gift, not money.", correct:false},
+    ],
+    explain: "Wahlberg’s ‘six or eight cows’ defense followed Archie Roosevelt’s tip; Allen notes Sinclair had indeed gifted livestock (horse, hogs, bull, heifers). :contentReference[oaicite:14]{index=14}"
+  },
+  {
+    id: 12,
+    prompt: "What does Allen say became of oil that might have been drained from the Reserves while production there was halted?",
+    choices: [
+      {text:"Part of it, likely including oil drawn from the Reserves, was sold to the Japanese government.", correct:true},
+      {text:"It remained untouched due to a federally mandated unitization agreement.", correct:false},
+      {text:"It was stored in Pearl Harbor tanks per the original Navy plan.", correct:false},
+      {text:"It was requisitioned by the U.S. Shipping Board during a coal strike.", correct:false},
+    ],
+    explain: "Allen remarks that neighboring wells continued producing and it was said some of that oil, probably including drained Reserve oil, went to Japan. :contentReference[oaicite:15]{index=15} :contentReference[oaicite:16]{index=16}"
+  },
+  {
+    id: 13,
+    prompt: "How does Allen assess the Veterans’ Bureau under Charles R. Forbes?",
+    choices: [
+      {text:"An episode of almost incredible waste and graft—hundreds of millions misdirected; Forbes later imprisoned for fraud.", correct:true},
+      {text:"A model of post-war efficiency hampered only by Congressional underfunding.", correct:false},
+      {text:"A temporary lapse corrected swiftly by Denby’s intervention.", correct:false},
+      {text:"An overblown scandal rooted in newspaper exaggeration, with no indictments.", correct:false},
+    ],
+    explain: "Allen details junkets, padded hospital contracts, absurd purchases (e.g., floor cleaner and sheets) and fire-sale disposals; Forbes went to Leavenworth in 1926. :contentReference[oaicite:17]{index=17} :contentReference[oaicite:18]{index=18}"
+  },
+  {
+    id: 14,
+    prompt: "In the American Metal Company case tied to the Alien Property Custodian, which pattern emerged regarding fees and political intermediaries?",
+    choices: [
+      {text:"Large Liberty-bond fees paid to intermediaries (e.g., John T. King) were split among insiders, with funds reaching Jess Smith and others near Daugherty.", correct:true},
+      {text:"Courts mandated all fees be escrowed at the Fed, eliminating influence peddling.", correct:false},
+      {text:"Swiss claimants received no restitution; bonds vanished into Continental Trading.", correct:false},
+      {text:"Thurston refused any fee, exposing a failed conspiracy.", correct:false},
+    ],
+    explain: "Allen recounts $441,000 in Liberty bonds to John T. King for ‘introductions,’ with at least $200,000 to Jess Smith and flows reaching Mal and Harry Daugherty’s orbit. :contentReference[oaicite:19]{index=19}"
+  },
+  {
+    id: 15,
+    prompt: "How does Allen describe public and press reaction to the investigations led by Senators Walsh and Wheeler in 1924?",
+    choices: [
+      {text:"Greater ire was directed at the investigators than at the offenders; newspapers labeled them “scandalmongers,” “mud-gunners,” and worse.", correct:true},
+      {text:"A bipartisan press crusade praised the investigators and demanded resignations.", correct:false},
+      {text:"Widespread apathy gave way to a reform wave electing Davis in 1924.", correct:false},
+      {text:"Farm journals alone criticized the probes as anti-tariff agitation.", correct:false},
+    ],
+    explain: "Allen lists hostile epithets from major papers and notes public sentiment often viewed the probes as disruptive to ‘normalcy.’ :contentReference[oaicite:20]{index=20}"
+  },
+  {
+    id: 16,
+    prompt: "What explanation did Doheny offer for producing only a fragment of Fall’s $100,000 promissory note?",
+    choices: [
+      {text:"He had torn the note in half and given the signed part to Mrs. Doheny, who mislaid it—claiming it was a mere ‘bagatelle’.", correct:true},
+      {text:"A bank vault fire destroyed the signature page, but microfilm confirmed authenticity.", correct:false},
+      {text:"Fall reclaimed the note to refinance cattle purchases; the bank refused to release it.", correct:false},
+      {text:"The DOJ seized the signature half under a sealed warrant, now missing.", correct:false},
+    ],
+    explain: "Doheny characterized the cash loan as routine and the missing signature as the result of a cautious split note—an account the Supreme Court later viewed skeptically. :contentReference[oaicite:21]{index=21} :contentReference[oaicite:22]{index=22}"
+  },
+  {
+    id: 17,
+    prompt: "What is Allen’s judgment about the Harding Administration’s record of misconduct relative to earlier administrations?",
+    choices: [
+      {text:"It involved “more concentrated robbery and rascality” than any other in federal history up to that time.", correct:true},
+      {text:"Comparable to Grant’s era but far less systematic.", correct:false},
+      {text:"No worse than typical Gilded Age patronage systems.", correct:false},
+      {text:"Serious, but outweighed by foreign policy achievements.", correct:false},
+    ],
+    explain: "Allen concludes the brief Harding tenure amassed unmatched concentration of misconduct. :contentReference[oaicite:23]{index=23}"
+  },
+  {
+    id: 18,
+    prompt: "What circumstances around Harding’s death does Allen recount as fueling alternative narratives beyond the official medical verdict?",
+    choices: [
+      {text:"Questions about ptomaine/crab meat, lack of autopsy, and assertions by Means—set against Harding’s evident dread during the Alaska trip.", correct:true},
+      {text:"A verified poisoning by foreign agents linked to naval intelligence leaks.", correct:false},
+      {text:"A duel between Secret Service factions resulting in misdiagnosed trauma.", correct:false},
+      {text:"Radiation exposure from X-ray therapy administered on the train.", correct:false},
+    ],
+    explain: "Allen reviews the ptomaine story inconsistencies, no autopsy, and Means’s claims, while emphasizing Harding’s despair and fear. :contentReference[oaicite:24]{index=24}"
+  },
+  {
+    id: 19,
+    prompt: "What immediate public response followed Harding’s death in August 1923, according to Allen?",
+    choices: [
+      {text:"A nationwide outpouring of grief as his train crossed the country; broad affection before the later revelations.", correct:true},
+      {text:"Instant demonstrations demanding Denby’s resignation.", correct:false},
+      {text:"A press embargo pending the Alaska report.", correct:false},
+      {text:"A muted response due to recession and the Klan’s rise.", correct:false},
+    ],
+    explain: "Allen describes vast crowds along the funeral train’s route and genuine mourning before subsequent scandals reshaped memory. :contentReference[oaicite:25]{index=25}"
+  },
+  {
+    id: 20,
+    prompt: "How long did the Harding Memorial remain undedicated, and what ultimately prompted the dedication?",
+    choices: [
+      {text:"Over seven years; Hoover and Coolidge resolved to proceed in June 1931 despite lingering embarrassment.", correct:true},
+      {text:"Three years; Coolidge insisted on immediate dedication in 1926.", correct:false},
+      {text:"A decade; Mellon funded it privately in 1933.", correct:false},
+      {text:"Eighteen months; Dawes pushed it through in 1925.", correct:false},
+    ],
+    explain: "Allen notes the delay and Daugherty’s call to postpone; ultimately Hoover and Coolidge took part in the June 1931 dedication. :contentReference[oaicite:26]{index=26}"
+  },
+  {
+    id: 21,
+    prompt: "Which Senate figures led the key investigations into the oil and Justice Department scandals?",
+    choices: [
+      {text:"Thomas J. Walsh (Public Lands) and Burton K. Wheeler (Department of Justice).", correct:true},
+      {text:"George W. Norris and Robert M. La Follette.", correct:false},
+      {text:"Arthur Vandenberg and Hiram Johnson.", correct:false},
+      {text:"Carter Glass and Claude Swanson.", correct:false},
+    ],
+    explain: "Walsh spearheaded Teapot Dome; Wheeler pursued DOJ matters—both faced fierce media attacks. :contentReference[oaicite:27]{index=27}"
+  },
+  {
+    id: 22,
+    prompt: "How does Allen portray the business community’s prevailing political desire during the scandal era?",
+    choices: [
+      {text:"To preserve the status quo—minimal governmental disturbance, occasional favorable tariffs, and no boat-rocking.", correct:true},
+      {text:"To expand federal oversight to restore public trust via regulation.", correct:false},
+      {text:"To nationalize oil reserves to end private exploitation.", correct:false},
+      {text:"To pivot toward internationalist League-style commitments.", correct:false},
+    ],
+    explain: "He stresses a dominant preference for ‘normalcy,’ limited interference, and stability—even at the cost of investigative zeal. :contentReference[oaicite:28]{index=28}"
+  },
+  {
+    id: 23,
+    prompt: "Which narrative device does Allen use to open Chapter 6 and frame Daugherty’s stance?",
+    choices: [
+      {text:"He prints Daugherty’s 1926 written refusal to testify (self-incrimination) as an epigraph, then rewinds to March 4, 1921.", correct:true},
+      {text:"He begins with a courtroom transcript from Fall’s trial, then shifts to Wilson’s farewell.", correct:false},
+      {text:"He opens with Hoover’s diary entry, then toggles to Denby’s confirmation.", correct:false},
+      {text:"He leads with Mellon’s letter to the committee, then revisits the Versailles debate.", correct:false},
+    ],
+    explain: "Chapter 6 starts with Daugherty’s refusal passage before situating readers on Inauguration Day 1921. :contentReference[oaicite:29]{index=29} :contentReference[oaicite:30]{index=30}"
+  },
+  {
+    id: 24,
+    prompt: "Which of the following best captures Allen’s summary of the Washington Naval Conference’s contemporary reception and effect?",
+    choices: [
+      {text:"It drew extraordinary public applause and set a precedent legitimizing arms limitation as an international concern, despite caveats about cruisers and submarines.", correct:true},
+      {text:"It was dismissed as symbolic, triggering Senate backlash and treaty defeat.", correct:false},
+      {text:"It collapsed over Pacific mandates, worsening U.S.–Japan tensions.", correct:false},
+      {text:"It narrowly avoided scandal due to Sinclair’s behind-the-scenes lobbying.", correct:false},
+    ],
+    explain: "Allen highlights Hughes’s bold plan, widespread acclaim, and the treaty’s precedent—even as naval competition persisted in other classes. :contentReference[oaicite:31]{index=31}"
+  },
+  {
+    id: 25,
+    prompt: "Which insider and collector for the ‘Ohio Gang’ is repeatedly linked by Allen to cash movements and died in 1923 under suspicious circumstances?",
+    choices: [
+      {text:"Jess Smith", correct:true},
+      {text:"John T. King", correct:false},
+      {text:"Gaston B. Means", correct:false},
+      {text:"T. W. Miller", correct:false},
+    ],
+    explain: "Allen presents Smith as Daugherty’s close associate and a conduit for funds; Means alleged a hidden cash cache and implied Smith’s ‘suicide’ was not self-inflicted. :contentReference[oaicite:32]{index=32}"
+  },
+  {
+    id: 26,
+    prompt: "In Allen’s account, what pattern does he note regarding the fates of several figures tied to the scandals (e.g., Jess Smith, John T. King, C. F. Cramer, etc.)?",
+    choices: [
+      {text:"A striking cluster of sudden deaths within a few years of Harding’s presidency.", correct:true},
+      {text:"A wave of voluntary exiles to Mexico and Canada to avoid subpoenas.", correct:false},
+      {text:"General pardons issued by Coolidge to quell partisan rancor.", correct:false},
+      {text:"Political rehabilitations culminating in cabinet reappointments.", correct:false},
+    ],
+    explain: "Means emphasized an ‘astonishing mortality’ among those in the know—Allen records this as part of the era’s murky aura. :contentReference[oaicite:33]{index=33}"
+  },
+  {
+    id: 27,
+    prompt: "Which practical concern initially motivated arguments for leasing or drilling in the Naval Oil Reserves even before Fall’s actions?",
+    choices: [
+      {text:"The risk of drainage by adjacent private wells into Reserve pools.", correct:true},
+      {text:"A treaty obligation requiring immediate extraction quotas.", correct:false},
+      {text:"Imminent naval conversion from oil back to coal stocks.", correct:false},
+      {text:"An Interior Department budget shortfall for 1920–21.", correct:false},
+    ],
+    explain: "Congress empowered the Navy (1920) to counter potential drainage by offset drilling or leasing/storage arrangements. :contentReference[oaicite:34]{index=34}"
+  },
+  {
+    id: 28,
+    prompt: "Which description best fits Allen’s portrayal of public opinion as the decade wore on after the initial uproar?",
+    choices: [
+      {text:"Early indignation faded into apathy; even when Rockefeller Jr. ousted Stewart at Standard (Indiana), the business world largely shrugged.", correct:true},
+      {text:"Grass-roots reform surged, culminating in antitrust breakups of major oil firms.", correct:false},
+      {text:"Universities led sustained teach-ins that forced Congressional censure.", correct:false},
+      {text:"Newspapers doubled down on investigative exposés through 1931.", correct:false},
+    ],
+    explain: "Allen notes a ‘profound and untroubled apathy’ replacing initial anger; Rockefeller Jr. was a notable exception pressing Stewart’s removal. :contentReference[oaicite:35]{index=35}"
+  },
+  {
+    id: 29,
+    prompt: "What sanctions did Sinclair ultimately face for his conduct during legal proceedings, distinct from bribery charges?",
+    choices: [
+      {text:"Imprisonment for contempt of the Senate (refusing to answer) and contempt of court (jury shadowing).", correct:true},
+      {text:"Permanent industry ban by the ICC and SEC.", correct:false},
+      {text:"Extradition to Canada under the Continental Trading Act.", correct:false},
+      {text:"A civil fine only, with no incarceration.", correct:false},
+    ],
+    explain: "Allen specifies Sinclair’s double contempt penalties in 1929 after jury-tampering revelations. :contentReference[oaicite:36]{index=36}"
+  },
+  {
+    id: 30,
+    prompt: "Which of the following best captures Allen’s overarching moral about the Harding scandals for American civic life?",
+    choices: [
+      {text:"They exposed a tolerance for corruption when economic ‘normalcy’ felt paramount, revealing the costs of apathy toward public ethics.", correct:true},
+      {text:"They proved that partisan checks invariably halt graft before damage accrues.", correct:false},
+      {text:"They validated executive secrecy as essential to national defense.", correct:false},
+      {text:"They demonstrated the superiority of private leasing over public management.", correct:false},
+    ],
+    explain: "Allen underlines how the drive for stability muted outrage and permitted a culture of indulgence toward official misconduct to persist. :contentReference[oaicite:37]{index=37}"
+  }
+];
+
+// --- State ---
+let QUESTIONS = [];
+let current = 0;
+const answers = new Map(); // qid -> index of choice
+let submitted = false;
+
+// --- Elements ---
+const questionHost = document.getElementById('questionHost');
+const grid = document.getElementById('grid');
+const meterBar = document.getElementById('meterBar');
+const progressText = document.getElementById('progressText');
+const scorePreview = document.getElementById('scorePreview');
+const postSubmit = document.getElementById('postSubmit');
+
+const startBtn = document.getElementById('startBtn');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const skipBtn = document.getElementById('skipBtn');
+const submitBtn = document.getElementById('submitBtn');
+const clearBtn = document.getElementById('clearBtn');
+
+const toggleInstant = document.getElementById('toggleInstant');
+const toggleExplainOnSelect = document.getElementById('toggleExplainOnSelect');
+
+// --- Utilities ---
+function shuffleInPlace(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+function deepClone(obj){ return JSON.parse(JSON.stringify(obj)); }
+
+function rerandomize(){
+  submitted = false;
+  answers.clear();
+  QUESTIONS = deepClone(QUESTIONS_BASE).map(q => {
+    q.choices = shuffleInPlace(q.choices);
+    return q;
+  });
+  shuffleInPlace(QUESTIONS);
+  current = 0;
+  renderAll();
+  postSubmit.style.display = 'none';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function answeredCount(){ let c=0; for(const q of QUESTIONS){ if(answers.has(q.id)) c++; } return c; }
+function scoreNow(){
+  let s = 0;
+  for(const q of QUESTIONS){
+    const idx = answers.get(q.id);
+    if(idx!=null && q.choices[idx].correct) s++;
+  }
+  return s;
+}
+function updateProgress(){
+  const a = answeredCount();
+  progressText.textContent = `${a}/${QUESTIONS.length} answered`;
+  const pct = Math.round(100 * a / QUESTIONS.length);
+  meterBar.style.width = `${pct}%`;
+  scorePreview.textContent = submitted ? `Score: ${scoreNow()} / ${QUESTIONS.length}` : `Score: —`;
+}
+
+function renderNavigator(){
+  grid.innerHTML = '';
+  QUESTIONS.forEach((q, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'dot';
+    dot.textContent = (i+1);
+    if(answers.has(q.id)) dot.classList.add('answered');
+    if(i===current) dot.classList.add('current');
+    if(submitted){
+      const idx = answers.get(q.id);
+      if(idx==null){ /* unanswered */ }
+      else if(q.choices[idx].correct) dot.classList.add('correct');
+      else dot.classList.add('incorrect');
+    }
+    dot.addEventListener('click', ()=>{ current=i; renderAll(); });
+    grid.appendChild(dot);
+  });
+}
+
+function renderQuestion(){
+  const q = QUESTIONS[current];
+  const wrap = document.createElement('div');
+  wrap.className = 'q';
+  const header = document.createElement('div');
+  header.className = 'q-header';
+  header.innerHTML = `<div class="q-title">Q${current+1}. ${q.prompt}</div>
+                      <div class="q-meta">${submitted ? '<span class="tag">Post-submission review</span>' : ''}</div>`;
+  wrap.appendChild(header);
+
+  const choices = document.createElement('div');
+  choices.className = 'choices';
+
+  q.choices.forEach((c, idx) => {
+    const node = document.createElement('div');
+    node.className = 'choice';
+    node.setAttribute('tabindex','0');
+    node.innerHTML = `<div>${c.text}</div>`;
+    const sel = answers.get(q.id);
+
+    if(sel===idx) node.classList.add('selected');
+
+    if(submitted){
+      if(c.correct) node.classList.add('correct');
+      if(sel===idx && !c.correct) node.classList.add('incorrect');
+    }
+
+    const clickSelect = ()=>{
+      if(submitted) return;
+      answers.set(q.id, idx);
+      if(toggleInstant.checked){
+        // Immediate mark
+        const correct = c.correct;
+        submitted = false; // still not global submit
+        renderAll();
+        if(toggleExplainOnSelect.checked){
+          const exp = document.createElement('div');
+          exp.className = 'explain';
+          exp.innerHTML = `<strong>Explanation:</strong> ${q.explain}`;
+          wrap.appendChild(exp);
+        }
+      }else{
+        renderAll();
+      }
+    };
+
+    node.addEventListener('click', clickSelect);
+    node.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); clickSelect(); } });
+    choices.appendChild(node);
+  });
+
+  wrap.appendChild(choices);
+
+  if(submitted){
+    const exp = document.createElement('div');
+    exp.className = 'explain';
+    exp.innerHTML = `<strong>Explanation:</strong> ${q.explain}`;
+    wrap.appendChild(exp);
+  }
+
+  questionHost.innerHTML = '';
+  questionHost.appendChild(wrap);
+}
+
+function renderAll(){
+  updateProgress();
+  renderNavigator();
+  renderQuestion();
+}
+
+function submitQuiz(){
+  submitted = true;
+  renderAll();
+  // Build detailed results table
+  let correct = scoreNow();
+  const total = QUESTIONS.length;
+  const pct = Math.round(100*correct/total);
+  const summary = `
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
+      <div>
+        <div style="font-size:1.1rem; font-weight:800">Results</div>
+        <div class="muted">You may review explanations below each item. Navigator dots are color-coded.</div>
+      </div>
+      <div>
+        <span class="tag">Score: ${correct} / ${total}</span>
+        <span class="tag">${pct}%</span>
+        <span class="tag">${pct>=85?'Distinction': pct>=70?'Merit': pct>=50?'Pass':'Below Pass'}</span>
+      </div>
+    </div>`;
+  postSubmit.innerHTML = summary + `<div class="footer-note">Explanations cite Frederick Lewis Allen, <em>Only Yesterday</em>, Chapter 6 (study PDF). Citation markers like  correspond to the source segments.</div>`;
+  postSubmit.style.display = '';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+startBtn.addEventListener('click', rerandomize);
+prevBtn.addEventListener('click', ()=>{ current = Math.max(0, current-1); renderAll(); });
+nextBtn.addEventListener('click', ()=>{ current = Math.min(QUESTIONS.length-1, current+1); renderAll(); });
+skipBtn.addEventListener('click', ()=>{ current = Math.min(QUESTIONS.length-1, current+1); renderAll(); });
+submitBtn.addEventListener('click', submitQuiz);
+clearBtn.addEventListener('click', ()=>{
+  if(confirm('Clear all selections?')){ answers.clear(); submitted=false; renderAll(); }
+});
+
+// Keyboard shortcuts
+window.addEventListener('keydown', (e)=>{
+  if(e.target.closest('input, textarea')) return;
+  if(e.key==='ArrowRight'){ e.preventDefault(); current=Math.min(QUESTIONS.length-1, current+1); renderAll(); }
+  if(e.key==='ArrowLeft'){ e.preventDefault(); current=Math.max(0, current-1); renderAll(); }
+  if(e.key.toLowerCase()==='s'){ e.preventDefault(); current=Math.min(QUESTIONS.length-1, current+1); renderAll(); }
+  if(e.key==='Enter'){
+    // select first unselected choice for quick progression
+    const q = QUESTIONS[current];
+    if(!submitted && !answers.has(q.id)){
+      answers.set(q.id, 0);
+      renderAll();
+    }
+  }
+});
+
+// Initialize once DOM is ready
+document.addEventListener('DOMContentLoaded', ()=>{ rerandomize(); });
+
+</script>
+</body>
+</html>

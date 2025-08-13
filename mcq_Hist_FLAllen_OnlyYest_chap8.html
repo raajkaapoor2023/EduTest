@@ -1,0 +1,682 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Only Yesterday — Ch. 8: THE BALLYHOO YEARS — 30-Question MCQ</title>
+<style>
+  :root{
+    --bg:#071021;
+    --card:#0f1a34;
+    --ink:#eaf0ff;
+    --muted:#b6c8e8;
+    --accent:#7fb7ff;
+    --accent-2:#8ef3c6;
+    --danger:#fa7a7a;
+    --warn:#f6c65a;
+    --ok:#4dd7a1;
+    --shadow:0 14px 36px rgba(0,0,0,.5), 0 6px 14px rgba(0,0,0,.28);
+    --radius:14px;
+    --glass: rgba(255,255,255,0.03);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:
+      radial-gradient(800px 420px at 12% 10%, rgba(15,30,60,.5), transparent),
+      linear-gradient(180deg,#07172b 0%, #041024 100%);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  header{
+    position:sticky; top:0; z-index:60;
+    border-bottom:1px solid rgba(127,183,255,.08);
+    backdrop-filter: blur(6px);
+    background:linear-gradient(180deg, rgba(8,18,36,.88), rgba(6,12,26,.72));
+  }
+  .wrap{max-width:1180px; margin:0 auto; padding:14px;}
+  h1{margin:0; font-size:clamp(1.3rem, 1rem + 1.6vw, 1.9rem)}
+  .subtitle{color:var(--muted); font-size:.95rem; margin-top:6px}
+  main{max-width:1180px; margin:18px auto; padding:18px; display:grid; grid-template-columns:1.25fr .9fr; gap:18px}
+  @media (max-width:980px){ main{grid-template-columns:1fr} }
+  .card{
+    background: linear-gradient(180deg, rgba(11,22,39,.72), rgba(8,14,28,.6));
+    border-radius:var(--radius);
+    border:1px solid rgba(127,183,255,.06);
+    box-shadow:var(--shadow);
+  }
+  .panel{padding:16px}
+  .controls{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+  button{
+    border:0; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:700;
+    background:var(--accent); color:#042033; box-shadow:0 10px 26px rgba(127,183,255,.10);
+  }
+  button.secondary{ background:transparent; color:var(--ink); border:1px solid rgba(127,183,255,.06); box-shadow:none }
+  button.ghost{ background:transparent; color:var(--muted); border:1px dashed rgba(127,183,255,.04) }
+  button.warn{ background:var(--warn); color:#071021 }
+  button.danger{ background:var(--danger); color:#071021 }
+  button.ok{ background:var(--ok); color:#071021 }
+  .meter{height:10px; background:rgba(255,255,255,0.03); border-radius:999px; overflow:hidden; border:1px solid rgba(127,183,255,.04)}
+  .meter > span{display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--accent), var(--accent-2)); transition:width .28s cubic-bezier(.2,.9,.2,1)}
+  .q{padding:18px; margin:14px 0; border-radius:12px; background:linear-gradient(180deg, rgba(7,14,28,.45), rgba(6,10,20,.35)); border:1px solid rgba(127,183,255,.04)}
+  .q-header{display:flex; justify-content:space-between; gap:12px; align-items:baseline}
+  .q-title{font-weight:800}
+  .q-meta{color:var(--muted); font-size:.95rem}
+  .choices{margin-top:12px; display:grid; gap:10px}
+  .choice{padding:12px; border-radius:10px; cursor:pointer; border:1px solid rgba(127,183,255,.06); background:var(--glass); transition:transform .06s ease, border-color .12s ease}
+  .choice:hover{ transform:translateY(-2px); border-color:rgba(127,183,255,.16) }
+  .choice.selected{ outline:2px solid rgba(127,183,255,.18); background:linear-gradient(180deg, rgba(21,36,64,.45), rgba(14,24,44,.45)) }
+  .choice.correct{ border-color: rgba(77,215,161,.5); background: rgba(20,60,42,.28) }
+  .choice.incorrect{ border-color: rgba(250,122,122,.5); background: rgba(60,20,24,.28) }
+  .aside{display:grid; gap:14px; align-content:start; position:sticky; top:82px}
+  .stat{display:flex; justify-content:space-between; align-items:center; padding:12px; border-radius:10px; border:1px solid rgba(127,183,255,.04)}
+  .grid{display:grid; gap:8px; grid-template-columns:repeat(6,1fr); padding:8px}
+  .dot{padding:8px 0; text-align:center; border-radius:8px; cursor:pointer; background:transparent; border:1px solid rgba(127,183,255,.04); color:var(--muted)}
+  .dot.answered{color:var(--ink); border-color:rgba(127,183,255,.12)}
+  .dot.current{outline:2px solid rgba(127,183,255,.14)}
+  .dot.correct{background:rgba(77,215,161,.12); border-color:rgba(77,215,161,.24); color:var(--ink)}
+  .dot.incorrect{background:rgba(250,122,122,.12); border-color:rgba(250,122,122,.2); color:var(--ink)}
+  .results{padding:14px; margin-top:12px; border-radius:10px; border:1px solid rgba(127,183,255,.04)}
+  .explain{margin-top:10px; border-left:3px solid var(--accent); padding:10px 12px; border-radius:8px; background:rgba(127,183,255,.03); color:var(--muted); font-size:0.95rem}
+  .tag{display:inline-block; font-size:.79rem; padding:4px 8px; border-radius:999px; background:rgba(127,183,255,.06); margin-right:8px}
+  .muted{color:var(--muted)}
+  .kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; background:rgba(255,255,255,.03); padding:2px 6px; border-radius:6px; border:1px solid rgba(127,183,255,.04)}
+  .references{font-size:.88rem; color:var(--muted); margin-top:10px; line-height:1.4}
+  .explain strong{color:var(--ink)}
+  footer{max-width:1180px; margin:18px auto; color:var(--muted); font-size:.9rem; text-align:center}
+</style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Only Yesterday — Chapter 8: <em>The Ballyhoo Years</em></h1>
+      <div class="subtitle">30-question MCQ • Oxbridge / Ivy BA Final • Randomize Qs & choices • Skip & submit anytime • Detailed academic explanations (Allen, Ch. 8).</div>
+    </div>
+  </header>
+  <main>
+    <section class="card panel" id="quizCard">
+      <div class="controls" style="margin-bottom:12px">
+        <button id="startBtn" class="ok">Start / Re-randomize</button>
+        <button id="prevBtn" class="secondary">Prev</button>
+        <button id="nextBtn" class="secondary">Next</button>
+        <button id="skipBtn" class="ghost">Skip</button>
+        <button id="submitBtn" class="warn">Submit Now</button>
+        <span class="muted" style="margin-left:8px">Hotkeys: <span class="kbd">←</span>/<span class="kbd">→</span> • <span class="kbd">S</span> skip • <span class="kbd">Enter</span> quick-select</span>
+      </div>
+      <div style="margin-bottom:10px">
+        <div class="meter" aria-hidden="true"><span id="meterBar"></span></div>
+        <div class="stat" style="margin-top:8px"><strong id="progressText">0/30 answered</strong><span id="scorePreview" class="muted">Score: —</span></div>
+      </div>
+      <div id="questionHost"></div>
+      <div id="postSubmit" class="results" style="display:none"></div>
+    </section>
+    <aside class="aside">
+      <section class="card panel">
+        <div style="display:flex; justify-content:space-between; align-items:center">
+          <div>
+            <div style="font-weight:800">Navigator</div>
+            <div class="muted" style="font-size:.92rem">Jump to any question</div>
+          </div>
+          <button id="clearBtn" class="danger">Clear</button>
+        </div>
+        <div class="grid" id="grid"></div>
+      </section>
+      <section class="card panel">
+        <div style="font-weight:800">Settings</div>
+        <div class="muted" style="margin:6px 0 10px">Attempt-level randomization & option shuffle enabled.</div>
+        <label><input type="checkbox" id="toggleInstant" /> Instant feedback mode</label><br/>
+        <label><input type="checkbox" id="toggleExplainOnSelect" /> Show explanation on selection</label>
+      </section>
+      <section class="card panel">
+        <div style="font-weight:800">Source note</div>
+        <div class="muted" style="margin-top:8px">All explanations reference Frederick L. Allen, <em>Only Yesterday</em>, Chapter 8 (file segments). Citations embedded in explanations.</div>
+      </section>
+    </aside>
+  </main>
+
+<script>
+/* Questions derived from Chapter 8 (\"The Ballyhoo Years\") of Frederick L. Allen,
+   with academically referenced explanations embedded (file citations).
+   - This script randomizes question order and choices per attempt.
+   - Skipping, jumping, instant feedback, and post-submit detailed answers enabled.
+*/
+
+// Question bank (30 items). Each explanation includes file citations (file_search markers).
+const QUESTIONS_BASE = [
+  {
+    id: 'q1',
+    prompt: 'What central phenomenon does Allen identify as characteristic of "The Ballyhoo Years"?',
+    choices: [
+      { text: 'A revival of nineteenth-century agrarian politics', correct: false },
+      { text: 'A pervasive culture of sensationalism and manufactured celebrity', correct: true },
+      { text: 'The decline of mass entertainment in favour of highbrow culture', correct: false },
+      { text: 'A cohesive national consensus around foreign policy', correct: false }
+    ],
+    explain: 'Allen describes the decade as marked by an “unparalleled rapidity” with which the public fixated on sensational trifles and manufactured heroes — a culture of ballyhoo and celebrity. :contentReference[oaicite:0]{index=0}'
+  },
+  {
+    id: 'q2',
+    prompt: 'Which industry does Allen cite as central to the mechanics of ballyhoo in the 1920s?',
+    choices: [
+      { text: 'Agricultural extension services', correct: false },
+      { text: 'Tabloid press and press-agentry/publicity firms', correct: true },
+      { text: 'Federal broadcasting regulation agencies', correct: false },
+      { text: 'Public education departments', correct: false }
+    ],
+    explain: 'Allen emphasizes tabloids, press agents, and promoters as the machinery that manufactured sensation and celebrity during the decade. '
+  },
+  {
+    id: 'q3',
+    prompt: 'Allen uses the phrase "causes célèbres" to describe many 1920s phenomena. Which event does he cite as an exemplar of this trend?',
+    choices: [
+      { text: 'The Yalta Conference', correct: false },
+      { text: 'The Hall–Mills murder trial', correct: true },
+      { text: 'The passage of the New Deal', correct: false },
+      { text: 'The sinking of the Titanic', correct: false }
+    ],
+    explain: 'The Hall–Mills murder case is treated by Allen as a prime example of a sensational trial that captivated the public imagination. :contentReference[oaicite:2]{index=2}'
+  },
+  {
+    id: 'q4',
+    prompt: 'How does Allen explain the public fascination with stunts such as flagpole-sitting and marathon dancing?',
+    choices: [
+      { text: 'As evidence of deepening political consciousness', correct: false },
+      { text: 'As a symptom of boredom and the appetite for spectacle', correct: true },
+      { text: 'As a government-led morale campaign', correct: false },
+      { text: 'As a grassroots cultural revival', correct: false }
+    ],
+    explain: 'Allen treats these stunts as symptomatic of a mass appetite for spectacle — an era in which the public was eager for conspicuous, consumable entertainments. :contentReference[oaicite:3]{index=3}'
+  },
+  {
+    id: 'q5',
+    prompt: 'Which sporting figure does Allen mention as having been elevated by ballyhoo to national prominence?',
+    choices: [
+      { text: 'Babe Ruth', correct: false },
+      { text: 'Red Grange', correct: true },
+      { text: 'Jack Dempsey only', correct: false },
+      { text: 'Joe Louis', correct: false }
+    ],
+    explain: 'Allen highlights Red Grange as an example of the new stadium hero whose fame was amplified by publicity and mass media. :contentReference[oaicite:4]{index=4}'
+  },
+  {
+    id: 'q6',
+    prompt: 'What role did the tabloids and rotogravure pages play, according to Allen?',
+    choices: [
+      { text: 'They suppressed sensational stories to protect elites', correct: false },
+      { text: 'They reframed public life as sport, scandal, and sex, distracting from political conflict', correct: true },
+      { text: 'They mainly published academic essays and literary criticism', correct: false },
+      { text: 'They operated as government information organs', correct: false }
+    ],
+    explain: 'Allen argues that tabloids reframed national attention toward sport, scandal, and sensation, diminishing the salience of complex political issues. :contentReference[oaicite:5]{index=5}'
+  },
+  {
+    id: 'q7',
+    prompt: 'Which novelty craze imported from China does Allen discuss as an indicator of mass consumer trends?',
+    choices: [
+      { text: 'Mah Jong', correct: true },
+      { text: 'Ping-pong', correct: false },
+      { text: 'Bonsai gardening', correct: false },
+      { text: 'Kite-flying', correct: false }
+    ],
+    explain: 'Allen documents the Mah Jong craze — aggressively marketed and rapidly adopted — as emblematic of mass consumer fads. :contentReference[oaicite:6]{index=6}'
+  },
+  {
+    id: 'q8',
+    prompt: 'Allen links the rise of ballyhoo to changes in what broader social condition?',
+    choices: [
+      { text: 'The resurgence of small-scale artisanal production', correct: false },
+      { text: 'A postwar relaxation of political intensity and a turn to private amusement', correct: true },
+      { text: 'A sudden increase in centralized political activism', correct: false },
+      { text: 'A major decline in urbanization', correct: false }
+    ],
+    explain: 'Allen situates ballyhoo in a context where the war’s political urgency faded and public energy shifted toward entertainments and consumer diversion. :contentReference[oaicite:7]{index=7}'
+  },
+  {
+    id: 'q9',
+    prompt: 'How does Allen treat the relationship between promoters (press-agents) and heroes like aviators or athletes?',
+    choices: [
+      { text: 'Promoters were irrelevant; heroes rose organically', correct: false },
+      { text: 'Promoters manufactured narratives and staged publicity to turn performers into national figures', correct: true },
+      { text: 'Promoters restricted coverage of heroes', correct: false },
+      { text: 'Promoters were often state officials', correct: false }
+    ],
+    explain: 'Allen emphasizes press-agentry and promotion as decisive in assembling heroic narratives around pilots, athletes, and stunt performers. :contentReference[oaicite:8]{index=8}'
+  },
+  {
+    id: 'q10',
+    prompt: 'Which cultural phenomenon does Allen say declined in prestige as ballyhoo rose?',
+    choices: [
+      { text: 'Mass spectator sports', correct: false },
+      { text: 'Highbrow literary seriousness among broad audiences', correct: true },
+      { text: 'Pamphleteering and polemical journalism', correct: false },
+      { text: 'Radio broadcasting', correct: false }
+    ],
+    explain: 'Allen notes a drift away from highbrow discourse among the mass public toward lighter sensational fare, a trend treated more fully in subsequent chapters. :contentReference[oaicite:9]{index=9}'
+  },
+  {
+    id: 'q11',
+    prompt: 'Which of the following does Allen present as a commercial effect of ballyhoo?',
+    choices: [
+      { text: 'Higher unionization rates', correct: false },
+      { text: 'New markets for spectacle-driven consumer goods and events', correct: true },
+      { text: 'A decline in advertising expenditure', correct: false },
+      { text: 'A collapse of popular newspapers', correct: false }
+    ],
+    explain: 'Allen describes how promoters and advertisers monetized attention, creating profitable markets for spectacles and celebrity endorsements. '
+  },
+  {
+    id: 'q12',
+    prompt: 'Allen regards the execution of Sacco and Vanzetti (as discussed in the chapter) primarily as:',
+    choices: [
+      { text: 'A minor legal detail with no public resonance', correct: false },
+      { text: 'A polarizing event that intermittently interrupted the carnival of ballyhoo', correct: true },
+      { text: 'The decisive cause of the end of mass ballyhoo', correct: false },
+      { text: 'An event celebrated uniformly across the nation', correct: false }
+    ],
+    explain: 'Allen treats Sacco and Vanzetti as a grave public issue that nonetheless coexisted with, and occasionally punctured, the era’s appetite for spectacle. :contentReference[oaicite:11]{index=11}'
+  },
+  {
+    id: 'q13',
+    prompt: 'Which technological diffusion does Allen credit with amplifying the reach of ballyhoo in the 1920s?',
+    choices: [
+      { text: 'Widespread use of television sets', correct: false },
+      { text: 'The growth of radio broadcasting and rotogravure photography', correct: true },
+      { text: 'The Internet', correct: false },
+      { text: 'Telegraph-only networks', correct: false }
+    ],
+    explain: 'Allen points to radio, photographic rotogravure, and the expanding press as crucial media that magnified sensations and created nationwide shared spectacles. :contentReference[oaicite:12]{index=12}'
+  },
+  {
+    id: 'q14',
+    prompt: 'Allen’s use of the term "ballyhoo" most nearly denotes:',
+    choices: [
+      { text: 'A carefully deliberated democratic reform movement', correct: false },
+      { text: 'A commercialized and theatricalized process of public excitement and hype', correct: true },
+      { text: 'A legal doctrine in constitutional law', correct: false },
+      { text: 'A fashion in men\'s tailoring', correct: false }
+    ],
+    explain: 'For Allen, "ballyhoo" denotes manufactured, theatrical publicity and hype that converted trivialities into public obsessions. :contentReference[oaicite:13]{index=13}'
+  },
+  {
+    id: 'q15',
+    prompt: 'Which social consequence of ballyhoo concerns Allen the most in this chapter?',
+    choices: [
+      { text: 'Strengthening of civic participation', correct: false },
+      { text: 'The displacement of serious public issues by sensational distractions', correct: true },
+      { text: 'A collapse in commercial advertising', correct: false },
+      { text: 'Complete homogenization of cultural tastes', correct: false }
+    ],
+    explain: 'Allen expresses concern that important civic questions were often overshadowed by trivial or sensational stories that dominated popular attention. :contentReference[oaicite:14]{index=14}'
+  },
+  {
+    id: 'q16',
+    prompt: 'Allen links the ballyhoo phenomenon to which element of the media ecosystem?',
+    choices: [
+      { text: 'A shrinking number of newspaper titles', correct: false },
+      { text: 'Competition among newspapers and promoters to seize public attention', correct: true },
+      { text: 'Strict government censorship of sensational stories', correct: false },
+      { text: 'The disappearance of advertising', correct: false }
+    ],
+    explain: 'Competition between publishers and promoters incentivized sensationalism; Allen highlights the press race for circulation and profit as a driving force. :contentReference[oaicite:15]{index=15}'
+  },
+  {
+    id: 'q17',
+    prompt: 'Which entertainment form does Allen mention as rising alongside ballyhoo, attracting cross-class audiences?',
+    choices: [
+      { text: 'Grand opera', correct: false },
+      { text: 'Sporting spectacles and radio-fed mass entertainments', correct: true },
+      { text: 'Courtly masques and aristocratic pageants', correct: false },
+      { text: 'Parliamentary debates', correct: false }
+    ],
+    explain: 'Allen points to sporting events and radio entertainment as mass amusements that appealed widely and were instrumental to the ballyhoo economy. '
+  },
+  {
+    id: 'q18',
+    prompt: 'What does Allen say about the longevity and potency of ballyhoo toward the end of the decade?',
+    choices: [
+      { text: 'It became more powerful and irreversible through the 1930s', correct: false },
+      { text: 'Its novelty began to wane; the technique matured and audiences at times grew weary', correct: true },
+      { text: 'It was instantly replaced by a resurgence of elite culture', correct: false },
+      { text: 'It caused an immediate collapse of the stock market', correct: false }
+    ],
+    explain: 'Allen observes a waning of ballyhoo’s freshness by the late twenties; overexposure and the big market crash changed public appetites. '
+  },
+  {
+    id: 'q19',
+    prompt: 'Which example does Allen give of an event that was both spectacle and engineered publicity?',
+    choices: [
+      { text: 'The Manhattan Project', correct: false },
+      { text: 'The staged lying-in-state and public mourning for Rudolph Valentino', correct: true },
+      { text: 'A routine congressional hearing', correct: false },
+      { text: 'The drafting of the League of Nations covenant', correct: false }
+    ],
+    explain: 'Allen recounts Valentino’s orchestrated public mourning as illustrating how showmanship could be structured and monetized. :contentReference[oaicite:18]{index=18}'
+  },
+  {
+    id: 'q20',
+    prompt: 'In Allen’s account, what is the relationship between ballyhoo and commercial advertising?',
+    choices: [
+      { text: 'Ballyhoo reduced the effectiveness of advertising', correct: false },
+      { text: 'They were mutually reinforcing — ballyhoo created spectacles advertisers could exploit', correct: true },
+      { text: 'Advertising agencies refused to use ballyhoo', correct: false },
+      { text: 'They were unrelated phenomena', correct: false }
+    ],
+    explain: 'Allen shows how promoters and advertisers collaborated: spectacles generated attention which advertisers monetized via tie-ins and endorsements. '
+  },
+  {
+    id: 'q21',
+    prompt: 'Which phrase best captures Allen’s tone toward ballyhoo in this chapter?',
+    choices: [
+      { text: 'Unalloyed praise for popular culture', correct: false },
+      { text: 'Sardonic analysis that recognizes both novelty and social cost', correct: true },
+      { text: 'Indifference and factual recounting without judgement', correct: false },
+      { text: 'Technocratic advocacy for more ballyhoo', correct: false }
+    ],
+    explain: 'Allen adopts a critical, often wry tone — acknowledging the ingenuity of promoters while warning of cultural consequences. :contentReference[oaicite:20]{index=20}'
+  },
+  {
+    id: 'q22',
+    prompt: 'How does Allen describe the effect of ballyhoo on political engagement?',
+    choices: [
+      { text: 'It deepened long-term political engagement uniformly', correct: false },
+      { text: 'It often diverted attention away from complex civic debates', correct: true },
+      { text: 'It made civic discourse more learned and sober', correct: false },
+      { text: 'It had no measurable effect', correct: false }
+    ],
+    explain: 'Allen argues that ballyhoo frequently diverted the public from sustained attention to complex public affairs and debates. :contentReference[oaicite:21]{index=21}'
+  },
+  {
+    id: 'q23',
+    prompt: 'Which commercial promoter is associated with spectacular endurance contests (e.g., the Bunion Derby) discussed by Allen?',
+    choices: [
+      { text: 'C. C. Pyle', correct: true },
+      { text: 'P. T. Barnum', correct: false },
+      { text: 'William Randolph Hearst', correct: false },
+      { text: 'Herbert Hoover', correct: false }
+    ],
+    explain: 'C. C. Pyle is cited by Allen for staging events like the Bunion Derby, exemplifying the entrepreneurial side of ballyhoo. :contentReference[oaicite:22]{index=22}'
+  },
+  {
+    id: 'q24',
+    prompt: 'Allen treats the public response to Lindbergh and Byrd as exemplifying what?',
+    choices: [
+      { text: 'The unique distrust of aviation feats', correct: false },
+      { text: 'The appetite for heroic narratives and media spectacle', correct: true },
+      { text: 'A rejection of modern technology by the masses', correct: false },
+      { text: 'A primarily academic fascination with aeronautics', correct: false }
+    ],
+    explain: 'The celebrity afforded to aviators like Lindbergh and Byrd demonstrates the public hunger for hero-making and spectacle. '
+  },
+  {
+    id: 'q25',
+    prompt: 'Which social group does Allen claim sometimes lost influence as ballyhoo culture expanded?',
+    choices: [
+      { text: 'Business leaders', correct: false },
+      { text: 'Highbrow intellectuals and cultural elites', correct: true },
+      { text: 'Sports promoters', correct: false },
+      { text: 'Movie studio executives', correct: false }
+    ],
+    explain: 'Allen suggests that the ascendancy of mass amusement diminished the cultural gate-keeping power of highbrow intellectuals. :contentReference[oaicite:24]{index=24}'
+  },
+  {
+    id: 'q26',
+    prompt: 'Allen notes that bathing-beauty contests and similar spectacles indicate which broader trend?',
+    choices: [
+      { text: 'A retreat into provincial religiosity', correct: false },
+      { text: 'The commercialization of private aesthetics into public entertainment', correct: true },
+      { text: 'A decline in theatricality', correct: false },
+      { text: 'A repudiation of consumer culture', correct: false }
+    ],
+    explain: 'Contests like bathing-beauty shows converted private aesthetics into commodities for public consumption and publicity. :contentReference[oaicite:25]{index=25}'
+  },
+  {
+    id: 'q27',
+    prompt: 'How does Allen situate the decline of ballyhoo\'s novelty after 1928–29?',
+    choices: [
+      { text: 'As solely the result of government censorship', correct: false },
+      { text: 'As partly due to market saturation and partly to the economic crisis of 1929', correct: true },
+      { text: 'As wholly a moral reform movement victory', correct: false },
+      { text: 'As unrelated to economic conditions', correct: false }
+    ],
+    explain: 'Allen attributes waning public appetite to overexposure and the changing economic context culminating in the crash, which altered popular priorities. '
+  },
+  {
+    id: 'q28',
+    prompt: 'Which of these is NOT a ballyhoo tactic Allen documents?',
+    choices: [
+      { text: 'Manufactured publicity events', correct: false },
+      { text: 'Synergistic tie-ins with advertisers', correct: false },
+      { text: 'Radical grassroots policy deliberation', correct: true },
+      { text: 'Sensational press narratives', correct: false }
+    ],
+    explain: 'Allen documents manufactured stunts, publicity tie-ins, and sensational press narratives — not grassroots policy deliberation — as features of ballyhoo. '
+  },
+  {
+    id: 'q29',
+    prompt: 'What methodological stance does Allen take in this chapter toward popular culture?',
+    choices: [
+      { text: 'He provides a purely quantitative economic analysis', correct: false },
+      { text: 'He blends narrative examples with interpretative critique of social effects', correct: true },
+      { text: 'He offers fiction rather than history', correct: false },
+      { text: 'He champions ballyhoo as the highest cultural form', correct: false }
+    ],
+    explain: 'Allen combines vivid narrative of events with interpretive critique — documenting examples while analyzing their cultural significance. :contentReference[oaicite:28]{index=28}'
+  },
+  {
+    id: 'q30',
+    prompt: 'According to Allen, what long-term implication did the ballyhoo years have for American public life?',
+    choices: [
+      { text: 'They permanently ended the power of popular entertainments', correct: false },
+      { text: 'They foreshadowed modern mass-mediated celebrity and the commodification of attention', correct: true },
+      { text: 'They caused the immediate collapse of advertising markets', correct: false },
+      { text: 'They led to the abolition of sporting events', correct: false }
+    ],
+    explain: 'Allen reads the decade as a precursor to modern mass-mediated celebrity culture: the commodification of attention and manufactured fame. '
+  }
+];
+
+// State
+let QUESTIONS = [];
+let current = 0;
+const answers = new Map(); // Map<questionId, choiceIndex>
+let submitted = false;
+
+// Elements
+const questionHost = document.getElementById('questionHost');
+const grid = document.getElementById('grid');
+const meterBar = document.getElementById('meterBar');
+const progressText = document.getElementById('progressText');
+const scorePreview = document.getElementById('scorePreview');
+const postSubmit = document.getElementById('postSubmit');
+
+// Buttons
+const startBtn = document.getElementById('startBtn');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const skipBtn = document.getElementById('skipBtn');
+const submitBtn = document.getElementById('submitBtn');
+const clearBtn = document.getElementById('clearBtn');
+
+// Settings toggles
+const toggleInstant = document.getElementById('toggleInstant');
+const toggleExplainOnSelect = document.getElementById('toggleExplainOnSelect');
+
+// Utilities
+function shuffle(a) {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function deepClone(o) { return JSON.parse(JSON.stringify(o)); }
+
+// Quiz functions
+function startAttempt() {
+  submitted = false;
+  answers.clear();
+  postSubmit.style.display = 'none';
+
+  QUESTIONS = deepClone(QUESTIONS_BASE).map(q => {
+    q.choices = shuffle(q.choices);
+    return q;
+  });
+  shuffle(QUESTIONS);
+
+  current = 0;
+  renderAll();
+}
+
+function answeredCount() { return QUESTIONS.filter(q => answers.has(q.id)).length; }
+
+function scoreNow() {
+  return QUESTIONS.reduce((s,q) => {
+    const sel = answers.get(q.id);
+    if (sel != null && q.choices[sel] && q.choices[sel].correct) return s+1;
+    return s;
+  },0);
+}
+
+function updateProgress() {
+  const answered = answeredCount();
+  progressText.textContent = `${answered}/${QUESTIONS.length} answered`;
+  meterBar.style.width = `${Math.round(100 * answered / QUESTIONS.length)}%`;
+  scorePreview.textContent = submitted ? `Score: ${scoreNow()} / ${QUESTIONS.length}` : 'Score: —';
+}
+
+function renderNavigator() {
+  grid.innerHTML = '';
+  QUESTIONS.forEach((q,i) => {
+    const btn = document.createElement('button');
+    btn.className = 'dot';
+    btn.textContent = i+1;
+    if (answers.has(q.id)) btn.classList.add('answered');
+    if (i === current) btn.classList.add('current');
+    if (submitted) {
+      const idx = answers.get(q.id);
+      if (idx != null) btn.classList.add(q.choices[idx].correct ? 'correct' : 'incorrect');
+    }
+    btn.onclick = () => { current = i; renderAll(); };
+    grid.appendChild(btn);
+  });
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  const wrap = document.createElement('div');
+  wrap.className = 'q';
+  wrap.innerHTML = `<div class="q-header"><div class="q-title">Q${current+1}. ${q.prompt}</div><div class="q-meta">${submitted ? '<span class="tag">Post-submit review</span>' : ''}</div></div>`;
+
+  const choicesContainer = document.createElement('div');
+  choicesContainer.className = 'choices';
+
+  q.choices.forEach((c, idx) => {
+    const node = document.createElement('div');
+    node.className = 'choice';
+    node.innerHTML = `<div>${c.text}</div>`;
+    const selectedIdx = answers.get(q.id);
+    if (selectedIdx === idx) node.classList.add('selected');
+
+    if (submitted) {
+      if (c.correct) node.classList.add('correct');
+      if (selectedIdx === idx && !c.correct) node.classList.add('incorrect');
+    }
+
+    node.onclick = () => {
+      if (submitted) return;
+      answers.set(q.id, idx);
+      renderAll();
+      if (toggleInstant.checked && toggleExplainOnSelect.checked) {
+        const existing = wrap.querySelector('.explain');
+        if (existing) existing.remove();
+        const ex = document.createElement('div');
+        ex.className = 'explain';
+        ex.innerHTML = `<strong>Explanation:</strong> ${q.explain}`;
+        wrap.appendChild(ex);
+      }
+    };
+    choicesContainer.appendChild(node);
+  });
+  wrap.appendChild(choicesContainer);
+
+  if (submitted) {
+    const exp = document.createElement('div');
+    exp.className = 'explain';
+    exp.innerHTML = `<strong>Explanation:</strong> ${q.explain}`;
+    wrap.appendChild(exp);
+  }
+
+  questionHost.innerHTML = '';
+  questionHost.appendChild(wrap);
+}
+
+function renderAll() {
+  updateProgress();
+  renderNavigator();
+  renderQuestion();
+}
+
+function submitQuiz() {
+  submitted = true;
+  renderAll();
+
+  const correct = scoreNow();
+  const total = QUESTIONS.length;
+  const pct = Math.round(100 * correct / total);
+  let level;
+  if (pct >= 85) level = 'Distinction';
+  else if (pct >= 70) level = 'Merit';
+  else if (pct >= 50) level = 'Pass';
+  else level = 'Below Pass';
+
+  // Build detailed post-test report with full explanations and file citations
+  let details = `<div><strong>Results:</strong> ${correct}/${total} (${pct}%) — ${level}</div>`;
+  details += `<div class="muted" style="margin-top:10px">Below are elaborated, academically-referenced answers drawn from Frederick L. Allen, <em>Only Yesterday</em>, Chapter 8. File citations indicate source segments.</div>`;
+  details += `<div style="margin-top:12px">`;
+  QUESTIONS.forEach((q,i) => {
+    const sel = answers.get(q.id);
+    const chosenText = sel != null ? q.choices[sel].text : '<em>No answer</em>';
+    const correctChoice = q.choices.find(ch => ch.correct).text;
+    const correctness = (sel != null && q.choices[sel].correct) ? '<span style="color:var(--ok);font-weight:700">Correct</span>' : '<span style="color:var(--danger);font-weight:700">Incorrect</span>';
+    details += `<div style="margin-top:12px;padding:12px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(127,183,255,0.04)"><div style="font-weight:800">Q${i+1}. ${q.prompt}</div><div style="margin-top:6px"><strong>Your answer:</strong> ${chosenText} — ${correctness}</div><div style="margin-top:6px"><strong>Correct answer:</strong> ${correctChoice}</div><div class="explain" style="margin-top:10px"><strong>Elaboration & sources:</strong> ${q.explain}</div></div>`;
+  });
+  details += `</div>`;
+  details += `<div class="references" style="margin-top:12px">Selected file citations used above: :contentReference[oaicite:30]{index=30} :contentReference[oaicite:31]{index=31} :contentReference[oaicite:32]{index=32} :contentReference[oaicite:33]{index=33} :contentReference[oaicite:34]{index=34}</div>`;
+
+  postSubmit.innerHTML = details;
+  postSubmit.style.display = 'block';
+}
+
+// Event bindings
+startBtn.onclick = startAttempt;
+prevBtn.onclick = () => { current = Math.max(0, current-1); renderAll(); };
+nextBtn.onclick = () => { current = Math.min(QUESTIONS.length-1, current+1); renderAll(); };
+skipBtn.onclick = () => { current = Math.min(QUESTIONS.length-1, current+1); renderAll(); };
+submitBtn.onclick = submitQuiz;
+clearBtn.onclick = () => {
+  if (confirm('Clear all answers and restart the quiz?')) startAttempt();
+};
+
+// Keyboard hotkeys
+window.addEventListener('keydown', e => {
+  if (e.target.closest('input, textarea')) return;
+  if (e.key === 'ArrowRight') { e.preventDefault(); nextBtn.click(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); prevBtn.click(); }
+  if (e.key.toLowerCase() === 's') { e.preventDefault(); skipBtn.click(); }
+  if (e.key === 'Enter') {
+    if (!submitted && !answers.has(QUESTIONS[current].id)) {
+      answers.set(QUESTIONS[current].id, 0);
+      renderAll();
+    }
+  }
+});
+
+// Auto-start attempt
+startAttempt();
+</script>
+<footer>— End of exam —</footer>
+</body>
+</html>
+```

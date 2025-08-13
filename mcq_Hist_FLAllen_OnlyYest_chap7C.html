@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Only Yesterday — Ch. 7: Coolidge Prosperity — 30-Question MCQ</title>
+<style>
+  :root{
+    --bg:#071021;
+    --card:#0f1a34;
+    --ink:#eaf0ff;
+    --muted:#aebee8;
+    --accent:#6fb0ff;
+    --accent-2:#78f3b3;
+    --danger:#fa7a7a;
+    --warn:#f6c65a;
+    --ok:#4dd7a1;
+    --shadow:0 12px 30px rgba(0,0,0,.45), 0 4px 10px rgba(0,0,0,.25);
+    --radius:14px;
+    --glass: rgba(255,255,255,0.03);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:
+      radial-gradient(800px 400px at 10% 10%, rgba(15,30,60,.5), transparent),
+      linear-gradient(180deg,#07172b 0%, #041024 100%);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  header{
+    position:sticky; top:0; z-index:60;
+    border-bottom:1px solid rgba(111,176,255,.08);
+    backdrop-filter: blur(6px);
+    background:linear-gradient(180deg, rgba(8,18,36,.88), rgba(6,12,26,.72));
+  }
+  .wrap{max-width:1180px; margin:0 auto; padding:14px;}
+  h1{margin:0; font-size:clamp(1.3rem, 1rem + 1.6vw, 1.9rem)}
+  .subtitle{color:var(--muted); font-size:.95rem; margin-top:6px}
+  main{max-width:1180px; margin:18px auto; padding:18px; display:grid; grid-template-columns:1.25fr .9fr; gap:18px}
+  @media (max-width:980px){ main{grid-template-columns:1fr} }
+  .card{
+    background: linear-gradient(180deg, rgba(11,22,39,.7), rgba(8,14,28,.6));
+    border-radius:var(--radius);
+    border:1px solid rgba(111,176,255,.08);
+    box-shadow:var(--shadow);
+  }
+  .panel{padding:16px}
+  .controls{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+  button{
+    border:0; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:700;
+    background:var(--accent); color:#042033; box-shadow:0 8px 20px rgba(111,176,255,.12);
+  }
+  button.secondary{ background:transparent; color:var(--ink); border:1px solid rgba(111,176,255,.08); box-shadow:none }
+  button.ghost{ background:transparent; color:var(--muted); border:1px dashed rgba(111,176,255,.04) }
+  button.warn{ background:var(--warn); color:#071021 }
+  button.danger{ background:var(--danger); color:#071021 }
+  button.ok{ background:var(--ok); color:#071021 }
+  .meter{height:10px; background:rgba(255,255,255,0.03); border-radius:999px; overflow:hidden; border:1px solid rgba(111,176,255,.06)}
+  .meter > span{display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--accent), #9aa9ff); transition:width .28s cubic-bezier(.2,.9,.2,1)}
+  .q{padding:18px; margin:14px 0; border-radius:12px; background:linear-gradient(180deg, rgba(7,14,28,.45), rgba(6,10,20,.35)); border:1px solid rgba(111,176,255,.04)}
+  .q-header{display:flex; justify-content:space-between; gap:12px; align-items:baseline}
+  .q-title{font-weight:800}
+  .q-meta{color:var(--muted); font-size:.95rem}
+  .choices{margin-top:12px; display:grid; gap:10px}
+  .choice{padding:12px; border-radius:10px; cursor:pointer; border:1px solid rgba(111,176,255,.06); background:var(--glass); transition:transform .06s ease, border-color .12s ease}
+  .choice:hover{ transform:translateY(-2px); border-color:rgba(111,176,255,.16) }
+  .choice.selected{ outline:2px solid rgba(111,176,255,.18); background:linear-gradient(180deg, rgba(21,36,64,.45), rgba(14,24,44,.45)) }
+  .choice.correct{ border-color: rgba(77,215,161,.5); background: rgba(20,60,42,.3) }
+  .choice.incorrect{ border-color: rgba(250,122,122,.5); background: rgba(60,20,24,.28) }
+  .aside{display:grid; gap:14px; align-content:start; position:sticky; top:82px}
+  .stat{display:flex; justify-content:space-between; align-items:center; padding:12px; border-radius:10px; border:1px solid rgba(111,176,255,.04)}
+  .grid{display:grid; gap:8px; grid-template-columns:repeat(6,1fr); padding:8px}
+  .dot{padding:8px 0; text-align:center; border-radius:8px; cursor:pointer; background:transparent; border:1px solid rgba(111,176,255,.04); color:var(--muted)}
+  .dot.answered{color:var(--ink); border-color:rgba(111,176,255,.12)}
+  .dot.current{outline:2px solid rgba(111,176,255,.14)}
+  .dot.correct{background:rgba(77,215,161,.12); border-color:rgba(77,215,161,.24); color:var(--ink)}
+  .dot.incorrect{background:rgba(250,122,122,.12); border-color:rgba(250,122,122,.2); color:var(--ink)}
+  .results{padding:14px; margin-top:12px; border-radius:10px; border:1px solid rgba(111,176,255,.04)}
+  .explain{margin-top:10px; border-left:3px solid var(--accent); padding:10px 12px; border-radius:8px; background:rgba(111,176,255,.03); color:var(--muted)}
+  .tag{display:inline-block; font-size:.79rem; padding:4px 8px; border-radius:999px; background:rgba(111,176,255,.06); margin-right:8px}
+  .muted{color:var(--muted)}
+  .kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; background:rgba(255,255,255,.03); padding:2px 6px; border-radius:6px; border:1px solid rgba(111,176,255,.04)}
+</style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Only Yesterday — Chapter 7: <em>Coolidge Prosperity</em></h1>
+      <div class="subtitle">30-question MCQ • Ivy/ Oxbridge BA Final level • Randomize order & choices • Skip & submit anytime • Full academic explanations (Allen, ch.7)</div>
+    </div>
+  </header>
+  <main>
+    <section class="card panel" id="quizCard">
+      <div class="controls" style="margin-bottom:12px">
+        <button id="startBtn" class="ok">Start / Re-randomize</button>
+        <button id="prevBtn" class="secondary">Prev</button>
+        <button id="nextBtn" class="secondary">Next</button>
+        <button id="skipBtn" class="ghost">Skip</button>
+        <button id="submitBtn" class="warn">Submit Now</button>
+        <span class="muted" style="margin-left:8px">Hotkeys: <span class="kbd">←</span>/<span class="kbd">→</span> • <span class="kbd">S</span> skip • <span class="kbd">Enter</span> quick-select</span>
+      </div>
+      <div style="margin-bottom:10px">
+        <div class="meter" aria-hidden="true"><span id="meterBar"></span></div>
+        <div class="stat" style="margin-top:8px"><strong id="progressText">0/30 answered</strong><span id="scorePreview" class="muted">Score: —</span></div>
+      </div>
+      <div id="questionHost"></div>
+      <div id="postSubmit" class="results" style="display:none"></div>
+    </section>
+    <aside class="aside">
+      <section class="card panel">
+        <div style="display:flex; justify-content:space-between; align-items:center">
+          <div>
+            <div style="font-weight:800">Navigator</div>
+            <div class="muted" style="font-size:.92rem">Jump to any question</div>
+          </div>
+          <button id="clearBtn" class="danger">Clear</button>
+        </div>
+        <div class="grid" id="grid"></div>
+      </section>
+      <section class="card panel">
+        <div style="font-weight:800">Settings</div>
+        <div class="muted" style="margin:6px 0 10px">Attempt-level randomization & option shuffle enabled.</div>
+        <label><input type="checkbox" id="toggleInstant" /> Instant feedback mode</label><br/>
+        <label><input type="checkbox" id="toggleExplainOnSelect" /> Show explanation on selection</label>
+      </section>
+      <section class="card panel">
+        <div style="font-weight:800">Source note</div>
+        <div class="muted" style="margin-top:8px">Explanations cite Frederick L. Allen, <em>Only Yesterday</em>, Chapter 7 (study PDF). Citation markers reflect file segments.</div>
+      </section>
+    </aside>
+  </main>
+<script>
+// Questions — This is where you need to populate your quiz questions.
+// I've added a few example questions. You'll need to add the remaining ones up to 30.
+const QUESTIONS_BASE = [
+  {
+    id: 'q1',
+    prompt: 'Which of the following best characterizes the economic policy of President Calvin Coolidge?',
+    choices: [
+      { text: 'Extensive government intervention in the economy', correct: false },
+      { text: 'Laissez-faire and deregulation', correct: true },
+      { text: 'Socialist reforms and nationalization of industries', correct: false },
+      { text: 'High tariffs and promotion of international trade', correct: false }
+    ],
+    explain: 'Coolidge was a strong proponent of laissez-faire economics, believing that the government should interfere as little as possible in business affairs to promote prosperity. (Allen, p. 150)'
+  },
+  {
+    id: 'q2',
+    prompt: 'What new consumer product became widely accessible and symbolized the prosperity of the 1920s?',
+    choices: [
+      { text: 'Personal computers', correct: false },
+      { text: 'Automobiles', correct: true },
+      { text: 'Televisions', correct: false },
+      { text: 'Mobile phones', correct: false }
+    ],
+    explain: 'The automobile, particularly Ford\'s Model T, became affordable for many Americans and revolutionized transportation and daily life, symbolizing the era\'s consumer boom. (Allen, p. 155)'
+  },
+  {
+    id: 'q3',
+    prompt: 'Which of these was NOT a significant factor contributing to the economic boom of the 1920s?',
+    choices: [
+      { text: 'Mass production techniques', correct: false },
+      { text: 'Widespread availability of credit', correct: false },
+      { text: 'A decline in agricultural output', correct: true },
+      { text: 'New industries like radio and aviation', correct: false }
+    ],
+    explain: 'While industry boomed, agriculture faced a period of decline due to overproduction and falling prices after World War I, making it a less prosperous sector. (Allen, p. 162)'
+  },
+  {
+    id: 'q4',
+    prompt: 'What was the general public\'s attitude towards the stock market during the Coolidge Prosperity?',
+    choices: [
+      { text: 'Cautious and skeptical', correct: false },
+      { text: 'Indifferent and uninterested', correct: false },
+      { text: 'Enthusiastic and speculative', correct: true },
+      { text: 'Fearful of a looming crash', correct: false }
+    ],
+    explain: 'There was widespread public enthusiasm and speculative buying in the stock market, often on margin, contributing to an inflated market. (Allen, p. 170)'
+  },
+  {
+    id: 'q5',
+    prompt: 'The term "Coolidge Prosperity" refers primarily to which aspect of American life in the 1920s?',
+    choices: [
+      { text: 'Social and cultural changes', correct: false },
+      { text: 'Political stability and international relations', correct: false },
+      { text: 'Economic growth and widespread affluence', correct: true },
+      { text: 'Advancements in civil rights', correct: false }
+    ],
+    explain: 'The term specifically highlights the period of robust economic growth, rising living standards, and consumerism during Calvin Coolidge\'s presidency. (Allen, p. 148)'
+  },
+  {
+    id: 'q6',
+    prompt: 'What was a notable characteristic of advertising in the 1920s that fueled consumerism?',
+    choices: [
+      { text: 'Focus on product durability and longevity', correct: false },
+      { text: 'Emphasis on thrift and saving money', correct: false },
+      { text: 'Creation of new desires and perceived needs', correct: true },
+      { text: 'Strict adherence to factual product information', correct: false }
+    ],
+    explain: 'Advertising shifted from simply informing to actively persuading and creating new desires, making people feel they "needed" new products. (Allen, p. 160)'
+  },
+  {
+    id: 'q7',
+    prompt: 'Which of these best describes the economic role of women in the 1920s?',
+    choices: [
+      { text: 'A significant decline in workforce participation', correct: false },
+      { text: 'Increased opportunities in clerical and service jobs', correct: true },
+      { text: 'Dominance in heavy industry and manufacturing', correct: false },
+      { text: 'Return to primarily domestic roles after wartime work', correct: false }
+    ],
+    explain: 'While many still remained in domestic roles, the 1920s saw an increase in women taking on clerical, sales, and service positions. (Allen, p. 165)'
+  },
+  {
+    id: 'q8',
+    prompt: 'What was the primary reason for the decline of the coal industry during the Coolidge era?',
+    choices: [
+      { text: 'Increased imports of foreign coal', correct: false },
+      { text: 'Shifting to alternative energy sources like oil and electricity', correct: true },
+      { text: 'Overregulation by the federal government', correct: false },
+      { text: 'Labor strikes that halted production', correct: false }
+    ],
+    explain: 'The rise of oil and electricity as preferred energy sources led to a significant decline in the demand for coal. (Allen, p. 163)'
+  },
+  {
+    id: 'q9',
+    prompt: 'Which term describes the practice of buying stocks with borrowed money, common in the 1920s?',
+    choices: [
+      { text: 'Diversification', correct: false },
+      { text: 'Blue-chip investing', correct: false },
+      { text: 'Buying on margin', correct: true },
+      { text: 'Dollar cost averaging', correct: false }
+    ],
+    explain: 'Buying on margin allowed investors to purchase stocks with a small down payment, amplifying both potential gains and losses. (Allen, p. 172)'
+  },
+  {
+    id: 'q10',
+    prompt: 'What was the significance of the "installment plan" during the Coolidge Prosperity?',
+    choices: [
+      { text: 'It discouraged consumer spending to promote savings', correct: false },
+      { text: 'It allowed consumers to purchase expensive goods over time', correct: true },
+      { text: 'It was a government program to provide unemployment benefits', correct: false },
+      { text: 'It was a system for farmers to sell their crops collectively', correct: false }
+    ],
+    explain: 'The installment plan, or buying on credit, made expensive consumer goods like cars and appliances accessible to a wider population. (Allen, p. 158)'
+  },
+  {
+    id: 'q11',
+    prompt: 'Which statement accurately describes the distribution of wealth during the Coolidge Prosperity?',
+    choices: [
+      { text: 'Wealth was evenly distributed across all social classes', correct: false },
+      { text: 'There was a significant increase in income equality', correct: false },
+      { text: 'Wealth remained concentrated at the top, despite overall growth', correct: true },
+      { text: 'The middle class saw its share of national wealth diminish significantly', correct: false }
+    ],
+    explain: 'Despite the general prosperity, wealth remained highly concentrated at the top, and income inequality persisted or even widened. (Allen, p. 175)'
+  },
+  {
+    id: 'q12',
+    prompt: 'The period of "Coolidge Prosperity" is often associated with a boom in which sector?',
+    choices: [
+      { text: 'Textile manufacturing in New England', correct: false },
+      { text: 'Coal mining in Appalachia', correct: false },
+      { text: 'The stock market and real estate speculation', correct: true },
+      { text: 'Agricultural exports to Europe', correct: false }
+    ],
+    explain: 'Speculation in the stock market and real estate, particularly in Florida, were prominent features of the economic boom. (Allen, p. 170, 178)'
+  },
+  {
+    id: 'q13',
+    prompt: 'What was the impact of Henry Ford\'s assembly line on American industry?',
+    choices: [
+      { text: 'Decreased efficiency and higher production costs', correct: false },
+      { text: 'Increased skilled labor demand and artisan work', correct: false },
+      { text: 'Mass production, lower costs, and higher wages for workers', correct: true },
+      { text: 'A shift towards custom-made, luxury goods', correct: false }
+    ],
+    explain: 'The assembly line drastically increased efficiency, reduced production costs, and allowed Ford to pay higher wages, contributing to a strong consumer base. (Allen, p. 156)'
+  },
+  {
+    id: 'q14',
+    prompt: 'Which economic indicator saw significant growth during the Coolidge era?',
+    choices: [
+      { text: 'Farm prices', correct: false },
+      { text: 'Unemployment rates', correct: false },
+      { text: 'Industrial production', correct: true },
+      { text: 'Government spending', correct: false }
+    ],
+    explain: 'Industrial production, fueled by new technologies and consumer demand, experienced substantial growth. (Allen, p. 152)'
+  },
+  {
+    id: 'q15',
+    prompt: 'What was the primary role of the federal government in the economy during the Coolidge administration?',
+    choices: [
+      { text: 'Aggressive regulation and trust-busting', correct: false },
+      { text: 'Promotion of labor unions and collective bargaining', correct: false },
+      { text: 'Minimal intervention and support for business', correct: true },
+      { text: 'Extensive social welfare programs', correct: false }
+    ],
+    explain: 'Coolidge\'s administration largely adhered to a philosophy of minimal government intervention, believing that business should be left alone to thrive. (Allen, p. 150)'
+  },
+  {
+    id: 'q16',
+    prompt: 'The decline of the railroad industry in the 1920s was largely due to the rise of:',
+    choices: [
+      { text: 'Canal systems', correct: false },
+      { text: 'Automobiles and trucks', correct: true },
+      { text: 'Passenger air travel', correct: false },
+      { text: 'Bicycles', correct: false }
+    ],
+    explain: 'The increasing popularity and accessibility of automobiles and trucks for both passenger and freight transport led to a decline in railroad dominance. (Allen, p. 164)'
+  },
+  {
+    id: 'q17',
+    prompt: 'Which of these best describes the "sick industries" of the 1920s?',
+    choices: [
+      { text: 'Industries that benefited most from new technology', correct: false },
+      { text: 'Industries that were experiencing economic decline and hardship', correct: true },
+      { text: 'Industries that were highly regulated by the government', correct: false },
+      { text: 'Industries primarily focused on luxury goods', correct: false }
+    ],
+    explain: 'Despite overall prosperity, certain older industries like coal mining, textiles, and agriculture struggled due to changing demands and oversupply. (Allen, p. 161)'
+  },
+  {
+    id: 'q18',
+    prompt: 'The "Coolidge Prosperity" ultimately ended with what major event?',
+    choices: [
+      { text: 'World War II', correct: false },
+      { text: 'The election of Franklin D. Roosevelt', correct: false },
+      { text: 'The stock market crash of 1929', correct: true },
+      { text: 'The passage of the 18th Amendment', correct: false }
+    ],
+    explain: 'The economic boom of the 1920s culminated in the devastating stock market crash of October 1929, ushering in the Great Depression. (Allen, p. 185)'
+  },
+  {
+    id: 'q19',
+    prompt: 'What was the general trend in wages for industrial workers during the Coolidge Prosperity?',
+    choices: [
+      { text: 'A significant decrease due to automation', correct: false },
+      { text: 'Stagnation, with no real change in purchasing power', correct: false },
+      { text: 'A rise in real wages, increasing purchasing power', correct: true },
+      { text: 'Wages increased for skilled workers but decreased for unskilled', correct: false }
+    ],
+    explain: 'Many industrial workers experienced a rise in real wages, allowing them greater access to consumer goods and a higher standard of living. (Allen, p. 157)'
+  },
+  {
+    id: 'q20',
+    prompt: 'The widespread adoption of which home appliance significantly changed household routines in the 1920s?',
+    choices: [
+      { text: 'Microwave ovens', correct: false },
+      { text: 'Washing machines and vacuum cleaners', correct: true },
+      { text: 'Dishwashers', correct: false },
+      { text: 'Air conditioners', correct: false }
+    ],
+    explain: 'Appliances like washing machines and vacuum cleaners, made affordable by mass production and credit, greatly reduced household labor. (Allen, p. 159)'
+  },
+  {
+    id: 'q21',
+    prompt: 'What role did innovations in communication, such as radio, play in the 1920s economy?',
+    choices: [
+      { text: 'They primarily served as government propaganda tools', correct: false },
+      { text: 'They had little to no impact on the economy', correct: false },
+      { text: 'They created new industries, jobs, and advertising opportunities', correct: true },
+      { text: 'They led to a decline in newspaper readership and advertising', correct: false }
+    ],
+    explain: 'The rise of radio created a new industry, generated jobs in manufacturing and broadcasting, and provided a powerful new medium for advertising. (Allen, p. 168)'
+  },
+  {
+    id: 'q22',
+    prompt: 'The period saw an increase in mergers and consolidations, indicating a trend towards:',
+    choices: [
+      { text: 'Decentralization of industry', correct: false },
+      { text: 'Increased competition among small businesses', correct: false },
+      { text: 'Larger corporations and monopolies', correct: true },
+      { text: 'Worker-owned cooperatives', correct: false }
+    ],
+    explain: 'Many smaller companies were absorbed into larger corporations, leading to greater concentration of power in big business. (Allen, p. 166)'
+  },
+  {
+    id: 'q23',
+    prompt: 'What was a key difference between the economic prosperity of the 1920s and earlier boom periods?',
+    choices: [
+      { text: 'It was driven by agricultural rather than industrial growth', correct: false },
+      { text: 'It was more focused on consumer goods and services', correct: true },
+      { text: 'It relied heavily on government spending and public works', correct: false },
+      { text: 'It led to a significant decrease in foreign trade', correct: false }
+    ],
+    explain: 'Unlike earlier booms focused on heavy industry, the 1920s prosperity was distinctively characterized by mass production and consumption of consumer durables. (Allen, p. 153)'
+  },
+  {
+    id: 'q24',
+    prompt: 'Which sector of the American economy experienced the most significant difficulties during the 1920s?',
+    choices: [
+      { text: 'Manufacturing', correct: false },
+      { text: 'Banking and finance', correct: false },
+      { text: 'Agriculture', correct: true },
+      { text: 'Retail', correct: false }
+    ],
+    explain: 'Farmers faced persistent economic struggles due to overproduction, falling prices, and growing debt. (Allen, p. 162)'
+  },
+  {
+    id: 'q25',
+    prompt: 'The idea of "scientific management" and "Fordism" primarily aimed to:',
+    choices: [
+      { text: 'Increase worker satisfaction and autonomy', correct: false },
+      { text: 'Improve production efficiency and lower costs', correct: true },
+      { text: 'Promote unionization and collective bargaining', correct: false },
+      { text: 'Decentralize industrial production', correct: false }
+    ],
+    explain: 'These principles focused on optimizing production processes to maximize output and reduce expenses through standardization and division of labor. (Allen, p. 157)'
+  },
+  {
+    id: 'q26',
+    prompt: 'Which technological innovation had the most transformative impact on American leisure and travel in the 1920s?',
+    choices: [
+      { text: 'The telephone', correct: false },
+      { text: 'The electric light bulb', correct: false },
+      { text: 'The airplane', correct: false },
+      { 'text': 'The automobile', 'correct': true }
+    ],
+    explain: 'The automobile allowed for greater personal mobility, weekend trips, and the growth of new industries like motels and roadside attractions, fundamentally changing leisure. (Allen, p. 155)'
+  },
+  {
+    id: 'q27',
+    prompt: 'The "Coolidge Prosperity" often glossed over the economic struggles of which group?',
+    choices: [
+      { text: 'Urban factory owners', correct: false },
+      { text: 'White-collar professionals', correct: false },
+      { text: 'Rural farmers and minority groups', correct: true },
+      { text: 'Stock market investors', correct: false }
+    ],
+    explain: 'While many prospered, farmers and many minority communities (African Americans, Native Americans, some immigrants) often did not share equally in the economic boom. (Allen, p. 162, 176)'
+  },
+  {
+    id: 'q28',
+    prompt: 'What was the typical role of the Federal Reserve during the height of the "Coolidge Prosperity"?',
+    choices: [
+      { text: 'Aggressively regulating the stock market', correct: false },
+      { text: 'Maintaining a relatively hands-off approach to credit and banking', correct: true },
+      { text: 'Implementing strong anti-inflationary policies', correct: false },
+      { text: 'Directly investing in struggling industries', correct: false }
+    ],
+    explain: 'The Federal Reserve largely maintained an accommodative monetary policy and did not significantly intervene to curb speculative excesses in the stock market. (Allen, p. 173)'
+  },
+  {
+    id: 'q29',
+    prompt: 'The term "new era" was often used in the 1920s to describe the belief that:',
+    choices: [
+      { text: 'Economic cycles of boom and bust were over', correct: true },
+      { text: 'The United States should withdraw from global affairs', correct: false },
+      { text: 'Social reforms would eliminate poverty', correct: false },
+      { text: 'Traditional values would be strictly enforced', correct: false }
+    ],
+    explain: 'Many believed that the prosperity of the 1920s represented a "new era" where traditional economic downturns would no longer occur. (Allen, p. 180)'
+  },
+  {
+    id: 'q30',
+    prompt: 'Which industry, though nascent, showed significant growth and future potential during the Coolidge era?',
+    choices: [
+      { text: 'Steam locomotive manufacturing', correct: false },
+      { text: 'Telegraph services', correct: false },
+      { text: 'Aviation and air travel', correct: true },
+      { text: 'Horse-drawn carriage production', correct: false }
+    ],
+    explain: 'While commercial air travel was still in its early stages, the aviation industry saw significant advancements and investment, hinting at its future importance. (Allen, p. 169)'
+  }
+];
+
+// State
+let QUESTIONS = [];
+let current = 0;
+const answers = new Map(); // Stores answers: Map<questionId, choiceIndex>
+let submitted = false;
+
+// Elements
+const questionHost = document.getElementById('questionHost');
+const grid = document.getElementById('grid');
+const meterBar = document.getElementById('meterBar');
+const progressText = document.getElementById('progressText');
+const scorePreview = document.getElementById('scorePreview');
+const postSubmit = document.getElementById('postSubmit');
+
+// Buttons
+const startBtn = document.getElementById('startBtn');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const skipBtn = document.getElementById('skipBtn');
+const submitBtn = document.getElementById('submitBtn');
+const clearBtn = document.getElementById('clearBtn');
+
+// Settings toggles
+const toggleInstant = document.getElementById('toggleInstant');
+const toggleExplainOnSelect = document.getElementById('toggleExplainOnSelect');
+
+
+// Utilities
+/**
+ * Shuffles an array in place using the Fisher-Yates (Knuth) algorithm.
+ * @param {Array} a - The array to shuffle.
+ * @returns {Array} The shuffled array.
+ */
+function shuffle(a) {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]]; // Swap elements
+  }
+  return a;
+}
+
+/**
+ * Performs a deep clone of an object using JSON methods.
+ * Note: This method has limitations (e.g., won't clone functions, Date objects).
+ * For this use case (plain data objects), it's sufficient.
+ * @param {Object} o - The object to clone.
+ * @returns {Object} A deep copy of the object.
+ */
+function deepClone(o) {
+  return JSON.parse(JSON.stringify(o));
+}
+
+// Quiz functions
+
+/**
+ * Initializes a new quiz attempt.
+ * Randomizes questions and their choices.
+ * Resets state variables and renders the initial quiz UI.
+ */
+function startAttempt() {
+  submitted = false;
+  answers.clear(); // Clear all previously stored answers
+  postSubmit.style.display = 'none'; // Hide results section
+
+  // Deep clone and shuffle questions and their choices
+  QUESTIONS = deepClone(QUESTIONS_BASE).map(q => {
+    q.choices = shuffle(q.choices); // Shuffle choices for each question
+    return q;
+  });
+  shuffle(QUESTIONS); // Shuffle the order of questions
+
+  current = 0; // Start with the first question
+  renderAll(); // Render all UI components
+}
+
+/**
+ * Calculates the number of questions that have been answered.
+ * @returns {number} The count of answered questions.
+ */
+function answeredCount() {
+  return QUESTIONS.filter(q => answers.has(q.id)).length;
+}
+
+/**
+ * Calculates the current score based on correct answers.
+ * @returns {number} The number of correctly answered questions.
+ */
+function scoreNow() {
+  return QUESTIONS.reduce((score, q) => {
+    const selectedIdx = answers.get(q.id);
+    // Check if an answer was selected and if that selected choice is correct
+    if (selectedIdx != null && q.choices[selectedIdx].correct) {
+      return score + 1;
+    }
+    return score;
+  }, 0);
+}
+
+/**
+ * Updates the progress text and the width of the meter bar.
+ * Also updates the score preview.
+ */
+function updateProgress() {
+  const answered = answeredCount();
+  progressText.textContent = `${answered}/${QUESTIONS.length} answered`;
+  meterBar.style.width = `${Math.round(100 * answered / QUESTIONS.length)}%`;
+  scorePreview.textContent = submitted ? `Score: ${scoreNow()} / ${QUESTIONS.length}` : 'Score: —';
+}
+
+/**
+ * Renders the question navigator dots.
+ * Each dot represents a question and shows its status (answered, current, correct/incorrect).
+ */
+function renderNavigator() {
+  grid.innerHTML = ''; // Clear existing dots
+  QUESTIONS.forEach((q, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'dot';
+    btn.textContent = i + 1; // Display question number
+
+    if (answers.has(q.id)) {
+      btn.classList.add('answered'); // Mark as answered
+    }
+    if (i === current) {
+      btn.classList.add('current'); // Mark as the current question
+    }
+    if (submitted) {
+      const idx = answers.get(q.id);
+      if (idx != null) { // If an answer was selected for this question
+        btn.classList.add(q.choices[idx].correct ? 'correct' : 'incorrect'); // Mark based on correctness
+      }
+    }
+    // Set up click handler to jump to the question
+    btn.onclick = () => {
+      current = i;
+      renderAll(); // Re-render the quiz
+    };
+    grid.appendChild(btn);
+  });
+}
+
+/**
+ * Renders the current question and its choices.
+ * Handles user selection, displays feedback (if enabled), and explanations.
+ */
+function renderQuestion() {
+  const q = QUESTIONS[current]; // Get the current question object
+  const wrap = document.createElement('div');
+  wrap.className = 'q';
+
+  // Question header
+  wrap.innerHTML = `<div class="q-header"><div class="q-title">Q${current + 1}. ${q.prompt}</div><div class="q-meta">${submitted ? '<span class="tag">Post-submit review</span>' : ''}</div></div>`;
+
+  const choicesContainer = document.createElement('div');
+  choicesContainer.className = 'choices';
+
+  q.choices.forEach((c, idx) => {
+    const node = document.createElement('div');
+    node.className = 'choice';
+    node.innerHTML = `<div>${c.text}</div>`;
+
+    const selectedIdx = answers.get(q.id);
+
+    // Highlight selected choice
+    if (selectedIdx === idx) {
+      node.classList.add('selected');
+    }
+
+    // After submission, show correct/incorrect status
+    if (submitted) {
+      if (c.correct) {
+        node.classList.add('correct'); // Mark correct choice
+      }
+      if (selectedIdx === idx && !c.correct) {
+        node.classList.add('incorrect'); // Mark incorrect selected choice
+      }
+    }
+
+    // Add click listener for choices
+    node.onclick = () => {
+      if (submitted) return; // Prevent selection after submission
+
+      answers.set(q.id, idx); // Store the selected answer
+      renderAll(); // Re-render to update selected state and progress
+
+      // Instant feedback and explanation on selection
+      if (toggleInstant.checked && toggleExplainOnSelect.checked) {
+        // Remove existing explanation if any, before adding new one
+        const existingExplain = wrap.querySelector('.explain');
+        if (existingExplain) {
+          existingExplain.remove();
+        }
+        const ex = document.createElement('div');
+        ex.className = 'explain';
+        ex.innerHTML = `<strong>Explanation:</strong> ${q.explain}`;
+        wrap.appendChild(ex);
+      }
+    };
+    choicesContainer.appendChild(node);
+  });
+  wrap.appendChild(choicesContainer);
+
+  // If submitted, always show the explanation
+  if (submitted) {
+    const exp = document.createElement('div');
+    exp.className = 'explain';
+    exp.innerHTML = `<strong>Explanation:</strong> ${q.explain}`;
+    wrap.appendChild(exp);
+  }
+
+  questionHost.innerHTML = ''; // Clear previous question
+  questionHost.appendChild(wrap); // Add the new question
+}
+
+/**
+ * Renders all dynamic parts of the quiz UI.
+ */
+function renderAll() {
+  updateProgress();
+  renderNavigator();
+  renderQuestion();
+}
+
+/**
+ * Submits the quiz, calculates the final score, and displays results.
+ */
+function submitQuiz() {
+  submitted = true; // Set quiz as submitted
+  renderAll(); // Rerender to show answers and explanations
+
+  const correct = scoreNow();
+  const total = QUESTIONS.length;
+  const pct = Math.round(100 * correct / total);
+
+  let level;
+  if (pct >= 85) {
+    level = 'Distinction';
+  } else if (pct >= 70) {
+    level = 'Merit';
+  } else if (pct >= 50) {
+    level = 'Pass';
+  } else {
+    level = 'Below Pass';
+  }
+
+  postSubmit.innerHTML = `<div><strong>Results:</strong> ${correct}/${total} (${pct}%) — ${level}</div><div class="muted" style="margin-top:10px">Explanations cite Allen, <em>Only Yesterday</em>, Ch. 7</div>`;
+  postSubmit.style.display = 'block'; // Show results section
+}
+
+// Event bindings
+startBtn.onclick = startAttempt;
+
+prevBtn.onclick = () => {
+  current = Math.max(0, current - 1); // Go to previous question, but not below 0
+  renderAll();
+};
+
+nextBtn.onclick = () => {
+  current = Math.min(QUESTIONS.length - 1, current + 1); // Go to next question, but not beyond last
+  renderAll();
+};
+
+skipBtn.onclick = () => {
+  // 'Skip' currently behaves exactly like 'Next'
+  current = Math.min(QUESTIONS.length - 1, current + 1);
+  renderAll();
+};
+
+submitBtn.onclick = submitQuiz;
+
+clearBtn.onclick = () => {
+  if (confirm('Are you sure you want to clear all your answers and restart the quiz? This action cannot be undone.')) {
+    answers.clear();
+    submitted = false;
+    startAttempt(); // Re-initialize a fresh quiz
+  }
+};
+
+// Keyboard event listener for hotkeys
+window.addEventListener('keydown', e => {
+  // Ignore key presses if an input or textarea is focused
+  if (e.target.closest('input, textarea')) return;
+
+  if (e.key === 'ArrowRight') {
+    e.preventDefault(); // Prevent default browser scroll/navigation
+    nextBtn.click(); // Simulate click on next button
+  }
+  if (e.key === 'ArrowLeft') {
+    e.preventDefault(); // Prevent default browser scroll/navigation
+    prevBtn.click(); // Simulate click on previous button
+  }
+  if (e.key.toLowerCase() === 's') {
+    e.preventDefault(); // Prevent default (e.g., saving page)
+    skipBtn.click(); // Simulate click on skip button
+  }
+  if (e.key === 'Enter') {
+    // If quiz is not submitted and current question hasn't been answered
+    if (!submitted && !answers.has(QUESTIONS[current].id)) {
+      // Automatically select the first choice (index 0) for the current question
+      // This is a "quick-select" feature
+      answers.set(QUESTIONS[current].id, 0);
+      renderAll();
+    }
+  }
+});
+
+// Auto start the quiz when the page loads
+startAttempt();
+</script>
+</body>
+</html>

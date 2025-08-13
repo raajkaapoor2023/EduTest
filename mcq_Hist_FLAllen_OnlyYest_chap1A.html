@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Only Yesterday – Chapter I Quiz</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background: #f7f7f9;
+      margin: 0;
+      padding: 2em;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    .quiz-container {
+      max-width: 800px;
+      margin: auto;
+      background: #ffffff;
+      padding: 2em;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .question-block {
+      margin-bottom: 2em;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 0.5em;
+    }
+    label {
+      display: block;
+      margin: 0.25em 0;
+      cursor: pointer;
+    }
+    button {
+      padding: 1em 2em;
+      background: #2980b9;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      display: block;
+      margin: 2em auto;
+    }
+    #results {
+      font-size: 1.1em;
+      text-align: center;
+      padding: 1em;
+      background-color: #ecf0f1;
+      border-radius: 8px;
+      margin-top: 2em;
+    }
+    .references {
+      margin-top: 2em;
+      font-size: 0.9em;
+      color: #555;
+      background-color: #f9f9f9;
+      padding: 1em;
+      border-left: 5px solid #3498db;
+    }
+  </style>
+</head>
+<body>
+  <h1>“Prelude: May 1919” – Final-Level Chapter Quiz</h1>
+  <div class="quiz-container" id="quiz"></div>
+  <button onclick="submitQuiz()">Submit Answers</button>
+  <div id="results"></div>
+  <div class="references" id="references" style="display:none;">
+    <h3>Academic References</h3>
+    <ul>
+      <li>Allen, Frederick Lewis. <i>Only Yesterday: An Informal History of the 1920s</i>. Chapter I: “Prelude: May 1919”.</li>
+      <li>Leuchtenburg, William E. <i>The Perils of Prosperity, 1914–1932</i>. University of Chicago Press, 1958.</li>
+      <li>Fass, Paula S. <i>The Damned and the Beautiful: American Youth in the 1920s</i>. Oxford University Press, 1977.</li>
+    </ul>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "1. What symbolic contrast does Allen use to highlight changes from 1919 to the 1920s?",
+        answers: [
+          "The difference in skirt lengths and women's public behavior",
+          "The evolution of jazz from blues",
+          "The popularity of prohibition over time",
+          "The growing influence of organized labor"
+        ],
+        correct: 0
+      },
+      {
+        question: "2. What does Allen imply about Mrs. Smith’s view of cosmetics in 1919?",
+        answers: [
+          "She was addicted to lipstick and rouge",
+          "She used only minimal powder and found paint inappropriate",
+          "She frequently visited beauty salons",
+          "She followed French beauty trends"
+        ],
+        correct: 1
+      },
+      {
+        question: "3. According to Allen, what key difference existed in newspapers of 1919?",
+        answers: [
+          "They focused exclusively on foreign news",
+          "They were mainly tabloids",
+          "Tabloids like the Daily News had not yet dominated circulation",
+          "They refused to print casualty lists"
+        ],
+        correct: 2
+      },
+      {
+        question: "4. Which emerging cultural icon was only just beginning to gain attention in May 1919?",
+        answers: [
+          "Ty Cobb",
+          "Babe Ruth",
+          "Jack Dempsey",
+          "Al Capone"
+        ],
+        correct: 1
+      },
+      {
+        question: "5. What was the significance of the NC-4 in 1919?",
+        answers: [
+          "It was the first nonstop transatlantic flight",
+          "It was a symbol of military aviation progress",
+          "It marked the first successful staged crossing via Azores",
+          "It represented Lindbergh’s first success"
+        ],
+        correct: 2
+      },
+      {
+        question: "6. What item did Allen cite as a symbol of pre-Prohibition masculinity?",
+        answers: [
+          "Beer steins",
+          "Public bars excluding women",
+          "Flasks and hip bottles",
+          "Jazz clubs"
+        ],
+        correct: 1
+      },
+      {
+        question: "7. What did Mr. Smith’s car in 1919 most likely lack?",
+        answers: [
+          "An ignition system",
+          "A crankshaft",
+          "A self-starter",
+          "A steering wheel"
+        ],
+        correct: 2
+      },
+      {
+        question: "8. How does Allen characterize the public’s understanding of vitamins in 1919?",
+        answers: [
+          "Widespread and scientific",
+          "Minimal to nonexistent",
+          "Mainstream among the elite",
+          "Required in schools"
+        ],
+        correct: 1
+      },
+      {
+        question: "9. What does Allen suggest about radio in 1919?",
+        answers: [
+          "It was well established in public households",
+          "It was popular among women",
+          "Broadcasting had not yet begun",
+          "FM radio was on the rise"
+        ],
+        correct: 2
+      },
+      {
+        question: "10. The postwar economic boom in May 1919 was tempered by:",
+        answers: [
+          "Government austerity",
+          "Socialism",
+          "Uncertainty and labor strikes",
+          "Collapse in steel production"
+        ],
+        correct: 2
+      },
+      {
+        question: "11. What musical trend was emerging at tea dances?",
+        answers: [
+          "Folk tunes",
+          "Baroque orchestras",
+          "Jazz bands",
+          "European marches"
+        ],
+        correct: 2
+      },
+      {
+        question: "12. According to Allen, how did society view short-haired women in 1919?",
+        answers: [
+          "As fashion leaders",
+          "As bohemians or radicals",
+          "As elite debutantes",
+          "As wives of soldiers"
+        ],
+        correct: 1
+      },
+      {
+        question: "13. What represented the 'Zeitgeist' of the postwar age, according to William Bolitho?",
+        answers: [
+          "The Charleston",
+          "Short skirts",
+          "Jazz music",
+          "The suffragist march"
+        ],
+        correct: 2
+      },
+      {
+        question: "14. Which major entertainment medium did not exist yet in 1919 homes?",
+        answers: [
+          "Radio broadcasting",
+          "Vaudeville",
+          "Silent cinema",
+          "Phonographs"
+        ],
+        correct: 0
+      },
+      {
+        question: "15. What was the general public's view of prohibition in 1919?",
+        answers: [
+          "Widely opposed",
+          "Met with indifference",
+          "Unanimously resisted",
+          "Broadly accepted and moralized"
+        ],
+        correct: 3
+      },
+      {
+        question: "16. What symbol of postwar patriotism and gratitude does Allen describe?",
+        answers: [
+          "Armistice Day",
+          "Confetti-filled parades for returning troops",
+          "Prohibition rallies",
+          "The signing of the Treaty of Versailles"
+        ],
+        correct: 1
+      },
+      {
+        question: "17. What role did price inflation play in middle-class life according to the Smiths’ breakfast discussion?",
+        answers: [
+          "They benefitted from it",
+          "They were unaware of it",
+          "It pressured fixed-income families",
+          "It was offset by tax cuts"
+        ],
+        correct: 2
+      },
+      {
+        question: "18. Why did the stock market of 1919 begin to worry financiers?",
+        answers: [
+          "Lack of regulation",
+          "Volume overload and speculative frenzy",
+          "Foreign intervention",
+          "Bank failures"
+        ],
+        correct: 1
+      },
+      {
+        question: "19. Allen uses the Smiths’ day to...",
+        answers: [
+          "Argue for a return to 1919 values",
+          "Emphasize nostalgia for traditionalism",
+          "Create a time capsule of social change",
+          "Critique consumer capitalism"
+        ],
+        correct: 2
+      },
+      {
+        question: "20. Allen’s method of recounting May 1919 reflects what kind of historiography?",
+        answers: [
+          "Traditional diplomatic history",
+          "Macro-economic analysis",
+          "Microhistorical and cultural focus",
+          "Marxist revisionism"
+        ],
+        correct: 2
+      }
+    ];
+
+    function submitQuiz() {
+      let score = 0;
+      const quizDiv = document.getElementById('quiz');
+      const resultsDiv = document.getElementById('results');
+      const refsDiv = document.getElementById('references');
+
+      questions.forEach((q, i) => {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (selected && parseInt(selected.value) === q.correct) {
+          score++;
+        }
+      });
+
+      resultsDiv.innerHTML = `<strong>Your score: ${score} / ${questions.length}</strong><br/>
+        ${score >= 16 ? "🎓 Excellent mastery — Oxbridge level!" : score >= 12 ? "👍 Solid grasp — well done." : "📘 Consider reviewing the chapter again."}`;
+
+      refsDiv.style.display = 'block';
+    }
+
+    // Render questions
+    const quizDiv = document.getElementById('quiz');
+    questions.forEach((q, i) => {
+      const qBlock = document.createElement('div');
+      qBlock.className = 'question-block';
+      qBlock.innerHTML = `<div class="question">${q.question}</div>` + 
+        q.answers.map((a, j) =>
+          `<label><input type="radio" name="q${i}" value="${j}"> ${a}</label>`
+        ).join('');
+      quizDiv.appendChild(qBlock);
+    });
+  </script>
+</body>
+</html>

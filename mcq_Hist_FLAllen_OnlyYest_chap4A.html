@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Allen – Chapter 4: America Convalescent Quiz</title>
+<style>
+body {font-family:'Georgia',serif;background:linear-gradient(135deg,#f4f7fa,#d3ddec);
+margin:0;padding:0;display:flex;justify-content:center;align-items:flex-start;
+min-height:100vh;padding:30px 12px;color:#2c3e50}
+#quiz-container{background:white;border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,0.07);
+max-width:880px;width:100%;padding:35px 40px}
+h1{text-align:center;color:#1b263b;margin-bottom:25px;font-size:2rem}
+#question-number{font-weight:700;margin-bottom:10px}
+#question-text{font-size:1.15rem;margin-bottom:20px}
+ul.options{list-style:none;padding:0;margin-bottom:25px}
+li.option{background:#d6e9f8;padding:12px 18px;border-radius:12px;margin-bottom:12px;
+cursor:pointer;border:2px solid transparent;transition:0.25s}
+li.option:hover{background-color:#1abc9c;color:#fff}
+li.option.selected{background-color:#16a085;color:#fff}
+#controls-row{display:flex;gap:10px}
+#next-btn,#skip-btn{flex:1;padding:14px 0;font-size:1.1rem;border:none;border-radius:12px;color:white;cursor:pointer}
+#next-btn{background:#1abc9c}
+#skip-btn{background:#95a5a6}
+#next-btn:disabled,#skip-btn:disabled{background:#bdc3c7;cursor:default}
+#result-container{display:none;max-height:500px;overflow-y:auto}
+#score{text-align:center;font-size:1.8rem;font-weight:bold;margin:10px 0}
+#feedback-text{text-align:center;margin-bottom:20px}
+#detailed-answers section{border-top:1px solid #ccc;padding-top:10px;margin-top:15px}
+#play-again-btn{margin-top:20px;width:100%;padding:14px 0;font-size:1.1rem;
+border:none;background-color:#16a085;color:white;border-radius:12px;cursor:pointer}
+</style>
+</head>
+<body>
+<div id="quiz-container">
+<h1>Chapter 4: America Convalescent – Quiz</h1>
+<div id="quiz-content">
+<div id="question-number"></div>
+<div id="question-text"></div>
+<ul class="options" id="options-list"></ul>
+<div id="controls-row">
+<button id="skip-btn">Skip</button>
+<button id="next-btn" disabled>Next</button>
+</div>
+</div>
+<div id="result-container">
+<div id="score"></div>
+<div id="feedback-text"></div>
+<div id="detailed-answers"></div>
+<button id="play-again-btn">Retake Quiz</button>
+</div>
+</div>
+<script>
+const questions = [
+{question:"What key factor marked the decline of the Big Red Scare by 1921?",options:["Sharp rise in radical activity","Localization of communism in Europe and ebbing US radicalism","Resurgence of anarchist bombings","Wilson’s League of Nations success"],answer:1,explanation:`Allen notes American fears eased as communism seemed contained to Europe and US radicalism ebbed (Allen, Ch.4).`},
+{question:"Which major new technology began reshaping American leisure after 1920?",options:["Television","Radio broadcasting","Home video","Internet"],answer:1,explanation:`The advent of commercial radio broadcasting in Nov 1920 transformed entertainment and communication (Allen, Ch.4).`},
+{question:"KDKA’s first broadcast on Nov 2, 1920 announced:",options:["Jack Dempsey fight","Harding–Cox election results","Prohibition repeal","Lindbergh’s flight"],answer:1,explanation:`KDKA began by broadcasting Harding–Cox presidential election returns (Allen, Ch.4).`},
+{question:"What sporting event in July 1921 drew 75,000 spectators and $1.5 million gate?",options:["Yankees World Series","Dempsey–Carpentier fight","Man o’ War’s race","Rutgers–Princeton football"],answer:1,explanation:`Jack Dempsey vs Georges Carpentier was the first ‘million-dollar gate’ fight (Allen, Ch.4).`},
+{question:"The 1921 Atlantic City pageant contributed to:",options:["Return of long skirts","Rise of national beauty contests","Decline of seaside tourism","End of jazz"],answer:1,explanation:`The first pageant popularized national beauty contests and skintight suits (Allen, Ch.4).`},
+{question:"Tabloids' rising popularity in the early 1920s coincided with:",options:["Increased radical agitation","Decline in class-consciousness","Drop in sports attendance","Ban on cinema"],answer:1,explanation:`Tabloids shifted focus to sport, crime, sex – eroding working-class class-consciousness (Allen, Ch.4).`},
+{question:"What Chinese game became a US craze by 1923?",options:["Go","Mah Jong","Pai Gow","Xiangqi"],answer:1,explanation:`Mah Jong’s fad swept the US with imported and domestic sets (Allen, Ch.4).`},
+{question:"Emil Coué preached:",options:["Temperance","Birth control","Autos for all","Auto-suggestion to improve life"],answer:3,explanation:`Coué taught self-affirmations like “Every day in every way …” (Allen, Ch.4).`},
+{question:"Which 1923 discovery sparked Egyptian-themed fashions?",options:["Rosetta Stone","King Tut’s tomb","Pyramids","Nefertiti bust"],answer:1,explanation:`Howard Carter’s finding of Tutankhamen's tomb inspired an Egyptian craze (Allen, Ch.4).`},
+{question:"'Yes, We Have No Bananas' is:",options:["A political slogan","A 1923 novelty song","A radio station motto","A film title"],answer:1,explanation:`This novelty song became a 1923 US pop culture phenomenon (Allen, Ch.4).`},
+{question:"Which 1920 case became a cause célèbre with global protests?",options:["Scopes Trial","Sacco and Vanzetti","Teapot Dome","Black Sox"],answer:1,explanation:`Italian anarchists Sacco and Vanzetti’s 7-year ordeal drew worldwide attention (Allen, Ch.4).`},
+{question:"Why did Sacco and Vanzetti’s case resonate with many?",options:["They were celebrities","Their demeanor and doubts over guilt","Evidence of foreign plots","Immediate acquittal"],answer:1,explanation:`Vanzetti’s character and doubts over guilt stirred sympathy (Allen, Ch.4).`},
+{question:"What fashion change became emblematic of 1920s women’s freedom?",options:["Long skirts","Floor-length dresses","Short skirts to the knee","Bustles"],answer:2,explanation:`Skirts rose to knee-length, symbolizing a new feminine ideal (Allen, Ch.4).`},
+{question:"Shorter skirts were accompanied by:",options:["More petticoats","Less clothing layers & silk/rayon fabrics","Heavier corsets","Return of bustles"],answer:1,explanation:`Women shed layers; silk/rayon replaced cotton; corsets declined (Allen, Ch.4).`},
+{question:"What hairstyle became almost universal among younger women mid-decade?",options:["Chignon","Bobbed hair","Beehive","Finger waves"],answer:1,explanation:`The bob (often shingled) spread widely, including older women (Allen, Ch.4).`},
+{question:"Which industry boomed alongside new fashion and beauty norms?",options:["Typewriters","Beauty culture/cosmetics","Horse carriages","Candles"],answer:1,explanation:`Cosmetics & beauty shops grew rapidly, becoming mainstream (Allen, Ch.4).`},
+{question:"Women’s cigarette smoking in the 1920s:",options:["Remained taboo everywhere","Expanded in public/social settings","Declined sharply","Was banned nationwide"],answer:1,explanation:`Smoking spread among women in restaurants, parties, clubs (Allen, Ch.4).`},
+{question:"Prohibition’s unintended effect on mixed socializing:",options:["Reduced women’s public presence","Introduced women to speakeasies/drinking with men","Stopped all alcohol consumption","Revived all-male saloons"],answer:1,explanation:`Speakeasies encouraged mixed-sex drinking, a major social shift (Allen, Ch.4).`},
+{question:"Closed automobiles facilitated:",options:["Church attendance","Private social/sexual freedom","Decline of dating","Fewer traffic laws"],answer:1,explanation:`Closed cars served as mobile private spaces for youth (Allen, Ch.4).`},
+{question:"Sex & confession magazines prospered by:",options:["Avoiding romance","Moralizing endings while detailing missteps","Printing only news","Selling political manifestos"],answer:1,explanation:`Stories stressed missteps yet gave pious endings to skirt censors (Allen, Ch.4).`},
+{question:"Will Hays’ role from 1922 was:",options:["Farm Bloc leader","Movie industry moral overseer","Strike negotiator","Aviator"],answer:1,explanation:`Hays headed Hollywood self-censorship to appease moral critics (Allen, Ch.4).`},
+{question:"Plays like 'What Price Glory?' and novels like 'The Sun Also Rises' signaled:",options:["Return to Victorian modesty","New frankness about sex","Decline of literature","Ban on modern drama"],answer:1,explanation:`They reflected unprecedented openness toward sexual themes (Allen, Ch.4).`},
+{question:"Divorce rates in the 1920s:",options:["Dropped sharply","Remained steady","Increased markedly","Were abolished"],answer:2,explanation:`Divorces rose to 16.5 per 100 marriages by 1928 (Allen, Ch.4).`},
+{question:"Judge Ben Lindsey controversially proposed:",options:["Prohibition repeal","Polygamy","Companionate marriage","No-fault traffic law"],answer:2,explanation:`Lindsey suggested legalizing birth control and easy divorce without children (Allen, Ch.4).`},
+{question:"A key consequence of relaxing old sexual codes was:",options:["Greater universal happiness","Social/sexual obsession & bad manners","Decline in parties","Revival of Victorianism"],answer:1,explanation:`Allen notes widespread sex talk, obsession, and lapse in manners (Ch.4).`},
+{question:"Allen likens manners of the era to:",options:["Greek refinement","Decade of Bad Manners","Golden Age of Etiquette","Puritan austerity"],answer:1,explanation:`He calls the postwar 1920s perhaps the 'Decade of Bad Manners' (Ch.4).`},
+{question:"Despite liberation, many found:",options:["Fulfillment","Emptiness & disillusionment","No social change","Return to strict codes"],answer:1,explanation:`Allen notes disillusionment, unhappiness, loss of old values (Ch.4).`},
+{question:"By decade’s end, some signs appeared of:",options:["Revived Red Scare","Adjustment to new morals","End of Prohibition","Collapse of fashion industry"],answer:1,explanation:`Late 1920s saw better adjustment to freer conventions (Allen, Ch.4).`},
+{question:"Which mix of forces drove the revolution in manners/morals?",options:["Only Prohibition","War disillusionment, women’s independence, Freud, cars, Prohibition, media","Immigration laws alone","Economic Depression"],answer:1,explanation:`Allen lists multiple interacting influences fueling change (Ch.4).`},
+{question:"Allen’s portrayal of the 1920s woman emphasized:",options:["Desire to be maternal","Youthful playmate role with sexual frankness","Business-only image","Withdrawal from public life"],answer:1,explanation:`She sought to allure as a youthful, frank companion, not just a mother (Ch.4).`}
+];
+
+let qOrder=[],current=0,score=0,selected=null,userAns=[],skipped=[];
+const qNum=document.getElementById("question-number"),
+qText=document.getElementById("question-text"),
+optList=document.getElementById("options-list"),
+nextBtn=document.getElementById("next-btn"),
+skipBtn=document.getElementById("skip-btn"),
+quizDiv=document.getElementById("quiz-content"),
+resDiv=document.getElementById("result-container"),
+scoreEl=document.getElementById("score"),
+fbText=document.getElementById("feedback-text"),
+detail=document.getElementById("detailed-answers"),
+playBtn=document.getElementById("play-again-btn");
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function start(){qOrder=shuffle([...Array(questions.length).keys()]);current=0;score=0;userAns=Array(questions.length).fill(null);skipped=[];quizDiv.style.display="block";resDiv.style.display="none";showQ();}
+function showQ(){const qi=qOrder[current],q=questions[qi];qNum.textContent=`Question ${current+1} of ${qOrder.length}`;qText.textContent=q.question;optList.innerHTML="";selected=null;shuffle(q.options.map((t,i)=>({t,i}))).forEach(o=>{const li=document.createElement('li');li.className='option';li.textContent=o.t;li.dataset.i=o.i;li.onclick=()=>{for(let c of optList.children)c.classList.remove('selected');li.classList.add('selected');selected=o.i;nextBtn.disabled=false};optList.appendChild(li)});nextBtn.textContent=(current===qOrder.length-1&&skipped.length===0)?"Finish":"Next";nextBtn.disabled=true;}
+nextBtn.onclick=()=>{userAns[qOrder[current]]=selected;if(selected===questions[qOrder[current]].answer)score++;if(current<qOrder.length-1){current++;showQ();}else if(skipped.length>0){qOrder=[...skipped];skipped=[];current=0;showQ();}else{results();}};
+skipBtn.onclick=()=>{if(!skipped.includes(qOrder[current]))skipped.push(qOrder[current]);current++;if(current>=qOrder.length&&skipped.length>0){qOrder=[...skipped];skipped=[];current=0;}if(current<qOrder.length)showQ();else results();};
+function results(){quizDiv.style.display="none";resDiv.style.display="block";scoreEl.textContent=`Your Score: ${score}/${questions.length}`;let pct=(score/questions.length)*100;fbText.textContent=(pct>=85)?"Excellent!":(pct>=60)?"Good job!":"Review the material.";detail.innerHTML="";questions.forEach((q,idx)=>{const sec=document.createElement('section');sec.innerHTML=`<h3>Q${idx+1}: ${q.question}</h3>
+<p>Your answer: <strong>${userAns[idx]!==null?q.options[userAns[idx]]:'No answer'}</strong> ${userAns[idx]===q.answer?'✅':'❌'}</p>
+${userAns[idx]!==q.answer?`<p>Correct: <strong>${q.options[q.answer]}</strong></p>`:''}
+<p><em>Explanation:</em> ${q.explanation}</p>`;detail.appendChild(sec);});}
+playBtn.onclick=()=>{start();window.scrollTo(0,0);};
+window.onload=start;
+</script>
+</body>
+</html>

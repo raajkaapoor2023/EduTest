@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chapter 5 Quiz - The Revolution in Manners and Morals</title>
+<style>
+  body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+    margin: 0; padding: 1rem;
+    color: #243b53;
+    min-height: 100vh;
+  }
+  h1, h2 {
+    color: #334e68;
+    text-align: center;
+    margin-top: 0;
+  }
+  .container {
+    max-width: 900px;
+    background-color: #fff;
+    margin: 1rem auto;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  }
+  form > .question {
+    border-left: 6px solid #627d98;
+    background: #f7fafc;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    padding: 1rem 1rem 1rem 1.5rem;
+  }
+  .question h3 {
+    color: #486581;
+    margin-top: 0;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  .answers label {
+    display: block;
+    cursor: pointer;
+    padding: 0.3rem 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.25s ease;
+    user-select: none;
+    margin-bottom: 0.25rem;
+  }
+  .answers label:hover {
+    background-color: #d0e1f9;
+  }
+  input[type="radio"] {
+    margin-right: 0.5rem;
+    accent-color: #3b82f6;
+  }
+  button {
+    display: block;
+    margin: 2rem auto 0;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button:hover:not(:disabled) {
+    background-color: #2563eb;
+  }
+  #results {
+    margin-top: 2rem;
+    background: #e0f2fe;
+    border: 2px solid #38bdf8;
+    border-radius: 10px;
+    color: #084298;
+    padding: 1.5rem;
+    display: none;
+  }
+  .answer-detail {
+    margin-bottom: 1.5rem;
+    background-color: #f0f9ff;
+    padding: 1rem;
+    border-left: 5px solid #3b82f6;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    white-space: pre-line;
+  }
+  @media (max-width: 600px) {
+    .container {
+      padding: 1rem;
+    }
+    button {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container" role="main">
+    <h1>Final B.A. Test:<br/> Chapter 5 – The Revolution in Manners and Morals</h1>
+    <p>Please answer the questions below by choosing the best option. You may skip questions and return later. Detailed academically-referenced answers will appear after submission.</p>
+    <form id="quizForm" autocomplete="off" aria-label="Chapter 5 multiple choice quiz"></form>
+    <button id="submitBtn" type="button">Submit Answers</button>
+    <div id="results" role="region" aria-live="polite"></div>
+  </div>
+
+<script>
+// Full 30-question quiz data with thoughtful options and detailed academic answers referencing Allen's Chapter 5.
+
+const quizData = [
+  {
+    q: "1. How did World War I and its immediate aftermath create a ‘new code’ among the younger generation?",
+    options: [
+      "It reinforced traditional Victorian morals.",
+      "It caused young people to return to conservative values.",
+      "It exposed youth to disillusionment and led to experimentation with personal freedoms.",
+      "It had no impact on youth cultural codes."
+    ],
+    answer: `The war exposed youth to harsh realities and destroyed naive Victorian assumptions. Exposure to loose European sexual mores and postwar disillusionment led to a 'new code' valuing personal freedom and challenging parental/societal authority (Allen, Chapter 5, §2).`
+  },
+  {
+    q: "2. Discuss the role of women’s evolving independence in accelerating the moral revolution of the 1920s.",
+    options: [
+      "Women's independence diminished during the 1920s.",
+      "Political and economic independence allowed women to assert new social freedoms.",
+      "Women maintained traditional roles without change.",
+      "Women rejected new fashions and social behaviors."
+    ],
+    answer: `Women's suffrage in 1920 symbolized equality, but economic independence, lighter household duties, and access to jobs directly empowered women to explore new fashions, behaviors, and sexual identities, confronting old moral codes (Allen, Chapter 5, §§2-3).`
+  },
+  {
+    q: "3. How did technological and societal changes in household management contribute to shifts in women’s status?",
+    options: [
+      "They increased women's household duties.",
+      "They freed women from domestic labor, enabling workforce participation.",
+      "There were no technological changes affecting household work.",
+      "Women were confined to traditional homemaking."
+    ],
+    answer: `Domestic technologies like washing machines and canned foods, plus apartment living, eased housework, freeing women's time and energy for socializing and employment, weakening traditional controls and fostering moral revolution (Allen, Chapter 5, §2).`
+  },
+  {
+    q: "4. Explain the paradox of greater female emancipation coinciding with a rise in fashion trends emphasizing juvenile femininity.",
+    options: [
+      "Women embraced mature and maternal aesthetics exclusively.",
+      "Fashion reverted to Victorian rigidity.",
+      "Despite emancipation, many adopted boyish shapes and short skirts reflecting juvenile allure rather than mature identity.",
+      "Fashions had no connection with female identity."
+    ],
+    answer: `The postwar feminine ideal favored whimsical youthfulness over maturity: boyish forms, bobbed hair, and short skirts rejected traditional womanhood in favor of playful companionship appealing to men (Allen, Chapter 5, §3).`
+  },
+  {
+    q: "5. What effect did Freudian psychoanalysis have on American moral attitudes, and what aspects of the new morality did it justify?",
+    options: [
+      "Freud reinforced Victorian morals.",
+      "It discredited scientific understanding of sex.",
+      "It legitimized sexual expression and questioned inherited moral codes.",
+      "It had no impact on American attitudes."
+    ],
+    answer: `Freudian ideas popularized libido as a central human drive, undermining moralistic sex views, encouraging scientific and liberal perspectives on sexuality that supported 1920s moral change (Allen, Chapter 5, §2).`
+  },
+  {
+    q: "6. How did Prohibition paradoxically influence the social behaviors of men and women?",
+    options: [
+      "It decreased women’s presence in social drinking places.",
+      "It ended all social drinking among youth.",
+      "It led to the rise of mixed-gender speakeasies and blurred traditional gender drinking roles.",
+      "It reinforced classic restrictive gender norms."
+    ],
+    answer: `Although intended to curtail drinking, Prohibition fostered clandestine speakeasies accepting mixed-gender crowds, integrating women into formerly male-dominated public drinking spaces, thus blurring traditional gender roles (Allen, Chapter 5, §§2-3).`
+  },
+  {
+    q: "7. Describe the significance of the automobile in changing courtship practices and moral supervision of youth.",
+    options: [
+      "It had no influence on youth social behaviors.",
+      "It increased parental supervision by facilitating family outings.",
+      "It provided privacy away from parental control, enabling secret meetings and sexual experimentation.",
+      "It was only significant for transportation, not social customs."
+    ],
+    answer: `The closed automobile gave young people private, mobile spaces free from parental oversight, facilitating "petting parties" and less supervised courtships—a major social transformation of the 1920s (Allen, Chapter 5, §2).`
+  },
+  {
+    q: "8. How did sex and confession magazines reflect and reinforce changing sexual norms?",
+    options: [
+      "They maintained Victorian reticence about sex.",
+      "They sensationalized sexual ‘missteps’ and normalized public discussion of sex issues.",
+      "They were banned by most states and had little influence.",
+      "They focused mainly on political news and avoided sexual topics."
+    ],
+    answer: `Sex and confession magazines openly discussed sexual ‘missteps’ with sensational yet moralizing stories, feeding curiosity and normalizing candid sex talk in public culture (Allen, Chapter 5, §2).`
+  },
+  {
+    q: "9. Assess the impact of Hollywood movies and their moral oversight on the revolution in manners and morals.",
+    options: [
+      "Movies strictly enforced old moral codes and discouraged sexual themes.",
+      "Movies avoided controversial themes due to censorship.",
+      "Despite censorship, films often showcased sexual and moral transgressions, influencing public attitudes.",
+      "Films had little audience or cultural impact during the 1920s."
+    ],
+    answer: `Films under Will H. Hays' code still exploited sexual themes and moral conflict, shaping public perceptions and symbolizing cultural tension over new morals (Allen, Chapter 5, §2).`
+  },
+  {
+    q: "10. Why did the 1920s revolution lead to ‘unmannerly’ behavior and erosion of previous social conventions?",
+    options: [
+      "The generation had a stronger commitment to Victorian decorum.",
+      "Older generations rigidly enforced manners.",
+      "The social upheaval created a vacuum in social norms, causing rude or chaotic behaviors.",
+      "No change in manners occurred during the 1920s."
+    ],
+    answer: `The collapse of strict Victorian norms left a void in social regulation, resulting in temporary informal, even rude behaviors as new conventions had yet to settle (Allen, Chapter 5, §4).`
+  },
+  {
+    q: "11. How did changes in language and conversation styles during the 1920s reflect broader social changes?",
+    options: [
+      "Language became more formal and elaborate.",
+      "Profanity and slang increased as part of social defiance and breaking taboos.",
+      "People spoke less openly about controversial topics.",
+      "Conversations reflected traditional Victorian restraint."
+    ],
+    answer: `Increased use of slang, profanity, and frank sex talk broke Victorian propriety, reflecting cultural embrace of realism, informality, and defiance of old taboos (Allen, Chapter 5, §4).`
+  },
+  {
+    q: "12. Discuss the decline of traditional Victorian and Puritan values in the context of the decade’s social transformations.",
+    options: [
+      "Such values remained strong and unchallenged.",
+      "They became ridiculed and increasingly outdated due to war and scientific skepticism.",
+      "They were only challenged in rural areas.",
+      "They were reinforced by religious institutions."
+    ],
+    answer: `Postwar disillusionment, modernization, and popular science undermined Victorian and Puritan values, which became widely seen as outdated and ridiculed in urban and youth culture (Allen, Chapter 5, §§2, 4).`
+  },
+  {
+    q: "13. Analyze how the revolution in sexual attitudes affected marriage and divorce rates during the decade.",
+    options: [
+      "Marriage became more idealized and divorce declined.",
+      "Divorce rates rose, with increased social acceptance and pragmatic views on marriage.",
+      "Marriages became rarer and family life declined.",
+      "There was no significant change in marriage or divorce."
+    ],
+    answer: `Divorce rates increased significantly (from 8.8% in 1910 to 16.5% in 1928), divorces became less stigmatized, and attitudes shifted away from romantic idealization toward pragmatism (Allen, Chapter 5, §4).`
+  },
+  {
+    q: "14. What societal tensions arose from the disparity between older values and the younger generation’s new freedoms?",
+    options: [
+      "Generations united in defense of tradition.",
+      "Generational conflict caused family strife, confusion, and social anxieties.",
+      "Older generations quickly adapted to new norms.",
+      "There was little awareness of the cultural gap."
+    ],
+    answer: `Conflict arose as older generations struggled to accept frank sexual openness, while youth rejected traditional moral codes, causing familial tension and broader social unease (Allen, Chapter 5, §4).`
+  },
+  {
+    q: "15. Explore how changes in fashion, specifically skirt lengths and cosmetic use, symbolized larger changes in female identity and agency.",
+    options: [
+      "Shorter skirts and cosmetics represented female autonomy, sexuality, and rejection of old constraints.",
+      "Fashion became more conservative in the 1920s.",
+      "Women avoided cosmetics due to social stigma.",
+      "Fashion changes had no social significance."
+    ],
+    answer: `Shorter skirts, boyish silhouettes, and widespread cosmetic use symbolized women's newfound autonomy, sexual assertiveness, and rejection of restrictive Victorian ideals (Allen, Chapter 5, §3).`
+  },
+  {
+    q: "16. Evaluate the role of the “flapper” as both a social icon and a symbol of moral change.",
+    options: [
+      "A symbol of female submission and traditional values.",
+      "A youth culture icon embodying sexual liberation, independence, and social rebellion.",
+      "A fashion fad with no impact on society.",
+      "A political movement for women's rights."
+    ],
+    answer: `The flapper represented youthful rebellion, sexual openness, and shifting gender roles—challenging authority and embodying the 1920s moral revolution (Allen, Chapter 5, §3).`
+  },
+  {
+    q: "17. How did legislative attempts to regulate dress and behavior illustrate the cultural clash of the 1920s?",
+    options: [
+      "Such laws were widely accepted and enforced.",
+      "They reflected conservative resistance to youth and urban modernism.",
+      "Legislation had no cultural significance.",
+      "Reformers supported unrestricted dress freedoms."
+    ],
+    answer: `Bills limiting skirt lengths and regulating dress showed rural and conservative pushback against urban youth culture and its loosening morals (Allen, Chapter 5, §3).`
+  },
+  {
+    q: "18. Examine the contradictory attitudes toward female smoking and drinking during the decade.",
+    options: [
+      "Women universally rejected smoking and drinking.",
+      "Women’s smoking and drinking grew despite persistent social disapproval and taboo.",
+      "No tension existed over these behaviors.",
+      "Smoking was encouraged, drinking was forbidden."
+    ],
+    answer: `While disapproved by many, women increasingly smoked and drank openly (especially in speakeasies), revealing growing but conflicted social norms (Allen, Chapter 5, §4).`
+  },
+  {
+    q: "19. What was the importance of mixed-gender social drinking on the erosion of previous gender norms?",
+    options: [
+      "It reinforced strict gender segregation.",
+      "It broke down male-only drinking culture and promoted social equality and informality.",
+      "No mixed social drinking took place.",
+      "It was condemned without exception."
+    ],
+    answer: `Mixed social drinking in speakeasies and cocktail parties symbolized erosion of separate gender spheres and advanced moral relaxation (Allen, Chapter 5, §4).`
+  },
+  {
+    q: "20. Discuss the impact of the “petting party” phenomenon on perceptions of youth morality.",
+    options: [
+      "Petting parties reinforced traditional courtship values.",
+      "They alarmed parents and moralists as evidence of sexual permissiveness.",
+      "They were largely ignored.",
+      "They were restricted to adult social circles."
+    ],
+    answer: `Petting parties normalized physical intimacy outside marriage and triggered widespread anxiety about deteriorating youth morals (Allen, Chapter 5, §4).`
+  },
+  {
+    q: "21. How did popular literature of the time expose or challenge traditional sexual morals?",
+    options: [
+      "Literature avoided sexual themes.",
+      "Works like Fitzgerald's *This Side of Paradise* openly depicted youthful sexual freedom and disillusionment.",
+      "Books reinforced Victorian chastity codes.",
+      "Literature was censored into innocence."
+    ],
+    answer: `Novels such as Fitzgerald’s *This Side of Paradise* revealed frank sexual realities, confronting and challenging traditional sexual ethics (Allen, Chapter 5, §4).`
+  },
+  {
+    q: "22. Explain the phenomenon of the 'obsession with sex' in public conversation and culture during the 1920s.",
+    options: [
+      "Sex remained a taboo topic in public.",
+      "Sex dominated public discourse as old reticence collapsed and new moral guidance was absent.",
+      "Sex was discussed only in private.",
+      "Discussion declined due to censorship."
+    ],
+    answer: `Public and private conversations frequently fixated on sex, reflecting a cultural vacuum of moral clarity and a loosening of previous taboos (Allen, Chapter 5, §4).`
+  },
+  {
+    q: "23. Despite increased freedoms, why did the moral revolution cause disillusionment and unhappiness?",
+    options: [
+      "New freedoms brought instant satisfaction and happiness.",
+      "Loss of old values without replacement led to emotional emptiness and social confusion.",
+      "There was no disillusionment.",
+      "People quickly adapted with new moral certainty."
+    ],
+    answer: `The collapse of established moral frameworks left many emotionally hollow, with the pursuit of sex alone yielding only fleeting pleasure (Allen, Chapter 5, §4).`
+  },
+  {
+    q: "24. How did the new moral code try to reconcile personal freedom with honesty and honor?",
+    options: [
+      "By rigidly enforcing Victorian virtues.",
+      "By advocating frankness about sexual conduct though often with contradictory results.",
+      "By rejecting all notions of honor.",
+      "By denying personal freedom."
+    ],
+    answer: `Some advocated honesty as a new foundation for conduct, but this 'low' standard lacked emotional satisfaction, illustrating contradictions of the evolving moral landscape (Allen, Chapter 5, §4).`
+  },
+  {
+    q: "25. What impact did women's job participation have on 1920s social dynamics?",
+    options: [
+      "It reinforced traditional male dominance.",
+      "It softened patriarchal control and blurred gender roles, promoting social transformation.",
+      "Women remained unemployed.",
+      "Job participation was isolated from social changes."
+    ],
+    answer: `Increased employment empowered women economically and socially, weakening traditional patriarchal authority and fostering broader social shifts (Allen, Chapter 5, §3).`
+  },
+  {
+    q: "26. Analyze the link between women's fashion changes and consumer culture in the 1920s.",
+    options: [
+      "Fashion was unaffected by consumerism.",
+      "Beauty industry profited from trends like shorter skirts and cosmetics, shaping modern femininity.",
+      "Women rejected consumer products.",
+      "Consumer culture declined."
+    ],
+    answer: `The rise of beauty shops, cosmetics sales, and mass-marketed fashions reflected and shaped women's identity in emerging consumer culture (Allen, Chapter 5, §3).`
+  },
+  {
+    q: "27. What did the ‘boyish’ silhouette and short haircuts signify for women?",
+    options: [
+      "Compliance with feminine passivity.",
+      "Rebellion against gender conventions and embrace of mobility and modernity.",
+      "Loss of female identity.",
+      "No social significance."
+    ],
+    answer: `Boyish looks and bobbed hair symbolized rejection of traditional domestic femininity and assertion of modern freedom (Allen, Chapter 5, §3).`
+  },
+  {
+    q: "28. How did changes in morality challenge religious authority and traditional moral education?",
+    options: [
+      "Religious authority was strengthened.",
+      "Scientific skepticism and psychoanalysis undercut literal religious teachings, fueling the Fundamentalist-Modernist divide.",
+      "Religion was unaffected by moral changes.",
+      "Churches uniformly supported modern morals."
+    ],
+    answer: `Scientific advances and psychoanalysis weakened religious literalism, provoking major conflicts like the Scopes Trial and challenging moral education (Allen, Chapter 5, §5).`
+  },
+  {
+    q: "29. How did class and geography influence diversity in 1920s moral attitudes?",
+    options: [
+      "Moral attitudes were uniform across classes and regions.",
+      "Urban middle/upper classes led liberal change; rural and religious regions often resisted with conservative values.",
+      "Rural regions were more liberal than cities.",
+      "Class had no effect on morals."
+    ],
+    answer: `Urban elites embraced modern morality and consumerism, while rural and religious communities maintained conservative attitudes, causing cultural friction (Allen, Chapter 5, §5).`
+  },
+  {
+    q: "30. What were the long-term historical implications of the 1920s revolution in manners and morals for American society?",
+    options: [
+      "It reinforced Victorian morality and religious authority.",
+      "It had no lasting impact.",
+      "It weakened Victorian morality and religion, paving way for cultural liberalization and modern conflicts.",
+      "It ended all discussions of morality."
+    ],
+    answer: `The decade’s revolution fundamentally reshaped American social norms on gender, sexuality, and consumption, undermining Victorian and religious authority and setting the stage for later cultural evolution and conflicts (Allen, Chapter 5, Conclusion).`
+  }
+];
+
+// If you want, I can provide all questions here but for brevity, above are the full 30 entries.
+
+const form = document.getElementById('quizForm');
+const submitBtn = document.getElementById('submitBtn');
+const resultsDiv = document.getElementById('results');
+
+// Create quiz UI dynamically
+quizData.forEach((item, idx) => {
+  const qDiv = document.createElement('div');
+  qDiv.className = 'question';
+
+  const qTitle = document.createElement('h3');
+  qTitle.textContent = `Q${idx+1}. ${item.q}`;
+  qTitle.id = `q${idx}_label`;
+  qDiv.appendChild(qTitle);
+
+  const aDiv = document.createElement('div');
+  aDiv.className = 'answers';
+  aDiv.setAttribute('role', 'radiogroup');
+  aDiv.setAttribute('aria-labelledby', qTitle.id);
+
+  item.options.forEach((opt, i) => {
+    const optionId = `q${idx}_opt${i}`;
+    const label = document.createElement('label');
+    label.setAttribute('for', optionId);
+    label.textContent = opt;
+
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${idx}`;
+    radio.id = optionId;
+    radio.value = i;
+
+    label.prepend(radio);
+    aDiv.appendChild(label);
+  });
+
+  qDiv.appendChild(aDiv);
+  form.appendChild(qDiv);
+});
+
+// Show detailed answers after submit
+submitBtn.addEventListener('click', () => {
+  submitBtn.disabled = true;
+  resultsDiv.innerHTML = '<h2>Detailed Answers & Explanations</h2>';
+
+  quizData.forEach((item, idx) => {
+    const ansDiv = document.createElement('div');
+    ansDiv.className = 'answer-detail';
+    ansDiv.innerHTML = `<strong>Q${idx+1} Answer:</strong> ${item.answer}`;
+    resultsDiv.appendChild(ansDiv);
+  });
+
+  resultsDiv.style.display = 'block';
+  resultsDiv.scrollIntoView({behavior: 'smooth'});
+});
+</script>
+</body>
+</html>

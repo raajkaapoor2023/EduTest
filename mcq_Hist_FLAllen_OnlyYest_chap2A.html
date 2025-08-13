@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Allen, Only Yesterday: Back to Normalcy Quiz</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background: linear-gradient(135deg, #f3f6f8, #b3c6e6);
+      margin: 0; padding: 0;
+      display: flex; justify-content: center; align-items: flex-start;
+      min-height: 100vh;
+      padding: 32px 6px;
+      color: #2c3e50;
+    }
+    #quiz-container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      max-width: 875px;
+      width: 100%;
+      padding: 40px 48px 40px 48px;
+    }
+    h1 {
+      text-align: center;
+      font-weight: 700;
+      color: #1b263b;
+      margin-bottom: 35px;
+      font-size: 2.2rem;
+    }
+    #question-number {
+      font-size: 1.23rem;
+      font-weight: 700;
+      color: #34495e;
+      margin-bottom: 11px;
+    }
+    #question-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 22px;
+      line-height: 1.45;
+      letter-spacing: 0.01em;
+    }
+    ul.options {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 30px;
+    }
+    li.option {
+      background: #d6e9f8;
+      padding: 15px 21px;
+      border-radius: 13px;
+      margin-bottom: 16px;
+      cursor: pointer;
+      font-size: 1.07rem;
+      border: 2px solid transparent;
+      color: #25415c;
+      transition: background-color 0.23s, border-color 0.23s, color 0.23s;
+      user-select: none;
+    }
+    li.option:hover {
+      background-color: #19817a;
+      color: white;
+      border-color: #0b504b;
+    }
+    li.option.selected {
+      background-color: #16a085;
+      border-color: #138d75;
+      color: #fff;
+    }
+    #controls-row {
+      display: flex; gap: 12px;
+      margin-bottom: 7px;
+    }
+    #next-btn, #skip-btn {
+      flex: 1;
+      padding: 15px 0;
+      font-size: 1.29rem;
+      border: none;
+      border-radius: 12px;
+      background-color: #1abc9c;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 5px 12px rgba(26, 188, 156, 0.15);
+      transition: background-color 0.3s;
+    }
+    #skip-btn {
+      background: #b4bbc3;
+      color: #223049;
+      font-weight: 500;
+    }
+    #skip-btn:disabled {
+      background: #e1e4e8;
+      color: #aaa;
+    }
+    #next-btn:disabled {
+      background-color: #a2d5c6;
+      color: #fff;
+      box-shadow: none;
+      cursor: default;
+    }
+
+    #result-container {
+      max-height: 520px;
+      overflow-y: auto;
+      display: none;
+      margin-top: 3px;
+    }
+    #score {
+      font-size: 2rem;
+      font-weight: 800;
+      text-align: center;
+      color: #27ae60;
+      margin-bottom: 12px;
+    }
+    #feedback-text {
+      text-align: center;
+      font-size: 1.15rem;
+      margin-bottom: 26px;
+      font-style: italic;
+    }
+    #detailed-answers section {
+      border-top: 2px solid #1abc9c;
+      margin-bottom: 25px;
+      padding-top: 13px;
+      background: #f7fafd;
+      border-radius: 7px;
+    }
+    #detailed-answers h3 {
+      font-weight: 700;
+      color: #117a65;
+      margin-bottom: 7px;
+      font-size: 1.04rem;
+    }
+    #detailed-answers p {
+      color: #384657;
+      font-size: 1.01rem;
+      line-height: 1.41;
+      margin-bottom: 6px;
+    }
+    #play-again-btn {
+      margin-top: 8px;
+      background-color: #16a085;
+      color: white;
+      font-weight: 700;
+      font-size: 1.13rem;
+      padding: 15px 0;
+      border: none;
+      border-radius: 13px;
+      width: 100%;
+      cursor: pointer;
+      box-shadow: 0 5px 13px rgba(22, 160, 133, 0.21);
+      transition: background-color 0.3s;
+    }
+    #play-again-btn:hover {
+      background-color: #138d75;
+    }
+
+    #result-container::-webkit-scrollbar {
+      width: 10px;
+    }
+    #result-container::-webkit-scrollbar-track {
+      background: #ecf0f1;
+    }
+    #result-container::-webkit-scrollbar-thumb {
+      background-color: #16a085;
+      border-radius: 20px;
+      border: 3px solid #ecf0f1;
+    }
+    @media (max-width: 540px) {
+      #quiz-container { padding: 15px 3.5vw 25px 3.5vw; }
+      h1 { font-size: 1.52rem; }
+      #question-text { font-size: 0.97rem; }
+      li.option { font-size: 0.98rem; padding: 10.5px 11px; }
+      #next-btn, #play-again-btn, #skip-btn { font-size: 1.03rem; padding: 12px 0; }
+    }
+  </style>
+</head>
+<body>
+<div id="quiz-container">
+  <h1>Allen, <em>Only Yesterday</em>: "Back to Normalcy" (Ch.2) Quiz</h1>
+  <div id="quiz-content">
+    <div id="question-number"></div>
+    <div id="question-text"></div>
+    <ul class="options" id="options-list"></ul>
+    <div id="controls-row">
+      <button id="skip-btn">Skip</button>
+      <button disabled id="next-btn">Next</button>
+    </div>
+  </div>
+  <div id="result-container">
+    <div id="score"></div>
+    <div id="feedback-text"></div>
+    <div id="detailed-answers"></div>
+    <button id="play-again-btn">Retake Quiz</button>
+  </div>
+</div>
+<script>
+// ========== QUESTIONS DATA ==========
+const questions = [
+{ // 1
+  question: "What was the 'return to normalcy' slogan most closely associated with in the 1920 presidential campaign?",
+  options: [
+    "International activism and progressive reform.",
+    "A desire to return to prewar stability and avoid entanglements, after the trauma and idealism of World War I.",
+    "The expansion of American imperial power overseas.",
+    "A drive to join the League of Nations at any cost."
+  ],
+  answer: 1,
+  explanation: `Harding’s call for “not heroics but healing… not revolution but restoration… not surgery but serenity… not the dramatic but the dispassionate, not experiment but equipoise” [Allen, Ch.2] was a conscious reaction to Wilson’s idealistic activism and the upheaval of the war years.`
+},
+{ // 2
+  question: "According to Allen, what was one core reason for the Republican bosses selecting Harding as their 1920 nominee?",
+  options: [
+    "He was a fiery progressive in the style of Theodore Roosevelt.",
+    "He stood out as a dramatic orator and idealistic statesman.",
+    "He was affable, accessible, non-threatening, and uncontroversial—a 'safe' contrast to Wilson.",
+    "He was an international expert with deep foreign policy experience."
+  ],
+  answer: 2,
+  explanation: `Allen describes Harding as deliberately chosen for being “a commonplace and unpretentious Senator from Ohio… accessible to the last degree. Wilson had been adept at making enemies; Harding hadn’t an enemy in the world.” [Allen, Ch.2]`
+},
+{ // 3
+  question: "What major event punctuated the end of President Wilson’s strength and the effective collapse of his leadership?",
+  options: [
+    "The Boston Police Strike",
+    "His cross-country speaking tour in 1919 culminating in a paralytic stroke",
+    "The passage of the Eighteenth Amendment",
+    "The Washington Naval Conference"
+  ],
+  answer: 1,
+  explanation: `Wilson’s desperate 1919 train tour to rally support for the League of Nations ended abruptly with a collapse—“he was feverish and… next morning when he tried to get up he could hardly stand… a few days later a cerebral thrombosis partially paralyzed his left side” [Allen, Ch.2].`
+},
+{ // 4
+  question: "What immediate effect did the war's end have on the American public's outlook, according to Allen?",
+  options: [
+    "A strengthening of idealistic unity and world engagement.",
+    "A sudden relaxation of idealism, disillusionment, and resentment of further obligations.",
+    "A nationwide rush to join the Socialist Party.",
+    "A renewed push for government expansion."
+  ],
+  answer: 1,
+  explanation: `Allen writes: “The tension of the war was relaxing, the bubble of idealism was pricked…” and “the compulsion for unity was gone; division was taking its place” [Allen, Ch.2].`
+},
+{ // 5
+  question: "Which issue most divided the American public in the two years after the war?",
+  options: [
+    "Whether to intervene in Latin America.",
+    "Prohibition and alcohol enforcement.",
+    "The League of Nations and the Treaty of Versailles.",
+    "The electric power industry."
+  ],
+  answer: 2,
+  explanation: `“The Treaty issue was the most divisive in American political life between 1919–1920, drawing together odd coalitions of ‘irreconcilables,’ Wilson loyalists, ethnic groups, and those simply weary of war” [Allen, Ch.2].`
+},
+{ // 6
+  question: "How did Allen characterize the 1919–20 'Red Scare' and its leaders such as Attorney-General Palmer?",
+  options: [
+    "An overblown panic marked by executive overreach, disregard for civil rights, and lawless 'defense of law and order.'",
+    "A necessary and proportional response to a real revolutionary danger.",
+    "A period of international peace and progressive reform.",
+    "A wave of pacifist activism."
+  ],
+  answer: 0,
+  explanation: `Allen details Palmer’s “country-wide raid upon these dangerous men,” mass arrests, deportations, and a climate of “reign of terror,” calling it “an era of lawless and disorderly defense of law and order” [Allen, Ch.2].`
+},
+{ // 7
+  question: "What were key social consequences of the postwar climate of 'normalcy' and political disengagement in the U.S.?",
+  options: [
+    "Universal public enthusiasm for controversial government investigations.",
+    "Rising conformity, political apathy, and public disinterest in exposing government corruption.",
+    "A sharp upturn in direct democracy and citizen activism.",
+    "An immediate return to Progressive Era reforms."
+  ],
+  answer: 1,
+  explanation: `Allen argues that the desire for “unobtrusive government” led to apathy in the face of scandal: “any relentless investigation of the scandals threatened to disturb the status quo, and disturbance of the status quo was the last thing that… the country at large wanted” [Allen, Ch.2].`
+},
+{ // 8
+  question: "Which factor was *most* responsible, per Allen, for the Tea Pot Dome oil scandal's far-reaching impact?",
+  options: [
+    "Singular personal corruption by President Harding himself.",
+    "A convergence of cronyism, lack of oversight, and a casual culture that tolerated 'practical politics'.",
+    "Congressional refusal to ratify the Treaty of Versailles.",
+    "Effective investigative journalism."
+  ],
+  answer: 1,
+  explanation: `Allen describes a system of casual appointment—gifts of office to cronies—and a culture where “offices were plums,” Harding “handed them out like a benevolent Santa Claus,” and an inability “to distinguish between honesty and rascality” leading to endemic corruption [Allen, Ch.2].`
+},
+{ // 9
+  question: "Allen’s narrative of early 1920s America stresses which main *mood* among ordinary citizens?",
+  options: [
+    "Militant reformism and political engagement.",
+    "Desire for healing, quiet, relaxation, and withdrawal from 'noble' crusades.",
+    "Resurgence of utopian socialism.",
+    "Apathy toward new technologies and consumer trends."
+  ],
+  answer: 1,
+  explanation: `“The nation was spiritually tired. Wearied by the excitements of the war… they hoped for quiet and healing. Sick of Wilson… callous to political idealism, they hoped for a chance to pursue private affairs without governmental interference” [Allen, Ch.2].`
+},
+{ // 10
+  question: "How did the Harding administration's approach differ from Wilson’s, according to Allen?",
+  options: [
+    "Aggressively expanded federal regulation and direct-sponsorship of labor unions.",
+    "Favored non-interference with business and the selection of 'good old friends' for office; an overall hands-off, genial approach.",
+    "Drastically internationalized U.S. foreign policy.",
+    "Launched new social welfare programs."
+  ],
+  answer: 1,
+  explanation: `Harding “looked back with longing eyes to the good old days when the government didn’t bother businessmen with unnecessary regulations…” and was “not only a Senator, but a highly amenable Senator.” [Allen, Ch.2]`
+},
+{ // 11
+  question: "What best describes Allen's analysis of Harding’s personality and decision-making style?",
+  options: [
+    "Sharp-witted, decisive, always personally hands-on with policy details.",
+    "Intellectually vague, heavily reliant on advisers, universally affable, and sentimental in private life.",
+    "Fiery orator, admired for his independent policy innovation.",
+    "Relentless opponent of party machines."
+  ],
+  answer: 1,
+  explanation: `Allen: “His mind was vague and fuzzy… Its quality was revealed in the clogged style of his public addresses… he was utterly dependent upon subordinates…” Harding “wanted to be helpful to neighbors from Marion and neighbors from campaign headquarters and to the whole neighborly American public.” [Allen, Ch.2]`
+},
+{ // 12
+  question: "According to Allen, what was the major *public* reaction when the Harding scandals finally broke?",
+  options: [
+    "Massive outrage and a demand for major policy reforms.",
+    "Greater condemnation for the investigators than for the perpetrators of corruption; public apathy overall.",
+    "Huge public demonstrations demanding Harding’s prosecution.",
+    "Resignation of most Republican leaders."
+  ],
+  answer: 1,
+  explanation: `Allen writes: “the harshest condemnation… was reserved, not for those who had defrauded the government, but for those who insisted on bringing the facts to light… One of the leading super-patriots… said the whole oil scandal was the result of a gigantic international conspiracy…” [Allen, Ch.2]`
+},
+{ // 13
+  question: "The Senate’s rejection of the Treaty of Versailles and the League of Nations was shaped most by:",
+  options: [
+    "Internationalist ideals.",
+    "Bipartisan consensus for global engagement.",
+    "A mix of political opposition, ethnic voting blocs, and public weariness of European entanglements.",
+    "Narrow legal disputes over wording."
+  ],
+  answer: 2,
+  explanation: `Allen: “There were hard-shelled tories like Brandegee; there were Western idealists like Borah, chronic dissenters… ethnic opposition… and vast public apathy to European problems.” [Allen, Ch.2]`
+},
+{ // 14
+  question: "Which best summarizes Allen's view of the public’s relation to politics and policy after 1920?",
+  options: [
+    "Citizens demanded broader government intervention.",
+    "Apathy, deference to business, and focus on personal prosperity over accountability.",
+    "Militant progressivism resurged.",
+    "Majority activism for labor reform."
+  ],
+  answer: 1,
+  explanation: `"The most that they required of the United States Government was that it should keep its hands off business… and be otherwise unobtrusive. They did not look for bold… statesmanship" [Allen, Ch.2].`
+},
+{ // 15
+  question: "What did Allen see as the principal result of 'normalcy' in the federal government’s relation to business?",
+  options: [
+    "Renewal of trust-busting.",
+    "Support for laissez-faire attitudes; tariffs raised, regulation lax; government indifference or support for business interests.",
+    "Hostile anti-business policy.",
+    "Immediate passage of new antitrust laws."
+  ],
+  answer: 1,
+  explanation: `Harding’s presidency “meant to give them as free a hand as possible ‘to resume their normal onward way’” [Allen, Ch.2].`
+},
+{ // 16
+  question: "Which of the following events during Harding’s time did Allen NOT list as a major sign of public disengagement?",
+  options: [
+    "Slow, piecemeal exposure and prosecution of graft—years after the events occurred.",
+    "Unanimous bipartisan political outrage.",
+    "Public excitement at “status-quo” affluence more than outrage at wrongdoing.",
+    "Resentment of those who exposed scandals."
+  ],
+  answer: 1,
+  explanation: `Unified bipartisan fury did NOT occur; Allen notes the opposite—“resentment… at the scandals and resentment at the scandal-mongers… gave way to a profound and untroubled apathy.” [Allen, Ch.2]`
+},
+{ // 17
+  question: "How does Allen describe the fate of Woodrow Wilson as his presidency ended?",
+  options: [
+    "Honored and widely influential.",
+    "A broken idealist, physically incapacitated, isolated, and ultimately embittered by defeat.",
+    "Celebrated by all as a martyr.",
+    "Chosen for a third term."
+  ],
+  answer: 1,
+  explanation: `“He had given all he had to the cause, and it had not been enough… [his] mind was sterile… he broke with advisers and closest friends… an old man, helpless and bitter.” [Allen, Ch.2]`
+},
+{ // 18
+  question: "Which group became a political and social phenomenon in the wake of the postwar 'normalcy' mood, as examined by Allen?",
+  options: [
+    "The Knights of Labor.",
+    "The Ku Klux Klan, now revived as an anti-immigrant, anti-Catholic, and nativist fraternal body.",
+    "The Readjuster Party.",
+    "The Progressive Party."
+  ],
+  answer: 1,
+  explanation: `"Ku Klux Klan… grew, in fact, with such inordinate rapidity that early in 1924 its membership had reached… nearly four and a half million… It came to wield great political power… its objects included to maintain… white supremacy and… a pure Americanism." [Allen, Ch.2]`
+},
+{ // 19
+  question: "What was a major dynamic in the 1920s media landscape, as discussed by Allen with data and anecdotes?",
+  options: [
+    "Collapse of nationwide newspapers in favor of small-town weeklies.",
+    "Centralization and homogenization, with chains and syndicates controlling ever-larger proportions of news and features.",
+    "Disappearance of tabloid journalism.",
+    "Decreased influence of national advertising."
+  ],
+  answer: 1,
+  explanation: `Allen notes: “the number of daily papers in the country dropped… [while] aggregate circulation … rose… papers were gathered into chains… syndicated features … guaranteed to tickle the mass mind.” [Allen, Ch.2]`
+},
+{ // 20
+  question: "Allen describes the public's obsession with what type of events in the “Ballyhoo Years” of the 1920s?",
+  options: [
+    "Deep, slow-moving political questions.",
+    "Dramatic but often trivial spectacles: boxing matches, murder trials, and celebrity scandals.",
+    "Only foreign wars.",
+    "Town hall debates."
+  ],
+  answer: 1,
+  explanation: `"…the unparalleled rapidity and unanimity with which millions… turned their attention… upon a series of tremendous trifles—a heavyweight boxing-match, a murder trial, a new automobile model, a transatlantic flight…" [Allen, Ch.2]`
+},
+{ // 21
+  question: "Which was NOT a central *theme* discussed by Allen as shaping the postwar American mood?",
+  options: [
+    "Weariness of idealism and government activism.",
+    "Desire for quiet prosperity and personal affairs.",
+    "Universal confidence in international cooperation.",
+    "A readiness to let the past be, and focus on the present."
+  ],
+  answer: 2,
+  explanation: `"Confidence in international engagement" was not dominant. Allen notes the “relaxation that comes with peace…” and a “desire to be done with it” [foreign affairs]. Most wanted withdrawal, not activism.`
+},
+{ // 22
+  question: "What does Allen cite as a key cause for the rapid rise of the Klan and popularity of intolerance?",
+  options: [
+    "Genuine revolutionary communist threat.",
+    "A perverted release for postwar emotions, group-loyalty and hate redirected toward minorities.",
+    "A surge in support for higher education.",
+    "Government support for civil rights."
+  ],
+  answer: 1,
+  explanation: `“Almost inevitably it [fear/intolerance] took the form of an ugly flare-up of feeling against the Negro, the Jew, and the Roman Catholic. The emotions of group loyalty… found a perverted release in the persecution…” [Allen, Ch.2]`
+},
+{ // 23
+  question: "What does Allen stress about the postwar Republican Party 'Old Guard' in the run-up to the 1920 election?",
+  options: [
+    "They were universally committed to progressive reform.",
+    "They pursued a return to earlier practices and sought a candidate as different from Wilson as possible.",
+    "They advocated energetic foreign engagement.",
+    "They nominated only ex-generals."
+  ],
+  answer: 1,
+  explanation: `"You cannot teach an Old Guard new tricks... The only way they look is backward." Allen agrees: they wanted "a complete contrast with the idealist [Wilson] whom they detested" [Allen, Ch.2].`
+},
+{ // 24
+  question: "Which of the following does Allen argue about the American businessman's psychology in 1919–20?",
+  options: [
+    "Business was infatuated with internationalist philosophy.",
+    "A mood of aggressive patriotic self-interest, mingling fear of radicals with anxiety for profits, colored by a habit of expecting conspiracy.",
+    "Unbounded support for labor radicalism.",
+    "Business prioritized employee equity above all."
+  ],
+  answer: 1,
+  explanation: `Allen: “He wanted to get back to business and enjoy his profits. Labor stood in his way and threatened his profits. He… developed a fervent belief that 100-per-cent Americanism… implied the right… to kick the union organizer out of his workshop… he had been nourished… on stories of spies and plotters…" [Allen, Ch.2]`
+},
+{ // 25
+  question: "Allen notes public support for which aspect of prohibition?",
+  options: [
+    "Violent evasion.",
+    "Initial near-unanimous support for a radical change, justified by war fever and habit of striking down threats.",
+    "Total rejection from the beginning.",
+    "Widespread skepticism and urban resistance only."
+  ],
+  answer: 1,
+  explanation: `Allen notes prohibition “had an overwhelming majority behind it throughout the United States; the Spartan fervor of war-time had not yet cooled." [Allen, Ch.2]`
+},
+{ // 26
+  question: "In Allen's account, the Palmer raids and deportations of 1919–20 were justified by which dominant public perception?",
+  options: [
+    "Real, large-scale communist insurrection.",
+    "Press-amplified panic and a credulous expectation of 'plots' imported from abroad.",
+    "Careful legal review and due process.",
+    "A wave of evangelical Christian revival."
+  ],
+  answer: 1,
+  explanation: `"His credulity had...stretched until he was quite ready to believe that a struggle of American laboring-men for better wages was the beginning of an armed rebellion directed by Lenin..." [Allen, Ch.2].`
+},
+{ // 27
+  question: "What best characterizes the Republican administrations’ economic policies, by Allen’s account?",
+  options: [
+    "Favored minimal government intervention, business-friendly tariffs, and deregulation.",
+    "High levels of federal ownership and regulation.",
+    "Expansive social welfare programs.",
+    "Heavy labor union support."
+  ],
+  answer: 0,
+  explanation: `"they did not want a man of action in the Presidency... they wanted as little government as possible, at as low cost as possible..." [Allen, Ch.2].`
+},
+{ // 28
+  question: "Which was a key reason for the widespread apathy toward the Harding-Coolidge scandals after the initial revelations?",
+  options: [
+    "Breakdown of national communications.",
+    "Focus on good business, economic optimism, and desire not to 'rock the boat.'",
+    "Active internationalist sentiment.",
+    "Widespread voter fraud accusations."
+  ],
+  answer: 1,
+  explanation: `"Business was good, the Coolidge variety of normalcy was working to the satisfaction of the country... the best thing was to let bygones be bygones." [Allen, Ch.2].`
+},
+{ // 29
+  question: "What, for Allen, was the final judgment delivered by the American electorate in the 1920 presidential election?",
+  options: [
+    "A solemn referendum on idealism.",
+    "A decisive preference for safe, conventional 'normalcy' over crusades or reform.",
+    "Embrace for international responsibility.",
+    "Alliance with organized labor."
+  ],
+  answer: 1,
+  explanation: `"The United States had rendered its considered judgment... It had preferred normalcy." [Allen, Ch.2].`
+},
+{ // 30
+  question: "According to Allen, how did Coolidge exemplify the mainstream ideal of leadership in the 'normalcy' years?",
+  options: [
+    "He was a revolutionary policy-maker.",
+    "He embodied negative government: minimal interference, discretion, and public respect for business.",
+    "He was a radical orator.",
+    "He promoted universal suffrage."
+  ],
+  answer: 1,
+  explanation: `"...Calvin Coolidge was unobtrusive to the last degree; he would never try to steer the ship of state into unknown waters... the prosperity band-wagon was rolling... and Calvin Coolidge was fortunate to become almost a demi-god by doing discreet obeisance before the altar." [Allen, Ch.2]`
+},
+];
+
+// ======= END QUESTIONS ========
+
+// State
+let questionsOrder = [];
+let currentIndex = 0;
+let score = 0;
+let selectedOption = null;
+let userAnswers = [];
+let skippedIndexes = [];
+
+const questionNumberEl = document.getElementById('question-number');
+const questionTextEl = document.getElementById('question-text');
+const optionsListEl = document.getElementById('options-list');
+const nextBtn = document.getElementById('next-btn');
+const skipBtn = document.getElementById('skip-btn');
+const quizContent = document.getElementById('quiz-content');
+const resultContainer = document.getElementById('result-container');
+const scoreEl = document.getElementById('score');
+const feedbackText = document.getElementById('feedback-text');
+const detailedAnswers = document.getElementById('detailed-answers');
+const playAgainBtn = document.getElementById('play-again-btn');
+
+function shuffle(array) { // Fisher–Yates
+  let n = array.length, i;
+  while (n > 0) {
+    i = Math.floor(Math.random() * n);
+    n--;
+    [array[n], array[i]] = [array[i], array[n]];
+  }
+  return array;
+}
+function startQuiz() {
+  questionsOrder = [...Array(questions.length).keys()];
+  questionsOrder = shuffle(questionsOrder);
+  currentIndex = 0;
+  score = 0;
+  userAnswers = Array(questions.length).fill(null);
+  skippedIndexes = [];
+  quizContent.style.display = 'block';
+  resultContainer.style.display = 'none';
+  nextBtn.disabled = true;
+  skipBtn.disabled = false;
+  showQuestion();
+}
+function showQuestion() {
+  const qi = questionsOrder[currentIndex];
+  const q = questions[qi];
+  questionNumberEl.textContent = `Question ${currentIndex + 1} of ${questionsOrder.length}`;
+  questionTextEl.textContent = q.question;
+  optionsListEl.innerHTML = '';
+  selectedOption = null;
+  let optionsWithIdx = q.options.map((txt,i)=>({text:txt, index:i}));
+  let shuffledOpts = shuffle([...optionsWithIdx]);
+  shuffledOpts.forEach(opt => {
+    const li = document.createElement('li');
+    li.className = 'option';
+    li.textContent = opt.text;
+    li.dataset.index = opt.index;
+    li.onclick = () => {
+      for(let el of optionsListEl.children) el.classList.remove('selected');
+      li.classList.add('selected');
+      selectedOption = opt.index;
+      nextBtn.disabled = false;
+    };
+    optionsListEl.appendChild(li);
+  });
+  nextBtn.textContent = (allRemaining()===1) ? 'Finish' : 'Next';
+  nextBtn.disabled = true;
+  skipBtn.disabled = false;
+  skipBtn.textContent = 'Skip';
+}
+
+nextBtn.onclick = () => {
+  const qi = questionsOrder[currentIndex];
+  userAnswers[qi] = selectedOption;
+  if (selectedOption === questions[qi].answer) score++;
+  // Go to next unanswered question or handle finishing
+  if (currentIndex < questionsOrder.length - 1) {
+    currentIndex++;
+    showQuestion();
+  } else if (skippedIndexes.length > 0) {
+    // Go to skipped
+    questionsOrder = [...skippedIndexes];
+    skippedIndexes = [];
+    currentIndex = 0;
+    alert("Quiz returning you to questions you skipped earlier. Please answer or skip again!");
+    showQuestion();
+  } else {
+    showResults();
+  }
+};
+
+skipBtn.onclick = () => {
+  // Add this question to skipped if not already
+  if (!skippedIndexes.includes(questionsOrder[currentIndex]))
+    skippedIndexes.push(questionsOrder[currentIndex]);
+  // Remove this from questionsOrder if present
+  const idx = currentIndex;
+  questionsOrder.splice(idx,1);
+  // If more in stack, continue; if not, move to skipped or finish
+  if (questionsOrder.length > 0) {
+    if (idx >= questionsOrder.length) currentIndex = 0;
+    showQuestion();
+  } else if (skippedIndexes.length > 0) {
+    questionsOrder = [...skippedIndexes];
+    skippedIndexes = [];
+    currentIndex = 0;
+    showQuestion();
+  } else {
+    showResults();
+  }
+};
+function allRemaining() {
+  return questionsOrder.length - currentIndex;
+}
+function showResults() {
+  quizContent.style.display = 'none';
+  resultContainer.style.display = 'block';
+  scoreEl.textContent = `Your Score: ${score} / ${questions.length}`;
+  const percent = (score / questions.length) * 100;
+  if (percent >= 85) {
+    feedbackText.textContent = "🌟 Outstanding! You have a deep scholarly grasp of Allen's social & political narrative.";
+    feedbackText.style.color = '#1e9647';
+  } else if (percent >= 60) {
+    feedbackText.textContent = "Good job! Review the answers to fully master Allen's insights into American normalcy.";
+    feedbackText.style.color = '#f7b20c';
+  } else {
+    feedbackText.textContent = "You may wish to study Allen's Chapter 2 again, then retake this quiz for deeper understanding.";
+    feedbackText.style.color = '#d02b33';
+  }
+
+  // Answers/explanations
+  detailedAnswers.innerHTML = '';
+  questions.forEach((q,qi) => {
+    const uans = userAnswers[qi];
+    const utext = (typeof uans==='number' && q.options[uans]) ? q.options[uans] : "<i>No answer selected</i>";
+    const ctext = q.options[q.answer];
+    const isCorrect = (uans === q.answer);
+    const sec = document.createElement('section');
+    const h3 = document.createElement('h3');
+    h3.textContent = `Q${qi + 1}: ${q.question}`;
+    sec.appendChild(h3);
+    const pUser = document.createElement('p');
+    pUser.innerHTML = `Your answer: <strong>${utext}</strong> ${isCorrect ? '✅' : '❌'}`;
+    sec.appendChild(pUser);
+    if (!isCorrect) {
+      const pCorr = document.createElement('p');
+      pCorr.innerHTML = `Correct: <strong>${ctext}</strong>`;
+      sec.appendChild(pCorr);
+    }
+    const pExp = document.createElement('p');
+    pExp.innerHTML = `<em>Explanation:</em> ${q.explanation}<br><span style="color:#888;font-size:0.92em;">(Allen, <i>Only Yesterday</i>, Ch.2)</span>`;
+    sec.appendChild(pExp);
+    detailedAnswers.appendChild(sec);
+  });
+  resultContainer.scrollTop = 0;
+}
+playAgainBtn.onclick = ()=>{
+  startQuiz();
+  window.scrollTo(0,0);
+};
+window.onload=startQuiz;
+</script>
+</body>
+</html>

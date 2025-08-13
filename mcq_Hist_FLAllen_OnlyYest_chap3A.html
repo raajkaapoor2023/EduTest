@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Allen - The Big Red Scare Quiz</title>
+<style>
+  body {
+    font-family: 'Georgia', serif;
+    background: linear-gradient(135deg, #f3f6f9, #ccd8e6);
+    margin: 0; padding: 0;
+    display: flex; justify-content: center; align-items: flex-start;
+    min-height: 100vh;
+    padding: 30px 12px;
+    color: #2c3e50;
+  }
+  #quiz-container {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    max-width: 880px;
+    width: 100%;
+    padding: 35px 40px 45px 40px;
+  }
+  h1 {
+    text-align: center;
+    color: #1b263b;
+    margin-bottom: 30px;
+    font-size: 2.1rem;
+  }
+  #question-number { font-weight: bold; margin-bottom: 10px; }
+  #question-text { font-size: 1.2rem; margin-bottom: 22px; }
+  ul.options { list-style: none; padding-left: 0; margin-bottom: 32px; }
+  li.option {
+    background: #d6e9f8;
+    padding: 14px 20px;
+    border-radius: 12px;
+    margin-bottom: 14px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: background-color 0.25s, border-color 0.25s;
+  }
+  li.option:hover { background-color: #1abc9c; color: white; }
+  li.option.selected { background-color: #16a085; color: white; }
+  #controls-row { display: flex; gap: 10px; }
+  #next-btn, #skip-btn {
+    flex: 1;
+    padding: 14px 0;
+    font-size: 1.15rem;
+    border: none; border-radius: 12px;
+    color: white; cursor: pointer;
+  }
+  #next-btn { background-color: #1abc9c; }
+  #skip-btn { background-color: #95a5a6; }
+  #next-btn:disabled, #skip-btn:disabled { background-color: #bdc3c7; cursor: default; }
+  #result-container { display: none; max-height: 500px; overflow-y: auto; }
+  #score { text-align: center; font-size: 2rem; font-weight: bold; margin-bottom: 5px; }
+  #feedback-text { text-align: center; margin-bottom: 20px; }
+  #detailed-answers section { border-top: 1px solid #ccc; padding-top: 12px; margin-top: 16px; }
+  #play-again-btn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 14px 0;
+    font-size: 1.2rem;
+    border: none;
+    background-color: #16a085; color: white;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div id="quiz-container">
+  <h1>"The Big Red Scare" – Chapter 3 Quiz</h1>
+  <div id="quiz-content">
+    <div id="question-number"></div>
+    <div id="question-text"></div>
+    <ul class="options" id="options-list"></ul>
+    <div id="controls-row">
+      <button id="skip-btn">Skip</button>
+      <button id="next-btn" disabled>Next</button>
+    </div>
+  </div>
+  <div id="result-container">
+    <div id="score"></div>
+    <div id="feedback-text"></div>
+    <div id="detailed-answers"></div>
+    <button id="play-again-btn">Retake Quiz</button>
+  </div>
+</div>
+<script>
+const questions = [
+{
+question:"What primary fear gripped millions of Americans during the 'Big Red Scare'?",
+options:["Invasion by Germany","A Bolshevik-style revolution in the U.S.","Mass famine","Collapse of banking system"],
+answer:1,
+explanation:`Allen describes that millions feared a Radical/Bolshevik revolution might erupt imminently in America (Allen, Ch.3).`
+},
+{
+question:"Which 1919 event exemplified violence linked to labor unrest and anti-radical hysteria?",
+options:["Boston Tea Party reenactment","Centralia Armistice Day incident","Scopes Trial","Harlem Renaissance parade"],
+answer:1,
+explanation:`In Centralia, Washington, radicals shot parade marchers; a mob lynched an IWW member by throwing him off a bridge (Allen, Ch.3).`
+},
+{
+question:"In early 1919, the U.S. labor movement was emboldened partly because:",
+options:["The war boosted wages and government support for unions","Immigration completely stopped","Employers encouraged work stoppages","There were no strikes in wartime"],
+answer:0,
+explanation:`During WWI, government encouraged labor peace and bargaining, raising hopes for gains after war (Allen, Ch.3).`
+},
+{
+question:"The 1919 Boston Police Strike began over:",
+options:["Refusal to evacuate stations","Pay and union affiliation disputes","Protesting Prohibition","Refusal to police Boston Common"],
+answer:1,
+explanation:`Low pay and forming a union against orders from Commissioner Curtis led to mass walkout (Allen, Ch.3).`
+},
+{
+question:"Governor Calvin Coolidge's response to Gompers in the police strike was:",
+options:["Approve nationalization of police","Offer arbitration","National Guard protection and famous 'no right to strike' quote","Ignored the strike entirely"],
+answer:2,
+explanation:`Coolidge became a hero by refusing to reinstate striking police, declaring “no right to strike against the public safety” (Allen, Ch.3).`
+},
+{
+question:"Attorney-General A. Mitchell Palmer initially gained fame in 1919–20 for:",
+options:["Leading peace talks","Suppressing strikes and ordering mass raids on radicals","Managing Prohibition enforcement","Defending Sacco and Vanzetti"],
+answer:1,
+explanation:`Palmer led Red raids and deportations targeting radicals, especially foreign-born Communists, anarchists (Allen, Ch.3).`
+},
+{
+question:"The January 1920 'Palmer Raids' notably:",
+options:["Occurred only in New York","Arrested over 6,000 suspected radicals nationwide","Avoided targeting aliens","Found massive weapon caches"],
+answer:1,
+explanation:`Sweeping raids in dozens of cities jailed thousands without warrants; found minimal arms (Allen, Ch.3).`
+},
+{
+question:"One package-bomb discovery in April 1919 implicated targets such as:",
+options:["Movie stars","High government officials like Justice Holmes, AG Palmer, business leaders","Union bosses only","Newspaper editors only"],
+answer:1,
+explanation:`Bombs addressed to AG Palmer, Justice Holmes, Morgans, Rockefellers, etc., were discovered (Allen, Ch.3).`
+},
+{
+question:"The 'Soviet Ark' (Buford) was used to:",
+options:["Transport wheat","Deport radical aliens to Russia","Travel to Paris Peace talks","Bring soldiers home from WWI"],
+answer:1,
+explanation:`Buford shipped deported radical aliens to Russia via Finland in 1919–20 (Allen, Ch.3).`
+},
+{
+question:"Which 1919 steel strike leader's past helped tie the strike to radicalism?",
+options:["Samuel Gompers","William Z. Foster","Henry Ford","Albert Fall"],
+answer:1,
+explanation:`Foster’s prior syndicalist ties made it easier to paint the steel strike as a Red plot (Allen, Ch.3).`
+},
+{
+question:"Public reaction to the Wall Street bombing of Sept 1920 showed:",
+options:["A spike identical to 1919 hysteria","Moderation compared to earlier months, fear was ebbing","No media coverage","Immediate repeal of Prohibition"],
+answer:1,
+explanation:`Though deadly, it didn't reignite unrest like 1919; Red Scare was subsiding (Allen, Ch.3).`
+},
+{
+question:"The Ku Klux Klan revival in early 1920s fed on fears against:",
+options:["Only Communists","African Americans, Jews, Catholics, immigrants","British aristocracy","Republican politicians"],
+answer:1,
+explanation:`Klan preyed on racial/religious/nativist fears, aligning with Red Scare intolerance (Allen, Ch.3).`
+},
+{
+question:"The New York State Assembly expelled Socialist members because:",
+options:["They refused to sign Prohibition pledge","They heckled the Governor","They belonged to 'disloyal' Socialist Party","They missed rollcall"],
+answer:2,
+explanation:`Membership in Socialist Party was cited as disloyal, grounds for expulsion (Allen, Ch.3).`
+},
+{
+question:"May Day 1920 passed quietly despite:",
+options:["Mass mobilization of radicals","Palmer’s warning of strikes and assassinations","Stock market crash","Resignation of Harding"],
+answer:1,
+explanation:`Predicted radical uprisings did not happen; indicated waning Scare (Allen, Ch.3).`
+},
+{
+question:"The Sacco and Vanzetti case became globally known partly due to:",
+options:["Media boycott","Propaganda by international radicals causing protests and violence abroad","Book by Fitzgerald","U.S. Government promotion"],
+answer:1,
+explanation:`Radical networks abroad publicized it causing protests, bombs, strikes; global cause célèbre (Allen, Ch.3).`
+},
+{
+question:"Allen characterizes Vanzetti as:",
+options:["A corrupt politician","A philosophical anarchist, impressive demeanor","A violent bomber","An undercover agent"],
+answer:1,
+explanation:`Vanzetti impresses as principled anarchist, difficult to link to payroll murder (Allen, Ch.3).`
+},
+{
+question:"What 1927 execution reignited Red Scare passions briefly?",
+options:["Leopold and Loeb","Sacco and Vanzetti","Haymarket anarchists","Rosenbergs"],
+answer:1,
+explanation:`Their 1927 execution reopened ideological divisions akin to 1919–20 (Allen, Ch.3).`
+},
+{
+question:"One social consequence of the Scare was:",
+options:["Increase in academic freedom","Conformity, fear of being thought radical","Widespread acceptance of Communists","Legalization of all radical parties"],
+answer:1,
+explanation:`Fear of suspicion bred conformity; dissent suppressed (Allen, Ch.3).`
+},
+{
+question:"Super-patriotic groups often alleged Bolshevik ties for:",
+options:["Organizations advocating mainstream social reform","Only foreign embassies","Sports clubs","Farmers' co-ops"],
+answer:0,
+explanation:`Groups like League of Women Voters were absurdly labeled Bolshevik allies (Allen, Ch.3).`
+},
+{
+question:"Anti-Semitism during the Scare was exemplified by:",
+options:["NY Times exposés","Henry Ford's Dearborn Independent attacking 'International Jew'","Election of Jewish President","Broadway plays about Rabbis"],
+answer:1,
+explanation:`Ford's paper alleged Jewish world conspiracy linking to social ills (Allen, Ch.3).`
+},
+{
+question:"Which columnist observed in 1922 that America was 'no longer free' due to fear and repression?",
+options:["Dorothy Parker","Katharine Fullerton Gerould","H.L. Mencken","Walter Lippmann"],
+answer:1,
+explanation:`Gerould warned of widespread chilling of expression (Allen, Ch.3).`
+},
+{
+question:"In race relations, postwar tensions and migration contributed to:",
+options:["1929 stock market crash","Chicago 1919 race riot","Civil Rights Act","Scopes Trial"],
+answer:1,
+explanation:`Chicago riot killed dozens after a black youth’s death sparked racial violence (Allen, Ch.3).`
+},
+{
+question:"Who organized the Klan’s explosive early-1920s growth and marketing?",
+options:["Henry Ford","Edward Y. Clarke","Calvin Coolidge","Clarence Darrow"],
+answer:1,
+explanation:`PR man Clarke of Southern Publicity Association built Klan membership machine (Allen, Ch.3).`
+},
+{
+question:"Common Klan targets included:",
+options:["Lutherans only","White Protestants","African Americans, Catholics, Jews","Republican senators"],
+answer:2,
+explanation:`Klan defined 'pure Americanism' as white Protestant supremacy (Allen, Ch.3).`
+},
+{
+question:"Klan violence could follow even unsupported accusations, such as:",
+options:["Improper advances alleged by a white woman against a black man","IRS audits","Voting against Prohibition","Wearing red ties"],
+answer:0,
+explanation:`Even alleged advances could lead to floggings, tarrings by local Klans (Allen, Ch.3).`
+},
+{
+question:"What did many Americans wrongly conflate with anarchism/Communism?",
+options:["Opposition to Prohibition","Nationalization of industries","Classical music","Advertising"],
+answer:1,
+explanation:`Ideas like miners' calls for nationalization were lumped with radical revolution (Allen, Ch.3).`
+},
+{
+question:"On what legal basis did Palmer get injunctions against the 1919 coal strike?",
+options:["Volstead Act","Food-and-Fuel Control Act (wartime law still in effect)","Sedition Act","Espionage Act"],
+answer:1,
+explanation:`Though war over, wartime law still enabled injunction; contrary to earlier assurances (Allen, Ch.3).`
+},
+{
+question:"What was the long-term trend of the Red Scare by 1921?",
+options:["Intensifying nationally","Shifting into cultural fads, hysteria fading","Exploding into civil war","Collapsing government"],
+answer:1,
+explanation:`By 1921–22, diversions and changing mood replaced peak panic (Allen, Ch.3).`
+},
+{
+question:"A major factor in ending the Scare was:",
+options:["Bolshevik victory in Germany","Failing of expected revolution & shift to peacetime diversions","Worsening WWI","Great Depression"],
+answer:1,
+explanation:`No revolution occurred; public turned to radios, sports, fads; peacetime ethos reasserted (Allen, Ch.3).`
+}
+];
+
+let questionsOrder=[], currentIndex=0, score=0, selectedOption=null, userAnswers=[], skippedIndexes=[];
+const questionNumberEl=document.getElementById("question-number"),
+questionTextEl=document.getElementById("question-text"),
+optionsListEl=document.getElementById("options-list"),
+nextBtn=document.getElementById("next-btn"),
+skipBtn=document.getElementById("skip-btn"),
+quizContent=document.getElementById("quiz-content"),
+resultContainer=document.getElementById("result-container"),
+scoreEl=document.getElementById("score"),
+feedbackText=document.getElementById("feedback-text"),
+detailedAnswers=document.getElementById("detailed-answers"),
+playAgainBtn=document.getElementById("play-again-btn");
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a;}
+function startQuiz(){questionsOrder=shuffle([...Array(questions.length).keys()]); currentIndex=0; score=0;
+userAnswers=Array(questions.length).fill(null); skippedIndexes=[]; quizContent.style.display="block";
+resultContainer.style.display="none"; showQuestion();}
+function showQuestion(){
+const qi=questionsOrder[currentIndex], q=questions[qi];
+questionNumberEl.textContent=`Question ${currentIndex+1} of ${questionsOrder.length}`;
+questionTextEl.textContent=q.question; optionsListEl.innerHTML=""; selectedOption=null;
+let opts=shuffle(q.options.map((txt,i)=>({text:txt,index:i})));
+opts.forEach(opt=>{const li=document.createElement("li"); li.className="option"; li.textContent=opt.text; li.dataset.index=opt.index;
+li.onclick=()=>{for(let el of optionsListEl.children) el.classList.remove("selected");
+li.classList.add("selected"); selectedOption=opt.index; nextBtn.disabled=false;};
+optionsListEl.appendChild(li);});
+nextBtn.textContent=currentIndex===questionsOrder.length-1 && skippedIndexes.length===0?"Finish":"Next";
+nextBtn.disabled=true;}
+nextBtn.onclick=()=>{const qi=questionsOrder[currentIndex]; userAnswers[qi]=selectedOption;
+if(selectedOption===questions[qi].answer) score++;
+if(currentIndex<questionsOrder.length-1){currentIndex++; showQuestion();}
+else if(skippedIndexes.length>0){questionsOrder=[...skippedIndexes]; skippedIndexes=[]; currentIndex=0; showQuestion();}
+else showResults();};
+skipBtn.onclick=()=>{if(!skippedIndexes.includes(questionsOrder[currentIndex])) skippedIndexes.push(questionsOrder[currentIndex]);
+currentIndex++; if(currentIndex>=questionsOrder.length && skippedIndexes.length>0){questionsOrder=[...skippedIndexes]; skippedIndexes=[]; currentIndex=0;}
+if(currentIndex<questionsOrder.length) showQuestion(); else showResults();};
+function showResults(){
+quizContent.style.display="none"; resultContainer.style.display="block"; scoreEl.textContent=`Your Score: ${score}/${questions.length}`;
+let pct=(score/questions.length)*100; if(pct>=85){feedbackText.textContent="Excellent!";} else if(pct>=60){feedbackText.textContent="Good job.";} else {feedbackText.textContent="Review the material.";}
+detailedAnswers.innerHTML=""; questions.forEach((q,qi)=>{const sec=document.createElement("section");
+sec.innerHTML=`<h3>Q${qi+1}: ${q.question}</h3>
+<p>Your answer: <strong>${userAnswers[qi]!==null?q.options[userAnswers[qi]]:"No answer"}</strong> ${userAnswers[qi]===q.answer?"✅":"❌"}</p>
+${userAnswers[qi]!==q.answer?`<p>Correct: <strong>${q.options[q.answer]}</strong></p>`:""}
+<p><em>Explanation:</em> ${q.explanation}</p>`; detailedAnswers.appendChild(sec);});}
+playAgainBtn.onclick=()=>{startQuiz(); window.scrollTo(0,0);};
+window.onload=startQuiz;
+</script>
+</body>
+</html>

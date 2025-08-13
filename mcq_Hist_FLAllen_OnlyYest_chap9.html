@@ -1,0 +1,632 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Only Yesterday — Ch. 9: THE REVOLT OF THE HIGHBROWS — 30-Question MCQ</title>
+<style>
+  :root{
+    --bg:#071021;
+    --card:#0f1a34;
+    --ink:#eaf0ff;
+    --muted:#b6c8e8;
+    --accent:#7fb7ff;
+    --accent-2:#8ef3c6;
+    --danger:#fa7a7a;
+    --warn:#f6c65a;
+    --ok:#4dd7a1;
+    --shadow:0 14px 36px rgba(0,0,0,.5), 0 6px 14px rgba(0,0,0,.28);
+    --radius:14px;
+    --glass: rgba(255,255,255,0.03);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:
+      radial-gradient(800px 420px at 12% 10%, rgba(15,30,60,.5), transparent),
+      linear-gradient(180deg,#07172b 0%, #041024 100%);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  header{
+    position:sticky; top:0; z-index:60;
+    border-bottom:1px solid rgba(127,183,255,.08);
+    backdrop-filter: blur(6px);
+    background:linear-gradient(180deg, rgba(8,18,36,.88), rgba(6,12,26,.72));
+  }
+  .wrap{max-width:1180px; margin:0 auto; padding:14px;}
+  h1{margin:0; font-size:clamp(1.3rem, 1rem + 1.6vw, 1.9rem)}
+  .subtitle{color:var(--muted); font-size:.95rem; margin-top:6px}
+  main{max-width:1180px; margin:18px auto; padding:18px; display:grid; grid-template-columns:1.25fr .9fr; gap:18px}
+  @media (max-width:980px){ main{grid-template-columns:1fr} }
+  .card{
+    background: linear-gradient(180deg, rgba(11,22,39,.72), rgba(8,14,28,.6));
+    border-radius:var(--radius);
+    border:1px solid rgba(127,183,255,.06);
+    box-shadow:var(--shadow);
+  }
+  .panel{padding:16px}
+  .controls{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+  button{
+    border:0; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:700;
+    background:var(--accent); color:#042033; box-shadow:0 10px 26px rgba(127,183,255,.10);
+  }
+  button.secondary{ background:transparent; color:var(--ink); border:1px solid rgba(127,183,255,.06); box-shadow:none }
+  button.ghost{ background:transparent; color:var(--muted); border:1px dashed rgba(127,183,255,.04) }
+  button.warn{ background:var(--warn); color:#071021 }
+  button.danger{ background:var(--danger); color:#071021 }
+  button.ok{ background:var(--ok); color:#071021 }
+  .meter{height:10px; background:rgba(255,255,255,0.03); border-radius:999px; overflow:hidden; border:1px solid rgba(127,183,255,.04)}
+  .meter > span{display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--accent), var(--accent-2)); transition:width .28s cubic-bezier(.2,.9,.2,1)}
+  .q{padding:18px; margin:14px 0; border-radius:12px; background:linear-gradient(180deg, rgba(7,14,28,.45), rgba(6,10,20,.35)); border:1px solid rgba(127,183,255,.04)}
+  .q-header{display:flex; justify-content:space-between; gap:12px; align-items:baseline}
+  .q-title{font-weight:800}
+  .q-meta{color:var(--muted); font-size:.95rem}
+  .choices{margin-top:12px; display:grid; gap:10px}
+  .choice{padding:12px; border-radius:10px; cursor:pointer; border:1px solid rgba(127,183,255,.06); background:var(--glass); transition:transform .06s ease, border-color .12s ease}
+  .choice:hover{ transform:translateY(-2px); border-color:rgba(127,183,255,.16) }
+  .choice.selected{ outline:2px solid rgba(127,183,255,.18); background:linear-gradient(180deg, rgba(21,36,64,.45), rgba(14,24,44,.45)) }
+  .choice.correct{ border-color: rgba(77,215,161,.5); background: rgba(20,60,42,.28) }
+  .choice.incorrect{ border-color: rgba(250,122,122,.5); background: rgba(60,20,24,.28) }
+  .aside{display:grid; gap:14px; align-content:start; position:sticky; top:82px}
+  .stat{display:flex; justify-content:space-between; align-items:center; padding:12px; border-radius:10px; border:1px solid rgba(127,183,255,.04)}
+  .grid{display:grid; gap:8px; grid-template-columns:repeat(6,1fr); padding:8px}
+  .dot{padding:8px 0; text-align:center; border-radius:8px; cursor:pointer; background:transparent; border:1px solid rgba(127,183,255,.04); color:var(--muted)}
+  .dot.answered{color:var(--ink); border-color:rgba(127,183,255,.12)}
+  .dot.current{outline:2px solid rgba(127,183,255,.14)}
+  .dot.correct{background:rgba(77,215,161,.12); border-color:rgba(77,215,161,.24); color:var(--ink)}
+  .dot.incorrect{background:rgba(250,122,122,.12); border-color:rgba(250,122,122,.2); color:var(--ink)}
+  .results{padding:14px; margin-top:12px; border-radius:10px; border:1px solid rgba(127,183,255,.04)}
+  .explain{margin-top:10px; border-left:3px solid var(--accent); padding:10px 12px; border-radius:8px; background:rgba(127,183,255,.03); color:var(--muted); font-size:0.95rem}
+  .tag{display:inline-block; font-size:.79rem; padding:4px 8px; border-radius:999px; background:rgba(127,183,255,.06); margin-right:8px}
+  .muted{color:var(--muted)}
+  .kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; background:rgba(255,255,255,.03); padding:2px 6px; border-radius:6px; border:1px solid rgba(127,183,255,.04)}
+  .references{font-size:.88rem; color:var(--muted); margin-top:10px; line-height:1.4}
+  footer{max-width:1180px; margin:18px auto; color:var(--muted); font-size:.9rem; text-align:center}
+</style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Only Yesterday — Chapter 9: <em>The Revolt of the Highbrows</em></h1>
+      <div class="subtitle">30-question MCQ • Oxbridge / Ivy BA Final • Randomize Qs & choices • Skip & submit anytime • Full academic explanations (Allen, Ch. 9)</div>
+    </div>
+  </header>
+  <main>
+    <section class="card panel" id="quizCard">
+      <div class="controls" style="margin-bottom:12px">
+        <button id="startBtn" class="ok">Start / Re-randomize</button>
+        <button id="prevBtn" class="secondary">Prev</button>
+        <button id="nextBtn" class="secondary">Next</button>
+        <button id="skipBtn" class="ghost">Skip</button>
+        <button id="submitBtn" class="warn">Submit Now</button>
+        <span class="muted" style="margin-left:8px">Hotkeys: <span class="kbd">←</span>/<span class="kbd">→</span> • <span class="kbd">S</span> skip • <span class="kbd">Enter</span> quick-select</span>
+      </div>
+      <div style="margin-bottom:10px">
+        <div class="meter" aria-hidden="true"><span id="meterBar"></span></div>
+        <div class="stat" style="margin-top:8px"><strong id="progressText">0/30 answered</strong><span id="scorePreview" class="muted">Score: —</span></div>
+      </div>
+      <div id="questionHost"></div>
+      <div id="postSubmit" class="results" style="display:none"></div>
+    </section>
+    <aside class="aside">
+      <section class="card panel">
+        <div style="display:flex; justify-content:space-between; align-items:center">
+          <div>
+            <div style="font-weight:800">Navigator</div>
+            <div class="muted" style="font-size:.92rem">Jump to any question</div>
+          </div>
+          <button id="clearBtn" class="danger">Clear</button>
+        </div>
+        <div class="grid" id="grid"></div>
+      </section>
+      <section class="card panel">
+        <div style="font-weight:800">Settings</div>
+        <div class="muted" style="margin:6px 0 10px">Attempt-level randomization & option shuffle enabled.</div>
+        <label><input type="checkbox" id="toggleInstant" /> Instant feedback mode</label><br/>
+        <label><input type="checkbox" id="toggleExplainOnSelect" /> Show explanation on selection</label>
+      </section>
+      <section class="card panel">
+        <div style="font-weight:800">Source note</div>
+        <div class="muted" style="margin-top:8px">Explanations cite Frederick L. Allen, <em>Only Yesterday</em>, Chapter 9 (file segments). Citations included below.</div>
+      </section>
+    </aside>
+  </main>
+
+<script>
+/* Chapter 9 — The Revolt of the Highbrows
+   30 rigorous MCQs inspired by Allen's Chapter 9.
+   Explanations include file citations to the uploaded PDF.
+*/
+
+const QUESTIONS_BASE = [
+  {
+    id: 'q1',
+    prompt: 'Allen defines the "highbrows" primarily as which social grouping?',
+    choices: [
+      { text: 'Organized political parties and machine politicians', correct: false },
+      { text: 'Artists, writers, intellectuals, and the college-educated minority', correct: true },
+      { text: 'Rural smallholders and agrarian populists', correct: false },
+      { text: 'Industrial labor union leaders', correct: false }
+    ],
+    explain: 'Allen characterizes the highbrows as artists, writers, professional people, and the intellectually restless college-educated minority. :contentReference[oaicite:0]{index=0}'
+  },
+  {
+    id: 'q2',
+    prompt: 'Which novelist does Allen credit with galvanizing the highbrow revolt through satirical portrayals of small-town America?',
+    choices: [
+      { text: 'F. Scott Fitzgerald', correct: false },
+      { text: 'Sinclair Lewis', correct: true },
+      { text: 'Ernest Hemingway', correct: false },
+      { text: 'Theodore Dreiser', correct: false }
+    ],
+    explain: 'Allen credits Sinclair Lewis—especially Main Street (1920) and Babbitt—as pivotal in rallying intellectual disgust with small-town boosterism. :contentReference[oaicite:1]{index=1}'
+  },
+  {
+    id: 'q3',
+    prompt: 'What role did H. L. Mencken play in the highbrow movement, according to Allen?',
+    choices: [
+      { text: 'He led a conservative campaign defending Main Street values', correct: false },
+      { text: 'He acted as a strident critic and "keynoter" amplifying highbrow dissent', correct: true },
+      { text: 'He was a marginal poet with little influence', correct: false },
+      { text: 'He organized workers’ unions in industrial towns', correct: false }
+    ],
+    explain: 'Allen describes Mencken as the chief tomtom-beater of the revolt—noisy, destructive, and influential in crystallizing intellectual dissent. :contentReference[oaicite:2]{index=2}'
+  },
+  {
+    id: 'q4',
+    prompt: 'Which magazine, edited by Mencken and Nathan, became a flagship for the intellectual left in the 1920s?',
+    choices: [
+      { text: 'The Nation', correct: false },
+      { text: 'The American Mercury', correct: true },
+      { text: 'Life', correct: false },
+      { text: 'The Saturday Evening Post', correct: false }
+    ],
+    explain: 'Allen details how the American Mercury (launched at the close of 1923) provided a platform for Mencken’s polemics and like-minded critics. :contentReference[oaicite:3]{index=3}'
+  },
+  {
+    id: 'q5',
+    prompt: 'Allen links the intellectuals’ revolt to their earlier responses to what postwar development?',
+    choices: [
+      { text: 'The League of Nations consensus', correct: false },
+      { text: 'Disillusionment from the Peace of Versailles and new scientific ideas', correct: true },
+      { text: 'A surge in agricultural exports', correct: false },
+      { text: 'An immediate postwar cultural conservatism', correct: false }
+    ],
+    explain: 'Allen argues many intellectuals were disillusioned by the Peace settlement and challenged by new scientific and psychological thought, which energized their revolt. '
+  },
+  {
+    id: 'q6',
+    prompt: 'Which critic does Allen cite as having provided analytical foundations for the chapter\'s interpretation of intellectual disillusionment?',
+    choices: [
+      { text: 'Joseph Wood Krutch', correct: true },
+      { text: 'William Butler Yeats', correct: false },
+      { text: 'Thorstein Veblen', correct: false },
+      { text: 'John Dewey', correct: false }
+    ],
+    explain: 'Allen acknowledges Joseph Wood Krutch\'s The Modern Temper as a key interpretive source for the chapter on disillusionment. :contentReference[oaicite:5]{index=5}'
+  },
+  {
+    id: 'q7',
+    prompt: 'How does Allen describe the highbrows’ attitude toward popular entertainments like movies?',
+    choices: [
+      { text: 'They uniformly embraced movies as the highest art', correct: false },
+      { text: 'They generally looked down on movies but sometimes admired figures like Charlie Chaplin', correct: true },
+      { text: 'They had no opinion on popular entertainments', correct: false },
+      { text: 'They controlled the movie industry directly', correct: false }
+    ],
+    explain: 'Allen indicates highbrows often scorned movies yet could revere exceptional figures (e.g., Charlie Chaplin) as artists. :contentReference[oaicite:6]{index=6}'
+  },
+  {
+    id: 'q8',
+    prompt: 'According to Allen, which social impulse did highbrows oppose that helped define their revolt?',
+    choices: [
+      { text: 'The laissez-faire orientation of business', correct: false },
+      { text: 'The mania for petty regulation and enforced respectability', correct: true },
+      { text: 'The expansion of higher education', correct: false },
+      { text: 'Mass spectator sports', correct: false }
+    ],
+    explain: 'Allen notes the intellectual revolt targeted the “mania for petty regulation” and enforced conformities of middle-class respectability. :contentReference[oaicite:7]{index=7}'
+  },
+  {
+    id: 'q9',
+    prompt: 'Which two novels does Allen identify as particularly influential on the highbrow critique of American life?',
+    choices: [
+      { text: 'Main Street and Babbitt', correct: true },
+      { text: 'The Great Gatsby and This Side of Paradise', correct: false },
+      { text: 'The Jungle and An American Tragedy', correct: false },
+      { text: 'Ulysses and The Waste Land', correct: false }
+    ],
+    explain: 'Allen singles out Sinclair Lewis\'s Main Street (1920) and Babbitt (1922) as catalyst texts for the revolt. :contentReference[oaicite:8]{index=8}'
+  },
+  {
+    id: 'q10',
+    prompt: 'What rhetorical strategy did Mencken famously employ in his attacks, as Allen recounts?',
+    choices: [
+      { text: 'Measured legal analysis and restraint', correct: false },
+      { text: 'Scathing invective, exaggeration and vivid metaphors', correct: true },
+      { text: 'Strict adherence to biographical criticism', correct: false },
+      { text: 'Promoting rural boosterism', correct: false }
+    ],
+    explain: 'Allen describes Mencken\'s style as full of invective—pejorative epithets and hyperbolic metaphors—used to demolish his targets. :contentReference[oaicite:9]{index=9}'
+  },
+  {
+    id: 'q11',
+    prompt: 'What danger did Allen attribute to the highbrows’ posture, despite sympathizing with some of their aims?',
+    choices: [
+      { text: 'Their political organization leading to an authoritarian movement', correct: false },
+      { text: 'A tone of despair and excessive disdain that risked alienating broader publics', correct: true },
+      { text: 'Their alliance with business interests', correct: false },
+      { text: 'Their embrace of reactionary rural values', correct: false }
+    ],
+    explain: 'Allen warns that an overbearing tone of scorn risked isolating intellectuals and diminishing the persuasive reach of their critique. :contentReference[oaicite:10]{index=10}'
+  },
+  {
+    id: 'q12',
+    prompt: 'Which magazine does Allen note changed tone by the late 1920s, signaling a cooling of the revolt?',
+    choices: [
+      { text: 'The Smart Set', correct: false },
+      { text: 'The New Yorker', correct: true },
+      { text: 'The Nation', correct: false },
+      { text: 'McCall\'s', correct: false }
+    ],
+    explain: 'Allen observes the New Yorker mellowed into a gentler humor, indicating a shift away from constant alarm. :contentReference[oaicite:11]{index=11}'
+  },
+  {
+    id: 'q13',
+    prompt: 'Allen links several cultural phenomena (e.g., Mah Jong, Coué, Tutankhamen) to earlier chapters. Why does he reference such fads here?',
+    choices: [
+      { text: 'To argue that highbrows invented popular fads', correct: false },
+      { text: 'To show the contrast between mass fads and the highbrows’ deeper preoccupations', correct: true },
+      { text: 'To demonstrate scientific determinism', correct: false },
+      { text: 'To claim that fads replaced all serious literature', correct: false }
+    ],
+    explain: 'Allen contrasts ephemeral mass fads with the intellectuals\' more reflective cultural concerns, highlighting different public attentions. :contentReference[oaicite:12]{index=12}'
+  },
+  {
+    id: 'q14',
+    prompt: 'Which theme does Allen attribute to the "credo" of many intellectuals during the revolt?',
+    choices: [
+      { text: 'A firm endorsement of Victorian social values', correct: false },
+      { text: 'Advocacy for sexual freedom and critique of censorship and Victorianism', correct: true },
+      { text: 'A call for increased commercial boosterism', correct: false },
+      { text: 'A movement to ban modernist literature', correct: false }
+    ],
+    explain: 'Allen summarizes intellectual credo as favoring greater sexual freedom and rejecting censorship and Victorian moralism. :contentReference[oaicite:13]{index=13}'
+  },
+  {
+    id: 'q15',
+    prompt: 'Allen treats the Scopes (Dayton) trial as an episode illustrating what larger conflict?',
+    choices: [
+      { text: 'Economic regulation vs laissez-faire', correct: false },
+      { text: 'The clash between scientific modernism and religious fundamentalism', correct: true },
+      { text: 'A struggle over immigration quotas', correct: false },
+      { text: 'A dispute over trade tariffs', correct: false }
+    ],
+    explain: 'Allen positions the Dayton/Scopes episode within the broader conflict between modern scientific thought and fundamentalist religious control. :contentReference[oaicite:14]{index=14}'
+  },
+  {
+    id: 'q16',
+    prompt: 'Which later intellectual figure attempted to recover moral grounding (as Allen notes) in 1929 with a project called "A Preface to Morals"?',
+    choices: [
+      { text: 'Joseph Wood Krutch', correct: false },
+      { text: 'Walter Lippmann', correct: true },
+      { text: 'H. L. Mencken', correct: false },
+      { text: 'James Truslow Adams', correct: false }
+    ],
+    explain: 'Allen mentions Walter Lippmann’s A Preface to Morals (1929) as an effort to reconstruct ethical bearings for a disillusioned public. :contentReference[oaicite:15]{index=15}'
+  },
+  {
+    id: 'q17',
+    prompt: 'How does Allen explain the eventual waning of the highbrow revolt by the late 1920s?',
+    choices: [
+      { text: 'Due to mass imprisonment of intellectuals', correct: false },
+      { text: 'Because the novelty of rebellion tired, some ideas lost their edge, and new currents emerged', correct: true },
+      { text: 'Because all books were destroyed in the 1927 fires', correct: false },
+      { text: 'Because highbrows fully conquered Main Street', correct: false }
+    ],
+    explain: 'Allen argues the revolt’s novelty diminished—magazines and critics tired of constant alarm—and new intellectual movements and recoveries followed. '
+  },
+  {
+    id: 'q18',
+    prompt: 'Which literary figure does Allen mention as later expressing a more romantic note (contrasting earlier disillusionment)?',
+    choices: [
+      { text: 'Sinclair Lewis', correct: false },
+      { text: 'Ernest Hemingway', correct: true },
+      { text: 'H. L. Mencken', correct: false },
+      { text: 'F. Scott Fitzgerald', correct: false }
+    ],
+    explain: 'Allen notes Hemingway\'s A Farewell to Arms (published late in 1929) struck a romantic note contrasting with prior futility themes. :contentReference[oaicite:17]{index=17}'
+  },
+  {
+    id: 'q19',
+    prompt: 'Allen describes a "humanist fad" in 1929. What is his assessment of it?',
+    choices: [
+      { text: 'He sees it as a coherent, clearly-defined popular movement', correct: false },
+      { text: 'He finds it somewhat comic and ill-defined among its advocates', correct: true },
+      { text: 'He claims it ended intellectual life entirely', correct: false },
+      { text: 'He argues it was a coded political conspiracy', correct: false }
+    ],
+    explain: 'Allen regards the humanist fad as somewhat comic because proponents often disagreed and lacked clarity about which humanism they meant. :contentReference[oaicite:18]{index=18}'
+  },
+  {
+    id: 'q20',
+    prompt: 'According to Allen, what was one institutional cultural outcome of the highbrow movement?',
+    choices: [
+      { text: 'The complete disappearance of American literature', correct: false },
+      { text: 'Growth of little-theater movements, experimental colleges, and college honors plans', correct: true },
+      { text: 'A universal return to Victorian theater', correct: false },
+      { text: 'The end of university education', correct: false }
+    ],
+    explain: 'Allen credits the revolt with encouraging initiatives in higher education (experimental colleges, honors plans) and the little-theater movement. :contentReference[oaicite:19]{index=19}'
+  },
+  {
+    id: 'q21',
+    prompt: 'Which magazine does Allen credit with doubling its circulation by adopting a more critical posture toward American life in the 1920s?',
+    choices: [
+      { text: 'Harper\'s Magazine', correct: true },
+      { text: 'McCall\'s', correct: false },
+      { text: 'Reader\'s Digest', correct: false },
+      { text: 'The Farmer\'s Almanac', correct: false }
+    ],
+    explain: 'Allen notes Harper\'s adopted a more critical posture (orange cover in 1925) and substantially increased circulation. :contentReference[oaicite:20]{index=20}'
+  },
+  {
+    id: 'q22',
+    prompt: 'What was the highbrows’ general posture toward business and the “rule of the businessman”?',
+    choices: [
+      { text: 'They universally supported business rule as enlightened', correct: false },
+      { text: 'They were often critical of the dominance of business values over culture', correct: true },
+      { text: 'They had no view about business', correct: false },
+      { text: 'They sought to replace businessmen with technocrats', correct: false }
+    ],
+    explain: 'Allen records intellectuals’ discontent with the rule of business and the cultural dominance of business values. :contentReference[oaicite:21]{index=21}'
+  },
+  {
+    id: 'q23',
+    prompt: 'Allen remarks the revolt included attention to new scientific and philosophical writers. Which of these is cited as influential?',
+    choices: [
+      { text: 'Eddington and Jeans', correct: true },
+      { text: 'Karl Marx exclusively', correct: false },
+      { text: 'Adam Smith finally', correct: false },
+      { text: 'None — science was irrelevant', correct: false }
+    ],
+    explain: 'Allen mentions figures like Eddington and Jeans as part of the intellectuals’ search for new philosophical or scientific foundations. :contentReference[oaicite:22]{index=22}'
+  },
+  {
+    id: 'q24',
+    prompt: 'Which of these best summarizes Allen’s final judgement on the Revolt of the Highbrows?',
+    choices: [
+      { text: 'It was an organized political uprising that permanently reshaped voting', correct: false },
+      { text: 'It was an influential cultural movement that achieved notable gains but eventually lost momentum', correct: true },
+      { text: 'It led directly to the end of consumer culture', correct: false },
+      { text: 'It was identical to the ballyhoo phenomenon', correct: false }
+    ],
+    explain: 'Allen reads the revolt as culturally influential yet not permanently dominant; its momentum waned by decade\'s end. '
+  },
+  {
+    id: 'q25',
+    prompt: 'Allen mentions the "Civilization in the United States" collaboration (ed. Harold Stearns). What did this work represent to intellectuals?',
+    choices: [
+      { text: 'An endorsement of small-town boosterism', correct: false },
+      { text: 'A collective statement summarizing intellectual concerns about cultural starvation', correct: true },
+      { text: 'A manual for agricultural improvement', correct: false },
+      { text: 'A technical treatise on engineering', correct: false }
+    ],
+    explain: 'Allen notes the collaboration encapsulated the sense among intellectuals that American society suffered from emotional and aesthetic starvation. :contentReference[oaicite:24]{index=24}'
+  },
+  {
+    id: 'q26',
+    prompt: 'How does Allen treat the relation between highbrow criticism and mass-market publishing?',
+    choices: [
+      { text: 'Highbrow criticism had no effect on publishing', correct: false },
+      { text: 'Highbrow critique spurred a flood of books and magazines reflecting intellectual concerns', correct: true },
+      { text: 'Mass-market publishing silenced highbrow voices immediately', correct: false },
+      { text: 'Highbrows primarily published only scientific journals', correct: false }
+    ],
+    explain: 'Allen documents how the intellectual critique precipitated an outpouring of books and stirred magazine debates—Harper\'s, Atlantic, Forum, etc. '
+  },
+  {
+    id: 'q27',
+    prompt: 'Which artistic or cultural movement does Allen associate with a revived American interest (rather than deference to foreign models)?',
+    choices: [
+      { text: 'The continuing dominance of Victorian romancers', correct: false },
+      { text: 'A nascent American architecture, literature, and native cultural research', correct: true },
+      { text: 'A wholesale return to British Victorianism', correct: false },
+      { text: 'Total rejection of American themes in art', correct: false }
+    ],
+    explain: 'Allen observes a growing confidence in native American cultural resources (architecture, literature) and reduced foreign inferiority feelings. :contentReference[oaicite:26]{index=26}'
+  },
+  {
+    id: 'q28',
+    prompt: 'Which of the following best describes Allen\'s view of the "mood of defeat" among intellectuals by 1931?',
+    choices: [
+      { text: 'It hardened into permanent cynicism without remedy', correct: false },
+      { text: 'It had begun to dissipate; some intellectuals thought renewal possible', correct: true },
+      { text: 'It led to the abolition of modernist literature', correct: false },
+      { text: 'It caused total political revolution', correct: false }
+    ],
+    explain: 'Allen records that by 1931 some commentators (e.g., Mumford) asserted the mood of defeat was ending and renewal was possible. :contentReference[oaicite:27]{index=27}'
+  },
+  {
+    id: 'q29',
+    prompt: 'What did Allen see as a limitation of the highbrow movement when judged by its public reception?',
+    choices: [
+      { text: 'It commanded unquestioned majority support', correct: false },
+      { text: 'It remained numerically small and sometimes dismissive, limiting broader traction', correct: true },
+      { text: 'It controlled Hollywood and mass media entirely', correct: false },
+      { text: 'It engineered legal bans on popular magazines', correct: false }
+    ],
+    explain: 'Allen notes the intellectuals were few, vocal, and sometimes elitist, which limited mass uptake of their program. :contentReference[oaicite:28]{index=28}'
+  },
+  {
+    id: 'q30',
+    prompt: 'Which of the following best captures Allen\'s historiographical method in this chapter?',
+    choices: [
+      { text: 'Purely statistical economic analysis', correct: false },
+      { text: 'Narrative examples combined with interpretive critique of cultural effects', correct: true },
+      { text: 'Complete reliance on a single primary source', correct: false },
+      { text: 'Fictional reconstruction without documentation', correct: false }
+    ],
+    explain: 'Allen blends vivid narrative anecdotes with critical interpretation—drawing on many sources—to analyze cultural trends. '
+  }
+];
+
+// State
+let QUESTIONS = [];
+let current = 0;
+const answers = new Map();
+let submitted = false;
+
+// Elements
+const questionHost = document.getElementById('questionHost');
+const grid = document.getElementById('grid');
+const meterBar = document.getElementById('meterBar');
+const progressText = document.getElementById('progressText');
+const scorePreview = document.getElementById('scorePreview');
+const postSubmit = document.getElementById('postSubmit');
+
+// Buttons
+const startBtn = document.getElementById('startBtn');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const skipBtn = document.getElementById('skipBtn');
+const submitBtn = document.getElementById('submitBtn');
+const clearBtn = document.getElementById('clearBtn');
+
+// Toggles
+const toggleInstant = document.getElementById('toggleInstant');
+const toggleExplainOnSelect = document.getElementById('toggleExplainOnSelect');
+
+// Utilities
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a }
+function deepClone(o){ return JSON.parse(JSON.stringify(o)) }
+
+// Quiz logic
+function startAttempt(){
+  submitted = false;
+  answers.clear();
+  postSubmit.style.display = 'none';
+  QUESTIONS = deepClone(QUESTIONS_BASE).map(q => { q.choices = shuffle(q.choices); return q });
+  shuffle(QUESTIONS);
+  current = 0;
+  renderAll();
+}
+
+function answeredCount(){ return QUESTIONS.filter(q => answers.has(q.id)).length }
+
+function scoreNow(){
+  return QUESTIONS.reduce((s,q)=>{
+    const sel = answers.get(q.id);
+    if (sel != null && q.choices[sel] && q.choices[sel].correct) return s+1;
+    return s;
+  },0);
+}
+
+function updateProgress(){
+  const answered = answeredCount();
+  progressText.textContent = `${answered}/${QUESTIONS.length} answered`;
+  meterBar.style.width = `${Math.round(100*answered/QUESTIONS.length)}%`;
+  scorePreview.textContent = submitted ? `Score: ${scoreNow()} / ${QUESTIONS.length}` : 'Score: —';
+}
+
+function renderNavigator(){
+  grid.innerHTML = '';
+  QUESTIONS.forEach((q,i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'dot';
+    btn.textContent = i+1;
+    if (answers.has(q.id)) btn.classList.add('answered');
+    if (i===current) btn.classList.add('current');
+    if (submitted){
+      const idx = answers.get(q.id);
+      if (idx != null) btn.classList.add(q.choices[idx].correct ? 'correct' : 'incorrect');
+    }
+    btn.onclick = ()=>{ current = i; renderAll() };
+    grid.appendChild(btn);
+  });
+}
+
+function renderQuestion(){
+  const q = QUESTIONS[current];
+  const wrap = document.createElement('div'); wrap.className='q';
+  wrap.innerHTML = `<div class="q-header"><div class="q-title">Q${current+1}. ${q.prompt}</div><div class="q-meta">${submitted ? '<span class="tag">Post-submit review</span>' : ''}</div></div>`;
+  const choicesContainer = document.createElement('div'); choicesContainer.className='choices';
+  q.choices.forEach((c,idx)=>{
+    const node = document.createElement('div'); node.className='choice'; node.innerHTML=`<div>${c.text}</div>`;
+    const selectedIdx = answers.get(q.id);
+    if (selectedIdx === idx) node.classList.add('selected');
+    if (submitted){
+      if (c.correct) node.classList.add('correct');
+      if (selectedIdx === idx && !c.correct) node.classList.add('incorrect');
+    }
+    node.onclick = ()=>{
+      if (submitted) return;
+      answers.set(q.id, idx);
+      renderAll();
+      if (toggleInstant.checked && toggleExplainOnSelect.checked){
+        const existing = wrap.querySelector('.explain'); if (existing) existing.remove();
+        const ex = document.createElement('div'); ex.className='explain'; ex.innerHTML=`<strong>Explanation:</strong> ${q.explain}`; wrap.appendChild(ex);
+      }
+    };
+    choicesContainer.appendChild(node);
+  });
+  wrap.appendChild(choicesContainer);
+  if (submitted){
+    const exp = document.createElement('div'); exp.className='explain'; exp.innerHTML=`<strong>Explanation:</strong> ${q.explain}`; wrap.appendChild(exp);
+  }
+  questionHost.innerHTML=''; questionHost.appendChild(wrap);
+}
+
+function renderAll(){ updateProgress(); renderNavigator(); renderQuestion() }
+
+function submitQuiz(){
+  submitted = true;
+  renderAll();
+  const correct = scoreNow(); const total = QUESTIONS.length; const pct = Math.round(100*correct/total);
+  let level = pct>=85 ? 'Distinction' : pct>=70 ? 'Merit' : pct>=50 ? 'Pass' : 'Below Pass';
+
+  // Detailed report with explanations & citations
+  let details = `<div><strong>Results:</strong> ${correct}/${total} (${pct}%) — ${level}</div>`;
+  details += `<div class="muted" style="margin-top:10px">Elaborated academic answers citing Frederick L. Allen, <em>Only Yesterday</em>, Ch. 9. File citations follow each explanation.</div>`;
+  details += `<div style="margin-top:12px">`;
+  QUESTIONS.forEach((q,i)=>{
+    const sel = answers.get(q.id);
+    const chosenText = sel!=null ? q.choices[sel].text : '<em>No answer</em>';
+    const correctChoice = q.choices.find(ch=>ch.correct).text;
+    const correctness = (sel!=null && q.choices[sel].correct) ? '<span style="color:var(--ok);font-weight:700">Correct</span>' : '<span style="color:var(--danger);font-weight:700">Incorrect</span>';
+    details += `<div style="margin-top:12px;padding:12px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(127,183,255,0.04)"><div style="font-weight:800">Q${i+1}. ${q.prompt}</div><div style="margin-top:6px"><strong>Your answer:</strong> ${chosenText} — ${correctness}</div><div style="margin-top:6px"><strong>Correct answer:</strong> ${correctChoice}</div><div class="explain" style="margin-top:10px"><strong>Elaboration & sources:</strong> ${q.explain}</div></div>`;
+  });
+  details += `</div>`;
+  details += `<div class="references" style="margin-top:12px">Key file citations used above: :contentReference[oaicite:30]{index=30} :contentReference[oaicite:31]{index=31} :contentReference[oaicite:32]{index=32} :contentReference[oaicite:33]{index=33} :contentReference[oaicite:34]{index=34} :contentReference[oaicite:35]{index=35}</div>`;
+
+  postSubmit.innerHTML = details;
+  postSubmit.style.display = 'block';
+}
+
+// Event bindings
+startBtn.onclick = startAttempt;
+prevBtn.onclick = ()=>{ current = Math.max(0,current-1); renderAll(); };
+nextBtn.onclick = ()=>{ current = Math.min(QUESTIONS.length-1,current+1); renderAll(); };
+skipBtn.onclick = ()=>{ current = Math.min(QUESTIONS.length-1,current+1); renderAll(); };
+submitBtn.onclick = submitQuiz;
+clearBtn.onclick = ()=>{ if(confirm('Clear all answers and restart the quiz?')) startAttempt(); };
+
+// Hotkeys
+window.addEventListener('keydown', e=>{
+  if (e.target.closest && e.target.closest('input, textarea')) return;
+  if (e.key==='ArrowRight'){ e.preventDefault(); nextBtn.click(); }
+  if (e.key==='ArrowLeft'){ e.preventDefault(); prevBtn.click(); }
+  if (e.key.toLowerCase()==='s'){ e.preventDefault(); skipBtn.click(); }
+  if (e.key==='Enter'){ if(!submitted && !answers.has(QUESTIONS[current].id)){ answers.set(QUESTIONS[current].id,0); renderAll(); } }
+});
+
+// Auto-start
+startAttempt();
+</script>
+<footer>— End of exam —</footer>
+</body>
+</html>
+```
