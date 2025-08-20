@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Roaring Twenties History Quiz</title>
+<style>
+  body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 20px;
+    background: #f7f9fc;
+    color: #222;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  form {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 6px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  }
+  .question {
+    margin-bottom: 1.5rem;
+  }
+  .question h3 {
+    margin-bottom: 0.5rem;
+  }
+  .options label {
+    display: block;
+    cursor: pointer;
+    padding: 5px 8px;
+    border-radius: 4px;
+    margin-bottom: 0.3rem;
+  }
+  .options input[type="radio"] {
+    margin-right: 10px;
+  }
+  button {
+    display: block;
+    margin: 1.5rem auto;
+    padding: 0.7rem 1.5rem;
+    font-size: 1.1rem;
+    background-color: #0077cc;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:hover:not(:disabled) {
+    background-color: #005fa3;
+  }
+  button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+  #results {
+    max-width: 900px;
+    margin: 2rem auto 3rem auto;
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 6px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  }
+  .correct {
+    color: green;
+    font-weight: 600;
+  }
+  .incorrect {
+    color: red;
+    font-weight: 600;
+  }
+  .explanation {
+    margin-top: 0.3rem;
+    font-size: 0.9rem;
+    color: #555;
+    background-color: #f0f8ff;
+    border-left: 4px solid #0077cc;
+    padding: 6px 12px;
+    border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Roaring Twenties History Quiz</h1>
+<form id="quizForm">
+
+  <!-- Question template:
+  <div class="question" id="q1">
+    <h3>1. Question text here?</h3>
+    <div class="options">
+      <label><input type="radio" name="q1" value="a" /> a) Option A</label>
+      <label><input type="radio" name="q1" value="b" /> b) Option B</label>
+      <label><input type="radio" name="q1" value="c" /> c) Option C</label>
+      <label><input type="radio" name="q1" value="d" /> d) Option D</label>
+    </div>
+  </div>
+  -->
+
+</form>
+
+<button id="submitBtn">Submit Answers</button>
+
+<div id="results" style="display:none;"></div>
+
+<script>
+  // Questions and answers data
+  const quizData = [
+    {
+      question: "Which constitutional amendment granted women the right to vote in the USA, ratified during the early 1920s?",
+      options: {
+        a: "15th Amendment",
+        b: "19th Amendment",
+        c: "21st Amendment",
+        d: "18th Amendment"
+      },
+      correct: "b",
+      explanation: "The 19th Amendment, ratified in 1920, granted women suffrage across the United States, marking a major milestone in women's rights."
+    },
+    {
+      question: "What major social movement, focused on African American culture and rights, flourished during the 1920s?",
+      options: {
+        a: "Harlem Renaissance",
+        b: "Civil Rights Movement",
+        c: "Black Power Movement",
+        d: "Reconstruction Era"
+      },
+      correct: "a",
+      explanation: "The Harlem Renaissance was an African American cultural awakening in literature, music, and art, centered in Harlem, NYC during the 1920s."
+    },
+    {
+      question: "Which U.S. president’s term from 1921-1923 was marked by scandals but also economic growth?",
+      options: {
+        a: "Calvin Coolidge",
+        b: "Warren G. Harding",
+        c: "Herbert Hoover",
+        d: "Woodrow Wilson"
+      },
+      correct: "b",
+      explanation: "Warren G. Harding’s presidency is known for various scandals such as Teapot Dome, though his term coincided with economic prosperity."
+    },
+    {
+      question: "What was the primary purpose of the 18th Amendment, and which act enforced it?",
+      options: {
+        a: "Women's suffrage; Voting Rights Act",
+        b: "Prohibition of alcohol; Volstead Act",
+        c: "Income tax; Revenue Act",
+        d: "Anti-lynching; Jim Crow Laws"
+      },
+      correct: "b",
+      explanation: "The 18th Amendment established Prohibition in the U.S., banning alcohol manufacture and sale; the Volstead Act enforced this law."
+    },
+    {
+      question: "The 'Red Scare' post-World War I referred to the fear of:",
+      options: {
+        a: "Communist and anarchist political radicals",
+        b: "Foreign invasion",
+        c: "Economic depression",
+        d: "Immigration from Europe"
+      },
+      correct: "a",
+      explanation: "The first Red Scare (1919-1920) was the widespread fear of communist revolutionaries and anarchists following the Russian Revolution."
+    },
+    {
+      question: "Which notorious Chicago gangster rose to prominence through bootlegging during Prohibition?",
+      options: {
+        a: "John Dillinger",
+        b: "Bugsy Siegel",
+        c: "Al Capone",
+        d: "Lucky Luciano"
+      },
+      correct: "c",
+      explanation: "Al Capone was the most infamous gangster controlling illegal alcohol distribution in Chicago during Prohibition."
+    },
+    {
+      question: "What was the significant racial conflict in 1921 that destroyed a prosperous African American community in Tulsa, Oklahoma?",
+      options: {
+        a: "The Tulsa Race Massacre",
+        b: "The Harlem Riot",
+        c: "The Detroit Riot",
+        d: "The Chicago Race Riot"
+      },
+      correct: "a",
+      explanation: "The Tulsa Race Massacre was a violent attack by a white mob that decimated the Greenwood District, a wealthy Black neighborhood, in 1921."
+    },
+    {
+      question: "Which industry was revolutionized by the introduction of the assembly line, making their product widely affordable?",
+      options: {
+        a: "Textile",
+        b: "Automobile",
+        c: "Steel",
+        d: "Radio broadcasting"
+      },
+      correct: "b",
+      explanation: "Henry Ford revolutionized automobile production with the assembly line, drastically lowering costs and making cars affordable."
+    },
+    {
+      question: "What major sporting stadium opened in New York City in 1923 and was nicknamed 'The House that Ruth Built'?",
+      options: {
+        a: "Polo Grounds",
+        b: "Yankee Stadium",
+        c: "Ebbets Field",
+        d: "Fenway Park"
+      },
+      correct: "b",
+      explanation: "Yankee Stadium opened in 1923, named so for the legendary baseball player Babe Ruth whose popularity helped finance the stadium."
+    },
+    {
+      question: "The term “Flapper” in the 1920s referred to:",
+      options: {
+        a: "A style of jazz music",
+        b: "Young women known for their unconventional behavior and fashion",
+        c: "Immigration laws",
+        d: "A type of automobile"
+      },
+      correct: "b",
+      explanation: "Flappers were young women who defied societal norms with their fashion, behavior, and attitudes during the 1920s."
+    },
+    {
+      question: "What Supreme Court decision supported the enactment of laws prohibiting teaching evolution in schools?",
+      options: {
+        a: "Plessy v. Ferguson",
+        b: "Brown v. Board of Education",
+        c: "Scopes Trial ruling (but teacher found guilty by Tennessee law)",
+        d: "Roe v. Wade"
+      },
+      correct: "c",
+      explanation: "The Scopes Trial (1925) saw John Scopes found guilty of teaching evolution in Tennessee, reflecting tensions between modernism and traditionalism."
+    },
+    {
+      question: "Which form of mass communication became widely influential due to regular broadcasts during the 1920s?",
+      options: {
+        a: "Television",
+        b: "Radio",
+        c: "Internet",
+        d: "Newspapers"
+      },
+      correct: "b",
+      explanation: "Radio became the dominant new medium in the 1920s, broadcasting news, music, and entertainment to the masses."
+    },
+    {
+      question: "Marcus Garvey was a prominent advocate of:",
+      options: {
+        a: "Civil disobedience",
+        b: "Back-to-Africa movement and Black nationalism",
+        c: "Integrationist policies",
+        d: "Labor union organization"
+      },
+      correct: "b",
+      explanation: "Marcus Garvey led the Universal Negro Improvement Association, promoting Black pride and repatriation to Africa."
+    },
+    {
+      question: "Which U.S. constitutional amendment repealed Prohibition in 1933?",
+      options: {
+        a: "18th Amendment",
+        b: "19th Amendment",
+        c: "21st Amendment",
+        d: "20th Amendment"
+      },
+      correct: "c",
+      explanation: "The 21st Amendment repealed the 18th Amendment, ending Prohibition in 1933."
+    },
+    {
+      question: "What characterized the economy of the USA in the Roaring Twenties?",
+      options: {
+        a: "Economic depression and recession throughout",
+        b: "Rapid industrial growth, consumerism, and stock market speculation",
+        c: "Economic stagnation with high unemployment",
+        d: "Agricultural boom rising steadily"
+      },
+      correct: "b",
+      explanation: "The 1920s economy was marked by rapid industrialization, consumer credit growth, and speculative investments, culminating in the 1929 crash."
+    },
+    {
+      question: "Which cultural figure is most closely associated with jazz music in the 1920s?",
+      options: {
+        a: "Duke Ellington",
+        b: "Louis Armstrong",
+        c: "Benny Goodman",
+        d: "Count Basie"
+      },
+      correct: "b",
+      explanation: "Louis Armstrong was a pioneering jazz trumpeter and vocalist who helped popularize jazz worldwide."
+    },
+    {
+      question: "Which 1920s literary movement is best exemplified by authors like F. Scott Fitzgerald and Ernest Hemingway?",
+      options: {
+        a: "Beat Generation",
+        b: "Lost Generation",
+        c: "Harlem Renaissance",
+        d: "Realism"
+      },
+      correct: "b",
+      explanation: "The Lost Generation refers to a group of post-WWI writers disillusioned by traditional values and forms."
+    },
+    {
+      question: "The Ku Klux Klan in the 1920s:",
+      options: {
+        a: "Disbanded after Reconstruction",
+        b: "Was nearly extinct and inactive",
+        c: "Experienced a resurgence and spread through much of the northern and midwestern U.S.",
+        d: "Focused exclusively on southern states"
+      },
+      correct: "c",
+      explanation: "The 1920s saw a KKK resurgence with millions of members and a presence outside the South, promoting white supremacy and nativism."
+    },
+    {
+      question: "What role did credit and installment buying play in the 1920s consumer culture?",
+      options: {
+        a: "Minimal impact; most purchases were cash-only",
+        b: "Enabled more Americans to buy goods, fueling consumerism",
+        c: "Was banned by government due to economic risks",
+        d: "Only available for luxury goods"
+      },
+      correct: "b",
+      explanation: "The spread of consumer credit and installment plans made expensive goods affordable to many, boosting mass consumption."
+    },
+    {
+      question: "Which major natural disaster struck the Mississippi River valley in 1927, causing widespread devastation?",
+      options: {
+        a: "The Great Mississippi Flood",
+        b: "The Dust Bowl",
+        c: "The San Francisco Earthquake",
+        d: "The Ohio River Flood"
+      },
+      correct: "a",
+      explanation: "The Great Mississippi Flood was one of the most destructive floods in U.S. history, displacing hundreds of thousands."
+    }
+  ];
+
+  const quizForm = document.getElementById("quizForm");
+  const submitBtn = document.getElementById("submitBtn");
+  const resultsDiv = document.getElementById("results");
+
+  // Dynamically generate quiz questions
+  function buildQuiz() {
+    let output = "";
+    quizData.forEach((item, index) => {
+      output += `
+      <div class="question" id="q${index + 1}">
+        <h3>${index + 1}. ${item.question}</h3>
+        <div class="options">
+          ${Object.entries(item.options).map(([key, val]) => `
+            <label>
+              <input type="radio" name="q${index + 1}" value="${key}" />
+              ${key}) ${val}
+            </label>
+          `).join("")}
+        </div>
+      </div>`;
+    });
+    quizForm.innerHTML = output;
+  }
+
+  // Calculate and display results
+  function showResults() {
+    let score = 0;
+    let output = "";
+    quizData.forEach((item, index) => {
+      const selector = `input[name=q${index + 1}]:checked`;
+      const userAnswer = (document.querySelector(selector) || {}).value;
+      const isCorrect = userAnswer === item.correct;
+      if (isCorrect) score++;
+
+      output += `
+      <div class="question-result">
+        <h3>Q${index + 1}: ${item.question}</h3>
+        <p>Your answer: <strong>${userAnswer ? `${userAnswer}) ${item.options[userAnswer]}` : "No answer selected"}</strong> — 
+          <span class="${isCorrect ? "correct" : "incorrect"}">${isCorrect ? "Correct" : "Incorrect"}</span></p>
+        <div class="explanation"><strong>Explanation:</strong> ${item.explanation}</div>
+        <hr />
+      </div>`;
+    });
+
+    resultsDiv.innerHTML = `<h2>Your score: ${score} / ${quizData.length}</h2>${output}`;
+    resultsDiv.style.display = "block";
+
+    // Disable form and button after submission
+    submitBtn.disabled = true;
+    const inputs = quizForm.querySelectorAll("input[type=radio]");
+    inputs.forEach(input => input.disabled = true);
+  }
+
+  // Build quiz on page load
+  buildQuiz();
+
+  // Submit button click event
+  submitBtn.addEventListener("click", () => {
+    // Check if all questions are answered (optional)
+    // Comment out if partial answers are allowed
+    /*
+    for(let i = 1; i <= quizData.length; i++) {
+      if(!document.querySelector(`input[name=q${i}]:checked`)) {
+        alert(`Please answer question ${i} before submitting.`);
+        return;
+      }
+    }
+    */
+    showResults();
+    // Scroll to results
+    resultsDiv.scrollIntoView({ behavior: "smooth" });
+  });
+</script>
+
+</body>
+</html>

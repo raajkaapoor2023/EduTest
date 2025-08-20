@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chapter 9: Narrow Transcription – BLing Quiz</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(120deg, #3a0ca3, #4361ee);
+      color: #f1faee;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+    .quiz-container {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+      width: 90%;
+      max-width: 750px;
+    }
+    h1 {
+      text-align: center;
+      color: #ffd60a;
+    }
+    .question {
+      font-size: 1.1rem;
+      margin: 1.5rem 0 0.5rem;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+    }
+    .option {
+      background: #3f37c9;
+      border: 2px solid #ffd60a;
+      margin: 0.4rem 0;
+      padding: 0.6rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .option:hover {
+      background: #ffd60a;
+      color: black;
+    }
+    .btn {
+      margin-top: 1rem;
+      padding: 0.6rem 1.5rem;
+      background: #f72585;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .result, .explanation {
+      margin-top: 2rem;
+      background: #ffffff11;
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+    .correct { color: lightgreen; }
+    .incorrect { color: #ff4d6d; }
+  </style>
+</head>
+<body>
+<div class="quiz-container">
+  <h1>Chapter 9: Narrow Transcription</h1>
+  <div id="quiz"></div>
+  <div class="result" id="result"></div>
+  <div class="explanation" id="explanation"></div>
+  <button class="btn" onclick="nextQuestion()">Next</button>
+</div>
+
+<script>
+const questions = [
+  {
+    q: "What does narrow transcription capture?",
+    options: [
+      "Only the phonemes of a language",
+      "Dialect spelling variations",
+      "Detailed allophonic and phonetic variations",
+      "Word stress patterns only"
+    ],
+    answer: 2,
+    ref: "Narrow transcription shows phonetic detail beyond phonemic level. (p.176)"
+  },
+  {
+    q: "Which brackets are used for narrow transcription?",
+    options: ["/ /", "< >", "[ ]", "{ }"],
+    answer: 2,
+    ref: "Square brackets [ ] are used for narrow (phonetic) transcription. (p.176)"
+  },
+  {
+    q: "Diacritics in IPA are used to indicate:",
+    options: [
+      "Word-level stress",
+      "Variations in pronunciation like aspiration or nasalization",
+      "Morpheme boundaries",
+      "Syllable breaks"
+    ],
+    answer: 1,
+    ref: "IPA diacritics show detailed articulation, such as nasalization [ã]. (p.177–179)"
+  },
+  {
+    q: "Which of the following shows aspiration using IPA?",
+    options: ["[p]", "[p̚]", "[pʰ]", "[pː]"],
+    answer: 2,
+    ref: "[pʰ] indicates an aspirated voiceless bilabial plosive. (p.177)"
+  },
+  {
+    q: "Glottalization is marked in IPA using:",
+    options: ["[ʔ]", "[ʕ]", "[˞]", "[ˀ]"],
+    answer: 3,
+    ref: "Glottalization is marked with the superscript ˀ. (p.178)"
+  },
+  {
+    q: "Which factor does NOT influence pronunciation variation?",
+    options: ["Speech rate", "Formality", "Speaker’s blood type", "Dialect"],
+    answer: 2,
+    ref: "Linguistic and social factors influence pronunciation, not biology. (p.179–180)"
+  },
+  {
+    q: "What is the difference between broad and narrow transcription?",
+    options: [
+      "Broad uses IPA; narrow uses spelling",
+      "Broad shows phonemes; narrow shows phonetic detail",
+      "Broad is older; narrow is modern",
+      "Broad uses brackets; narrow uses slashes"
+    ],
+    answer: 1,
+    ref: "Broad = phonemic (less detail); Narrow = allophonic/phonetic. (p.176–177)"
+  },
+  {
+    q: "Which of the following shows nasalization of a vowel?",
+    options: ["[ã]", "[a̤]", "[ä]", "[ʌː]"],
+    answer: 0,
+    ref: "[ã] indicates nasalized vowel. (p.177)"
+  },
+  {
+    q: "What is coarticulation's impact on narrow transcription?",
+    options: [
+      "It simplifies it",
+      "It requires more diacritics for detail",
+      "It removes all stress",
+      "It marks pitch only"
+    ],
+    answer: 1,
+    ref: "Coarticulation leads to more detailed phonetic features. (p.179–180)"
+  },
+  {
+    q: "Which diacritic indicates devoicing?",
+    options: [" ̥ ", "ʰ", "̃", "˞"],
+    answer: 0,
+    ref: "The small circle under a symbol ( ̥ ) shows devoicing. (p.177)"
+  },
+  {
+    q: "Why might a speaker pronounce [t] as a flap [ɾ]?",
+    options: [
+      "It is faster to produce between vowels",
+      "It is incorrect articulation",
+      "Due to nasal coarticulation",
+      "For emphasis"
+    ],
+    answer: 0,
+    ref: "Flapping occurs between vowels in American English (e.g., butter → [ˈbʌɾɚ]). (p.180–181)"
+  },
+  {
+    q: "Which is a common dialectal variation in American English?",
+    options: [
+      "Using /θ/ for /s/",
+      "Flapping /t/ and /d/",
+      "Nasalizing voiceless stops",
+      "Trilling vowels"
+    ],
+    answer: 1,
+    ref: "Flapping is a typical dialectal feature in General American. (p.180)"
+  },
+  {
+    q: "What factor may cause /t/ to be realized as a glottal stop [ʔ]?",
+    options: ["Stress position", "Word final placement", "Dialect", "All of the above"],
+    answer: 3,
+    ref: "Multiple factors (including dialect and phonetic context) can cause [ʔ]. (p.180–181)"
+  },
+  {
+    q: "Which transcription represents a nasalized vowel followed by a nasal consonant?",
+    options: ["[tæn]", "[tãn]", "[tǝn]", "[tæn̩]"],
+    answer: 1,
+    ref: "[ã] = nasalized vowel; [n] = nasal consonant. (p.177–178)"
+  },
+  {
+    q: "What is phonetic reduction?",
+    options: [
+      "Deleting whole syllables",
+      "Simplifying articulation due to speed or informality",
+      "Changing grammatical category",
+      "A historical sound change"
+    ],
+    answer: 1,
+    ref: "Reduction occurs when articulatory effort is minimized. (p.179–180)"
+  },
+  {
+    q: "Which factor increases articulatory precision?",
+    options: ["Fast rate", "Casual speech", "Careful speech", "Regional accent"],
+    answer: 2,
+    ref: "Careful speech enhances precision, useful for narrow transcription. (p.180)"
+  },
+  {
+    q: "Which transcription best represents a word-final unreleased [p]?",
+    options: ["[p]", "[p̚]", "[pʰ]", "[pː]"],
+    answer: 1,
+    ref: "[p̚] indicates unreleased final plosive. (p.177)"
+  },
+  {
+    q: "Linguistic style refers to:",
+    options: ["Fashion speech", "Choice of grammar", "Degree of formality or spontaneity", "The use of intonation only"],
+    answer: 2,
+    ref: "Style includes formality, spontaneity, and register. (p.179)"
+  },
+  {
+    q: "What is a sociolinguistic factor in pronunciation?",
+    options: [
+      "Word length",
+      "Lexical stress",
+      "Speaker’s age or education",
+      "Position of a vowel"
+    ],
+    answer: 2,
+    ref: "Age, gender, region, education influence pronunciation. (p.179–180)"
+  },
+  {
+    q: "The diacritic [̩] indicates:",
+    options: ["Voicing", "Nasalization", "Syllabicity", "Devoicing"],
+    answer: 2,
+    ref: "Syllabicity (e.g., [n̩]) marks consonants acting as syllabic nuclei. (p.177)"
+  }
+];
+
+let current = 0;
+let score = 0;
+
+function showQuestion() {
+  const q = questions[current];
+  document.getElementById("quiz").innerHTML = `
+    <div class="question">${current + 1}/20. ${q.q}</div>
+    <div class="options">
+      ${q.options.map((opt, i) => `
+        <div class="option" onclick="checkAnswer(${i})">
+          ${String.fromCharCode(65 + i)}. ${opt}
+        </div>`).join('')}
+    </div>
+  `;
+  document.getElementById("result").textContent = '';
+  document.getElementById("explanation").textContent = '';
+}
+
+function checkAnswer(selected) {
+  const q = questions[current];
+  const correct = q.answer;
+  const resultEl = document.getElementById("result");
+  const explanation = document.getElementById("explanation");
+
+  if (selected === correct) {
+    score++;
+    resultEl.innerHTML = `<span class="correct">✅ Correct!</span>`;
+  } else {
+    resultEl.innerHTML = `<span class="incorrect">❌ Incorrect.</span> Correct answer: <strong>${String.fromCharCode(65 + correct)}</strong>`;
+  }
+
+  explanation.innerHTML = `<strong>Reference:</strong> ${q.ref}`;
+}
+
+function nextQuestion() {
+  if (current < questions.length - 1) {
+    current++;
+    showQuestion();
+  } else {
+    document.getElementById("quiz").innerHTML = `<h2>🎓 Quiz Complete</h2><p>Your Score: ${score}/20</p>`;
+    document.getElementById("result").textContent = '';
+    document.getElementById("explanation").innerHTML = `
+      <p><strong>Review source:</strong> Linda I. House, <em>Introductory Phonetics and Phonology</em>, Chapter 9: Narrow Transcription (pp.176–202).</p>`;
+    document.querySelector(".btn").style.display = "none";
+  }
+}
+
+showQuestion();
+</script>
+</body>
+</html>

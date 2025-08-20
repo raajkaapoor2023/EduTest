@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>QCM : Culioli – Linguistique de l'Énonciation</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; max-width: 960px; margin: auto; background: #f9f9f9; }
+    h1 { color: #2c3e50; }
+    .question { background: #ffffff; padding: 1rem; border-left: 4px solid #3498db; margin-bottom: 1.5rem; border-radius: 8px; }
+    .question p { font-weight: bold; }
+    button { padding: 0.6rem 1rem; font-size: 1rem; margin-top: 1rem; cursor: pointer; }
+    .result { font-size: 1.2rem; color: green; margin-top: 2rem; }
+    .answers { margin-top: 2rem; padding: 1rem; background: #fcf3cf; border-left: 5px solid #f39c12; }
+  </style>
+</head>
+<body>
+  <h1>QCM (50 questions) – Antoine Culioli : Pour une linguistique de l'énonciation</h1>
+  <form id="quizForm"></form>
+
+  <script>
+    const questions = [
+      { q: "Quel est le concept central de la théorie de Culioli ?", opts: ["La prédication", "L'énoncé performatif", "L'opération de repérage", "La déixis"], a: 2 },
+      { q: "Selon Culioli, l'énonciation est considérée comme :", opts: ["Un acte social figé", "Une production syntaxique neutre", "Un processus opératoire de construction du sens", "Une simple transmission d'information"], a: 2 },
+      { q: "La notion de 'repérage' chez Culioli désigne :", opts: ["Un phénomène phonologique", "L'indexation grammaticale fixe", "La mise en relation de points de référence pour construire le sens", "La structuration narrative du récit"], a: 2 },
+      { q: "Culioli emploie le terme 'invariant' pour désigner :", opts: ["Une constante phonétique", "Un noyau opératoire abstrait commun à différentes formes linguistiques", "Un élément morphologique", "Un modèle de discours narratif"], a: 1 },
+      { q: "Dans l'approche culiolienne, qu'appelle-t-on une 'opération linguistique' ?", opts: ["Un segment grammatical autonome", "Une transformation syntaxique issue du générativisme", "Un acte discursif intentionnel", "Un processus mental permettant la construction de représentations"], a: 3 },
+      { q: "Quelle est la finalité des opérations énonciatives ?", opts: ["Produire des sons corrects", "Générer des structures syntaxiques", "Construire des représentations mentales", "Traduire automatiquement"], a: 2 },
+      { q: "Que représente le 'repère zéro' ?", opts: ["Un marqueur de négation", "Un point d’ancrage déictique initial", "Une pause syntaxique", "Une absence d’ancrage contextuel"], a: 1 },
+      { q: "Comment Culioli définit-il la 'modalisation' ?", opts: ["Une catégorie syntaxique", "Une nuance affective", "Une opération de positionnement du locuteur", "Un effet prosodique"], a: 2 },
+      { q: "Dans la théorie des domaines, un domaine est :", opts: ["Un champ morphologique clos", "Un espace notionnel structuré par des opérations de repérage", "Un univers sémantique arbitraire", "Un syntagme figé"], a: 1 },
+      { q: "La notion de 'valeur' chez Culioli s'entend comme :", opts: ["Un jugement moral du locuteur", "Un sens lexical isolé", "Une variation contextuelle de sens dans une structure donnée", "Un élément prosodique invariant"], a: 2 },
+      { q: "Que sont les 'paramètres' dans l'analyse culiolienne ?", opts: ["Des règles de phonologie", "Des constantes sémantiques", "Des dimensions de variation pertinentes pour l’interprétation", "Des lexèmes abstraits"], a: 2 },
+      { q: "Le rôle du locuteur, dans la linguistique de l'énonciation, est :", opts: ["Marginalisé au profit de la syntaxe", "Effacé par l’objectivité scientifique", "Essentiel comme source de point de vue", "Irréductible à une fonction grammaticale"], a: 2 },
+      { q: "Comment Culioli envisage-t-il la langue ?", opts: ["Comme un code clos", "Comme un système mathématique formel", "Comme un ensemble d’opérations dynamiques", "Comme un dictionnaire figé"], a: 2 },
+      { q: "Qu’est-ce que la 'notion' chez Culioli ?", opts: ["Une forme syntaxique", "Un concept grammatical figé", "Une structure préconstruite", "Une entité cognitive floue activée dans un domaine"], a: 3 },
+      { q: "La négation, pour Culioli, est :", opts: ["Un simple opérateur binaire", "Une marque morphologique sans portée", "Un opérateur sur des représentations", "Un phénomène prosodique"], a: 2 },
+      { q: "L’énoncé 'Il n’est pas parti' implique :", opts: ["Un rejet catégorique de l'action", "L'opération de négation d’un procès envisagé", "Une opposition lexicale stricte", "Une assertion assertive simple"], a: 1 },
+      { q: "Le rôle du co-énonciateur est :", opts: ["Négligeable dans la théorie", "De comprendre uniquement le lexique", "De reconstruire les opérations à partir de l’énoncé", "De choisir l’intonation"], a: 2 },
+      { q: "Culioli distingue les opérations :", opts: ["Syntaxiques et sémantiques", "Abstraites et concrètes", "Enonciatives et inférentielles", "Opératoires et terminatives"], a: 0 },
+      { q: "Les marqueurs linguistiques sont vus comme :", opts: ["Des mots lexicaux pleins", "Des formes toujours autonomes", "Des indices de fonctionnement opératoire", "Des signes arbitraires sans lien au sens"], a: 2 },
+      { q: "Un exemple de paramètre dans le domaine temporel serait :", opts: ["La voix passive", "Le repérage passé/présent", "La nasalisation", "Le genre nominal"], a: 1 },
+      { q: "L’opposition entre 'je' et 'tu' illustre :", opts: ["La conjugaison", "Le lexique pronominal", "Une opération de repérage énonciatif", "Une variation diachronique"], a: 2 },
+      { q: "Qu’indique la forme 'aurait pu venir' ?", opts: ["Un futur simple", "Une impossibilité logique", "Une opération modale complexe avec virtualité et antériorité", "Un ordre direct"], a: 2 },
+      { q: "'Même' dans 'même lui l’a dit' a une fonction de :", opts: ["Préfixe aspectuel", "Marqueur de focalisation", "Verbe auxiliaire", "Morphème vide"], a: 1 },
+      { q: "Une opération d’aspect marque :", opts: ["Le style d’écriture", "L’intonation prosodique", "La structure du procès dans le temps", "Le type de verbe"], a: 2 },
+      { q: "La forme 'en train de' marque :", opts: ["L’aspect accompli", "Le futur proche", "L’aspect inchoatif", "L’aspect progressif"], a: 3 },
+      { q: "Le rôle du cotexte dans l’interprétation est :", opts: ["Marginal", "Structurant pour les opérations de repérage", "Un obstacle à l’analyse", "Strictement syntaxique"], a: 1 },
+      { q: "La forme 'il va pleuvoir' contient :", opts: ["Une modalisation évidente", "Un aspect accompli", "Une virtualité projetée", "Un procès déjà terminé"], a: 2 },
+      { q: "Les constructions hypothétiques relèvent :", opts: ["D’opérations logiques modales", "De l’indicatif uniquement", "D’un style oral", "Du niveau phonologique"], a: 0 },
+      { q: "L’énoncé 'Si j’étais toi' relève d’une modalité :", opts: ["Assertive", "Interrogative", "Contrefactuelle", "Inchoative"], a: 2 },
+      { q: "La polyphonie est liée à :", opts: ["La musicalité d’un texte", "La présence de plusieurs voix dans un énoncé", "La répétition syntaxique", "Le style indirect libre uniquement"], a: 1 },
+      { q: "Une opération de reformulation a pour but :", opts: ["D’éviter la répétition", "De construire une nouvelle représentation équivalente", "De corriger l’intonation", "De segmenter la phrase"], a: 1 },
+      { q: "Le connecteur 'donc' fonctionne comme :", opts: ["Adverbe temporel", "Opérateur de conséquence logique", "Marqueur de politesse", "Adjectif"], a: 1 },
+      { q: "'Pourtant' dans un énoncé introduit :", opts: ["Une reprise narrative", "Un contraste argumentatif", "Un renforcement modal", "Un futur probable"], a: 1 },
+      { q: "Dans 'il semble que', le verbe 'sembler' a une valeur :", opts: ["Épistémique modale", "Lexicale pleine", "Déontique pure", "Aspectuelle"], a: 0 },
+      { q: "L’approche de Culioli est souvent décrite comme :", opts: ["Formaliste syntaxique", "Opérationnelle cognitive", "Lexicale descriptive", "Narratologique"], a: 1 },
+      { q: "Quel linguiste est souvent mis en parallèle avec Culioli sur les marqueurs ?", opts: ["Benveniste", "Chomsky", "Jakobson", "Derrida"], a: 0 },
+      { q: "Un 'procès' en linguistique culiolienne est :", opts: ["Une forme verbale pleine", "Un déroulement représenté par un verbe", "Un acte juridique", "Un syntagme figé"], a: 1 },
+      { q: "La notion de virtualité renvoie à :", opts: ["Des réalités futures obligatoires", "Des processus non réalisés mais envisagés", "Des faits avérés", "Des processus passés répétés"], a: 1 },
+      { q: "Culioli distingue 'modalité épistémique' et :", opts: ["Modalité musicale", "Modalité déontique", "Modalité passive", "Modalité stylistique"], a: 1 },
+      { q: "L’approche énonciative met l’accent sur :", opts: ["Le texte comme produit", "La parole sans locuteur", "La subjectivité et la construction du sens", "L’analyse phonétique"], a: 2 },
+      { q: "Une 'construction marquée' signifie :", opts: ["Une forme fautive", "Une forme motivée signalant une valeur spécifique", "Une forme allongée", "Une erreur de registre"], a: 1 },
+      { q: "'Il a failli tomber' marque :", opts: ["Une action réalisée", "Un événement certain", "Un procès presque réalisé (virtualité proche)", "Une action future probable"], a: 2 },
+      { q: "L’ancrage énonciatif est essentiel pour :", opts: ["La poésie", "L’interprétation syntaxique", "La localisation des procès dans l’espace/temps", "La dérivation morphologique"], a: 2 },
+      { q: "La forme 'Il doit venir' est interprétée comme :", opts: ["Nécessité épistémique ou obligation", "Passé accompli", "Contingence", "Futur incertain"], a: 0 }
+    ];
+
+    function buildQuiz() {
+      const form = document.getElementById("quizForm");
+      questions.forEach((item, i) => {
+        const div = document.createElement("div");
+        div.className = "question";
+        div.innerHTML = `<p>${i + 1}. ${item.q}</p>` +
+          item.opts.map((opt, j) =>
+            `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label><br>`
+          ).join("");
+        form.appendChild(div);
+      });
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = "Valider le questionnaire";
+      btn.onclick = grade;
+      form.appendChild(btn);
+    }
+
+    function grade() {
+      let score = 0;
+      questions.forEach((item, i) => {
+        const sel = document.querySelector(`input[name=q${i}]:checked`);
+        if (sel && Number(sel.value) === item.a) score++;
+      });
+      const form = document.getElementById("quizForm");
+      form.insertAdjacentHTML('beforeend', `<div class="result">Votre score : ${score} sur ${questions.length}</div>`);
+      const btn2 = document.createElement("button");
+      btn2.type = "button";
+      btn2.textContent = "Afficher les réponses détaillées avec références";
+      btn2.onclick = showAnswers;
+      form.appendChild(btn2);
+    }
+
+    function showAnswers() {
+      const div = document.createElement("div");
+      div.className = "answers";
+      let html = "<h2>Réponses détaillées et références</h2>";
+      questions.forEach((item, i) => {
+        html += `<p><strong>Q${i + 1}.</strong> ${item.q}<br>` +
+                `✅ <em>${item.opts[item.a]}</em><br>` +
+                `<small>Réf. : A. Culioli, <em>Pour une linguistique de l'énonciation</em>; voir aussi : Anscombre (1995), Rabatel (2004), Ducrot (1980)</small></p>`;
+      });
+      div.innerHTML = html;
+      document.getElementById("quizForm").appendChild(div);
+    }
+
+    window.onload = buildQuiz;
+  </script>
+</body>
+</html>

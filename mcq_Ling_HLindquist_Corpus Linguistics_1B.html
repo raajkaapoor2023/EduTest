@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Corpus Linguistics: Chapter 1 Advanced Quiz</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top for longer content */
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .quiz-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        .question-box {
+            min-height: 120px; /* Ensure consistent height for questions */
+        }
+        .option-item {
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            border: 1px solid #e2e8f0; /* Light gray border */
+        }
+        .option-item:hover {
+            background-color: #eff6ff; /* Lighter blue on hover */
+        }
+        .option-item.selected {
+            background-color: #dbeafe; /* Blue 100 */
+            border-color: #93c5fd; /* Blue 300 */
+            box-shadow: 0 0 0 2px #bfdbfe; /* Blue 200 ring */
+        }
+        .option-item.correct {
+            background-color: #d1fae5; /* Green 100 */
+            border-color: #6ee7b7; /* Green 300 */
+        }
+        .option-item.incorrect {
+            background-color: #fee2e2; /* Red 100 */
+            border-color: #fca5a5; /* Red 300 */
+        }
+        .explanation-box {
+            background-color: #f8fafc; /* White-gray for explanation */
+            border-left: 4px solid #3b82f6; /* Blue border */
+        }
+        .button-primary {
+            background-color: #2563eb; /* Blue 600 */
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .button-primary:hover:not(.button-disabled) {
+            background-color: #1d4ed8; /* Blue 700 */
+        }
+        .button-secondary {
+            background-color: #e2e8f0; /* Gray 200 */
+            color: #4b5563; /* Gray 700 */
+            padding: 12px 24px;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .button-secondary:hover:not(.button-disabled) {
+            background-color: #cbd5e1; /* Gray 300 */
+        }
+        .button-disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .progress-bar {
+            height: 8px;
+            background-color: #e0e7ff; /* Indigo 100 */
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #6366f1; /* Indigo 500 */
+            transition: width 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="selection:bg-blue-200 selection:text-blue-800">
+    <div id="quiz-app" class="quiz-container">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Corpus Linguistics Quiz: Chapter 1</h1>
+        <div class="progress-bar mb-6">
+            <div id="progress-fill" class="progress-fill" style="width: 0%;"></div>
+        </div>
+        <!-- Quiz Screen -->
+        <div id="quiz-screen">
+            <p class="text-sm text-gray-600 mb-2">Question <span id="current-q-number">1</span> of <span id="total-q-count">40</span></p>
+            <div class="question-box bg-blue-50 text-blue-900 p-6 rounded-lg mb-6 shadow-sm">
+                <p id="question-text" class="text-lg font-medium leading-relaxed"></p>
+                <p id="question-hint" class="text-sm text-blue-700 mt-2 italic hidden"></p>
+            </div>
+            <div id="options-container" class="space-y-3 mb-6" role="list" aria-label="Answer options">
+                <!-- Options will be dynamically loaded here -->
+            </div>
+            <div class="flex flex-col sm:flex-row justify-between gap-4">
+                <button id="prev-button" class="button-secondary flex-1" disabled>Previous Question</button>
+                <button id="skip-button" class="button-secondary flex-1">Skip Question</button>
+                <button id="next-button" class="button-primary flex-1 button-disabled" disabled>Next Question</button>
+                <button id="submit-quiz-button" class="button-primary flex-1 hidden button-disabled" disabled>Submit Quiz</button>
+            </div>
+        </div>
+        <!-- Results Screen -->
+        <div id="results-screen" class="hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Quiz Results</h2>
+            <p class="text-xl text-center mb-6">Your Score: <span id="final-score" class="font-bold text-green-600"></span> / <span id="total-score-possible" class="font-bold"></span></p>
+            <div id="answers-container" class="space-y-8" tabindex="0" aria-live="polite" aria-label="Detailed quiz results with explanations">
+                <!-- Detailed answers will be loaded here -->
+            </div>
+            <button id="restart-button" class="button-primary w-full mt-8">Restart Quiz</button>
+        </div>
+    </div>
+   <script>
+        // Quiz Data - 40 questions on Chapter 1 of H. Lindquist's Corpus Linguistics
+        const quizData = {
+            questions: [
+                {
+                    "question": "The text differentiates between corpus linguistics and other 'hyphenated branches' of linguistics. What is the fundamental distinction drawn?",
+                    "hint": "Think about what the term 'corpus' describes in this context, and how that contrasts with the subject matter of fields like sociolinguistics or psycholinguistics.",
+                    "answerOptions": [
+                        {
+                            "text": "Corpus linguistics is an independent theoretical framework, while other branches are subfields of applied linguistics.",
+                            "rationale": "While corpus linguistics has theoretical implications, the text explicitly states its primary identity is as a methodology, not a theoretical framework on par with other branches which define their subject of study.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Corpus linguistics is a methodology for studying any aspect of language, whereas other branches are defined by the specific aspect of language they study (e.g., language and society).",
+                            "rationale": "The book clarifies that corpus linguistics is a methodology and not a subject area like sociolinguistics or neurolinguistics, which are defined by what they study (language and society, or language and the brain, respectively).",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "Corpus linguistics is exclusively concerned with quantitative data, while other linguistic branches focus on qualitative analysis.",
+                            "rationale": "The text does not state that corpus linguistics is exclusively quantitative; it mentions that corpus linguists may also engage in careful manual (qualitative) analysis and that the methodology can be used by scholars of different theoretical leanings.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Corpus linguistics relies on introspection, while other branches are based on empirical observation of language in use.",
+                            "rationale": "This statement is the opposite of what the text argues; a key advantage of corpus linguistics is its use of objective, verifiable data from language in use, contrasting with introspection.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "According to the chapter, what is the key difference between a corpus-based and a corpus-driven approach to linguistics?",
+                    "hint": "Consider the relationship between theory and data in each approach.",
+                    "answerOptions": [
+                        {
+                            "text": "Corpus-based linguistics focuses on inductive reasoning, while corpus-driven linguistics uses deductive reasoning to test hypotheses.",
+                            "rationale": "The text states that corpus-driven linguistics involves working with data inductively to arrive at an analysis, while corpus-based linguistics uses corpora to test hypotheses based on existing theories, which is a deductive approach.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Corpus-based linguistics uses corpora to test pre-existing hypotheses, whereas corpus-driven linguistics attempts to derive theory from the corpus data with minimal preconceptions.",
+                            "rationale": "The text explicitly defines corpus-based linguistics as using corpora to test hypotheses from existing theories and corpus-driven linguistics as working with data with minimal preconceptions to arrive at an analysis inductively.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "Corpus-based linguistics relies on a single, large corpus, while corpus-driven linguistics utilizes a collection of smaller, specialized corpora.",
+                            "rationale": "The distinction is not about the size or number of corpora used, but rather the theoretical relationship between the researcher's approach and the data itself.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Corpus-driven linguistics is concerned only with quantitative data, while corpus-based linguistics integrates both quantitative and qualitative methods.",
+                            "rationale": "The distinction between the two approaches is not about the type of data (quantitative vs. qualitative) but about the relationship between theory and data analysis.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "What primary limitation of using a traditional 'professor's shoeboxes' collection of language examples is highlighted in the text?",
+                    "hint": "Consider what makes a collection of examples truly representative or robust for linguistic analysis.",
+                    "answerOptions": [
+                        {
+                            "text": "The examples were typically too complex to be manually analysed.",
+                            "rationale": "The issue was not the complexity of the examples themselves, but rather the ad-hoc and unrepresentative nature of the collection.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "The collection methods were unsystematic, making the examples subjectively selected and non-verifiable.",
+                            "rationale": "The text highlights that these personal collections were often unsystematic, unrepresentative, and could not be verified by other researchers, making them less reliable for objective study.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "The sheer volume of material made it impossible to manually process without computer assistance.",
+                            "rationale": "While computers made large-scale analysis possible, the text points out that even before computers, the fundamental problem was the unsystematic and unrepresentative nature of the hand-collected data, not just the volume.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "The examples were limited to written texts and did not include spoken language.",
+                            "rationale": "While spoken language corpora were a later development, the primary limitation of the 'shoebox' method was its lack of objectivity and representativeness, regardless of the medium.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "Which of the following is NOT listed as an advantage of using corpora for linguistic research, according to Svartvik's arguments in the chapter?",
+                    "hint": "Review the specific points made by Jan Svartvik about why corpus data is valuable.",
+                    "answerOptions": [
+                        {
+                            "text": "Corpus data can be used for studies of variation between dialects, registers, and styles.",
+                            "rationale": "Svartvik's arguments include the utility of corpus data for studying variation across dialects and registers.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Corpus data are needed for the development of generative grammar theories.",
+                            "rationale": "The text associates generative linguistics with an opposing view to early corpus linguistics, and this is not an argument Svartvik presents in favour of corpus data.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "Corpus data can easily be verified by other researchers.",
+                            "rationale": "Verifiability and shared data are listed as key advantages, allowing for collaborative and reproducible research.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Corpus data provide information on the frequency of occurrence of linguistic items.",
+                            "rationale": "The ability to provide quantitative information, such as frequency, is explicitly listed as one of the main advantages of corpus data.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "What is the key challenge associated with creating corpora of spoken language, as noted in the text?",
+                    "hint": "Consider the nature of spoken language and how it differs from written text in terms of collection and representation.",
+                    "answerOptions": [
+                        {
+                            "text": "The difficulty of securing funding for such large-scale projects.",
+                            "rationale": "While funding is a practical challenge, the text focuses on the linguistic and technical complexities of representing spoken language.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "The ethical and legal complexities of recording private conversations without consent.",
+                            "rationale": "While ethical concerns are relevant, the text emphasizes the technical difficulties of transcription and annotation, such as representing pauses, interruptions, and non-standard speech.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "The challenge of transcribing speech accurately, including features like pauses, interruptions, and non-standard forms, and representing them appropriately.",
+                            "rationale": "The text highlights the specific complications of transcribing spoken language, including the need to represent features like pauses, incomplete sentences, and errors, which are not present in written corpora.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "The limited availability of authentic spoken language for research purposes.",
+                            "rationale": "The text implies that spoken language is available, but that the process of turning it into a usable corpus is what presents the main challenge.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "The chapter discusses a criticism from 'armchair linguists' that some corpus findings are trivial. What example does the text provide to illustrate a potentially trivial finding?",
+                    "hint": "Look for an example in the section on criticism that compares the frequency of a linguistic item in two different, but similar, contexts.",
+                    "answerOptions": [
+                        {
+                            "text": "The finding that 'the' is the most frequent word in English.",
+                            "rationale": "The frequency of function words is a well-established and generally accepted finding; the text uses a different example to illustrate a trivial finding.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "The observation that 'I live in New York' is more frequent than 'I live in Dayton, Ohio'.",
+                            "rationale": "The text uses the example of 'I live in New York' being more frequent than 'I live in Dayton, Ohio' to illustrate a finding that, while true, may be considered trivial for linguistic theory or description.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "The discovery of a new grammatical construction that only appears once in a 100-million-word corpus.",
+                            "rationale": "The text does not use this specific example, and in fact, such a discovery might be of great interest, not trivial.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "The finding that conversational language contains more interjections than academic prose.",
+                            "rationale": "This finding, while perhaps intuitive, is a stylistic difference that is linguistically significant and not presented as a trivial example in the text.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "According to the chapter, why is it crucial for a corpus linguist to engage in 'careful manual analysis' in addition to computational methods?",
+                    "hint": "Think about the limitations of relying on statistical figures alone.",
+                    "answerOptions": [
+                        {
+                            "text": "Manual analysis is necessary to correct every spelling mistake and grammatical error in the corpus data.",
+                            "rationale": "While correcting errors may be part of the process, the text's primary point is about the interpretation and context of the data, stating that 'mere figures are rarely enough.'",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Manual analysis is required to identify what is grammatical and what is not in the corpus data.",
+                            "rationale": "The text mentions that a native speaker's intuition might be needed for this, but the primary reason for manual analysis is to interpret the data beyond just the figures.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Manual analysis provides the necessary theoretical framework before beginning the research.",
+                            "rationale": "The theoretical framework is something the researcher brings to the project, and manual analysis is done in conjunction with the data, not necessarily to create the framework itself.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Mere figures from a corpus are often insufficient and manual analysis is needed to interpret the results and provide a deeper understanding of the findings.",
+                            "rationale": "The text states that 'mere figures are rarely enough' and that careful manual analysis is a crucial complement to computational methods for interpreting the data.",
+                            "isCorrect": true
+                        }
+                    ]
+                },
+                {
+                    "question": "The London-Lund Corpus is described as a 'pioneering corpus of spoken English.' What is a key feature of its construction that addresses a major challenge of spoken corpora?",
+                    "hint": "Focus on how the corpus was created and how it was made accessible.",
+                    "answerOptions": [
+                        {
+                            "text": "It was the first spoken corpus to be fully transcribed by a computer and not by hand.",
+                            "rationale": "The text mentions that the LLC was painstakingly transcribed by hand, which took an immense amount of time.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "It was the first to exclusively use recordings from academic lectures to ensure high-quality speech.",
+                            "rationale": "The LLC contains a variety of spoken texts, including public and private conversations, not just academic lectures.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "It was compiled using a specialized 'T-scanner' to automatically identify all-caps words.",
+                            "rationale": "The text makes no mention of a 'T-scanner' for this purpose; this is not a feature of the LLC's pioneering status.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "It used a specialized transcription system to capture non-standard features of spoken language, such as pauses, laughter, and false starts.",
+                            "rationale": "The text notes that the LLC used a special transcription system to capture non-standard features like pauses and false starts, which was a pioneering step in spoken corpus compilation.",
+                            "isCorrect": true
+                        }
+                    ]
+                },
+                {
+                    "question": "What is the primary difference between a 'general corpus' and a 'specialized corpus'?",
+                    "hint": "Consider the criteria used for text selection in each type of corpus.",
+                    "answerOptions": [
+                        {
+                            "text": "A general corpus is always larger than a specialized corpus.",
+                            "rationale": "While general corpora tend to be large, the key distinction is not size but the scope and criteria of the texts included, as a specialized corpus can be very large if it is still focused on a particular area.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "A general corpus aims to represent the language as a whole, while a specialized corpus focuses on a specific genre, variety, or type of language use.",
+                            "rationale": "A general corpus aims for a broad representation of the language, such as the BNC, while a specialized corpus, like COLT, focuses on a specific domain such as teenage speech.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "A general corpus contains texts from all time periods, while a specialized corpus is always synchronic.",
+                            "rationale": "The distinction is not about the time period; a general corpus can be synchronic (e.g., BNC) or diachronic (e.g., COHA), as can specialized corpora.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "A specialized corpus is only used for diachronic studies, while a general corpus is only used for synchronic studies.",
+                            "rationale": "Both general and specialized corpora can be either synchronic or diachronic; the defining characteristic is the scope and focus of the included texts.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "The Brown Corpus is considered a foundational 'general corpus'. Which of the following best describes its structure and purpose?",
+                    "hint": "Recall the historical context and the methodology used to create this early corpus.",
+                    "answerOptions": [
+                        {
+                            "text": "It consists of 100 text samples of 2,000 words each from five distinct genres of contemporary American English.",
+                            "rationale": "The Brown Corpus contains 500 text samples of 2,000 words each, representing 15 different genres, not 100 samples from five genres.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "It is a 1-million-word corpus of American English written in 1961, carefully balanced to represent a range of 15 genres.",
+                            "rationale": "The Brown Corpus is a 1-million-word corpus of written American English from 1961, with a balanced collection of 500 texts of 2,000 words each across 15 genres, making it the first of its kind.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "It is the first corpus to be fully tagged for part of speech, making it the first tagged corpus.",
+                            "rationale": "While the Brown Corpus was later tagged, the text states the first manually tagged corpus was the London-Lund Corpus, and the Brown Corpus was the first *computerized* corpus of its kind.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "It is a diachronic corpus used to study the historical development of American English from the 1960s to the present day.",
+                            "rationale": "The Brown Corpus is synchronic, representing a single point in time (1961). The Corpus of Historical American English (COHA) is an example of a diachronic corpus.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "What is the primary purpose of a 'learner corpus' like the International Corpus of Learner English (ICLE)?",
+                    "hint": "Consider who the subjects of the corpus are and what their language use reveals.",
+                    "answerOptions": [
+                        {
+                            "text": "To provide a standard reference for native-speaker English to be used in language teaching materials.",
+                            "rationale": "The text states that the purpose of learner corpora is to study the 'interlanguage' of non-native speakers, not to serve as a standard for native speakers.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "To study the 'interlanguage' of non-native speakers and identify systematic errors or patterns related to their first language.",
+                            "rationale": "The text states that ICLE, a learner corpus, is used to compare the 'interlanguage' of learners with different native languages and to see if they make different mistakes due to first language interference.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "To collect and analyze the language of native English-speaking children from different countries.",
+                            "rationale": "Learner corpora, such as ICLE, focus on non-native speakers, not native-speaking children.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "To create a large database of grammatical and ungrammatical sentences to train language-processing algorithms.",
+                            "rationale": "While learner corpora can be used for this purpose, their primary purpose as described in the chapter is to conduct linguistic research on second language acquisition and learner language.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "Why does the chapter suggest that the number of possible sentences in a language is infinite, and what implication does this have for corpora?",
+                    "hint": "Think about the concept of productivity in language.",
+                    "answerOptions": [
+                        {
+                            "text": "The infinity of sentences is a theoretical concept, and therefore corpora cannot truly capture a language as it is spoken and used.",
+                            "rationale": "The text suggests that because the number of possible sentences is infinite, no corpus can ever contain everything known by a native speaker. The implication is that corpora are necessarily limited in what they can contain, which is a key caveat.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "The statement is a philosophical point with no practical relevance to corpus linguistics.",
+                            "rationale": "The text presents this point as a practical caveat for corpus linguistics, showing that even the largest corpus will never be big enough to contain everything, which is a limitation to be aware of.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "It means that a corpus will never be big enough to contain everything that is known by a native speaker of a language, and thus cannot fully describe a language on its own.",
+                            "rationale": "The text states that since the number of possible sentences is infinite, corpora will never be big enough to contain everything, which is a key limitation and a caveat of corpus-based research.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "The infinite number of sentences makes it impossible to tag corpora for parts of speech.",
+                            "rationale": "The infinite nature of sentences does not prevent the tagging of corpora; it is a conceptual limit on what can be captured in a finite database.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "What is the main challenge presented by the use of the web as a corpus, as discussed in the chapter?",
+                    "hint": "Consider the nature of web content and how it is different from a carefully curated corpus.",
+                    "answerOptions": [
+                        {
+                            "text": "The sheer size of the web makes it impossible to search with traditional corpus tools.",
+                            "rationale": "The text mentions that commercial search engines are used, and that web-based corpus linguistics is an exciting development, despite the size. The main challenge is not the size itself, but the lack of control over the data.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "The content on the web is not subject to copyright, making it unreliable for academic study.",
+                            "rationale": "Copyright is not mentioned as the primary challenge. The text notes that much of the content is copyrighted but also that many older works are in the public domain.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "The lack of reliable metadata about the texts and the unknown quality of the text versions make the data difficult to use for systematic linguistic research.",
+                            "rationale": "The text explicitly states that 'metalinguistic information about the texts is patchy or non-existent' and that one 'cannot be 100% certain of the quality of the text versions,' which are key challenges of using the web as a corpus.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "The web is exclusively composed of informal, conversational language, which limits its use for studying formal registers.",
+                            "rationale": "The text does not state this; it notes that web content includes a variety of genres. The challenge is the lack of control, not the genre itself.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "Which type of corpus is defined by its chronological span, allowing for the study of language change over time?",
+                    "hint": "The term for this type of corpus begins with 'd' and refers to a study of change over time.",
+                    "answerOptions": [
+                        {
+                            "text": "Synchronic corpus",
+                            "rationale": "A synchronic corpus represents a single point in time, such as a snapshot of English in 1961, and is not suitable for studying language change.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Specialized corpus",
+                            "rationale": "A specialized corpus focuses on a specific genre or variety, but this does not necessarily mean it spans a long period of time.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Diachronic corpus",
+                            "rationale": "A diachronic corpus is explicitly defined as a historical corpus that contains texts from different time periods, making it suitable for studying language change, as exemplified by the Helsinki Corpus.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "Spoken corpus",
+                            "rationale": "A spoken corpus is defined by the medium of its content (speech) and can be either synchronic or diachronic, but the defining characteristic is not time.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "The chapter mentions the Bank of English (BoE). What is a notable characteristic of this corpus in comparison to older corpora like the BNC?",
+                    "hint": "Think about the defining feature of the BoE mentioned in the text.",
+                    "answerOptions": [
+                        {
+                            "text": "It is a closed, static corpus that is no longer updated.",
+                            "rationale": "The text states that the Bank of English is a 'monitor corpus' that is constantly being updated, which is the opposite of a static corpus.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "It is a specialized corpus focusing only on financial and economic texts.",
+                            "rationale": "The Bank of English is a general corpus, not a specialized one. The name is a pun and does not refer to the content.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "It is a 'monitor corpus,' which means it is continuously expanded by adding new texts.",
+                            "rationale": "The Bank of English is described as a monitor corpus, which is a living, continuously expanding resource that allows researchers to observe language change in real time.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "It is the first corpus to contain both English and Spanish translations of the same texts.",
+                            "rationale": "The text mentions that parallel and multilingual corpora are a separate type of corpus from the Bank of English.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "What is the purpose of using a 'parallel corpus'?",
+                    "hint": "Consider the languages involved and the relationship between the texts within this type of corpus.",
+                    "answerOptions": [
+                        {
+                            "text": "To compare language use between two different dialects of the same language, such as American and British English.",
+                            "rationale": "Parallel corpora are used to compare a language and its translation into another language, not to compare dialects of the same language.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "To study a language over a long period of time by using texts from different centuries.",
+                            "rationale": "This describes a diachronic corpus, not a parallel corpus, which is defined by the relationship between the languages.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "To study one or more languages by compiling texts in their original language and their translations into another language.",
+                            "rationale": "The text defines a parallel corpus as one that contains originals and their translations (source and target texts) in two or more languages, making it ideal for translation studies.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "To compare the language of a non-native speaker with that of a native speaker.",
+                            "rationale": "This describes the purpose of a learner corpus, not a parallel corpus.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "What is the primary function of a concordance, as described in the text?",
+                    "hint": "Think about what a concordance shows you about a particular word or phrase.",
+                    "answerOptions": [
+                        {
+                            "text": "To display the frequency of a word in a corpus.",
+                            "rationale": "A concordance is not a simple frequency list; it shows the word in its context, which is a richer form of information.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "To show every occurrence of a particular word or phrase in a corpus, along with its immediate co-text (surrounding words).",
+                            "rationale": "The text defines a concordance as a list of every occurrence of a word, with a certain amount of co-text to the left and right, which allows a researcher to see the word in context.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "To identify and correct grammatical errors and spelling mistakes in the corpus.",
+                            "rationale": "While a researcher might use a concordance to spot errors, its primary purpose is not error correction but analysis of word usage.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "To automatically tag the part of speech for every word in the corpus.",
+                            "rationale": "Part-of-speech tagging is a separate process from concordancing. Concordancing displays a word in context, while tagging adds a grammatical label to it.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "According to the text, what is one of the main arguments against the use of introspection in linguistics, which corpus data aims to remedy?",
+                    "hint": "Consider the nature of an individual's intuition about language.",
+                    "answerOptions": [
+                        {
+                            "text": "It is impossible for a native speaker to have an intuition about language.",
+                            "rationale": "The text acknowledges that native speaker intuition is sometimes needed, but the problem is that it is subjective and may not reflect actual language use.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Introspective data is subjective, potentially unreliable, and cannot be easily verified by other researchers.",
+                            "rationale": "The text states that corpus data is 'more objective than data based on introspection' and that it 'can easily be verified by other researchers,' which are direct arguments against introspection.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "It is too time-consuming to gather a large number of introspective judgments.",
+                            "rationale": "While gathering introspective data on a large scale might be difficult, the primary criticism is about its subjective nature, not the time it takes to gather it.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Introspection can only be used to study written language, not spoken language.",
+                            "rationale": "Introspection can be applied to both written and spoken language; the problem lies in its reliability and verifiability.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "The chapter describes the Corpus of London Teenage Speech (COLT). Why would a researcher use this specific corpus?",
+                    "hint": "Think about the focus of this particular corpus and its value to a linguist.",
+                    "answerOptions": [
+                        {
+                            "text": "To study the historical development of London English over the last century.",
+                            "rationale": "COLT is a synchronic corpus of contemporary teenage speech and is not used for diachronic studies.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "To study the language of a specific age group and geographical location, which might not be well-represented in a general corpus.",
+                            "rationale": "COLT is a specialized corpus of the informal, spoken language of teenagers in London, serving a specific purpose that a general corpus might not adequately capture.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "To examine the differences between spoken and written language in a formal setting.",
+                            "rationale": "COLT is a corpus of spoken language, not written, and it focuses on informal teenage speech, not formal settings.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "To compare the language use of native British speakers with non-native speakers.",
+                            "rationale": "This would require a learner corpus like ICLE, not a corpus of native speakers like COLT.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "What is the primary distinction between a 'corpus proper' and a 'text archive'?",
+                    "hint": "Consider the level of structure and metadata in each.",
+                    "answerOptions": [
+                        {
+                            "text": "A corpus proper is static, whereas a text archive is constantly being updated.",
+                            "rationale": "The distinction is not about whether they are static or dynamic. For example, some corpora are static, while others (like monitor corpora) are dynamic, but this is not the fundamental difference between a corpus and a text archive.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "A corpus proper is structured and annotated for linguistic analysis, while a text archive is a raw, un-annotated collection of texts.",
+                            "rationale": "The text describes a corpus proper as a collection of texts 'with a certain structure and sometimes with a certain amount of mark-up,' while a text archive is a raw collection without such organization, like the Oxford Text Archives.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "A corpus proper is always larger than a text archive.",
+                            "rationale": "The size is not the defining characteristic; a text archive can contain a massive amount of text, but if it lacks structure and annotation, it is not a corpus proper.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "A text archive is always a historical collection, while a corpus proper is always synchronic.",
+                            "rationale": "Both text archives and corpora can be either historical or synchronic. The distinction is about their internal structure and preparation for linguistic analysis.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "The chapter describes a hypothetical situation where linguists 'felt as if they had to work in secret cells.' Which historical group does the text use to illustrate this point?",
+                    "hint": "This group was loosely organized and initially did not advertise its meetings.",
+                    "answerOptions": [
+                        {
+                            "text": "The Helsinki Corpus project",
+                            "rationale": "The Helsinki Corpus is mentioned as pioneering historical work, but not in the context of working 'in secret cells.'",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "The British National Corpus (BNC) project",
+                            "rationale": "The BNC is presented as a major, well-funded national project, not one that worked in secret.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "The International Computer Archive of Modern English (ICAME)",
+                            "rationale": "The text states that the loosely organized ICAME 'did not advertise its meetings and accepted participants by invitation only,' which illustrates the sense of working in 'secret cells' due to the dominance of generative linguistics.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "The creators of the Brown Corpus",
+                            "rationale": "The Brown Corpus is presented as a foundational project, but the text does not associate its creators with this sense of secrecy.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "The chapter mentions the 'Corpus of Historical American English' (COHA). What makes this corpus particularly valuable for linguistic research?",
+                    "hint": "Consider its size, scope, and the type of research it facilitates.",
+                    "answerOptions": [
+                        {
+                            "text": "It is a small, specialized corpus that focuses on the language of the American Civil War.",
+                            "rationale": "The COHA is a very large corpus (400+ million words) and covers a much broader historical span than the American Civil War, specifically 1810-2009.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "It is the only corpus that contains both American and British English texts, allowing for direct comparison.",
+                            "rationale": "The COHA is specifically a corpus of American English, not British. The Global Web-based English (GloWbE) corpus is better suited for cross-variety comparison.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "It is a very large diachronic corpus that is carefully balanced across decades and genres, allowing for the study of long-term language change in American English.",
+                            "rationale": "COHA is described as a massive, carefully balanced diachronic corpus spanning two centuries, making it an excellent resource for studying language change.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "It is the first corpus to be fully searchable on a web-based interface.",
+                            "rationale": "While the COHA is web-searchable, this is not its unique or most valuable feature; its value lies in its size, balance, and historical scope.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "What is the significance of the London-Lund Corpus (LLC) having both a printed version and a computerized version?",
+                    "hint": "Think about the historical context and the technological developments of the time.",
+                    "answerOptions": [
+                        {
+                            "text": "The printed version was for public use, while the computerized version was for the researchers.",
+                            "rationale": "The text states that both versions were for researchers to use, with the computerized version allowing for new types of analysis.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "The printed version allowed for manual, qualitative analysis, while the computerized version enabled frequency and other quantitative analyses.",
+                            "rationale": "The printed version, with its detailed annotations, enabled close, manual analysis, while the computerized version, with its early mark-up, allowed for computational searches and frequency counts that were not possible with the physical text alone.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "The printed version served as the gold standard for accuracy, while the computerized version was a rough draft.",
+                            "rationale": "Both versions were meant to be accurate, but the computerized version was designed to enable different, more efficient types of analysis.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "The printed version was a historical document, while the computerized version was continuously updated.",
+                            "rationale": "The LLC is a fixed, synchronic corpus from the 1970s. It is not a monitor corpus and is not continuously updated.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "According to the chapter, what is one of the key caveats of using corpora, even for a native speaker?",
+                    "hint": "Think about the relationship between intuition and empirical data.",
+                    "answerOptions": [
+                        {
+                            "text": "Corpora can never be used to study language variation.",
+                            "rationale": "The text explicitly states that corpora are ideal for studying variation between dialects and registers.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Corpora contain mistakes and speech errors that may need to be disregarded by the researcher.",
+                            "rationale": "The text lists this as a specific caveat, noting that corpora contain a variety of real-world usage, including mistakes, which a researcher must account for.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "Corpora can only be used for studying formal written language.",
+                            "rationale": "The text discusses spoken corpora and online corpora, demonstrating that corpora are used for a wide variety of language types, not just formal written language.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Corpora are not suitable for non-native speakers of the language.",
+                            "rationale": "This is the opposite of what the text says; it states that corpus data is 'ideal for non-native speakers' because it provides authentic, verifiable examples.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "The chapter discusses a shift in attitudes towards corpus linguistics. What is the main reason cited for the improved relations between corpus linguistics and other types of linguistics?",
+                    "hint": "Consider the evolution of both theoretical and corpus-based approaches.",
+                    "answerOptions": [
+                        {
+                            "text": "The development of a single, unifying theory that all linguists can agree on.",
+                            "rationale": "The text does not suggest a unifying theory has emerged. Instead, it points to a mutual maturation and greater awareness of each other's strengths and limitations.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Corpus linguists have become more theoretically sophisticated, and other linguists have begun to use corpus methodology as a standard tool.",
+                            "rationale": "The text states that 'corpus linguists have become more theoretically sophisticated' and that corpora are now used by many linguists who do not primarily call themselves corpus linguists, indicating a broader acceptance and integration of the methodology.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "The rise of new computer programs that make corpus analysis completely automated and free of human bias.",
+                            "rationale": "The text emphasizes that human analysis is still needed and that automation has its limits. The relationship improvement is about a change in intellectual approach, not just technology.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Generative linguists have abandoned their theories in favour of a usage-based approach.",
+                            "rationale": "The text does not state that generative linguists have abandoned their theories, but rather that the relationship has become more 'friendly' and that there is more mutual respect and use of each other's methods.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "What does a 'balanced corpus' aim to achieve?",
+                    "hint": "Think about the representativeness of the texts included in the corpus.",
+                    "answerOptions": [
+                        {
+                            "text": "An equal number of words from different time periods.",
+                            "rationale": "This describes a balanced diachronic corpus, but the principle of balance applies more broadly to synchronic corpora as well.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "A proportional representation of different genres and text types to reflect a particular variety of language as a whole.",
+                            "rationale": "A balanced corpus is designed to be a representative sample of a language or variety, with texts carefully selected from different genres in proportion to their frequency in the real world.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "An equal number of words from both written and spoken sources.",
+                            "rationale": "A balanced corpus does not necessarily have an equal number of words from written and spoken sources; it aims to reflect their true proportion, which is often not equal.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "A collection of texts that are completely free of spelling and grammatical errors.",
+                            "rationale": "A corpus is a collection of language as it is used, which includes errors. Balance refers to the proportional representation of genres, not the quality of the text.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "According to the chapter, what is a crucial reason that corpora cannot provide a complete picture of a language?",
+                    "hint": "Think about the relationship between what is in the corpus and what is 'known' by a speaker.",
+                    "answerOptions": [
+                        {
+                            "text": "Corpora can only contain language from a single time period.",
+                            "rationale": "The text explicitly mentions diachronic corpora, which are designed to span multiple time periods.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "The number of possible sentences in a language is infinite, so no corpus, regardless of its size, can be truly exhaustive.",
+                            "rationale": "The chapter lists this as a key caveat of corpus data, highlighting the fundamental limitation that a finite corpus cannot contain all possible linguistic variations.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "Corpora are only compiled by a few select researchers, so they are not representative of all language use.",
+                            "rationale": "While the early days of corpus linguistics involved a small group of researchers, the text notes the field has grown phenomenally, with many corpora now widely available.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Corpora only contain written language and cannot represent the full range of human communication.",
+                            "rationale": "The text describes spoken corpora and online corpora, demonstrating that corpora are used for a wide variety of language types, not just formal written language.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "Which of the following would be an example of a 'token' in a corpus?",
+                    "hint": "Think about the basic unit of counting in a corpus.",
+                    "answerOptions": [
+                        {
+                            "text": "The number of times the word 'the' appears in a text.",
+                            "rationale": "This is a frequency count, which is a result of counting tokens, but it is not a token itself.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "The unique word 'corpus' in the dictionary.",
+                            "rationale": "This is a 'type' or a 'lemma', which refers to a unique word form or base form, not an instance of a word in a text.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "An individual instance of a word, punctuation mark, or number in the text.",
+                            "rationale": "The term 'token' refers to every instance of a word, punctuation mark, or number in a corpus, serving as the basic unit for frequency counts.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "A list of all the different words found in a corpus.",
+                            "rationale": "This describes a 'word list' or 'type list,' not an individual token.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "What is the primary benefit of using a diachronic corpus like the Helsinki Corpus?",
+                    "hint": "The name itself, 'diachronic,' provides a clue about its purpose.",
+                    "answerOptions": [
+                        {
+                            "text": "To study the sociolinguistic variation of a language at a single point in time.",
+                            "rationale": "This is the purpose of a synchronic corpus, which captures language at a single point in time, not a diachronic one.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "To analyze how a language has changed and developed over centuries.",
+                            "rationale": "The Helsinki Corpus is a historical corpus that contains texts from different periods, allowing researchers to trace changes in grammar, lexis, and other linguistic features over time.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "To provide a definitive guide for lexicographers on current word usage.",
+                            "rationale": "This would be the purpose of a large, synchronic, general corpus, not a diachronic one that focuses on historical language.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "To compare the language of native speakers with that of non-native speakers.",
+                            "rationale": "This is the purpose of a learner corpus, such as ICLE, not a diachronic corpus.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "The chapter mentions a project to create corpora for 1931 and 1901 called BLOB. What is the main purpose of this project?",
+                    "hint": "Consider the relationship between BLOB and the LOB corpus.",
+                    "answerOptions": [
+                        {
+                            "text": "To create a diachronic series of corpora to compare with the LOB corpus and study language change over time.",
+                            "rationale": "BLOB (before LOB) is designed to create diachronic counterparts to the LOB corpus, allowing for the study of language change in British English.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "To create a corpus of British newspaper articles from the early 20th century.",
+                            "rationale": "While the corpus may include newspaper articles, its primary purpose is not to be a genre-specific corpus but to provide a historical sample of the language.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "To study spoken language in Britain before the invention of the tape recorder.",
+                            "rationale": "This is a corpus of written language, not spoken, from a period when spoken recordings were not widely available.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "To provide an updated version of the LOB corpus for modern English.",
+                            "rationale": "The BLOB project is for historical texts *before* the LOB corpus, not for modern texts.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "Which of the following best describes the principle of 'representativity' in corpus design?",
+                    "hint": "Think about what a corpus should represent.",
+                    "answerOptions": [
+                        {
+                            "text": "A corpus is representative if it contains an equal number of words from all available genres.",
+                            "rationale": "Representativity is not about equal numbers of words from each genre but about proportional representation of genres based on their true frequency in the language.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "A corpus is representative if it is the largest collection of texts available for a language.",
+                            "rationale": "Representativity is not about size alone; a large corpus may still be unrepresentative if it is not carefully balanced to reflect the language as a whole.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "A corpus is representative if its contents are a balanced and proportionally accurate reflection of a particular language or variety.",
+                            "rationale": "Representativity means the corpus is a balanced sample that accurately reflects a target language or variety, with genres and styles represented in proportion to their real-world occurrence.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "A corpus is representative if it is freely available to all researchers.",
+                            "rationale": "Availability is a separate issue from representativity. A corpus can be freely available but still not be a representative sample of a language.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "What does a 'parallel corpus' primarily facilitate?",
+                    "hint": "The term 'parallel' hints at a comparison between languages.",
+                    "answerOptions": [
+                        {
+                            "text": "The study of how a language changes over different time periods.",
+                            "rationale": "This describes a diachronic corpus, not a parallel corpus, which is focused on multiple languages.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "The comparison of different genres within a single language.",
+                            "rationale": "This can be done with a balanced synchronic corpus, not necessarily a parallel corpus.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "The analysis of a source text and its translation into a target language.",
+                            "rationale": "A parallel corpus contains texts in two or more languages, typically an original and its translation, which is used for translation studies and contrastive linguistics.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "The study of spoken language in a single, specific geographical area.",
+                            "rationale": "This describes a specialized spoken corpus, like COLT, not a parallel corpus.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "What is the primary benefit of a 'monitor corpus' like the Bank of English?",
+                    "hint": "Think about its dynamic nature over time.",
+                    "answerOptions": [
+                        {
+                            "text": "It is the only type of corpus that allows for searches for specific words or phrases.",
+                            "rationale": "All corpora, whether static or dynamic, allow for searching. The key feature of a monitor corpus is its continuous growth, which is not a function of simple searchability.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "It can be used to observe and track language change in a language in real time as new texts are added to it continuously.",
+                            "rationale": "The text states that a monitor corpus, like the Bank of English, is continuously expanded with new texts, allowing researchers to study ongoing language change.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "It is a highly specialized corpus that focuses on a single, specific topic.",
+                            "rationale": "The Bank of English is a general corpus, not a specialized one. Its defining characteristic is its dynamic nature, not its subject matter.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "It is a collection of only the most grammatically correct and formal texts.",
+                            "rationale": "Monitor corpora, like all corpora, aim to reflect actual language use, which includes a wide range of registers and may contain errors.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "The chapter mentions the rise of corpus linguistics in the 1960s, coinciding with the development of which technology?",
+                    "hint": "The title of section 1.3 is a strong clue.",
+                    "answerOptions": [
+                        {
+                            "text": "The advent of the personal computer.",
+                            "rationale": "The text states that corpus linguistics started around 1960 when computers began to become 'reasonably powerful,' which predates the development of the personal computer.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "The proliferation of the internet and the World Wide Web.",
+                            "rationale": "The web as a corpus is a much later development, from the twenty-first century, as the text notes.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Reasonably powerful digital computers.",
+                            "rationale": "The text explicitly states that the idea of using electronic corpora began around 1960, 'fairly soon after computers started becoming reasonably powerful,' replacing earlier methods like shoebox collections.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "The invention of the tape recorder.",
+                            "rationale": "The tape recorder is mentioned as a predecessor technology that made spoken language collection easier, but the shift to computational methods in the 1960s was driven by the computer itself.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "What is the key difference between a tagged corpus and an untagged corpus?",
+                    "hint": "Think about the extra layer of information a tagged corpus provides.",
+                    "answerOptions": [
+                        {
+                            "text": "A tagged corpus contains both spoken and written language, while an untagged corpus only contains written language.",
+                            "rationale": "This is incorrect. Both tagged and untagged corpora can contain spoken and written language; the difference is in the annotation.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "A tagged corpus has been annotated with linguistic information, such as part of speech, while an untagged corpus is just a plain text file.",
+                            "rationale": "The text explains that corpus annotation involves adding 'linguistic mark-up' to a corpus, such as part of speech tags, which distinguishes it from a raw text file.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "A tagged corpus is used for quantitative research, while an untagged corpus is used for qualitative research.",
+                            "rationale": "The type of research is not determined by whether the corpus is tagged; tagging simply enables more complex types of analysis.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "A tagged corpus is smaller in size than an untagged corpus.",
+                            "rationale": "Size is not the defining factor. A tagged corpus can be of any size, and the process of tagging can be applied to corpora of all sizes.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "The chapter mentions the Oxford English Dictionary (OED) as a resource that can be used as a corpus. What is a notable advantage of using the OED in this way?",
+                    "hint": "Consider the nature of the OED's content and how it is organized.",
+                    "answerOptions": [
+                        {
+                            "text": "It contains a balanced and representative sample of all contemporary English.",
+                            "rationale": "The OED is not a balanced corpus of contemporary English; it is a historical record of the language's development.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "It contains a rich collection of dated quotations that can be used to trace the historical development of a word.",
+                            "rationale": "The OED is a historical dictionary that uses a vast collection of dated quotations to illustrate the changing meaning, form, and use of words over time, making it a valuable diachronic resource.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "It is fully tagged for parts of speech and other grammatical features.",
+                            "rationale": "While the OED's entries are highly structured, the text does not state that it is a fully tagged corpus in the same way as a linguistic corpus like the BNC.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "It is the only public corpus that is freely available online.",
+                            "rationale": "There are many other free, public corpora available online, such as COCA and COHA.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "What is the primary function of a concordance that a simple search engine cannot perform as effectively?",
+                    "hint": "Think about how the results are presented and what that allows a researcher to do.",
+                    "answerOptions": [
+                        {
+                            "text": "A concordance provides a frequency list of all words in the corpus.",
+                            "rationale": "While a frequency list can be generated from a concordance, the primary benefit of a concordance is the display of context, which is a richer form of information.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "A concordance provides a list of every occurrence of a word with its surrounding context, allowing for manual analysis of usage patterns.",
+                            "rationale": "A concordance, as defined in the text, provides 'a list of every occurrence of a word, with a certain amount of co-text to the left and right', enabling researchers to see usage in context, which is the key advantage over a simple search.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "To identify and correct grammatical errors and spelling mistakes in the corpus.",
+                            "rationale": "While a researcher might use a concordance to spot errors, its primary purpose is not error correction but analysis of word usage.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "To automatically tag the part of speech for every word in the corpus.",
+                            "rationale": "Part-of-speech tagging is a separate process from concordancing. Concordancing displays a word in context, while tagging adds a grammatical label to it.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "What is the distinction between a 'raw' corpus and an 'annotated' corpus?",
+                    "hint": "Consider the level of processing and added information.",
+                    "answerOptions": [
+                        {
+                            "text": "A raw corpus is always a collection of spoken language, whereas an annotated corpus is always a collection of written language.",
+                            "rationale": "This is incorrect. Both spoken and written language can be either raw or annotated.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "A raw corpus is a plain text file, while an annotated corpus has been 'marked up' with additional linguistic information such as part-of-speech tags or grammatical structures.",
+                            "rationale": "The text explains that annotation is the process of adding 'linguistic mark-up' to a raw corpus, providing information like part-of-speech, which is what distinguishes an annotated corpus from a raw one.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "A raw corpus contains mistakes and errors, while an annotated corpus has been manually corrected to be flawless.",
+                            "rationale": "Annotation adds linguistic information; it does not necessarily correct every mistake. In fact, a corpus often deliberately retains errors to reflect real-world language use.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "A raw corpus is freely available to the public, but an annotated corpus is always proprietary.",
+                            "rationale": "The availability of a corpus (public or proprietary) is not determined by whether it is raw or annotated.",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "question": "According to the text, what is one of the primary reasons to use corpora for the purpose of language teaching?",
+                    "hint": "Think about what kind of information corpora can provide to a language learner or teacher.",
+                    "answerOptions": [
+                        {
+                            "text": "Corpora provide a definitive list of all the grammatical rules of a language.",
+                            "rationale": "Corpora do not provide rules; they provide evidence of how language is actually used, which can be used to inform teaching but is not a definitive set of rules.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Corpora provide authentic examples of language in use, which can help non-native speakers understand real-world usage and idiomatic phrases.",
+                            "rationale": "The chapter lists 'Corpus data give essential information for a number of applied areas, like language teaching' and that they are 'ideal for non-native speakers of the language,' because they provide real-world, verifiable examples of usage.",
+                            "isCorrect": true
+                        },
+                        {
+                            "text": "Corpora are primarily used to train machine translation algorithms, which can then be used by students.",
+                            "rationale": "While corpora are used for language technology like machine translation, this is not their direct benefit for language teaching as described in the chapter.",
+                            "isCorrect": false
+                        },
+                        {
+                            "text": "Corpora allow teachers to create exercises that are completely free of all errors and false starts.",
+                            "rationale": "Corpora reflect language as it is used, which includes errors and false starts. The value is in the authenticity, not the lack of errors.",
+                            "isCorrect": false
+                        }
+                    ]
+                }
+            ]
+        };
+
+        let shuffledQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = []; // Stores objects { questionIndex, selectedOptionIndex, isCorrect }
+        let score = 0;
+
+        // DOM Elements
+        const questionText = document.getElementById('question-text');
+        const questionHint = document.getElementById('question-hint');
+        const optionsContainer = document.getElementById('options-container');
+        const currentQNumber = document.getElementById('current-q-number');
+        const totalQCount = document.getElementById('total-q-count');
+        const progressFill = document.getElementById('progress-fill');
+        const nextButton = document.getElementById('next-button');
+        const prevButton = document.getElementById('prev-button');
+        const skipButton = document.getElementById('skip-button');
+        const submitQuizButton = document.getElementById('submit-quiz-button');
+        const restartButton = document.getElementById('restart-button');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const finalScoreSpan = document.getElementById('final-score');
+        const totalScorePossibleSpan = document.getElementById('total-score-possible');
+        const answersContainer = document.getElementById('answers-container');
+
+        // Fisher-Yates shuffle
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function startQuiz() {
+            shuffledQuestions = shuffleArray([...quizData.questions]);
+            currentQuestionIndex = 0;
+            userAnswers = Array(shuffledQuestions.length).fill(null);
+            score = 0;
+            totalQCount.textContent = shuffledQuestions.length;
+            quizScreen.classList.remove('hidden');
+            resultsScreen.classList.add('hidden');
+            submitQuizButton.classList.add('hidden');
+            submitQuizButton.classList.add('button-disabled');
+            submitQuizButton.disabled = true;
+            nextButton.classList.remove('hidden');
+            nextButton.classList.remove('button-disabled');
+            nextButton.disabled = false;
+            prevButton.disabled = true;
+            prevButton.classList.add('button-disabled');
+            skipButton.disabled = false;
+            skipButton.classList.remove('button-disabled');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex < 0) currentQuestionIndex = 0;
+            if (currentQuestionIndex >= shuffledQuestions.length) currentQuestionIndex = shuffledQuestions.length - 1;
+
+            const currentQuestion = shuffledQuestions[currentQuestionIndex];
+            currentQNumber.textContent = currentQuestionIndex + 1;
+            questionText.textContent = currentQuestion.question;
+
+            if (currentQuestion.hint) {
+                questionHint.textContent = currentQuestion.hint;
+                questionHint.classList.remove('hidden');
+            } else {
+                questionHint.classList.add('hidden');
+            }
+
+            // Shuffle options to present in random order each time question loads
+            const shuffledOptions = shuffleArray([...currentQuestion.answerOptions]);
+
+            // Store shuffled options order indexed by current question index for answer mapping
+            currentQuestion._shuffledOptions = shuffledOptions;
+
+            optionsContainer.innerHTML = '';
+            shuffledOptions.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option-item p-4 rounded-lg font-medium text-gray-700';
+                optionDiv.textContent = option.text;
+                optionDiv.dataset.index = index;
+                optionDiv.setAttribute('role', 'listitem');
+                optionDiv.setAttribute('tabindex', '0');
+                optionDiv.addEventListener('click', () => selectOption(optionDiv));
+                optionDiv.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        selectOption(optionDiv);
+                    }
+                });
+                optionsContainer.appendChild(optionDiv);
+            });
+
+            // Reset selection UI
+            optionsContainer.querySelectorAll('.option-item').forEach(el => {
+                el.classList.remove('selected');
+            });
+
+            // Restore previous answer selection if any
+            const savedAnswer = userAnswers[currentQuestionIndex];
+            if (savedAnswer !== null) {
+                const selectedIndex = savedAnswer.selectedOptionIndex;
+                // Map selected option index back to shuffled display index
+                const optionElements = [...optionsContainer.children];
+                optionElements.forEach((el, idx) => {
+                    if (idx === selectedIndex) {
+                        el.classList.add('selected');
+                    }
+                });
+                // Enable next/submit button
+                toggleNavigationButtons(true);
+            } else {
+                toggleNavigationButtons(false);
+            }
+
+            // Update progress bar
+            updateProgressBar();
+
+            // Update navigation buttons state
+            prevButton.disabled = currentQuestionIndex === 0;
+            if (prevButton.disabled) prevButton.classList.add('button-disabled');
+            else prevButton.classList.remove('button-disabled');
+
+            // Show submit button only on last question if answered
+            if (currentQuestionIndex === shuffledQuestions.length - 1) {
+                submitQuizButton.classList.remove('hidden');
+                nextButton.classList.add('hidden');
+                if (savedAnswer !== null) {
+                    submitQuizButton.disabled = false;
+                    submitQuizButton.classList.remove('button-disabled');
+                } else {
+                    submitQuizButton.disabled = true;
+                    submitQuizButton.classList.add('button-disabled');
+                }
+            } else {
+                submitQuizButton.classList.add('hidden');
+                nextButton.classList.remove('hidden');
+            }
+        }
+
+        // Handle option selection
+        function selectOption(optionDiv) {
+            // Deselect all options first
+            optionsContainer.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
+            optionDiv.classList.add('selected');
+
+            const selectedDisplayIndex = parseInt(optionDiv.dataset.index, 10);
+
+            // Save answer mapped to the original option index (for logic)
+            const currentQuestion = shuffledQuestions[currentQuestionIndex];
+            const selectedOption = currentQuestion._shuffledOptions[selectedDisplayIndex];
+            const originalOptionIndex = currentQuestion.answerOptions.findIndex(opt => opt.text === selectedOption.text && opt.isCorrect === selectedOption.isCorrect);
+
+            userAnswers[currentQuestionIndex] = {
+                questionIndex: currentQuestionIndex,
+                selectedOptionIndex: selectedDisplayIndex,
+                originalOptionIndex,
+                isCorrect: selectedOption.isCorrect
+            };
+
+            // Enable navigation and submit buttons accordingly
+            toggleNavigationButtons(true);
+        }
+
+        // Enable or disable Next/Submit buttons according to answering state
+        function toggleNavigationButtons(answerSelected) {
+            if (currentQuestionIndex === shuffledQuestions.length - 1) {
+                if (answerSelected) {
+                    submitQuizButton.disabled = false;
+                    submitQuizButton.classList.remove('button-disabled');
+                } else {
+                    submitQuizButton.disabled = true;
+                    submitQuizButton.classList.add('button-disabled');
+                }
+                nextButton.disabled = true;
+                nextButton.classList.add('button-disabled');
+            } else {
+                nextButton.disabled = !answerSelected;
+                if (answerSelected) nextButton.classList.remove('button-disabled');
+                else nextButton.classList.add('button-disabled');
+
+                submitQuizButton.disabled = true;
+                submitQuizButton.classList.add('button-disabled');
+            }
+        }
+
+        // Navigate to next question
+        function nextQuestion() {
+            if (currentQuestionIndex < shuffledQuestions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            }
+        }
+
+        // Navigate to previous question
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        }
+
+        // Skip current question (record no answer) and move forward
+        function skipQuestion() {
+            // Record skipped as null if not already answered
+            if(userAnswers[currentQuestionIndex] === null) {
+                userAnswers[currentQuestionIndex] = null;
+            }
+            // Move to next question or if last, submit
+            if (currentQuestionIndex < shuffledQuestions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            } else {
+                submitQuiz();
+            }
+        }
+
+        // Update progress bar (progress is questions viewed, including skipped)
+        function updateProgressBar() {
+            // We consider currentQuestionIndex progress + 1 as count of questions viewed
+            const progress = ((currentQuestionIndex + 1) / shuffledQuestions.length) * 100;
+            progressFill.style.width = `${progress}%`;
+        }
+
+        // Calculate score and show results screen
+        function submitQuiz() {
+            score = 0;
+            userAnswers.forEach(answer => {
+                if (answer && answer.isCorrect) {
+                    score++;
+                }
+            });
+
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            finalScoreSpan.textContent = score;
+            totalScorePossibleSpan.textContent = shuffledQuestions.length;
+
+            displayResults();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Display answers with detailed rationale
+        function displayResults() {
+            answersContainer.innerHTML = '';
+            shuffledQuestions.forEach((q, qIndex) => {
+                const userAnswer = userAnswers[qIndex];
+                const isAnswered = userAnswer !== null && userAnswer !== undefined;
+                const isCorrect = isAnswered && userAnswer.isCorrect;
+
+                const questionResultDiv = document.createElement('div');
+                questionResultDiv.classList.add('border', 'rounded-lg', 'p-5', 'shadow-sm', 'focus:outline-none');
+                questionResultDiv.setAttribute('tabindex', '0');
+
+                let borderColor = 'border-gray-200';
+                if (isAnswered) {
+                    borderColor = isCorrect ? 'border-green-400' : 'border-red-400';
+                }
+                questionResultDiv.classList.add(borderColor);
+
+                // Build options list showing correct, user-selected, and rationale
+                let optionsHtml = '<ul class="space-y-2 mb-4">';
+                q.answerOptions.forEach((option, optIndex) => {
+                    let optionClasses = 'p-3 rounded-md transition duration-150 ease-in-out';
+                    if (option.isCorrect) {
+                        optionClasses += ' bg-green-100 text-green-800 font-medium';
+                    }
+                    if (isAnswered && userAnswer.originalOptionIndex === optIndex && !option.isCorrect) {
+                        optionClasses += ' bg-red-100 text-red-800';
+                    }
+                    // Mark correct and user answers explicitly
+                    let marker = '';
+                    if (option.isCorrect) marker = '✅';
+                    if (isAnswered && userAnswer.originalOptionIndex === optIndex && !option.isCorrect) marker = '❌';
+                    optionsHtml += `<li class="${optionClasses}">${option.text} ${marker}</li>`;
+                });
+                optionsHtml += '</ul>';
+
+                questionResultDiv.innerHTML = `
+                    <p class="text-lg font-semibold text-gray-800 mb-3">${qIndex + 1}. ${q.question}</p>
+                    ${optionsHtml}
+                    <div class="explanation-box p-4 rounded-md text-gray-700 text-sm italic">
+                        <p class="font-bold text-blue-700 mb-1">Rationale:</p>
+                        <p>${q.answerOptions.find(opt => opt.isCorrect).rationale}</p>
+                    </div>
+                `;
+
+                answersContainer.appendChild(questionResultDiv);
+            });
+        }
+
+        // Event Listeners
+        nextButton.addEventListener('click', nextQuestion);
+        prevButton.addEventListener('click', prevQuestion);
+        skipButton.addEventListener('click', skipQuestion);
+        submitQuizButton.addEventListener('click', () => {
+            if (confirm('Are you sure you want to submit the quiz? You will not be able to change answers after submission.')) {
+                submitQuiz();
+            }
+        });
+        restartButton.addEventListener('click', startQuiz);
+
+        // Start quiz on page load
+        document.addEventListener('DOMContentLoaded', startQuiz);
+    </script>
+</body>
+</html>

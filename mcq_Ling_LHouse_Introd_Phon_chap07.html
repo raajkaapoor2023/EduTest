@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chapter 7 Focus: Coarticulation Quiz</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(120deg, #1d3557, #457b9d);
+      color: #f1faee;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+    .quiz-container {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+      width: 90%;
+      max-width: 750px;
+    }
+    h1 {
+      text-align: center;
+      color: #ffca3a;
+    }
+    .question {
+      font-size: 1.1rem;
+      margin: 1.5rem 0 0.5rem;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+    }
+    .option {
+      background: #264653;
+      border: 2px solid #ffca3a;
+      margin: 0.4rem 0;
+      padding: 0.6rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .option:hover {
+      background: #ffca3a;
+      color: black;
+    }
+    .btn {
+      margin-top: 1rem;
+      padding: 0.6rem 1.5rem;
+      background: #f77f00;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .result, .explanation {
+      margin-top: 2rem;
+      background: #ffffff11;
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+    .correct { color: lightgreen; }
+    .incorrect { color: #e63946; }
+  </style>
+</head>
+<body>
+<div class="quiz-container">
+  <h1>Chapter 7 Focus: Coarticulation</h1>
+  <div id="quiz"></div>
+  <div class="result" id="result"></div>
+  <div class="explanation" id="explanation"></div>
+  <button class="btn" onclick="nextQuestion()">Next</button>
+</div>
+
+<script>
+const questions = [
+  {
+    q: "What is coarticulation?",
+    options: [
+      "Overlapping articulation of adjacent sounds",
+      "The process of stress assignment",
+      "Speech at a slow tempo",
+      "Backchannel feedback in dialogue"
+    ],
+    answer: 0,
+    ref: "Coarticulation is the simultaneous or overlapping movement of articulators. (p.57)"
+  },
+  {
+    q: "Which type of coarticulation occurs when a sound influences the following sound?",
+    options: ["Anticipatory", "Progressive", "Reciprocal", "Perseveratory"],
+    answer: 3,
+    ref: "Perseveratory coarticulation occurs when a prior articulation continues. (p.58)"
+  },
+  {
+    q: "Anticipatory coarticulation is also known as:",
+    options: ["Carry-over", "Progressive", "Right-to-left", "Left-to-right"],
+    answer: 2,
+    ref: "Anticipatory (regressive) coarticulation affects earlier sounds due to later ones. (p.58)"
+  },
+  {
+    q: "In the phrase 'key' vs. 'cool', the /k/ is produced differently due to:",
+    options: ["Assimilation", "Progressive coarticulation", "Lip rounding", "Anticipatory coarticulation"],
+    answer: 3,
+    ref: "The /k/ is fronted in 'key' due to the following front vowel. (p.57–58)"
+  },
+  {
+    q: "Which of the following best illustrates perseveratory coarticulation?",
+    options: ["'dogs' → /dɔgz/", "'cat' → /kæt/", "'team' → /tiːm/", "'banana' → /bəˈnænə/"],
+    answer: 0,
+    ref: "/z/ is voiced due to the voiced /g/, showing perseveration. (p.58)"
+  },
+  {
+    q: "Reciprocal coarticulation involves:",
+    options: ["A sound influencing itself", "Mutual influence between adjacent sounds", "Insertion of a glide", "Aspiration loss"],
+    answer: 1,
+    ref: "Reciprocal coarticulation involves bidirectional influence. (p.58)"
+  },
+  {
+    q: "Which articulators are most involved in coarticulation?",
+    options: ["Lips and tongue", "Vocal folds", "Teeth", "Diaphragm"],
+    answer: 0,
+    ref: "Lips and tongue are mobile and actively shape coarticulation. (p.57)"
+  },
+  {
+    q: "Coarticulation is more prominent in:",
+    options: ["Slow formal speech", "Isolated word reading", "Rapid connected speech", "Monotone chanting"],
+    answer: 2,
+    ref: "In faster speech, articulatory gestures overlap more. (p.57)"
+  },
+  {
+    q: "Gradient coarticulation refers to:",
+    options: ["A binary change in voicing", "A smooth articulatory shift", "Neutralization of vowels", "Syllable timing shift"],
+    answer: 1,
+    ref: "Gradient coarticulation shows continuous rather than categorical transitions. (p.57)"
+  },
+  {
+    q: "Which example shows coarticulatory nasalization?",
+    options: ["'man' → [mæ̃n]", "'top' → [tɑp]", "'dog' → [dɑg]", "'kiss' → [kɪs]"],
+    answer: 0,
+    ref: "The vowel [æ] is nasalized before [n] due to coarticulation. (p.57)"
+  },
+  {
+    q: "Which factor reduces the amount of coarticulation?",
+    options: ["Fast rate", "Stress", "Vowel height", "Careful speech"],
+    answer: 3,
+    ref: "Careful, slow, or hyperarticulated speech reduces coarticulation. (p.58)"
+  },
+  {
+    q: "Coarticulation enhances speech:",
+    options: ["Ambiguity", "Efficiency and fluency", "Glottalization", "Length"],
+    answer: 1,
+    ref: "It increases articulatory efficiency and helps in fluency. (p.57)"
+  },
+  {
+    q: "The main acoustic result of coarticulation is:",
+    options: ["Silent gaps", "Formant transitions", "Rhoticization", "Frication noise"],
+    answer: 1,
+    ref: "Formant transitions reflect movement between articulatory targets. (p.57)"
+  },
+  {
+    q: "In 'green beans' pronounced as [griːm biːnz], the [n] becomes [m] due to:",
+    options: ["Epenthesis", "Progressive coarticulation", "Anticipatory coarticulation", "Vowel reduction"],
+    answer: 2,
+    ref: "[n] changes to [m] due to upcoming bilabial [b]. (p.58)"
+  },
+  {
+    q: "What is a coarticulatory cue in spectrograms?",
+    options: ["Pitch plateau", "Flat F1", "Transition in formants", "Duration decrease"],
+    answer: 2,
+    ref: "Transitions in formants signal movement between sounds. (p.57)"
+  },
+  {
+    q: "Coarticulation is fundamentally a:",
+    options: ["Psycholinguistic phenomenon", "Cognitive artifact", "Biomechanical inevitability", "Stylistic feature"],
+    answer: 2,
+    ref: "It results from overlapping articulator movements in real-time. (p.57)"
+  },
+  {
+    q: "Which vowel is more prone to coarticulatory effects?",
+    options: ["Central vowels", "Back rounded vowels", "Low vowels", "Diphthongs"],
+    answer: 3,
+    ref: "Diphthongs involve movement, hence more susceptible to coarticulatory influence. (p.57–58)"
+  },
+  {
+    q: "Coarticulation can lead to what kind of errors in speech perception?",
+    options: ["Segmentation ambiguity", "Pitch mismatch", "Stress reversal", "Syllable inversion"],
+    answer: 0,
+    ref: "Listeners may misperceive boundaries due to coarticulated blending. (p.58)"
+  },
+  {
+    q: "What is the difference between assimilation and coarticulation?",
+    options: ["Assimilation is lexical; coarticulation is suprasegmental", "Assimilation is categorical; coarticulation is gradient", "Coarticulation occurs only in tone languages", "Assimilation doesn't affect articulation"],
+    answer: 1,
+    ref: "Assimilation leads to phonemic changes; coarticulation is subphonemic. (p.58)"
+  },
+  {
+    q: "Which tool is commonly used to measure coarticulatory effects?",
+    options: ["Formant chart", "Spectrogram", "Praat pitch tracker", "Laryngeal mirror"],
+    answer: 1,
+    ref: "Spectrograms reveal coarticulatory formant transitions. (p.57)"
+  }
+];
+
+let current = 0;
+let score = 0;
+
+function showQuestion() {
+  const q = questions[current];
+  document.getElementById("quiz").innerHTML = `
+    <div class="question">${current + 1}/20. ${q.q}</div>
+    <div class="options">
+      ${q.options.map((opt, i) => `
+        <div class="option" onclick="checkAnswer(${i})">
+          ${String.fromCharCode(65 + i)}. ${opt}
+        </div>`).join('')}
+    </div>
+  `;
+  document.getElementById("result").textContent = '';
+  document.getElementById("explanation").textContent = '';
+}
+
+function checkAnswer(selected) {
+  const q = questions[current];
+  const correct = q.answer;
+  const resultEl = document.getElementById("result");
+  const explanation = document.getElementById("explanation");
+
+  if (selected === correct) {
+    score++;
+    resultEl.innerHTML = `<span class="correct">✅ Correct!</span>`;
+  } else {
+    resultEl.innerHTML = `<span class="incorrect">❌ Incorrect.</span> Correct answer: <strong>${String.fromCharCode(65 + correct)}</strong>`;
+  }
+
+  explanation.innerHTML = `<strong>Reference:</strong> ${q.ref}`;
+}
+
+function nextQuestion() {
+  if (current < questions.length - 1) {
+    current++;
+    showQuestion();
+  } else {
+    document.getElementById("quiz").innerHTML = `<h2>🎓 Quiz Complete</h2><p>Your Score: ${score}/20</p>`;
+    document.getElementById("result").textContent = '';
+    document.getElementById("explanation").innerHTML = `
+      <p><strong>Review source:</strong> Linda I. House, <em>Introductory Phonetics and Phonology</em>, Chapter 7 – Coarticulation Focus.</p>`;
+    document.querySelector(".btn").style.display = "none";
+  }
+}
+
+showQuestion();
+</script>
+</body>
+</html>

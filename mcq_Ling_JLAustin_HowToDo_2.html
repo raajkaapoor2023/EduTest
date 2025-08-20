@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>MCQ: How to Do Things with Words (Lectures V–VIII)</title>
+  <style>
+    body {
+      background-color: #f9fcff;
+      color: #222;
+      font-family: Georgia, serif;
+      margin: 0;
+      padding: 1em;
+    }
+    h1 {
+      text-align: center;
+      color: #003366;
+      margin-bottom: 0.5em;
+    }
+    #quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .question-card {
+      border: 1px solid #ccc;
+      border-left: 6px solid #003366;
+      border-radius: 4px;
+      padding: 1em;
+      margin-bottom: 1em;
+      background: #fff;
+    }
+    .question-card h2 {
+      margin: 0 0 0.5em;
+      font-size: 1.1em;
+      color: #003366;
+    }
+    .options label {
+      display: block;
+      margin: 0.4em 0;
+      cursor: pointer;
+    }
+    .options input[type="radio"] {
+      margin-right: 0.5em;
+    }
+    #navigation {
+      display: flex;
+      justify-content: space-between;
+      margin: 1em 0;
+    }
+    .btn {
+      background-color: #003366;
+      color: #fff;
+      border: none;
+      padding: 0.6em 1.2em;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    .btn:disabled {
+      background-color: #ccc;
+      cursor: default;
+    }
+    #results {
+      max-width: 800px;
+      margin: 2em auto;
+      background: #eef9ff;
+      padding: 1em;
+      border: 1px solid #003366;
+      border-radius: 4px;
+    }
+    #results h2 {
+      color: #003366;
+    }
+    .answer-block {
+      margin: 1em 0;
+      padding: 0.5em;
+      border-radius: 3px;
+    }
+    .answer-block.correct {
+      border-left: 4px solid #006400;
+      background: #f4fff4;
+    }
+    .answer-block.incorrect {
+      border-left: 4px solid #8b0000;
+      background: #fff4f4;
+    }
+    .explanation {
+      margin-top: 0.5em;
+      font-size: 0.95em;
+      color: #555;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #ccc;
+      margin: 1.5em 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>MCQ Test: How to Do Things with Words<br/>(Lectures V–VIII)</h1>
+  <div id="quiz-container">
+    <div id="question-card" class="question-card"></div>
+    <div id="navigation">
+      <button id="prevBtn" class="btn">Previous</button>
+      <button id="skipBtn" class="btn">Skip</button>
+      <button id="nextBtn" class="btn">Next</button>
+      <button id="submitBtn" class="btn">Submit</button>
+    </div>
+  </div>
+  <div id="results"></div>
+
+  <script>
+  const questions = [
+    // Lecture V (1–10)
+    {
+      question: "What central theme does Austin address in Lecture V?",
+      options: [
+        "The role of excuses",
+        "The role of sincerity",
+        "The role of context",
+        "The role of grammar"
+      ],
+      answer: 0,
+      explanation: "Lecture V is a “Plea for Excuses,” focusing on how excuses differ from infelicities."
+    },
+    {
+      question: "According to Austin, an excuse differs from an infelicity in that it:",
+      options: [
+        "Prevents the act from being performed",
+        "Justifies or pardons an infelicitous act",
+        "Alters the grammatical structure",
+        "Changes the literal meaning"
+      ],
+      answer: 1,
+      explanation: "Excuses do not invalidate the act but provide reasons to justify or pardon it."
+    },
+    {
+      question: "Which of the following does Austin list as a standard excuse?",
+      options: [
+        "Duress",
+        "Insincerity",
+        "Misapplication",
+        "Hitch"
+      ],
+      answer: 0,
+      explanation: "Duress is an excuse; insincerity is itself an infelicity, not an excuse."
+    },
+    {
+      question: "In Lecture V, “mistake of fact” functions as:",
+      options: [
+        "An infelicity",
+        "An excuse",
+        "A presupposition",
+        "A performative"
+      ],
+      answer: 1,
+      explanation: "A genuine mistake of fact excuses but doesn’t invalidate the performative act."
+    },
+    {
+      question: "Austin explains that duress operates by:",
+      options: [
+        "Removing the required felicity condition",
+        "Forcing compliance under threat",
+        "Changing the propositional content",
+        "Triggering a perlocUTION"
+      ],
+      answer: 1,
+      explanation: "Duress compels compliance, but the utterance still counts; it’s merely excused."
+    },
+    {
+      question: "Which scenario exemplifies a proper excuse?",
+      options: [
+        "A judge pronouncing sentence while dizzy",
+        "A mistaken baptism of a plant",
+        "A false promise without intent",
+        "A failed marriage ceremony"
+      ],
+      answer: 0,
+      explanation: "Illness or dizziness can excuse a judge’s utterance without invalidating it."
+    },
+    {
+      question: "According to Austin, excuses belong to which category?",
+      options: [
+        "Infelicities",
+        "Root in sincerity",
+        "Second-order considerations",
+        "Written performatives"
+      ],
+      answer: 2,
+      explanation: "Excuses address moral or legal pardon, beyond mere felicity conditions."
+    },
+    {
+      question: "In discussing excuses, Austin emphasizes:",
+      options: [
+        "The difference between failure and pardon",
+        "That all infelicities can be excused",
+        "That sincerity guarantees felicity",
+        "That context is irrelevant"
+      ],
+      answer: 0,
+      explanation: "He draws a line between invalidity (infelicity) and pardon (excuse)."
+    },
+    {
+      question: "Austin’s handling of excuses is described as:",
+      options: [
+        "A brief addendum",
+        "A central redefinition of performatives",
+        "A complete revision of previous lectures",
+        "A dismissal as irrelevant"
+      ],
+      answer: 0,
+      explanation: "Lecture V is a relatively short discussion, an addendum to infelicities."
+    },
+    {
+      question: "Which of these is NOT discussed as an excuse in Lecture V?",
+      options: [
+        "Insanity",
+        "Force majeure",
+        "Mistake of law",
+        "Illocutionary force"
+      ],
+      answer: 3,
+      explanation: "Insanity, force majeure, and mistake of law are typical excuses; illocutionary force is not."
+    },
+
+    // Lecture VI (11–20)
+    {
+      question: "The central topic of Lecture VI is:",
+      options: [
+        "Implicit performatives",
+        "Indirect speech acts",
+        "Written versus spoken performatives",
+        "Semantic paradoxes"
+      ],
+      answer: 1,
+      explanation: "Lecture VI explores indirect speech acts and how speakers signal illocutionary force."
+    },
+    {
+      question: "An indirect speech act occurs when:",
+      options: [
+        "Meaning differs from force",
+        "The utterance fails completely",
+        "The audience misinterprets",
+        "The speaker is insincere"
+      ],
+      answer: 0,
+      explanation: "Indirect acts have a literal meaning but convey a different illocutionary force."
+    },
+    {
+      question: "Which device can indicate illocutionary force in indirect speech?",
+      options: [
+        "Tone of voice",
+        "Word length",
+        "Font style",
+        "Sentence length"
+      ],
+      answer: 0,
+      explanation: "Tone, stress, and pauses can signal that a literal question is actually a request."
+    },
+    {
+      question: "According to Austin, which of these is NOT needed for indirect speech?",
+      options: [
+        "Familiar participants",
+        "Rich contextual cues",
+        "Explicit performative verb",
+        "Shared background norms"
+      ],
+      answer: 2,
+      explanation: "Indirect speech works without explicit performative verbs if context suffices."
+    },
+    {
+      question: "When someone says “It’s cold in here,” hoping to close a window, it’s an example of:",
+      options: [
+        "Locutionary act",
+        "Perlocutionary act",
+        "Illocutionary act",
+        "Metalinguistic act"
+      ],
+      answer: 2,
+      explanation: "The speaker performs an illocutionary request under the guise of a statement."
+    },
+    {
+      question: "The perlocutionary act primarily concerns:",
+      options: [
+        "The literal content",
+        "The speaker’s intention",
+        "The effect on the hearer",
+        "The grammatical form"
+      ],
+      answer: 2,
+      explanation: "Perlocutionary acts focus on the effect—like persuading, amusing, or warning."
+    },
+    {
+      question: "Which term describes performing one illocutionary act by uttering another?",
+      options: [
+        "Direct speech",
+        "Metaspeech",
+        "Perlocution",
+        "Felicity"
+      ],
+      answer: 1,
+      explanation: "Metaspeech refers to talking about the speech act itself, e.g. “I call this…”."
+    },
+    {
+      question: "“Could you pass the salt?” is an example of:",
+      options: [
+        "Direct speech act",
+        "Question only",
+        "Indirect speech act",
+        "Pure perlocution"
+      ],
+      answer: 2,
+      explanation: "Though phrased as a question, it functions as a polite request."
+    },
+    {
+      question: "In Lecture VI, Austin suggests that understanding indirect speech depends mostly on:",
+      options: [
+        "Grammatical clues",
+        "The felicity conditions",
+        "Contextual knowledge",
+        "Lexical semantics"
+      ],
+      answer: 2,
+      explanation: "Context and shared norms reveal the speaker’s intended force."
+    },
+    {
+      question: "Misinterpreting an indirect speech act results in:",
+      options: [
+        "Misinvocation",
+        "Perlocutionary failure",
+        "Illocutionary fallacy",
+        "Pronunciation error"
+      ],
+      answer: 1,
+      explanation: "When the intended effect doesn’t occur, it’s a perlocutionary failure."
+    },
+
+    // Lecture VII (21–30)
+    {
+      question: "Lecture VII is largely about:",
+      options: [
+        "The structure of conversations",
+        "Written performatives",
+        "Comparisons with Searle",
+        "Excuses and pardons revisited"
+      ],
+      answer: 1,
+      explanation: "Lecture VII discusses how performatives work in writing versus speech."
+    },
+    {
+      question: "In written performatives, Austin notes that the word “hereby”:",
+      options: [
+        "Is optional",
+        "Marks the utterance itself as the action",
+        "Alters propositional content",
+        "Indicates a quotation"
+      ],
+      answer: 1,
+      explanation: "“Hereby” signals that the written text is performing the act itself."
+    },
+    {
+      question: "For a written promise to work, Austin argues you must:",
+      options: [
+        "Underline key words",
+        "Include an explicit performative verb",
+        "Send via registered mail",
+        "Write in first person past"
+      ],
+      answer: 1,
+      explanation: "Explicit performative verbs compensate for the lack of vocal cues."
+    },
+    {
+      question: "Which of these is more reliable in speech than writing, per Austin?",
+      options: [
+        "Audience reception",
+        "Phonetic clarity",
+        "Illocutionary force",
+        "Reflexivity"
+      ],
+      answer: 2,
+      explanation: "Tone and stress better signal force in face-to-face speech."
+    },
+    {
+      question: "Writing a promise without “I promise” yields a:",
+      options: [
+        "Insincere promise",
+        "Illicit contract",
+        "Indirect speech act",
+        "Plain statement"
+      ],
+      answer: 3,
+      explanation: "Absent a performative verb, it’s merely a statement of intent."
+    },
+    {
+      question: "Austin claims that telephoned performatives can:",
+      options: [
+        "Always succeed",
+        "Never require performative verbs",
+        "Misfire without visual cues",
+        "Be immune to infelicity"
+      ],
+      answer: 2,
+      explanation: "Missing face-to-face context can cause performative misfires."
+    },
+    {
+      question: "Which medium did Austin list as most problematic for performatives?",
+      options: [
+        "Email",
+        "Letter",
+        "Radio",
+        "Face-to-face"
+      ],
+      answer: 0,
+      explanation: "Email lacks vocal tone and immediate feedback, increasing infelicity risks."
+    },
+    {
+      question: "The key to successful written performatives is:",
+      options: [
+        "Official stationery",
+        "Clear performative language",
+        "Thick paper",
+        "Handwritten signature"
+      ],
+      answer: 1,
+      explanation: "Clarity of language compensates for absence of speech cues."
+    },
+    {
+      question: "Austin’s treatment of writing in Lecture VII is to:",
+      options: [
+        "Deny it can perform actions",
+        "Show it adapts by explicit markers",
+        "Claim it’s identical to speech",
+        "Ignore written ritual"
+      ],
+      answer: 1,
+      explanation: "He demonstrates how writing uses explicit markers like “hereby.”"
+    },
+    {
+      question: "Which example illustrates a misfire in writing?",
+      options: [
+        "A letter of resignation not dated",
+        "A typed marriage certificate without signature",
+        "An undelivered email promise",
+        "A printed speech from memory"
+      ],
+      answer: 1,
+      explanation: "Without proper signatures, the performative certificate fails entirely."
+    },
+
+    // Lecture VIII (31–40)
+    {
+      question: "Lecture VIII focuses on:",
+      options: [
+        "Rhetorical persuasion",
+        "The limits of performatives",
+        "Contextual presuppositions",
+        "Legal applications"
+      ],
+      answer: 1,
+      explanation: "Austin explores boundaries and limits of performative utterances."
+    },
+    {
+      question: "“Can you swim?” asked to an adult in a pool means:",
+      options: [
+        "A genuine question",
+        "An indirect suggestion",
+        "A perlocutionary attack",
+        "A felicity condition"
+      ],
+      answer: 1,
+      explanation: "Context suggests an indirect offer of assistance or warning."
+    },
+    {
+      question: "Which term best describes assumptions that must hold true?",
+      options: [
+        "Implicature",
+        "Presupposition",
+        "Contradiction",
+        "Assertion"
+      ],
+      answer: 1,
+      explanation: "Presuppositions are background requirements for utterances to make sense."
+    },
+    {
+      question: "According to Lecture VIII, presuppositions are:",
+      options: [
+        "Destroyed by negation",
+        "Maintained under negation",
+        "Irrelevant to potency",
+        "Based purely on syntax"
+      ],
+      answer: 1,
+      explanation: "Unlike assertions, presuppositions survive negation."
+    },
+    {
+      question: "In legal contexts, performatives:",
+      options: [
+        "Rely solely on speech",
+        "Often require written documentation",
+        "Never misfire",
+        "Are always felicitous"
+      ],
+      answer: 1,
+      explanation: "Laws mandate written records, not just verbal declarations."
+    },
+    {
+      question: "Austin warns that stretching performatives too far leads to:",
+      options: [
+        "Paradox",
+        "Infinite regress",
+        "Redundancy",
+        "Total silence"
+      ],
+      answer: 0,
+      explanation: "Over-applying performative theory to all language invites paradoxes."
+    },
+    {
+      question: "Which element is most crucial in boundary cases?",
+      options: [
+        "Tonal nuance",
+        "Social status",
+        "Lexical choice",
+        "Physical context"
+      ],
+      answer: 3,
+      explanation: "Physical context can make or break a performative’s felicity."
+    },
+    {
+      question: "A “token externalist” reading assumes:",
+      options: [
+        "Meaning in the mind only",
+        "Force fixed by context only",
+        "Content is unchanging",
+        "Performative verbs unnecessary"
+      ],
+      answer: 1,
+      explanation: "External context—social roles, institution—fixes the force of the utterance."
+    },
+    {
+      question: "Lecture VIII concludes that performative theory:",
+      options: [
+        "Applies to all utterances",
+        "Best fits institutional contexts",
+        "Fails for everyday speech",
+        "Replaces truth-conditional theory"
+      ],
+      answer: 1,
+      explanation: "It’s most robust in institutional or ritual contexts."
+    },
+    {
+      question: "Which fallacy does Austin warn about in the final lecture?",
+      options: [
+        "Hasty generalization",
+        "Performative universalization",
+        "Descriptive inflation",
+        "Performative absolutism"
+      ],
+      answer: 3,
+      explanation: "Treating every utterance as performative commits performative absolutism."
+    }
+  ];
+
+  // shuffle questions & options
+  let quiz = questions
+    .map(q => {
+      const copy = JSON.parse(JSON.stringify(q));
+      const opts = copy.options
+        .map((o,i) => ({o,i}))
+        .sort(()=>Math.random()-0.5);
+      const correct = opts.findIndex(x=>x.i===copy.answer);
+      return {
+        question: copy.question,
+        options: opts.map(x=>x.o),
+        answer: correct,
+        explanation: copy.explanation
+      };
+    })
+    .sort(()=>Math.random()-0.5);
+
+  let current = 0, answers = Array(quiz.length).fill(null);
+
+  function render(){
+    const q = quiz[current];
+    let html = `<h2>Q${current+1} of ${quiz.length}</h2>
+                <p>${q.question}</p>
+                <div class="options">`;
+    q.options.forEach((opt,i)=>{
+      const chk = answers[current]===i ? "checked" : "";
+      html += `<label>
+                 <input type="radio" name="opt" value="${i}" ${chk}/>
+                 ${opt}
+               </label>`;
+    });
+    html += "</div>";
+    document.getElementById("question-card").innerHTML = html;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === quiz.length - 1;
+  }
+
+  function store(){
+    const sel = document.querySelector('input[name="opt"]:checked');
+    answers[current] = sel ? +sel.value : null;
+  }
+
+  function showResults(){
+    store();
+    let score = 0,
+        out = `<h2>Your Score: 0 / ${quiz.length}</h2>`;
+    quiz.forEach((q,i)=>{
+      const ok = answers[i] === q.answer;
+      if(ok) score++;
+      out += `
+        <div class="answer-block ${ok ? "correct" : "incorrect"}">
+          <strong>Q${i+1}:</strong> ${q.question}<br/>
+          <em>Your answer:</em> ${
+            answers[i] === null
+              ? "<span style='color:#888'>No answer</span>"
+              : q.options[answers[i]]
+          }<br/>
+          <em>${ok ? "✅ Correct" : "❌ Incorrect, correct was"}${
+            ok ? "" : " " + q.options[q.answer]
+          }</em>
+          <div class="explanation">${q.explanation}</div>
+        </div><hr/>`;
+    });
+    out = out.replace("Your Score: 0", `Your Score: ${score}`);
+    document.getElementById("results").innerHTML = out;
+    document.getElementById("quiz-container").style.display = "none";
+    document.getElementById("results").scrollIntoView({behavior:"smooth"});
+  }
+
+  window.onload = ()=>{
+    render();
+    prevBtn.onclick = ()=>{
+      store();
+      if(current>0) current--, render();
+    };
+    nextBtn.onclick = ()=>{
+      store();
+      if(current<quiz.length-1) current++, render();
+    };
+    skipBtn.onclick = ()=>{
+      answers[current] = null;
+      if(current<quiz.length-1) current++, render();
+    };
+    submitBtn.onclick = showResults;
+  };
+  </script>
+</body>
+</html>

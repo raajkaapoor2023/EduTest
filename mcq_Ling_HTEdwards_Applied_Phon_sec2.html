@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chapter 2 Phonetics Quiz - Language & Dialects</title>
+<style>
+  body {
+    margin: 0; padding: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #2E86C1, #58D68D);
+    color: #0B3D91;
+    display: flex; justify-content: center; align-items: flex-start;
+    min-height: 100vh;
+  }
+  .quiz-container {
+    background: rgba(255,255,255,0.95);
+    border-radius: 20px;
+    max-width: 700px;
+    width: 100%;
+    padding: 30px 40px;
+    box-shadow: 0 12px 36px rgba(15,65,128,0.4);
+    animation: fadeIn 1.2s ease forwards;
+  }
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(40px);}
+    to {opacity: 1; transform: none;}
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 18px;
+    font-weight: 700;
+    font-size: 1.85em;
+    color: #004080;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.13);
+  }
+  .question {
+    font-weight: 700;
+    font-size: 1.28em;
+    margin-bottom: 18px;
+    color: #00529B;
+  }
+  .options label {
+    display: block;
+    background: linear-gradient(90deg, #D0E9FF, #A9D3FF);
+    border-radius: 14px;
+    padding: 10px 22px;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: #104E8B;
+    box-shadow: inset 2px 2px 8px rgba(255,255,255,0.7);
+    transition: background 0.3s ease, color 0.3s ease;
+    user-select: none;
+  }
+  .options label:hover {
+    background: linear-gradient(90deg, #87BFFF, #579EFF);
+    color: #062E50;
+  }
+  input[type=radio] {
+    display: none;
+  }
+  input[type=radio]:checked + span {
+    font-weight: 800;
+    color: #1B4F72;
+    text-shadow: 0 0 4px #a3d0ff;
+  }
+  #feedback {
+    margin-top: 14px;
+    padding: 12px 18px;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 1.14em;
+    max-width: 600px;
+  }
+  #feedback.correct {
+    background-color: #D0F0D6;
+    color: #2E7D32;
+    box-shadow: 0 0 15px 3px #8BED9F;
+  }
+  #feedback.incorrect {
+    background-color: #F8D7DA;
+    color: #A93226;
+    box-shadow: 0 0 15px 3px #F08078;
+  }
+  #score {
+    margin-top: 30px;
+    font-size: 1.45em;
+    font-weight: 700;
+    text-align: center;
+    color: #063970;
+  }
+  #restart {
+    cursor: pointer;
+    background: #00529B;
+    color: #fff;
+    width: 170px;
+    margin: 20px auto 0;
+    display: block;
+    border: none;
+    font-weight: 700;
+    font-size: 1.1em;
+    border-radius: 30px;
+    padding: 12px 0;
+    transition: background 0.3s ease;
+    box-shadow: 0 6px 16px rgba(0,82,155,0.55);
+    user-select: none;
+  }
+  #restart:hover {
+    background: #004080;
+    box-shadow: 0 8px 20px rgba(0,65,128,0.75);
+  }
+  #reference {
+    margin-top: 32px;
+    max-height: 330px;
+    overflow-y: auto;
+    background: #effff0;
+    border-left: 6px solid #27ae60;
+    padding: 18px 24px;
+    font-size: 0.9em;
+    color: #174d29;
+    line-height: 1.38;
+    text-align: justify;
+    display: none;
+  }
+  #reference h3 {
+    margin-top: 0;
+    color: #145214;
+    font-weight: 700;
+  }
+</style>
+</head>
+<body>
+
+<div class="quiz-container" id="quizContainer">
+  <h2>Phonetics MCQ Quiz: Chapter 2 - Language, Dialects & Idiolects</h2>
+  <div id="quiz"></div>
+  <div id="score"></div>
+  <button id="restart" onclick="restartQuiz()">Restart Quiz</button>
+  <div id="reference"></div>
+</div>
+
+<script>
+  const questions = [
+    {
+      q: "What major assumption is made when asking 'What language are you speaking?'?",
+      options: [
+        "All humans speak the same language.",
+        "Multiple languages exist and people can learn more than one.",
+        "Language cannot be learned, only inherited.",
+        "Language is the same as dialect."
+      ],
+      answer: 1,
+      reference: "Edwards (1992), Chapter 2: It’s assumed multiple languages exist and people can learn other languages."
+    },
+    {
+      q: "How is 'language' defined in the text?",
+      options: [
+        "A written system of alphabets.",
+        "A system of communication relating sound to meaning using internalized operations.",
+        "The way animals communicate.",
+        "Different dialect forms of speech."
+      ],
+      answer: 1,
+      reference: "Edwards (1992), Chapter 2: Language is a system of communication relating sound and meaning."
+    },
+    {
+      q: "What is a dialect?",
+      options: [
+        "A completely different language.",
+        "A regional or social variation of a language with differences in pronunciation, vocabulary, and grammar.",
+        "A style of writing.",
+        "A made-up way of speaking."
+      ],
+      answer: 1,
+      reference: "Edwards (1992), Chapter 2: Dialects arise due to geographical or social isolation, affecting speech sounds and grammar."
+    },
+    {
+      q: "What does it mean if someone is bidialectal?",
+      options: [
+        "They can speak two languages fluently.",
+        "They use two dialects appropriately.",
+        "They have a speech disorder.",
+        "They only speak one dialect."
+      ],
+      answer: 1,
+      reference: "Edwards (1992), Chapter 2: Bidialectal means using two dialects appropriately."
+    },
+    {
+      q: "What is a register in language?",
+      options: [
+        "A dialectal area.",
+        "A style of speech adjusted to the listener or context.",
+        "The vocabulary of a language.",
+        "A speech disorder."
+      ],
+      answer: 1,
+      reference: "Edwards (1992), Chapter 2: Register is a style of speech adapted for listener needs."
+    },
+    {
+      q: "Identify the four major dialect areas of the continental United States according to the text.",
+      options: [
+        "Northern, Western, Central, Southern.",
+        "General American, Eastern American, Southern American, Afro-American English.",
+        "British English, American English, Canadian English, Australian English.",
+        "Urban, Rural, Coastal, Mountainous."
+      ],
+      answer: 1,
+      reference: "Edwards (1992), Chapter 2: Major dialect areas are General American, Eastern American, Southern American, and Afro-American English."
+    },
+    {
+      q: "Which dialect has the least diverse variety with only slight sound differences across the large region?",
+      options: [
+        "Southern American.",
+        "Eastern American.",
+        "General American.",
+        "Afro-American English."
+      ],
+      answer: 2,
+      reference: "Edwards (1992), Chapter 2: General American dialect covers a large area with little variation."
+    },
+    {
+      q: "What dialect arose primarily in West Africa and was modified by Southern American dialect?",
+      options: [
+        "Appalachian English.",
+        "Afro-American English.",
+        "Eastern American.",
+        "New York City dialect."
+      ],
+      answer: 1,
+      reference: "Edwards (1992), Chapter 2: Afro-American English originated from West African creole influences."
+    },
+    {
+      q: "What are isoglosses?",
+      options: [
+        "Boundaries separating dialect regions based on speech features.",
+        "Types of speech registers.",
+        "The sounds used in normal speech.",
+        "Phonemes used for writing."
+      ],
+      answer: 0,
+      reference: "Edwards (1992), Chapter 2: Isoglosses mark dialect boundaries."
+    },
+    {
+      q: "Which dialect commonly drops the /r/ sound in words like 'fork' and 'murmur'?",
+      options: [
+        "General American.",
+        "Southern American and New England.",
+        "Afro-American English.",
+        "Eastern American."
+      ],
+      answer: 1,
+      reference: "Edwards (1992), Chapter 2: /r/ dropping is common in Southern and New England dialects."
+    },
+    {
+      q: "What is an idiolect?",
+      options: [
+        "A speech style directed at children.",
+        "A language system used by a region.",
+        "An individual’s unique speech pattern influenced by personal history.",
+        "A subtype of register."
+      ],
+      answer: 2,
+      reference: "Edwards (1992), Chapter 2: Idiolect is a person’s unique speech influenced by lifetime history."
+    },
+    {
+      q: "Which factor does NOT influence a person's idiolect?",
+      options: [
+        "Childhood residence.",
+        "Parents’ speech patterns.",
+        "Astrological sign.",
+        "School friends' speech."
+      ],
+      answer: 2,
+      reference: "Edwards (1992), Chapter 2: Astrological signs do not affect idiolects."
+    },
+    {
+      q: "What is significant about registers in natural language use?",
+      options: [
+        "They determine grammatical correctness.",
+        "They adjust speech style to social context and audience.",
+        "They are dialects spoken by different regions.",
+        "They relate to phonetic transcription."
+      ],
+      answer: 1,
+      reference: "Edwards (1992), Chapter 2: Registers change speech style depending on listener and situation."
+    },
+    {
+      q: "Why do people change registers when speaking to children versus adults?",
+      options: [
+        "To use simpler vocabulary and exaggerated intonation to aid comprehension.",
+        "Because children speak a different dialect.",
+        "Because it’s a different language.",
+        "To confuse the listener."
+      ],
+      answer: 0,
+      reference: "Edwards (1992), Chapter 2: Child registers use simpler speech and clearer intonation."
+    },
+    {
+      q: "Which best describes American English dialect diversity?",
+      options: [
+        "Highly diversified with many languages.",
+        "Relatively homogeneous across broad regions with some local variation.",
+        "No differences exist.",
+        "Only lexical differences."
+      ],
+      answer: 1,
+      reference: "Edwards (1992), Chapter 2: Dialects have broad limits and are relatively homogeneous."
+    },
+    {
+      q: "What is the influence of economic and social factors on dialect development?",
+      options: [
+        "No effect; only geographical features matter.",
+        "They can isolate groups causing dialectal differences without geographical distance.",
+        "They create official language standards.",
+        "They eliminate dialect differences."
+      ],
+      answer: 1,
+      reference: "Edwards (1992), Chapter 2: Social and economic isolation can cause dialectal variation."
+    },
+    {
+      q: "What is bidialectalism important for?",
+      options: [
+        "Traveling abroad.",
+        "Appropriate language use in different communities.",
+        "Speaking only one dialect.",
+        "Learning new languages quickly."
+      ],
+      answer: 1,
+      reference: "Edwards (1992), Chapter 2: Bidialectal speakers adjust speech style depending on social context."
+    },
+    {
+      q: "Which dialect is characterized by distinct sound changes and wide variation within the American South?",
+      options: [
+        "General American.",
+        "Eastern American.",
+        "Southern American.",
+        "New York City dialect."
+      ],
+      answer: 2,
+      reference: "Edwards (1992), Chapter 2: Southern American dialect is highly varied regionally."
+    },
+    {
+      q: "How do dialects affect phonetic descriptions and transcription?",
+      options: [
+        "They are irrelevant.",
+        "Sounds differ and should be transcribed accordingly.",
+        "They are the same for all dialects.",
+        "Only vocabulary changes."
+      ],
+      answer: 1,
+      reference: "Edwards (1992), Chapter 2: Dialectal sound differences impact transcription conventions."
+    },
+    {
+      q: "What is the major purpose of studying one’s speech history?",
+      options: [
+        "To produce identical speech as peers.",
+        "To understand influences shaping one’s unique idiolect.",
+        "To learn a new language.",
+        "To memorize dialect maps."
+      ],
+      answer: 1,
+      reference: "Edwards (1992), Chapter 2: Speech history analysis reveals factors shaping an individual's unique style."
+    }
+  ];
+
+  let currentQuestion = 0;
+  let score = 0;
+  const quizDiv = document.getElementById('quiz');
+  const scoreDiv = document.getElementById('score');
+  const restartBtn = document.getElementById('restart');
+  const referenceDiv = document.getElementById('reference');
+
+  function showQuestion() {
+    referenceDiv.style.display = 'none';
+    scoreDiv.textContent = '';
+    restartBtn.style.display = 'none';
+    const q = questions[currentQuestion];
+    quizDiv.innerHTML = `
+      <div class="question">${currentQuestion + 1}. ${q.q}</div>
+      <div class="options">
+        ${q.options.map((option, i) => `
+          <label>
+            <input type="radio" name="option" value="${i}" />
+            <span>${option}</span>
+          </label>
+        `).join('')}
+      </div>
+      <div id="feedback"></div>
+    `;
+    const inputs = quizDiv.querySelectorAll('input[type=radio]');
+    inputs.forEach(input => input.addEventListener('change', () => checkAnswer(parseInt(input.value))));
+  }
+
+  function checkAnswer(selected) {
+    const q = questions[currentQuestion];
+    const feedbackDiv = document.getElementById('feedback');
+    if(selected === q.answer) {
+      score++;
+      feedbackDiv.className = 'correct';
+      feedbackDiv.textContent = '✅ Correct!';
+    } else {
+      feedbackDiv.className = 'incorrect';
+      feedbackDiv.innerHTML = `❌ Incorrect! The correct answer is: <strong>${q.options[q.answer]}</strong>`;
+    }
+    disableOptions();
+    setTimeout(() => {
+      currentQuestion++;
+      if(currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        showScore();
+      }
+    }, 1400);
+  }
+
+  function disableOptions() {
+    const inputs = quizDiv.querySelectorAll('input[type=radio]');
+    inputs.forEach(input => input.disabled = true);
+  }
+
+  function showScore() {
+    quizDiv.innerHTML = '';
+    scoreDiv.innerHTML = `You scored <strong>${score} out of ${questions.length}</strong>.`;
+    restartBtn.style.display = 'block';
+    showReferences();
+  }
+
+  function showReferences() {
+    const refsHtml = questions.map((q,i) => `<b>Q${i+1}:</b> ${q.reference}`).join('<br><br>');
+    referenceDiv.innerHTML = `<h3>Detailed Referenced Answers:</h3>${refsHtml}`;
+    referenceDiv.style.display = 'block';
+  }
+
+  function restartQuiz() {
+    currentQuestion = 0;
+    score = 0;
+    showQuestion();
+    scoreDiv.textContent = '';
+    referenceDiv.style.display = 'none';
+    restartBtn.style.display = 'none';
+  }
+
+  showQuestion();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chapter 10: Sentence Stress – Phonetics Quiz</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #240046, #5a189a);
+      color: #f8f9fa;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+    .quiz-container {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+      width: 90%;
+      max-width: 750px;
+    }
+    h1 {
+      text-align: center;
+      color: #ffba08;
+    }
+    .question {
+      font-size: 1.1rem;
+      margin: 1.5rem 0 0.5rem;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+    }
+    .option {
+      background: #3c096c;
+      border: 2px solid #ffba08;
+      margin: 0.4rem 0;
+      padding: 0.6rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .option:hover {
+      background: #ffba08;
+      color: black;
+    }
+    .btn {
+      margin-top: 1rem;
+      padding: 0.6rem 1.5rem;
+      background: #f72585;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .result, .explanation {
+      margin-top: 2rem;
+      background: #ffffff11;
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+    .correct { color: lightgreen; }
+    .incorrect { color: #ff4d6d; }
+  </style>
+</head>
+<body>
+<div class="quiz-container">
+  <h1>Chapter 10: Sentence Stress</h1>
+  <div id="quiz"></div>
+  <div class="result" id="result"></div>
+  <div class="explanation" id="explanation"></div>
+  <button class="btn" onclick="nextQuestion()">Next</button>
+</div>
+
+<script>
+const questions = [
+  {
+    q: "What is sentence stress?",
+    options: [
+      "Stress placed randomly in a sentence",
+      "Emphasis placed on certain words for meaning",
+      "Stress used for syllable length",
+      "IPA-based transcription only"
+    ],
+    answer: 1,
+    ref: "Sentence stress emphasizes words to highlight meaning and structure. (p.203)"
+  },
+  {
+    q: "Which type of words usually receive stress in English sentences?",
+    options: ["Function words", "Content words", "Conjunctions", "Pronouns"],
+    answer: 1,
+    ref: "Content words (nouns, verbs, adjectives, adverbs) typically bear stress. (p.203)"
+  },
+  {
+    q: "Function words like 'the', 'is', 'and' are usually:",
+    options: ["Fully stressed", "Unstressed", "Elided", "Nucleus of the intonation unit"],
+    answer: 1,
+    ref: "Function words are generally unstressed unless focused. (p.204)"
+  },
+  {
+    q: "Which of the following contains contrastive stress?",
+    options: [
+      "She walked to school.",
+      "SHE walked to school.",
+      "She walked to SCHOOL.",
+      "She walked to school?"
+    ],
+    answer: 1,
+    ref: "Contrastive stress is used for correction or emphasis: SHE (not someone else). (p.205)"
+  },
+  {
+    q: "What is the nuclear stress?",
+    options: [
+      "The first stressed syllable",
+      "The loudest pitch peak",
+      "The final main stress in an intonation unit",
+      "Stress on function words"
+    ],
+    answer: 2,
+    ref: "Nuclear stress is the final prominent stress of an intonation group. (p.204)"
+  },
+  {
+    q: "Which word is likely to receive nuclear stress: 'She gave HIM a book.'?",
+    options: ["She", "Gave", "Him", "Book"],
+    answer: 3,
+    ref: "The last content word ('book') usually receives nuclear stress. (p.204)"
+  },
+  {
+    q: "In sentence stress, 'intonation unit' refers to:",
+    options: [
+      "Any syllable",
+      "A stressed vowel",
+      "A meaningful group of words with one main stress",
+      "A complete clause"
+    ],
+    answer: 2,
+    ref: "Intonation units contain a nucleus (main stress) and other rhythmic elements. (p.204)"
+  },
+  {
+    q: "Which sentence uses contrastive stress to emphasize 'book'?",
+    options: [
+      "She gave him a BOOK.",
+      "She GAVE him a book.",
+      "She gave HIM a book.",
+      "She gave him a book?"
+    ],
+    answer: 0,
+    ref: "Capitalizing 'BOOK' indicates it is emphasized. (p.205)"
+  },
+  {
+    q: "Stress shift in a sentence can affect:",
+    options: [
+      "Meaning and focus",
+      "Consonant voicing",
+      "IPA symbols",
+      "Grammar only"
+    ],
+    answer: 0,
+    ref: "Stress placement shifts focus and affects listener interpretation. (p.205)"
+  },
+  {
+    q: "Which is an example of a focus question triggering contrastive stress?",
+    options: [
+      "Where did she go?",
+      "Did she go?",
+      "Who went to school?",
+      "Did SHE go to school?"
+    ],
+    answer: 3,
+    ref: "The word 'SHE' is contrastively stressed in correction or focus. (p.205)"
+  },
+  {
+    q: "In 'I saw the man with the telescope', stress on 'telescope' implies:",
+    options: [
+      "The man had the telescope",
+      "The observer used the telescope",
+      "Telescope is a function word",
+      "Stress is irrelevant"
+    ],
+    answer: 1,
+    ref: "Stress helps disambiguate meaning by signaling focus. (p.205–206)"
+  },
+  {
+    q: "Which prosodic feature signals sentence stress most clearly?",
+    options: ["Nasalization", "Vowel height", "Pitch and loudness", "Aspiration"],
+    answer: 2,
+    ref: "Pitch movement and amplitude mark stressed syllables in sentence context. (p.203)"
+  },
+  {
+    q: "Sentence stress in English is:",
+    options: [
+      "Fixed on first syllables",
+      "Completely unpredictable",
+      "Determined by syntax and pragmatics",
+      "Lexically encoded"
+    ],
+    answer: 2,
+    ref: "Sentence stress depends on word class, focus, and information structure. (p.203–204)"
+  },
+  {
+    q: "In English, new information tends to:",
+    options: [
+      "Be unstressed",
+      "Carry nuclear stress",
+      "Be deleted",
+      "Be spoken more softly"
+    ],
+    answer: 1,
+    ref: "New info is emphasized via nuclear stress. (p.204)"
+  },
+  {
+    q: "Which of the following could result in a stress shift?",
+    options: [
+      "Punctuation",
+      "Function word deletion",
+      "Contrastive emphasis",
+      "Consonant devoicing"
+    ],
+    answer: 2,
+    ref: "Stress shifts to accommodate focus or correction. (p.205–206)"
+  },
+  {
+    q: "Stress on 'CAN' in 'I CAN do it' likely signals:",
+    options: [
+      "An auxiliary",
+      "Contrastive emphasis (e.g., CAN vs. can't)",
+      "Syllable lengthening",
+      "Question intonation"
+    ],
+    answer: 1,
+    ref: "'CAN' is emphasized to show contrast. (p.205)"
+  },
+  {
+    q: "Sentence stress differs from lexical stress in that it:",
+    options: [
+      "Is always fixed",
+      "Reflects meaning and context",
+      "Affects only syllables",
+      "Occurs only in poetry"
+    ],
+    answer: 1,
+    ref: "Lexical stress is fixed in words; sentence stress varies with discourse. (p.204–205)"
+  },
+  {
+    q: "Which is a content word in: 'She will call him tomorrow'?",
+    options: ["Will", "Call", "She", "Him"],
+    answer: 1,
+    ref: "'Call' is a verb and thus a content word likely to be stressed. (p.203)"
+  },
+  {
+    q: "Which function word may be stressed for contrast?",
+    options: ["And", "In", "Do", "All of the above"],
+    answer: 3,
+    ref: "Function words can receive stress when used contrastively. (p.204–205)"
+  },
+  {
+    q: "Which intonational feature marks the nucleus?",
+    options: ["Vocal fry", "Creaky voice", "Pitch movement (e.g., fall or rise)", "Pausing"],
+    answer: 2,
+    ref: "Nuclear stress is typically marked by a pitch change. (p.204)"
+  }
+];
+
+let current = 0;
+let score = 0;
+
+function showQuestion() {
+  const q = questions[current];
+  document.getElementById("quiz").innerHTML = `
+    <div class="question">${current + 1}/20. ${q.q}</div>
+    <div class="options">
+      ${q.options.map((opt, i) => `
+        <div class="option" onclick="checkAnswer(${i})">
+          ${String.fromCharCode(65 + i)}. ${opt}
+        </div>`).join('')}
+    </div>
+  `;
+  document.getElementById("result").textContent = '';
+  document.getElementById("explanation").textContent = '';
+}
+
+function checkAnswer(selected) {
+  const q = questions[current];
+  const correct = q.answer;
+  const resultEl = document.getElementById("result");
+  const explanation = document.getElementById("explanation");
+
+  if (selected === correct) {
+    score++;
+    resultEl.innerHTML = `<span class="correct">✅ Correct!</span>`;
+  } else {
+    resultEl.innerHTML = `<span class="incorrect">❌ Incorrect.</span> Correct answer: <strong>${String.fromCharCode(65 + correct)}</strong>`;
+  }
+
+  explanation.innerHTML = `<strong>Reference:</strong> ${q.ref}`;
+}
+
+function nextQuestion() {
+  if (current < questions.length - 1) {
+    current++;
+    showQuestion();
+  } else {
+    document.getElementById("quiz").innerHTML = `<h2>🎓 Quiz Complete</h2><p>Your Score: ${score}/20</p>`;
+    document.getElementById("result").textContent = '';
+    document.getElementById("explanation").innerHTML = `
+      <p><strong>Review source:</strong> Linda I. House, <em>Introductory Phonetics and Phonology</em>, Chapter 10: Sentence Stress (pp.203–209).</p>`;
+    document.querySelector(".btn").style.display = "none";
+  }
+}
+
+showQuestion();
+</script>
+</body>
+</html>

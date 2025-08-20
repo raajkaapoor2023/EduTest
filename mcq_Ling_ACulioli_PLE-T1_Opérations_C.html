@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Test de fin d'études en linguistique : Pour une linguistique de l'énonciation - Opérations et représentations (Tome 1) par Antoine Culioli</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { text-align: center; }
+        .dashboard { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .progress { width: 100%; background: #ddd; height: 10px; border-radius: 5px; margin: 0 10px; flex-grow: 1; }
+        .progress-bar { background: #4caf50; height: 10px; border-radius: 5px; width: 0%; }
+        .question { margin-bottom: 20px; }
+        .options label { display: block; margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; transition: background 0.3s; }
+        .options input { margin-right: 10px; }
+        .options input:checked + span { background: #d4edda; color: #155724; font-weight: bold; }
+        .navigation { display: flex; justify-content: space-between; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; transition: background 0.3s; }
+        button:hover { background: #0056b3; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        #results { display: none; }
+        .highlight-correct { background: #d4edda; padding: 10px; border-radius: 4px; margin-bottom: 10px; }
+        .highlight-wrong { background: #f8d7da; padding: 10px; border-radius: 4px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test de fin d'études en linguistique : Pour une linguistique de l'énonciation - Opérations et représentations (Tome 1) par Antoine Culioli</h1>
+        <div class="dashboard">
+            <div>Questions répondues : <span id="answered">0</span>/90</div>
+            <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+            <div>Temps écoulé : <span id="time">0:00</span></div>
+        </div>
+        <div class="question">
+            <h2 id="question-number"></h2>
+            <p id="question-text"></p>
+            <div class="options" id="options"></div>
+        </div>
+        <div class="navigation">
+            <button id="prev">Précédent</button>
+            <button id="next">Suivant</button>
+            <button id="submit">Valider</button>
+        </div>
+        <div id="results">
+            <h2>Résultats</h2>
+            <p>Score : <span id="score"></span>/90</p>
+            <div id="detailed-results"></div>
+        </div>
+    </div>
+    <script>
+        const questions = [
+            // Avant-propos (pp. 7-8, 8 questions)
+            {
+                question: "Selon l'avant-propos de Culioli, la linguistique doit-elle être orthodoxe ou paradoxale ?",
+                options: [
+                    "Strictement orthodoxe pour maintenir la cohérence",
+                    "Fondamentalement paradoxale pour capturer la complexité des phénomènes langagiers",
+                    "Purement descriptive sans paradoxes",
+                    "Exclusivement formelle et non paradoxale"
+                ],
+                correct: "Fondamentalement paradoxale pour capturer la complexité des phénomènes langagiers",
+                explanation: "Culioli souligne que la linguistique doit intégrer des paradoxes pour relier empirique et formel. Référence académique : Avant-propos (pp. 7-8). Cette vue s'aligne sur des débats en philosophie des sciences, influencés par Kuhn sur les paradigmes."
+            },
+            {
+                question: "Quelle est la position de Culioli sur la défense d'une orthodoxie en linguistique dans l'avant-propos ?",
+                options: [
+                    "Il la défend vigoureusement",
+                    "Il n'est pas question de défendre une orthodoxie, mais d'explorer des questions ouvertes",
+                    "Il propose une nouvelle orthodoxie",
+                    "Il critique les orthodoxies sans proposer d'alternative"
+                ],
+                correct: "Il n'est pas question de défendre une orthodoxie, mais d'explorer des questions ouvertes",
+                explanation: "L'avant-propos insiste sur l'ouverture plutôt que la défense d'une doctrine fixe. Référence académique : Avant-propos (pp. 7-8). Lien avec l'approche post-structurale en linguistique."
+            },
+            {
+                question: "Dans l'avant-propos, comment Culioli décrit-il les articles présentés ?",
+                options: [
+                    "Comme des textes chronologiques sans lien",
+                    "Comme des articles sur des thèmes variés, écrits en anglais pour la plupart",
+                    "Comme une série d'articles, dont certains en anglais, centrés sur des points d'abords en anglai",
+                    "Comme une collection de textes rédigés principalement en français"
+                ],
+                correct: "Comme une série d'articles, dont certains en anglais, centrés sur des points d'abords en anglai",
+                explanation: "Les articles sont décrits comme couvrant des thèmes spécifiques, avec certains en anglais. Référence académique : Avant-propos (pp. 7-8). Cela reflète l'internationalité de la théorie de l'énonciation."
+            },
+            {
+                question: "Quelle est l'importance accordée aux textes reformulés dans l'avant-propos ?",
+                options: [
+                    "Ils sont ignorés",
+                    "Ils contiennent des points d'absordant des textes originaux",
+                    "Ils sont des reformulations contenant des points absorbent",
+                    "Ils sont des reformulations contenant des points aborder pour la première fois"
+                ],
+                correct: "Ils sont des reformulations contenant des points aborder pour la première fois",
+                explanation: "Les reformulations introduisent de nouveaux points. Référence académique : Avant-propos (pp. 7-8). Cette méthode est typique de l'approche itérative en théorie linguistique."
+            },
+            {
+                question: "Comment Culioli voit-il le rôle des articles en anglais dans l'avant-propos ?",
+                options: [
+                    "Comme secondaires",
+                    "Comme permettant aux lecteurs de souhaiter de la version originale",
+                    "Comme permettant aux lecteurs qui le souhaitent de consulter la version originale",
+                    "Comme superflus"
+                ],
+                correct: "Comme permettant aux lecteurs qui le souhaitent de consulter la version originale",
+                explanation: "Les articles en anglais permettent l'accès aux originaux. Référence académique : Avant-propos (pp. 7-8). Promouvoir l'accès multilingue en recherche."
+            },
+            {
+                question: "Quelle est la nature paradoxale de la linguistique selon Culioli dans l'avant-propos ?",
+                options: [
+                    "Elle est simple et directe",
+                    "Elle intègre des tensions entre empirique et formel, observations et modélisation",
+                    "Elle évite les paradoxes",
+                    "Elle est uniquement empirique"
+                ],
+                correct: "Elle intègre des tensions entre empirique et formel, observations et modélisation",
+                explanation: "La paradoxalité capture la complexité. Référence académique : Avant-propos (pp. 7-8). Écho à la dialectique en philosophie du langage."
+            },
+            {
+                question: "Dans l'avant-propos, Culioli mentionne-t-il des articles écrits en anglais ?",
+                options: [
+                    "Non, tous en français",
+                    "Oui, et ils sont présentés pour permettre la consultation des originaux",
+                    "Oui, mais ils sont traduits",
+                    "Non, ils sont exclus"
+                ],
+                correct: "Oui, et ils sont présentés pour permettre la consultation des originaux",
+                explanation: "Les articles en anglais sont inclus pour référence. Référence académique : Avant-propos (pp. 7-8). Soutien à la diffusion internationale."
+            },
+            {
+                question: "Quelle est la finalité des reformulations dans l'avant-propos selon Culioli ?",
+                options: [
+                    "Répéter sans changement",
+                    "Introduire de nouveaux points et clarifier",
+                    "Éviter de nouveaux points",
+                    "Rendre le texte plus court"
+                ],
+                correct: "Introduire de nouveaux points et clarifier",
+                explanation: "Les reformulations ajoutent de la profondeur. Référence académique : Avant-propos (pp. 7-8). Technique courante en théorie évolutive."
+            },
+            // La linguistique : de l'empirique au formel (pp. 9-46, 10 questions)
+            {
+                question: "Dans 'La linguistique : de l'empirique au formel', quelle est la relation entre l'empirique et le formel selon Culioli ?",
+                options: [
+                    "Ils sont opposés sans lien",
+                    "Le formel dérive de l'empirique par abstraction et modélisation",
+                    "L'empirique est dérivé du formel",
+                    "Ils sont indépendants"
+                ],
+                correct: "Le formel dérive de l'empirique par abstraction et modélisation",
+                explanation: "Culioli advocate pour une progression de l'observation à la formalisation. Référence académique : La linguistique : de l'empirique au formel (pp. 9-46). Influencé par l'empirisme logique."
+            },
+            {
+                question: "Quelle est l'approche de Culioli à la linguistique dans ce chapitre ?",
+                options: [
+                    "Purement formelle",
+                    "Intégrant empirique et formel pour éviter les dogmes",
+                    "Uniquement empirique",
+                    "Basée sur la syntaxe seule"
+                ],
+                correct: "Intégrant empirique et formel pour éviter les dogmes",
+                explanation: "L'approche équilibre observation et théorie. Référence académique : La linguistique : de l'empirique au formel (pp. 9-46). Comparaison avec Benveniste."
+            },
+            {
+                question: "Comment Culioli décrit-il le passage de l'empirique au formel ?",
+                options: [
+                    "Comme un saut direct",
+                    "Comme un processus d'abstraction progressive à partir de données observées",
+                    "Comme inutile",
+                    "Comme réversible seulement"
+                ],
+                correct: "Comme un processus d'abstraction progressive à partir de données observées",
+                explanation: "Le passage implique modélisation. Référence académique : La linguistique : de l'empirique au formel (pp. 9-46). Lien avec la méthodologie scientifique."
+            },
+            {
+                question: "Dans ce chapitre, quelle importance Culioli accorde-t-il à l'observation empirique ?",
+                options: [
+                    "Aucune, il privilégie le formel",
+                    "Elle est la base pour construire des modèles formels",
+                    "Elle est secondaire",
+                    "Elle est contradictoire au formel"
+                ],
+                correct: "Elle est la base pour construire des modèles formels",
+                explanation: "L'empirique fonde le formel. Référence académique : La linguistique : de l'empirique au formel (pp. 9-46). Écho à l'inductivisme."
+            },
+            {
+                question: "Quelle est la critique de Culioli aux approches dogmatiques en linguistique ?",
+                options: [
+                    "Il les soutient",
+                    "Il les rejette au profit d'une approche ouverte empirique-formelle",
+                    "Il les ignore",
+                    "Il les modifie légèrement"
+                ],
+                correct: "Il les rejette au profit d'une approche ouverte empirique-formelle",
+                explanation: "Critique des dogmes pour une flexibilité. Référence académique : La linguistique : de l'empirique au formel (pp. 9-46). Critique post-moderne."
+            },
+            {
+                question: "Comment Culioli voit-il la complexité des phénomènes langagiers dans ce chapitre ?",
+                options: [
+                    "Comme simple",
+                    "Comme nécessitant une intégration d'observations multiples et modélisation",
+                    "Comme réductible à des règles simples",
+                    "Comme non pertinente"
+                ],
+                correct: "Comme nécessitant une intégration d'observations multiples et modélisation",
+                explanation: "La complexité exige une approche nuancée. Référence académique : La linguistique : de l'empirique au formel (pp. 9-46). Influence cognitive."
+            },
+            {
+                question: "Dans 'de l'empirique au formel', quelle est la rôle de la modélisation ?",
+                options: [
+                    "Secondaire",
+                    "Central pour relier observations à théorie",
+                    "Inutile",
+                    "Purement descriptive"
+                ],
+                correct: "Central pour relier observations à théorie",
+                explanation: "Modélisation relie les niveaux. Référence académique : La linguistique : de l'empirique au formel (pp. 9-46). Similaire à la modélisation en sciences."
+            },
+            {
+                question: "Culioli insiste-t-il sur l'importance de données cross-linguistiques dans ce chapitre ?",
+                options: [
+                    "Non",
+                    "Oui, pour valider les modèles",
+                    "Seulement pour le français",
+                    "Pour les langues indo-européennes seulement"
+                ],
+                correct: "Oui, pour valider les modèles",
+                explanation: "Données multilingues soutiennent la généralité. Référence académique : La linguistique : de l'empirique au formel (pp. 9-46). Approche typologique."
+            },
+            {
+                question: "Quelle est la perspective de Culioli sur la théorie en linguistique ?",
+                options: [
+                    "Elle doit être déconnectée de l'empirique",
+                    "Elle doit être construite à partir de l'empirique",
+                    "Elle est innée",
+                    "Elle est arbitraire"
+                ],
+                correct: "Elle doit être construite à partir de l'empirique",
+                explanation: "Théorie ancrée dans l'observation. Référence académique : La linguistique : de l'empirique au formel (pp. 9-46). Empirisme."
+            },
+            {
+                question: "Dans ce chapitre, Culioli discute-t-il de la nécessité d'une méta-langue ?",
+                options: [
+                    "Non",
+                    "Oui, pour formaliser les observations",
+                    "Seulement pour la syntaxe",
+                    "Pour la sémantique seule"
+                ],
+                correct: "Oui, pour formaliser les observations",
+                explanation: "Méta-langue aide à la formalisation. Référence académique : La linguistique : de l'empirique au formel (pp. 9-46). Concept clé en méta-linguistique."
+            },
+            // Sur le concept de notion (pp. 47-66, 8 questions)
+            {
+                question: "Qu'est-ce que la 'notion' dans la théorie de Culioli ?",
+                options: [
+                    "Un terme lexical spécifique",
+                    "Un construct abstrait pré-linguistique regroupant occurrences typiques et atypiques",
+                    "Une catégorie syntaxique",
+                    "Un énoncé complet"
+                ],
+                correct: "Un construct abstrait pré-linguistique regroupant occurrences typiques et atypiques",
+                explanation: "La notion organise des occurrences abstraitement. Référence académique : Sur le concept de notion (pp. 47-66). Influencé par la sémantique générale."
+            },
+            {
+                question: "Comment la notion est-elle liée aux occurrences ?",
+                options: [
+                    "Elle les ignore",
+                    "Elle regroupe un ensemble d'occurrences dans un domaine abstrait",
+                    "Elle est une occurrence unique",
+                    "Elle est post-linguistique"
+                ],
+                correct: "Elle regroupe un ensemble d'occurrences dans un domaine abstrait",
+                explanation: "La notion structure les occurrences. Référence académique : Sur le concept de notion (pp. 47-66). Lien avec la prototypicalité de Rosch."
+            },
+            {
+                question: "La notion est-elle langue-spécifique selon Culioli ?",
+                options: [
+                    "Oui",
+                    "Non, elle est pré-linguistique et abstraite",
+                    "Seulement pour le français",
+                    "Pour les langues romanes"
+                ],
+                correct: "Non, elle est pré-linguistique et abstraite",
+                explanation: "Indépendante de langues spécifiques. Référence académique : Sur le concept de notion (pp. 47-66). Universel en théorie énonciative."
+            },
+            {
+                question: "Quelle est la fonction de la notion dans l'énonciation ?",
+                options: [
+                    "Décorative",
+                    "Base pour les opérations de repérage et construction référentielle",
+                    "Syntaxique seulement",
+                    "Phonologique"
+                ],
+                correct: "Base pour les opérations de repérage et construction référentielle",
+                explanation: "Fondement des opérations. Référence académique : Sur le concept de notion (pp. 47-66). Central en énonciation."
+            },
+            {
+                question: "Culioli distingue-t-il entre occurrences typiques et atypiques dans la notion ?",
+                options: [
+                    "Non",
+                    "Oui, la notion inclut les deux pour une représentation complète",
+                    "Seulement typiques",
+                    "Seulement atypiques"
+                ],
+                correct: "Oui, la notion inclut les deux pour une représentation complète",
+                explanation: "Inclut variation. Référence académique : Sur le concept de notion (pp. 47-66). Approche gradientielle."
+            },
+            {
+                question: "La notion est-elle un concept statique ou dynamique ?",
+                options: [
+                    "Statique",
+                    "Dynamique, sujet à opérations énonciatives",
+                    "Fixe dans le temps",
+                    "Culturel seulement"
+                ],
+                correct: "Dynamique, sujet à opérations énonciatives",
+                explanation: "Dynamique via opérations. Référence académique : Sur le concept de notion (pp. 47-66). Perspective processuelle."
+            },
+            {
+                question: "Comment la notion contribue-t-elle à la modélisation linguistique ?",
+                options: [
+                    "En ignorant les variations",
+                    "En reliant empirique à formel par abstraction",
+                    "En se limitant à la syntaxe",
+                    "En étant descriptive seulement"
+                ],
+                correct: "En reliant empirique à formel par abstraction",
+                explanation: "Relie niveaux. Référence académique : Sur le concept de notion (pp. 47-66). Modélisation abstraite."
+            },
+            {
+                question: "Dans ce chapitre, Culioli utilise-t-il des exemples multilingues pour illustrer la notion ?",
+                options: [
+                    "Non",
+                    "Oui, pour montrer son universalité",
+                    "Seulement en français",
+                    "Pour la négation seulement"
+                ],
+                correct: "Oui, pour montrer son universalité",
+                explanation: "Exemples cross-linguistiques. Référence académique : Sur le concept de notion (pp. 47-66). Typologie linguistique."
+            },
+            // The Concept of Notional Domain (pp. 67-82, 7 questions)
+            {
+                question: "Qu'est-ce que le 'notional domain' selon Culioli ?",
+                options: [
+                    "Un domaine lexical",
+                    "L'espace abstrait structuré des occurrences associées à une notion",
+                    "Une frontière syntaxique",
+                    "Un contexte culturel"
+                ],
+                correct: "L'espace abstrait structuré des occurrences associées à une notion",
+                explanation: "Espace organisant occurrences. Référence académique : The Concept of Notional Domain (pp. 67-82). Concept sémiotique."
+            },
+            {
+                question: "Comment le domaine notionnel   est-il sujet aux opérations ?",
+                options: [
+                    "Pas du tout",
+                    "Sujet à repérage et détermination",
+                    "Seulement négation",
+                    "Phonologiquement"
+                ],
+                correct: "Sujet à repérage et détermination",
+                explanation: "Opérations de repérage. Référence académique : The Concept of Notional Domain (pp. 67-82). Opérations énonciatives."
+            },
+            {
+                question: "Le domaine notionnel   est-il lié à la construction du référent ?",
+                options: [
+                    "Non",
+                    "Oui, il permet la construction référentielle",
+                    "Seulement pour les noms",
+                    "Pour les verbes seulement"
+                ],
+                correct: "Oui, il permet la construction référentielle",
+                explanation: "Base pour référent. Référence académique : The Concept of Notional Domain (pp. 67-82). Référence en sémantique."
+            },
+            {
+                question: "Culioli décrit-il le domaine notionnel   comme structuré ou chaotique ?",
+                options: [
+                    "Chaotique",
+                    "Structuré par opérations",
+                    "Non structuré",
+                    "Aléatoire"
+                ],
+                correct: "Structuré par opérations",
+                explanation: "Structuré abstraitement. Référence académique : The Concept of Notional Domain (pp. 67-82). Structure notionnelle."
+            },
+            {
+                question: "Quelle est la relation entre notion et domaine notionnel   ?",
+                options: [
+                    "Indépendants",
+                    "Le domaine est l'ensemble associé à la notion",
+                    "Identiques",
+                    "Opposés"
+                ],
+                correct: "Le domaine est l'ensemble associé à la notion",
+                explanation: "Domaine étend la notion. Référence académique : The Concept of Notional Domain (pp. 67-82). Extension notionnelle."
+            },
+            {
+                question: "Le domaine notionnel   inclut-il des occurrences typiques seulement ?",
+                options: [
+                    "Oui",
+                    "Non, typiques et atypiques",
+                    "Seulement atypiques",
+                    "Aucune occurrence"
+                ],
+                correct: "Non, typiques et atypiques",
+                explanation: "Inclut variation. Référence académique : The Concept of Notional Domain (pp. 67-82). Gradient."
+            },
+            {
+                question: "Dans ce chapitre, Culioli utilise-t-il des diagrammes pour illustrer le domaine notionnel   ?",
+                options: [
+                    "Non",
+                    "Oui, pour visualiser la structure",
+                    "Seulement textuel",
+                    "Pour la négation"
+                ],
+                correct: "Oui, pour visualiser la structure",
+                explanation: "Visualisation abstraite. Référence académique : The Concept of Notional Domain (pp. 67-82). Représentation graphique."
+            },
+            // La frontière (pp. 83-90, 6 questions)
+            {
+                question: "Qu'est-ce que la 'frontière' dans la théorie de Culioli ?",
+                options: [
+                    "Une limite géographique",
+                    "Une opération de délimitation dans le domaine notionnel  ",
+                    "Un marqueur lexical",
+                    "Une catégorie verbale"
+                ],
+                correct: "Une opération de délimitation dans le domaine notionnel  ",
+                explanation: "Opération de séparation. Référence académique : La frontière (pp. 83-90). Délimitation notionnelle."
+            },
+            {
+                question: "La frontière est-elle une opération statique ou dynamique ?",
+                options: [
+                    "Statique",
+                    "Dynamique, impliquée dans le repérage",
+                    "Fixe",
+                    "Non opérative"
+                ],
+                correct: "Dynamique, impliquée dans le repérage",
+                explanation: "Dynamique en énonciation. Référence académique : La frontière (pp. 83-90). Processus."
+            },
+            {
+                question: "Comment la frontière contribue-t-elle à la distinction des occurrences ?",
+                options: [
+                    "En les fusionnant",
+                    "En établissant des limites claires",
+                    "En les ignorant",
+                    "En les multipliant"
+                ],
+                correct: "En établissant des limites claires",
+                explanation: "Délimite occurrences. Référence académique : La frontière (pp. 83-90). Distinction."
+            },
+            {
+                question: "Culioli lie-t-il la frontière à la négation ?",
+                options: [
+                    "Non",
+                    "Oui, comme opération de disconnection",
+                    "Seulement à la modalité",
+                    "À la syntaxe"
+                ],
+                correct: "Oui, comme opération de disconnection",
+                explanation: "Liée à négation. Référence académique : La frontière (pp. 83-90). Connexion opérative."
+            },
+            {
+                question: "La frontière est-elle langue-spécifique ?",
+                options: [
+                    "Oui",
+                    "Non, opération abstraite",
+                    "Pour l'anglais seulement",
+                    "Pour le français"
+                ],
+                correct: "Non, opération abstraite",
+                explanation: "Abstraite et universelle. Référence académique : La frontière (pp. 83-90). Universalité."
+            },
+            {
+                question: "Dans ce chapitre, des exemples illustrent-ils la frontière ?",
+                options: [
+                    "Non",
+                    "Oui, avec des marqueurs linguistiques",
+                    "Seulement théoriques",
+                    "Phonologiques"
+                ],
+                correct: "Oui, avec des marqueurs linguistiques",
+                explanation: "Exemples concrets. Référence académique : La frontière (pp. 83-90). Illustration."
+            },
+            // La négation : marqueurs et operations (pp. 91-114, 8 questions)
+            {
+                question: "Comment Culioli conçoit-il la négation ?",
+                options: [
+                    "Comme inversion simple",
+                    "Comme opérations de marqueurs et disconnection",
+                    "Comme lexicale seulement",
+                    "Comme syntaxique unique"
+                ],
+                correct: "Comme opérations de marqueurs et disconnection",
+                explanation: "Opérations multiples. Référence académique : La négation : marqueurs et operations (pp. 91-114). Logique et pragmatique."
+            },
+            {
+                question: "La négation implique-t-elle des opérations dans le domaine notionnel   ?",
+                options: [
+                    "Non",
+                    "Oui, disconnection d'occurrences",
+                    "Seulement affirmation",
+                    "Phonétique"
+                ],
+                correct: "Oui, disconnection d'occurrences",
+                explanation: "Disconnection notionnelle. Référence académique : La négation : marqueurs et operations (pp. 91-114). Opérations."
+            },
+            {
+                question: "Culioli distingue-t-il entre marqueurs négatifs et opérations ?",
+                options: [
+                    "Non",
+                    "Oui, marqueurs sont surface, opérations profondes",
+                    "Identiques",
+                    "Marqueurs seulement"
+                ],
+                correct: "Oui, marqueurs sont surface, opérations profondes",
+                explanation: "Distinction niveaux. Référence académique : La négation : marqueurs et operations (pp. 91-114). Surface/profondeur."
+            },
+            {
+                question: "La négation est-elle liée à la frontière ?",
+                options: [
+                    "Non",
+                    "Oui, comme forme de délimitation",
+                    "Seulement modalité",
+                    "Syntaxe"
+                ],
+                correct: "Oui, comme forme de délimitation",
+                explanation: "Liée à frontière. Référence académique : La négation : marqueurs et operations (pp. 91-114). Intégration."
+            },
+            {
+                question: "Des exemples multilingues sont-ils utilisés pour la négation ?",
+                options: [
+                    "Non",
+                    "Oui, pour montrer variations et universalité",
+                    "Français seulement",
+                    "Anglais seulement"
+                ],
+                correct: "Oui, pour montrer variations et universalité",
+                explanation: "Cross-linguistique. Référence académique : La négation : marqueurs et operations (pp. 91-114). Typologie."
+            },
+            {
+                question: "La négation affecte-t-elle la validation référentielle ?",
+                options: [
+                    "Non",
+                    "Oui, par modulation",
+                    "Seulement lexical",
+                    "Phonologique"
+                ],
+                correct: "Oui, par modulation",
+                explanation: "Module validation. Référence académique : La négation : marqueurs et operations (pp. 91-114). Validation."
+            },
+            {
+                question: "Culioli discute-t-il de la négation polémiqe ?",
+                options: [
+                    "Non",
+                    "Oui, comme type spécifique",
+                    "Seulement descriptive",
+                    "Ignorée"
+                ],
+                correct: "Oui, comme type spécifique",
+                explanation: "Types de négation. Référence académique : La négation : marqueurs et operations (pp. 91-114). Polémique."
+            },
+            {
+                question: "La négation est-elle une opération unique ou multiple ?",
+                options: [
+                    "Unique",
+                    "Multiple, avec marqueurs et opérations",
+                    "Simple inversion",
+                    "Lexicale"
+                ],
+                correct: "Multiple, avec marqueurs et opérations",
+                explanation: "Multiple. Référence académique : La négation : marqueurs et operations (pp. 91-114). Complexité."
+            },
+            // Formes linguistiques et domaine (pp. 115-126, 6 questions)
+            {
+                question: "Comment les formes linguistiques se rapportent-elles au domaine notionnel   ?",
+                options: [
+                    "Indépendantes",
+                    "Elles construisent et modulent le domaine",
+                    "Seulement surface",
+                    "Phonologiques"
+                ],
+                correct: "Elles construisent et modulent le domaine",
+                explanation: "Construction domaine. Référence académique : Formes linguistiques et domaine (pp. 115-126). Formes et notion."
+            },
+            {
+                question: "Les formes sont-elles liées aux opérations énonciatives ?",
+                options: [
+                    "Non",
+                    "Oui, elles réalisent les opérations",
+                    "Seulement syntaxe",
+                    "Lexicales"
+                ],
+                correct: "Oui, elles réalisent les opérations",
+                explanation: "Réalisation opérative. Référence académique : Formes linguistiques et domaine (pp. 115-126). Réalisation."
+            },
+            {
+                question: "Culioli discute-t-il de la stabilité des formes ?",
+                options: [
+                    "Non",
+                    "Oui, relative dans le domaine",
+                    "Absolue",
+                    "Instable"
+                ],
+                correct: "Oui, relative dans le domaine",
+                explanation: "Stabilité relative. Référence académique : Formes linguistiques et domaine (pp. 115-126). Stabilité."
+            },
+            {
+                question: "Les formes linguistiques sont-elles langue-spécifiques ou universelles ?",
+                options: [
+                    "Universelles",
+                    "Langue-spécifiques, mais liées à domaines abstraits",
+                    "Seulement français",
+                    "Aléatoires"
+                ],
+                correct: "Langue-spécifiques, mais liées à domaines abstraits",
+                explanation: "Spécifiques mais abstraites. Référence académique : Formes linguistiques et domaine (pp. 115-126). Variation."
+            },
+            {
+                question: "Comment les formes contribuent-elles à la détermination ?",
+                options: [
+                    "Pas du tout",
+                    "Par repérage dans le domaine",
+                    "Seulement négation",
+                    "Modalité"
+                ],
+                correct: "Par repérage dans le domaine",
+                explanation: "Repérage formel. Référence académique : Formes linguistiques et domaine (pp. 115-126). Détermination."
+            },
+            {
+                question: "Des exemples illustrent-ils les formes et domaine ?",
+                options: [
+                    "Non",
+                    "Oui, avec analyses linguistiques",
+                    "Théoriques seulement",
+                    "Phonétiques"
+                ],
+                correct: "Oui, avec analyses linguistiques",
+                explanation: "Analyses. Référence académique : Formes linguistiques et domaine (pp. 115-126). Exemples."
+            },
+            // Stabilité de l'énonciable en linguistique (pp. 127-134, 6 questions)
+            {
+                question: "Qu'est-ce que la stabilité de l'énonciable ?",
+                options: [
+                    "Instabilité des formes",
+                    "Capacité des formes à maintenir stabilité malgré variations",
+                    "Changement constant",
+                    "Syntaxe fixe"
+                ],
+                correct: "Capacité des formes à maintenir stabilité malgré variations",
+                explanation: "Stabilité relative. Référence académique : Stabilité de l'énonciable en linguistique (pp. 127-134). Stabilité."
+            },
+            {
+                question: "La stabilité est-elle absolue selon Culioli ?",
+                options: [
+                    "Oui",
+                    "Non, relative aux contextes",
+                    "Fixe",
+                    "Inexistante"
+                ],
+                correct: "Non, relative aux contextes",
+                explanation: "Relative. Référence académique : Stabilité de l'énonciable en linguistique (pp. 127-134). Contexte."
+            },
+            {
+                question: "Comment la stabilité contribue-t-elle à la modélisation ?",
+                options: [
+                    "En ignorant variations",
+                    "En permettant constance dans variation",
+                    "Seulement empirique",
+                    "Formelle seulement"
+                ],
+                correct: "En permettant constance dans variation",
+                explanation: "Constance variation. Référence académique : Stabilité de l'énonciable en linguistique (pp. 127-134). Modélisation."
+            },
+            {
+                question: "Culioli utilise-t-il des données empiriques pour la stabilité ?",
+                options: [
+                    "Non",
+                    "Oui, across languages",
+                    "Français seulement",
+                    "Théorique"
+                ],
+                correct: "Oui, across languages",
+                explanation: "Empirique multilingue. Référence académique : Stabilité de l'énonciable en linguistique (pp. 127-134). Données."
+            },
+            {
+                question: "La stabilité est-elle liée au domaine notionnel   ?",
+                options: [
+                    "Non",
+                    "Oui, dans la construction référentielle",
+                    "Seulement notion",
+                    "Frontière"
+                ],
+                correct: "Oui, dans la construction référentielle",
+                explanation: "Liée domaine. Référence académique : Stabilité de l'énonciable en linguistique (pp. 127-134). Référentiel."
+            },
+            {
+                question: "Quelle est la rôle de la stabilité en énonciation ?",
+                options: [
+                    "Secondaire",
+                    "Central pour la cohérence",
+                    "Ignorée",
+                    "Négative"
+                ],
+                correct: "Central pour la cohérence",
+                explanation: "Cohérence. Référence académique : Stabilité de l'énonciable en linguistique (pp. 127-134). Énonciation."
+            },
+            // Valeurs modales et operations énonciatives (pp. 135-156, 8 questions)
+            {
+                question: "Les valeurs modales sont-elles construites par quelles opérations ?",
+                options: [
+                    "Lexicales",
+                    "Énonciatives de qualification et modulation",
+                    "Syntaxiques basiques",
+                    "Phonétiques"
+                ],
+                correct: "Énonciatives de qualification et modulation",
+                explanation: "Opérations modales. Référence académique : Valeurs modales et operations énonciatives (pp. 135-156). Modalité."
+            },
+            {
+                question: "La modalité affecte-t-elle le degré de validation ?",
+                options: [
+                    "Non",
+                    "Oui, par modulation",
+                    "Seulement négation",
+                    "Affirmation"
+                ],
+                correct: "Oui, par modulation",
+                explanation: "Validation degré. Référence académique : Valeurs modales et operations énonciatives (pp. 135-156). Validation."
+            },
+            {
+                question: "Culioli lie-t-il modalité à logique modale ?",
+                options: [
+                    "Non",
+                    "Oui, avec extensions énonciatives",
+                    "Logique seulement",
+                    "Ignorée"
+                ],
+                correct: "Oui, avec extensions énonciatives",
+                explanation: "Logique modale. Référence académique : Valeurs modales et operations énonciatives (pp. 135-156). Logique."
+            },
+            {
+                question: "Des exemples de modaux sont-ils analysés ?",
+                options: [
+                    "Non",
+                    "Oui, avec valeurs variées",
+                    "Seulement anglais",
+                    "Français"
+                ],
+                correct: "Oui, avec valeurs variées",
+                explanation: "Analyses exemples. Référence académique : Valeurs modales et operations énonciatives (pp. 135-156). Exemples."
+            },
+            {
+                question: "La modalité est-elle liée au repérage ?",
+                options: [
+                    "Non",
+                    "Oui, dans la qualification référentielle",
+                    "Seulement frontière",
+                    "Négation"
+                ],
+                correct: "Oui, dans la qualification référentielle",
+                explanation: "Repérage modal. Référence académique : Valeurs modales et operations énonciatives (pp. 135-156). Qualification."
+            },
+            {
+                question: "Culioli discute-t-il de modalité épistémique vs déontique ?",
+                options: [
+                    "Non",
+                    "Oui, comme opérations distinctes",
+                    "Épistémique seulement",
+                    "Déontique"
+                ],
+                correct: "Oui, comme opérations distinctes",
+                explanation: "Types modaux. Référence académique : Valeurs modales et operations énonciatives (pp. 135-156). Types."
+            },
+            {
+                question: "La modalité module-t-elle le référent ?",
+                options: [
+                    "Non",
+                    "Oui, par degrés",
+                    "Fixe",
+                    "Ignorée"
+                ],
+                correct: "Oui, par degrés",
+                explanation: "Modulation degrés. Référence académique : Valeurs modales et operations énonciatives (pp. 135-156). Degrés."
+            },
+            {
+                question: "Des liens avec pragmatique sont-ils faits ?",
+                options: [
+                    "Non",
+                    "Oui, dans l'énonciation",
+                    "Syntaxe",
+                    "Phonologie"
+                ],
+                correct: "Oui, dans l'énonciation",
+                explanation: "Pragmatique. Référence académique : Valeurs modales et operations énonciatives (pp. 135-156). Pragmatique."
+            },
+            // Autres commentaires sur Bien (pp. 157-168, 7 questions)
+            {
+                question: " 'Bien' est analysé comme quoi par Culioli ?",
+                options: [
+                    "Adverbe simple",
+                    "Marqueur modal avec valeurs énonciatives variées",
+                    "Verbe",
+                    "Nom"
+                ],
+                correct: "Marqueur modal avec valeurs énonciatives variées",
+                explanation: "Marqueur modal. Référence académique : Autres commentaires sur Bien (pp. 157-168). Analyse."
+            },
+            {
+                question: " 'Bien' a-t-il des fonctions aspectuelles ?",
+                options: [
+                    "Non",
+                    "Oui, selon contexte",
+                    "Seulement modal",
+                    "Négatif"
+                ],
+                correct: "Oui, selon contexte",
+                explanation: "Aspectuel. Référence académique : Autres commentaires sur Bien (pp. 157-168). Aspect."
+            },
+            {
+                question: "Des exemples multilingues pour 'bien' ?",
+                options: [
+                    "Non",
+                    "Oui, comparaisons",
+                    "Français seulement",
+                    "Anglais"
+                ],
+                correct: "Oui, comparaisons",
+                explanation: "Multilingues. Référence académique : Autres commentaires sur Bien (pp. 157-168). Comparaisons."
+            },
+            {
+                question: " 'Bien' est-il lié à modalité ?",
+                options: [
+                    "Non",
+                    "Oui, valeurs modales",
+                    "Syntaxe",
+                    "Phonologie"
+                ],
+                correct: "Oui, valeurs modales",
+                explanation: "Modal. Référence académique : Autres commentaires sur Bien (pp. 157-168). Modalité."
+            },
+            {
+                question: "Analyse détaillée de 'bien' dans contextes ?",
+                options: [
+                    "Non",
+                    "Oui, variés",
+                    "Unique",
+                    "Ignorée"
+                ],
+                correct: "Oui, variés",
+                explanation: "Détaillée. Référence académique : Autres commentaires sur Bien (pp. 157-168). Contextes."
+            },
+            {
+                question: " 'Bien' comme marqueur énonciatif ?",
+                options: [
+                    "Non",
+                    "Oui, dans énonciation",
+                    "Lexical seulement",
+                    "Syntaxique"
+                ],
+                correct: "Oui, dans énonciation",
+                explanation: "Énonciatif. Référence académique : Autres commentaires sur Bien (pp. 157-168). Marqueur."
+            },
+            {
+                question: "Liens avec autres opérations pour 'bien' ?",
+                options: [
+                    "Non",
+                    "Oui, négation et modalité",
+                    "Frontière seulement",
+                    "Notion"
+                ],
+                correct: "Oui, négation et modalité",
+                explanation: "Liens. Référence académique : Autres commentaires sur Bien (pp. 157-168). Opérations."
+            },
+            // Done (pp. 169-176, 6 questions)
+            {
+                question: " 'Done' représente quoi dans la théorie ?",
+                options: [
+                    "Terme anglais",
+                    "Processus de clôture référentielle",
+                    "Particule",
+                    "Phonème"
+                ],
+                correct: "Processus de clôture référentielle",
+                explanation: "Clôture. Référence académique : Done (pp. 169-176). Référentiel."
+            },
+            {
+                question: " 'Done' implique-t-il régulation ?",
+                options: [
+                    "Non",
+                    "Oui, dans construction",
+                    "Seulement validation",
+                    "Négation"
+                ],
+                correct: "Oui, dans construction",
+                explanation: "Régulation. Référence académique : Done (pp. 169-176). Régulation."
+            },
+            {
+                question: "Liens avec philosophie du langage pour 'done' ?",
+                options: [
+                    "Non",
+                    "Oui, théories de référence",
+                    "Syntaxe",
+                    "Phonologie"
+                ],
+                correct: "Oui, théories de référence",
+                explanation: "Philosophie. Référence académique : Done (pp. 169-176). Référence."
+            },
+            {
+                question: " 'Done' comme opération de fin ?",
+                options: [
+                    "Non",
+                    "Oui, clôture",
+                    "Début",
+                    "Milieu"
+                ],
+                correct: "Oui, clôture",
+                explanation: "Fin. Référence académique : Done (pp. 169-176). Clôture."
+            },
+            {
+                question: "Exemples pour 'done' ?",
+                options: [
+                    "Non",
+                    "Oui, référentiels",
+                    "Théoriques",
+                    "Ignorés"
+                ],
+                correct: "Oui, référentiels",
+                explanation: "Exemples. Référence académique : Done (pp. 169-176). Illustrations."
+            },
+            {
+                question: " 'Done' lié à representation ?",
+                options: [
+                    "Non",
+                    "Oui, processes",
+                    "Notion",
+                    "Frontière"
+                ],
+                correct: "Oui, processes",
+                explanation: "Représentation. Référence académique : Done (pp. 169-176). Processes."
+            },
+            // Representation, referential processes and regulation (pp. 177-214, 10 questions)
+            {
+                question: "La représentation référentielle est-elle un processus ?",
+                options: [
+                    "Statique",
+                    "Dynamique de construction et régulation",
+                    "Lexicale",
+                    "Syntaxique"
+                ],
+                correct: "Dynamique de construction et régulation",
+                explanation: "Processus dynamique. Référence académique : Representation, referential processes and regulation (pp. 177-214). Représentation."
+            },
+            {
+                question: "Les processes référentiels impliquent-ils régulation ?",
+                options: [
+                    "Non",
+                    "Oui, pour stabilité",
+                    "Seulement construction",
+                    "Destruction"
+                ],
+                correct: "Oui, pour stabilité",
+                explanation: "Régulation. Référence académique : Representation, referential processes and regulation (pp. 177-214). Stabilité."
+            },
+            {
+                question: "Culioli intègre-t-il perspectives cognitives ?",
+                options: [
+                    "Non",
+                    "Oui, dans représentation",
+                    "Syntaxe",
+                    "Phonologie"
+                ],
+                correct: "Oui, dans représentation",
+                explanation: "Cognitives. Référence académique : Representation, referential processes and regulation (pp. 177-214). Cognitif."
+            },
+            {
+                question: "La régulation est-elle centrale en représentation ?",
+                options: [
+                    "Non",
+                    "Oui, pour référent",
+                    "Périphérique",
+                    "Ignorée"
+                ],
+                correct: "Oui, pour référent",
+                explanation: "Centrale. Référence académique : Representation, referential processes and regulation (pp. 177-214). Régulation."
+            },
+            {
+                question: "Des diagrammes pour processes référentiels ?",
+                options: [
+                    "Non",
+                    "Oui, visualisation",
+                    "Textuel seulement",
+                    "Non pertinents"
+                ],
+                correct: "Oui, visualisation",
+                explanation: "Diagrammes. Référence académique : Representation, referential processes and regulation (pp. 177-214). Visual."
+            },
+            {
+                question: "Liens avec autres concepts comme notion ?",
+                options: [
+                    "Non",
+                    "Oui, intégrés",
+                    "Isolés",
+                    "Opposés"
+                ],
+                correct: "Oui, intégrés",
+                explanation: "Intégrés. Référence académique : Representation, referential processes and regulation (pp. 177-214). Liens."
+            },
+            {
+                question: "La représentation est-elle énonciative ?",
+                options: [
+                    "Non",
+                    "Oui, processuelle",
+                    "Statique",
+                    "Lexicale"
+                ],
+                correct: "Oui, processuelle",
+                explanation: "Énonciative. Référence académique : Representation, referential processes and regulation (pp. 177-214). Process."
+            },
+            {
+                question: "Régulation implique-t-elle ajustement ?",
+                options: [
+                    "Non",
+                    "Oui, dans référentiel",
+                    "Fixe",
+                    "Aléatoire"
+                ],
+                correct: "Oui, dans référentiel",
+                explanation: "Ajustement. Référence académique : Representation, referential processes and regulation (pp. 177-214). Ajustement."
+            },
+            {
+                question: "Exemples multilingues dans ce chapitre ?",
+                options: [
+                    "Non",
+                    "Oui, pour processes",
+                    "Français",
+                    "Anglais"
+                ],
+                correct: "Oui, pour processes",
+                explanation: "Multilingues. Référence académique : Representation, referential processes and regulation (pp. 177-214). Exemples."
+            },
+            {
+                question: "La chapitre conclut-il la théorie ?",
+                options: [
+                    "Non",
+                    "Oui, avec synthèse",
+                    "Début",
+                    "Milieu"
+                ],
+                correct: "Oui, avec synthèse",
+                explanation: "Synthèse. Référence académique : Representation, referential processes and regulation (pp. 177-214). Conclusion."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = new Array(questions.length).fill(null);
+        let timer = 0;
+        let interval;
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        const shuffledQuestions = shuffle([...questions]);
+
+        function loadQuestion(index) {
+            const q = shuffledQuestions[index];
+            document.getElementById('question-number').textContent = `Question ${index + 1}`;
+            document.getElementById('question-text').textContent = q.question;
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            const shuffledOptions = shuffle([...q.options]);
+            shuffledOptions.forEach((opt) => {
+                const label = document.createElement('label');
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'option';
+                input.value = opt;
+                if (answers[index] === opt) input.checked = true;
+                const span = document.createElement('span');
+                span.textContent = opt;
+                label.appendChild(input);
+                label.appendChild(span);
+                optionsDiv.appendChild(label);
+            });
+            updateDashboard();
+            document.getElementById('prev').disabled = index === 0;
+            document.getElementById('next').disabled = index === shuffledQuestions.length - 1;
+        }
+
+        function updateDashboard() {
+            const answeredCount = answers.filter(a => a !== null).length;
+            document.getElementById('answered').textContent = answeredCount;
+            document.getElementById('progress-bar').style.width = (answeredCount / questions.length * 100) + '%';
+            const minutes = Math.floor(timer / 60);
+            const seconds = timer % 60;
+            document.getElementById('time').textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        function saveAnswer() {
+            const selected = document.querySelector('input[name="option"]:checked');
+            if (selected) {
+                answers[currentQuestion] = selected.value;
+            }
+        }
+
+        function showResults() {
+            clearInterval(interval);
+            document.querySelector('.question').style.display = 'none';
+            document.querySelector('.navigation').style.display = 'none';
+            document.querySelector('.dashboard').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            let score = 0;
+            const detailed = document.getElementById('detailed-results');
+            shuffledQuestions.forEach((q, i) => {
+                const userAnswer = answers[i];
+                const isCorrect = userAnswer === q.correct;
+                if (isCorrect) score++;
+                const div = document.createElement('div');
+                div.classList.add(isCorrect ? 'highlight-correct' : 'highlight-wrong');
+                div.innerHTML = `
+                    <h3>Question ${i + 1}: ${q.question}</h3>
+                    <p>Votre réponse : ${userAnswer || 'Non répondue'} ${isCorrect ? '(Correcte)' : '(Incorrecte)'}</p>
+                    <p>Réponse correcte : ${q.correct}</p>
+                    <p>Explication détaillée : ${q.explanation}</p>
+                `;
+                detailed.appendChild(div);
+            });
+            document.getElementById('score').textContent = score;
+        }
+
+        document.getElementById('prev').addEventListener('click', () => {
+            saveAnswer();
+            currentQuestion--;
+            loadQuestion(currentQuestion);
+        });
+
+        document.getElementById('next').addEventListener('click', () => {
+            saveAnswer();
+            currentQuestion++;
+            loadQuestion(currentQuestion);
+        });
+
+        document.getElementById('submit').addEventListener('click', () => {
+            saveAnswer();
+            showResults();
+        });
+
+        function startTimer() {
+            interval = setInterval(() => {
+                timer++;
+                updateDashboard();
+            }, 1000);
+        }
+
+        window.addEventListener('load', () => {
+            loadQuestion(currentQuestion);
+            startTimer();
+        });
+    </script>
+</body>
+</html>

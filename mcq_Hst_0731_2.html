@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>1920s History Quiz - II</title>
+<style>
+  body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 20px;
+    background: #f0f3f6;
+    color: #222;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 1em;
+  }
+  form {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 6px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  }
+  .question {
+    margin-bottom: 1.5rem;
+  }
+  .question h3 {
+    margin-bottom: 0.5rem;
+  }
+  .options label {
+    display: block;
+    cursor: pointer;
+    padding: 5px 8px;
+    border-radius: 4px;
+    margin-bottom: 0.3rem;
+  }
+  .options input[type="radio"] {
+    margin-right: 10px;
+  }
+  button {
+    display: block;
+    margin: 1.5rem auto;
+    padding: 0.75rem 1.8rem;
+    font-size: 1.1rem;
+    background-color: #005a9c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:hover:not(:disabled) {
+    background-color: #003f6b;
+  }
+  button:disabled {
+    background-color: #999;
+    cursor: not-allowed;
+  }
+  #results {
+    max-width: 900px;
+    margin: 2rem auto 3rem auto;
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 6px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  }
+  .correct {
+    color: green;
+    font-weight: bold;
+  }
+  .incorrect {
+    color: red;
+    font-weight: bold;
+  }
+  .explanation {
+    margin-top: 0.4rem;
+    font-size: 0.9rem;
+    color: #444;
+    background-color: #e8f0fe;
+    border-left: 4px solid #005a9c;
+    padding: 6px 12px;
+    border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+
+<h1>1920s History Quiz - Part II</h1>
+<form id="quizForm">
+
+</form>
+
+<button id="submitBtn">Submit Answers</button>
+
+<div id="results" style="display:none;"></div>
+
+<script>
+  const quizData = [
+    {
+      question: "What major technological advancement of the 1920s revolutionized communication and entertainment?",
+      options: {
+        a: "Television",
+        b: "Cinema with sound ('talkies')",
+        c: "Telephone",
+        d: "Internet"
+      },
+      correct: "b",
+      explanation: "The introduction of sound films, or 'talkies', in the late 1920s transformed the movie industry and popular culture."
+    },
+    {
+      question: "Which amendment to the U.S. Constitution prohibited the manufacture, transportation, and sale of alcohol?",
+      options: {
+        a: "16th Amendment",
+        b: "17th Amendment",
+        c: "18th Amendment",
+        d: "19th Amendment"
+      },
+      correct: "c",
+      explanation: "The 18th Amendment (1919) began Prohibition, banning alcohol nationwide until its repeal in 1933."
+    },
+    {
+      question: "What was the name of the cultural movement that celebrated African American cultural expressions in literature, music, and art in New York City during the 1920s?",
+      options: {
+        a: "New Negro Movement",
+        b: "Harlem Renaissance",
+        c: "Black Arts Movement",
+        d: "Civil Rights Movement"
+      },
+      correct: "b",
+      explanation: "The Harlem Renaissance was a blossoming of black culture in Harlem during the 1920s, impacting music, literature, and art."
+    },
+    {
+      question: "Which president famously declared a 'return to normalcy' after World War I?",
+      options: {
+        a: "Woodrow Wilson",
+        b: "Warren G. Harding",
+        c: "Calvin Coolidge",
+        d: "Herbert Hoover"
+      },
+      correct: "b",
+      explanation: "Harding's 1920 campaign slogan was 'Return to normalcy', signaling a shift from wartime to peacetime priorities."
+    },
+    {
+      question: "What significant law passed in 1924 limited immigration into the United States, especially from Southern and Eastern Europe?",
+      options: {
+        a: "Immigration Act",
+        b: "Johnson-Reed Act",
+        c: "Chinese Exclusion Act",
+        d: "Magnuson Act"
+      },
+      correct: "b",
+      explanation: "The Johnson-Reed Act (1924) severely restricted immigration quotas favoring northern Europeans, and effectively barred many others."
+    },
+    {
+      question: "Which of the following was NOT a consumer product that saw rapid adoption in the 1920s?",
+      options: {
+        a: "Radios",
+        b: "Automobiles",
+        c: "Refrigerators",
+        d: "Personal computers"
+      },
+      correct: "d",
+      explanation: "Personal computers did not exist in the 1920s; radios, cars, and refrigerators became common household goods."
+    },
+    {
+      question: "What role did installment buying play in 1920s American consumer culture?",
+      options: {
+        a: "It reduced the ability of Americans to purchase goods",
+        b: "It introduced credit systems allowing consumers to buy expensive goods over time",
+        c: "It discouraged spending and borrowing",
+        d: "It was banned by federal law"
+      },
+      correct: "b",
+      explanation: "Installment buying allowed many Americans to afford consumer goods by paying over time, fueling economic growth."
+    },
+    {
+      question: "Which famed baseball player was nicknamed 'The Sultan of Swat' during the 1920s?",
+      options: {
+        a: "Ty Cobb",
+        b: "Babe Ruth",
+        c: "Lou Gehrig",
+        d: "Cy Young"
+      },
+      correct: "b",
+      explanation: "Babe Ruth was a star player for the New York Yankees and became a cultural icon of the 1920s."
+    },
+    {
+      question: "What extremist and racist organization experienced a resurgence and spread across the U.S. during the 1920s?",
+      options: {
+        a: "The Ku Klux Klan",
+        b: "The Sons of Liberty",
+        c: "The NAACP",
+        d: "The American Civil Liberties Union"
+      },
+      correct: "a",
+      explanation: "The Ku Klux Klan grew significantly during the 1920s, expanding its influence beyond the South."
+    },
+    {
+      question: "What was the outcome of the 1925 Scopes 'Monkey' Trial?",
+      options: {
+        a: "Evolution was accepted in all public schools",
+        b: "John Scopes was found guilty for teaching evolution",
+        c: "The teaching of evolution was banned nationwide",
+        d: "The trial was dismissed without decision"
+      },
+      correct: "b",
+      explanation: "John Scopes was found guilty under Tennessee law for teaching evolution, highlighting cultural clashes."
+    },
+    {
+      question: "Which employee revolution in the 1920s brought higher wages and shorter hours but faced resistance from some industries?",
+      options: {
+        a: "Teamsters Union Strike",
+        b: "Steelworkers' Strike",
+        c: "Automobile workers' unionization efforts",
+        d: "Railroad workers' walkout"
+      },
+      correct: "c",
+      explanation: "The automobile industry saw growing unionization and labor unrest in the late 1920s."
+    },
+    {
+      question: "Which statement best characterizes the stock market in the late 1920s?",
+      options: {
+        a: "Steady growth with minimal speculation",
+        b: "Market crash leading to the Great Depression",
+        c: "Limited public participation",
+        d: "Government control over stock exchange"
+      },
+      correct: "b",
+      explanation: "The stock market crash in 1929 ended the decade's boom and ushered in the Great Depression."
+    },
+    {
+      question: "What form of popular music became symbolic of the 1920s cultural scene?",
+      options: {
+        a: "Country",
+        b: "Jazz",
+        c: "Blues",
+        d: "Classical"
+      },
+      correct: "b",
+      explanation: "Jazz music, with its roots in African American communities, defined the Roaring Twenties mood."
+    },
+    {
+      question: "The popularity of which dance craze reflected the rebellious spirit of 1920s youth?",
+      options: {
+        a: "The Waltz",
+        b: "The Charleston",
+        c: "The Foxtrot",
+        d: "The Tango"
+      },
+      correct: "b",
+      explanation: "The Charleston was a fast-paced dance popularly performed by 'flappers' and youth challenging conventions."
+    },
+    {
+      question: "Which influential author wrote about the disillusionment of the post-World War I generation?",
+      options: {
+        a: " Ernest Hemingway",
+        b: " Mark Twain",
+        c: " Walt Whitman",
+        d: " John Steinbeck"
+      },
+      correct: "a",
+      explanation: "Ernest Hemingway was a leading voice of the 'Lost Generation' expressing postwar disillusionment."
+    },
+    {
+      question: "Which 1920s invention dramatically expanded urban nightlife by powering neon signage?",
+      options: {
+        a: "Alternating current electricity",
+        b: "Incandescent bulb",
+        c: "Neon lighting",
+        d: "Gas lamps"
+      },
+      correct: "c",
+      explanation: "Neon lights became widespread in the 1920s, transforming cityscapes and nightlife culture."
+    },
+    {
+      question: "What did the term 'speakeasy' refer to during Prohibition?",
+      options: {
+        a: "A legal bar serving alcohol",
+        b: "An illegal bar selling alcohol secretly",
+        c: "A radio program",
+        d: "A clothing style"
+      },
+      correct: "b",
+      explanation: "Speakeasies were clandestine bars operating during Prohibition where people consumed illegal alcohol."
+    },
+    {
+      question: "Who was the famous aviator who completed the first solo nonstop transatlantic flight in 1927?",
+      options: {
+        a: "Bessie Coleman",
+        b: "Charles Lindbergh",
+        c: "Amelia Earhart",
+        d: "Howard Hughes"
+      },
+      correct: "b",
+      explanation: "Charles Lindbergh flew solo nonstop from New York to Paris, a celebrated milestone in aviation."
+    },
+    {
+      question: "What was the status of women’s fashion during the 1920s?",
+      options: {
+        a: "Conservative and modest",
+        b: "Progressive and rebellious with shorter dresses and bobbed hair",
+        c: "Victorian style",
+        d: "Elaborate 19th-century gowns"
+      },
+      correct: "b",
+      explanation: "The 1920s saw a radical change in women’s fashion symbolizing newfound freedoms and social change."
+    },
+    {
+      question: "What was fundamental to the economic boom experienced in the USA during the 1920s?",
+      options: {
+        a: "Wars and military spending",
+        b: "Agricultural exports",
+        c: "Mass production and consumer credit",
+        d: "Government social programs"
+      },
+      correct: "c",
+      explanation: "Mass production techniques and consumer credit fueled the rapid economic expansion and consumerism."
+    }
+  ];
+
+  const quizForm = document.getElementById("quizForm");
+  const submitBtn = document.getElementById("submitBtn");
+  const resultsDiv = document.getElementById("results");
+
+  function buildQuiz() {
+    let output = "";
+    quizData.forEach((item, index) => {
+      output += `
+      <div class="question" id="q${index + 1}">
+        <h3>${index + 1}. ${item.question}</h3>
+        <div class="options">
+          ${Object.entries(item.options).map(([key, val]) => `
+            <label>
+              <input type="radio" name="q${index + 1}" value="${key}" />
+              ${key}) ${val}
+            </label>
+          `).join("")}
+        </div>
+      </div>`;
+    });
+    quizForm.innerHTML = output;
+  }
+
+  function showResults() {
+    let score = 0;
+    let output = "";
+    quizData.forEach((item, index) => {
+      const selector = `input[name=q${index + 1}]:checked`;
+      const userAnswer = (document.querySelector(selector) || {}).value;
+      const isCorrect = userAnswer === item.correct;
+      if (isCorrect) score++;
+
+      output += `
+      <div class="question-result">
+        <h3>Q${index + 1}: ${item.question}</h3>
+        <p>Your answer: <strong>${userAnswer ? `${userAnswer}) ${item.options[userAnswer]}` : "No answer selected"}</strong> — 
+          <span class="${isCorrect ? "correct" : "incorrect"}">${isCorrect ? "Correct" : "Incorrect"}</span></p>
+        <div class="explanation"><strong>Explanation:</strong> ${item.explanation}</div>
+        <hr />
+      </div>`;
+    });
+
+    resultsDiv.innerHTML = `<h2>Your score: ${score} / ${quizData.length}</h2>${output}`;
+    resultsDiv.style.display = "block";
+
+    submitBtn.disabled = true;
+    const inputs = quizForm.querySelectorAll("input[type=radio]");
+    inputs.forEach(input => input.disabled = true);
+  }
+
+  buildQuiz();
+
+  submitBtn.addEventListener("click", () => {
+    showResults();
+    resultsDiv.scrollIntoView({ behavior: "smooth" });
+  });
+</script>
+
+</body>
+</html>

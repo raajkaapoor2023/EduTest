@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Phonetics MCQ Quiz - Section 2: Consonants, Syllabics, Vowels</title>
+<style>
+  body {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: #e0f0ff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0; padding: 40px 20px;
+    display: flex; justify-content: center; align-items: flex-start;
+    min-height: 100vh;
+  }
+  .container {
+    background: rgba(32, 52, 86, 0.95);
+    max-width: 720px;
+    width: 100%;
+    border-radius: 20px;
+    padding: 30px 40px;
+    box-shadow: 0 0 30px rgba(45, 75, 120, 0.8);
+    user-select: none;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 22px;
+    font-weight: 700;
+  }
+  .question {
+    font-size: 1.3em;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .options label {
+    display: block;
+    margin: 12px 0;
+    background: linear-gradient(90deg, #3b5998, #8b9dc3);
+    border-radius: 14px;
+    padding: 12px 25px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background 0.3s ease;
+    color: #e0eafc;
+    box-shadow: inset 2px 2px 5px rgba(255,255,255,0.3);
+  }
+  .options label:hover {
+    background: linear-gradient(90deg, #5c80d6, #adc5f6);
+    color: #031a3b;
+  }
+  input[type=radio] {
+    display: none;
+  }
+  input[type=radio]:checked + span {
+    font-weight: 800;
+    color: #ffffcc;
+    text-shadow: 0 0 8px #ffe066;
+  }
+  #feedback {
+    margin-top: 18px;
+    padding: 14px 20px;
+    font-weight: 700;
+    font-size: 1.1em;
+    border-radius: 16px;
+    max-width: 680px;
+    user-select: text;
+  }
+  #feedback.correct {
+    background-color: #376e3c;
+    color: #d5f5d3;
+  }
+  #feedback.incorrect {
+    background-color: #872626;
+    color: #ffdada;
+  }
+  #score {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-top: 32px;
+    text-align: center;
+    user-select: none;
+  }
+  #restart {
+    display: none;
+    margin: 22px auto 0;
+    padding: 14px 36px;
+    font-size: 1.15em;
+    font-weight: 700;
+    border: none;
+    border-radius: 32px;
+    background: #ffbf00;
+    color: #3d2a00;
+    box-shadow: 0 6px 15px rgba(255,191,0,0.7);
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.3s ease;
+  }
+  #restart:hover {
+    background: #e6ac00;
+  }
+  #references {
+    margin-top: 30px;
+    background: rgba(0,0,0,0.15);
+    padding: 20px 25px;
+    border-radius: 14px;
+    font-size: 0.9em;
+    max-height: 280px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    color: #fffde7;
+  }
+</style>
+</head>
+<body>
+
+<div class="container" role="main" aria-label="Phonetics Section 2 Quiz">
+  <h1>Phonetics MCQ Quiz<br>— Consonants, Syllabics &amp; Vowels —</h1>
+  <div id="quiz"></div>
+  <div id="feedback" role="alert" aria-live="assertive"></div>
+  <div id="score"></div>
+  <button id="restart" aria-label="Restart the quiz">Restart Quiz</button>
+  <div id="references" aria-label="Detailed referenced answers" tabindex="0"></div>
+</div>
+
+<script>
+  const questions = [
+    {
+      q: "Which phoneme is described as a voiceless bilabial stop produced by complete lip closure?",
+      options: ["/b/", "/p/", "/m/", "/w/"],
+      answer: 1,
+      reference: "Edwards (Ch.5): /p/ is a voiceless bilabial stop with complete lip closure and aspirated release in stressed word-initial positions."
+    },
+    {
+      q: "Which nasal consonant is homorganic with /p/ and /b/, produced by air passing through the nasal cavity?",
+      options: ["/m/", "/n/", "/ŋ/", "/w/"],
+      answer: 0,
+      reference: "Edwards (Ch.8): /m/ is the voiced bilabial nasal, homorganic with /p,b/, produced with velum lowered to allow nasal airflow."
+    },
+    {
+      q: "What key feature differentiates /t/ and /d/ consonants?",
+      options: ["Voicing", "Place of articulation", "Manner of articulation", "Lip rounding"],
+      answer: 0,
+      reference: "Edwards (Ch.5): Both are alveolar stops; /t/ is voiceless, /d/ is voiced."
+    },
+    {
+      q: "The velar nasal /ŋ/ is homorganic with which consonants?",
+      options: ["/k/ and /g/", "/m/ and /b/", "/t/ and /d/", "/n/ and /l/"],
+      answer: 0,
+      reference: "Edwards (Ch.8): /ŋ/ is homorganic with velar stops /k,g/, articulated with tongue dorsum against the soft palate."
+    },
+    {
+      q: "Which consonant functions as a voiced palatal glide similar to vowel /i/?",
+      options: ["/j/", "/w/", "/r/", "/l/"],
+      answer: 0,
+      reference: "Edwards (Ch.9): /j/ is the voiced palatal glide, articulated with tongue close to the hard palate, analogous to vowel /i/."
+    },
+    {
+      q: "Which American English vowel is a high front tense unrounded vowel?",
+      options: ["/i/", "/ɛ/", "/æ/", "/ʌ/"],
+      answer: 0,
+      reference: "Edwards (Ch.10): /i/ is the high front tense vowel."
+    },
+    {
+      q: "What describes the vowel /ʌ/ in American English?",
+      options: ["Mid-central lax unrounded", "High back rounded", "Low front unrounded", "Mid front tense"],
+      answer: 0,
+      reference: "Edwards (Ch.11): /ʌ/ is a mid-central lax unrounded vowel."
+    },
+    {
+      q: "Which consonant is a voiced alveolar lateral approximant?",
+      options: ["/l/", "/r/", "/w/", "/j/"],
+      answer: 0,
+      reference: "Edwards (Ch.9): /l/ is a voiced alveolar lateral approximant, airflow passes laterally along tongue sides."
+    },
+    {
+      q: "How is /r/ typically classified in American English?",
+      options: ["Alveolar liquid", "Velar nasal", "Voiceless fricative", "Bilabial glide"],
+      answer: 0,
+      reference: "Edwards (Ch.9): /r/ is a voiced alveolar liquid or approximant with variable articulation and lip rounding."
+    },
+    {
+      q: "Which consonants commonly act as syllabic nuclei in unstressed syllables?",
+      options: ["/m, n, l/", "/p, t, k/", "/f, v, θ/", "/j, w, r/"],
+      answer: 0,
+      reference: "Edwards (Ch.8,9): /m̩, n̩, l̩/ act as syllabics forming syllable nuclei."
+    },
+    {
+      q: "What allophonic variation do voiceless stops /p, t, k/ typically exhibit in initial stressed syllables?",
+      options: ["Aspirated release", "Nasalized", "Unreleased", "Devoiced"],
+      answer: 0,
+      reference: "Edwards (Ch.5): Voiceless stops /p,t,k/ are aspirated when word-initial and stressed."
+    },
+    {
+      q: "Which vowel is most common in unstressed syllables, often appearing reduced?",
+      options: ["/a/", "/ɚ/", "/æ/", "/ə/"],
+      answer: 3,
+      reference: "Edwards (Ch.11): The schwa /ə/ is the mid-central vowel common in unstressed syllables."
+    },
+    {
+      q: "Which voiced labiodental fricative involves lower lip and upper teeth articulation?",
+      options: ["/f/", "/v/", "/θ/", "/ð/"],
+      answer: 1,
+      reference: "Edwards (Ch.6): /v/ is voiced labiodental fricative, air passes between lower lip and upper teeth."
+    },
+    {
+      q: "What is the voiced velar stop phoneme?",
+      options: ["/k/", "/g/", "/ŋ/", "/w/"],
+      answer: 1,
+      reference: "Edwards (Ch.5,8): /g/ is voiced velar stop produced with tongue dorsum contacting soft palate."
+    },
+    {
+      q: "Which phoneme is the voiceless alveo-palatal affricate /tʃ/?",
+      options: ["/tʃ/", "/dʒ/", "/ʃ/", "/ʒ/"],
+      answer: 0,
+      reference: "Edwards (Ch.7): /tʃ/ is voiceless affricate combining stop and fricative at alveo-palatal place."
+    },
+    {
+      q: "Where do syllabic consonants like /n̩/ commonly occur?",
+      options: ["Word initial", "Before stressed vowels", "Unstressed syllables after consonants", "In consonant clusters"],
+      answer: 2,
+      reference: "Edwards (Ch.8,9): Syllabic consonants usually occur in unstressed syllables, often after consonants."
+    },
+    {
+      q: "Which nasal consonant has the lowest frequency acoustic energy peak near 400 Hz for males?",
+      options: ["/m/", "/n/", "/l/", "/r/"],
+      answer: 0,
+      reference: "Edwards (Ch.8): /m/ exhibits low frequency resonance near 400 Hz (male speakers)."
+    },
+    {
+      q: "Which fricative may devoice in final position but remains voiced intervocalically?",
+      options: ["/z/", "/s/", "/θ/", "/ð/"],
+      answer: 0,
+      reference: "Edwards (Ch.6): /z/ often devoiced in final position, voiced between vowels."
+    },
+    {
+      q: "Which front vowel is low, lax, and unrounded, as in the word 'cat'?",
+      options: ["/æ/", "/ɛ/", "/i/", "/ʌ/"],
+      answer: 0,
+      reference: "Edwards (Ch.10): /æ/ is the low front lax unrounded vowel."
+    }
+  ];
+
+  let currentIndex = 0;
+  let score = 0;
+
+  const quizDiv = document.getElementById("quiz");
+  const feedbackDiv = document.getElementById("feedback");
+  const scoreDiv = document.getElementById("score");
+  const restartBtn = document.getElementById("restart");
+  const referencesDiv = document.getElementById("references");
+
+  function renderQuestion() {
+    feedbackDiv.style.display = "none";
+    referencesDiv.style.display = "none";
+    restartBtn.style.display = "none";
+    scoreDiv.textContent = "";
+    const q = questions[currentIndex];
+    quizDiv.innerHTML = `
+      <div class="question">${currentIndex + 1}. ${q.q}</div>
+      <div class="options">
+        ${q.options.map((opt, i) => `
+          <label>
+            <input type="radio" name="choice" value="${i}" />
+            <span>${opt}</span>
+          </label>
+        `).join('')}
+      </div>
+    `;
+    const inputs = quizDiv.querySelectorAll("input[name=choice]");
+    inputs.forEach(input => {
+      input.addEventListener('change', () => {
+        checkAnswer(parseInt(input.value));
+      });
+    });
+  }
+
+  function checkAnswer(selected) {
+    const correct = questions[currentIndex].answer;
+    feedbackDiv.style.display = "block";
+    if (selected === correct) {
+      score++;
+      feedbackDiv.className = "correct";
+      feedbackDiv.textContent = "✅ Correct!";
+    } else {
+      feedbackDiv.className = "incorrect";
+      feedbackDiv.innerHTML = `❌ Incorrect! The correct answer is: <strong>${questions[currentIndex].options[correct]}</strong>`;
+    }
+    disableOptions();
+    setTimeout(() => {
+      currentIndex++;
+      if (currentIndex < questions.length) {
+        renderQuestion();
+      } else {
+        endQuiz();
+      }
+    }, 1600);
+  }
+
+  function disableOptions() {
+    document.querySelectorAll("input[name=choice]").forEach(input => input.disabled = true);
+  }
+
+  function endQuiz() {
+    quizDiv.innerHTML = "";
+    feedbackDiv.style.display = "none";
+    scoreDiv.textContent = `You scored ${score} out of ${questions.length}.`;
+    restartBtn.style.display = "block";
+    showReferences();
+  }
+
+  function showReferences() {
+    let refsText = "📚 Detailed Referenced Answers (Harold T. Edwards, Applied Phonetics):\n\n";
+    for(let i=0; i < questions.length; i++) {
+      refsText += `Q${i + 1}: ${questions[i].reference}\n\n`;
+    }
+    referencesDiv.textContent = refsText;
+    referencesDiv.style.display = "block";
+  }
+
+  restartBtn.addEventListener('click', () => {
+    currentIndex = 0;
+    score = 0;
+    renderQuestion();
+    scoreDiv.textContent = "";
+    feedbackDiv.style.display = "none";
+    referencesDiv.style.display = "none";
+    restartBtn.style.display = "none";
+  });
+
+  // Start quiz
+  renderQuestion();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chapter 8: Syllable Stress – Phonology Quiz</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(120deg, #2a0944, #3b185f);
+      color: #f8f9fa;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+    .quiz-container {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+      width: 90%;
+      max-width: 750px;
+    }
+    h1 {
+      text-align: center;
+      color: #ffb703;
+    }
+    .question {
+      font-size: 1.1rem;
+      margin: 1.5rem 0 0.5rem;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+    }
+    .option {
+      background: #3d246c;
+      border: 2px solid #ffb703;
+      margin: 0.4rem 0;
+      padding: 0.6rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .option:hover {
+      background: #ffb703;
+      color: black;
+    }
+    .btn {
+      margin-top: 1rem;
+      padding: 0.6rem 1.5rem;
+      background: #fb5607;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .result, .explanation {
+      margin-top: 2rem;
+      background: #ffffff11;
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+    .correct { color: lightgreen; }
+    .incorrect { color: #ef233c; }
+  </style>
+</head>
+<body>
+<div class="quiz-container">
+  <h1>Chapter 8: Syllable Stress</h1>
+  <div id="quiz"></div>
+  <div class="result" id="result"></div>
+  <div class="explanation" id="explanation"></div>
+  <button class="btn" onclick="nextQuestion()">Next</button>
+</div>
+
+<script>
+const questions = [
+  {
+    q: "What is syllable stress?",
+    options: [
+      "Syllable lengthening without pitch change",
+      "The relative emphasis placed on a syllable",
+      "Changing vowel quality in unstressed syllables",
+      "Deletion of final consonants"
+    ],
+    answer: 1,
+    ref: "Stress is the emphasis given to certain syllables using loudness, pitch, and duration. (p.148)"
+  },
+  {
+    q: "Which symbol indicates primary stress in IPA?",
+    options: ["ˌ", "ˈ", "*", "•"],
+    answer: 1,
+    ref: "The IPA symbol ˈ precedes the syllable with primary stress. (p.149)"
+  },
+  {
+    q: "Secondary stress in IPA is marked with:",
+    options: ["ˈ", "ˌ", "~", "."],
+    answer: 1,
+    ref: "ˌ indicates secondary stress on a syllable. (p.149)"
+  },
+  {
+    q: "Which of the following words has stress on the first syllable?",
+    options: ["record (verb)", "permit (verb)", "object (noun)", "reject (verb)"],
+    answer: 2,
+    ref: "'Object' as a noun has initial syllable stress. (p.155)"
+  },
+  {
+    q: "The term 'stress-timed' refers to:",
+    options: [
+      "Equal syllable duration",
+      "Syllables occurring at predictable intervals",
+      "Stress placed randomly",
+      "Stressed syllables separated by equal time units"
+    ],
+    answer: 3,
+    ref: "Stress-timed rhythm spaces stressed syllables evenly. (p.150)"
+  },
+  {
+    q: "What role does syllable weight play in stress assignment?",
+    options: [
+      "Heavier syllables attract stress",
+      "Only light syllables can be stressed",
+      "All syllables are equal",
+      "Syllable weight affects pitch but not stress"
+    ],
+    answer: 0,
+    ref: "Syllables with complex nuclei or codas often attract stress. (p.154)"
+  },
+  {
+    q: "Which of the following is NOT a phonetic correlate of stress?",
+    options: ["Pitch", "Length", "Loudness", "Nasality"],
+    answer: 3,
+    ref: "Stress is expressed with pitch, length, loudness—not nasality. (p.148–149)"
+  },
+  {
+    q: "Stress in English typically falls on the:",
+    options: [
+      "Final syllable",
+      "First syllable of bisyllabic nouns",
+      "Middle syllable in all words",
+      "Second syllable always"
+    ],
+    answer: 1,
+    ref: "Nouns and adjectives often have initial stress in English. (p.154–155)"
+  },
+  {
+    q: "Compound nouns in English usually receive stress on:",
+    options: ["The second word", "Both words equally", "The first word", "The final syllable"],
+    answer: 2,
+    ref: "Compound nouns like 'blackboard' stress the first element. (p.155)"
+  },
+  {
+    q: "Which of the following words shows contrastive stress?",
+    options: ["ˈpermit", "perˈmit", "permit", "permít"],
+    answer: 1,
+    ref: "Contrastive stress shifts meaning between noun and verb forms. (p.155)"
+  },
+  {
+    q: "Predictable stress means:",
+    options: [
+      "Stress must be memorized",
+      "Stress patterns are rule-based",
+      "Stress always falls on the first syllable",
+      "Stress changes meaning"
+    ],
+    answer: 1,
+    ref: "Predictable stress follows phonological rules rather than lexicon. (p.152)"
+  },
+  {
+    q: "An affix that changes stress is called:",
+    options: ["Derivational", "Inflectional", "Contrastive", "Predictive"],
+    answer: 0,
+    ref: "Derivational affixes may shift stress (e.g., 'public' → 'publicity'). (p.153–154)"
+  },
+  {
+    q: "Which syllable is stressed in 'information'?",
+    options: ["First", "Second", "Third", "Fourth"],
+    answer: 2,
+    ref: "'Information' has primary stress on the third syllable: in-for-ˈma-tion. (p.151)"
+  },
+  {
+    q: "Function words in English are usually:",
+    options: ["Stressed", "Reduced and unstressed", "Unpredictable", "Always monosyllabic"],
+    answer: 1,
+    ref: "Function words are often unstressed in natural speech. (p.151)"
+  },
+  {
+    q: "What effect does sentence-level stress have?",
+    options: [
+      "It doesn’t affect word stress",
+      "It alters the syllable count",
+      "It highlights contrast or focus",
+      "It simplifies word meaning"
+    ],
+    answer: 2,
+    ref: "Sentence stress conveys emphasis and contrast. (p.151–152)"
+  },
+  {
+    q: "Which of the following words ends in a stress-attracting suffix?",
+    options: ["-er", "-ic", "-ful", "-ness"],
+    answer: 1,
+    ref: "Suffixes like -ic often attract stress to the preceding syllable (e.g., 'graphic'). (p.153)"
+  },
+  {
+    q: "Stress placement can affect:",
+    options: ["Grammar", "Meaning", "Lexical category", "All of the above"],
+    answer: 3,
+    ref: "Stress can signal grammatical category, affect meaning, and pronunciation. (p.154–155)"
+  },
+  {
+    q: "Which syllable is stressed in 'democracy'?",
+    options: ["First", "Second", "Third", "Fourth"],
+    answer: 0,
+    ref: "Stress in 'democracy' falls on the first syllable: ˈde-moc-ra-cy. (p.151)"
+  },
+  {
+    q: "Stress clash in English may result in:",
+    options: ["Reduced speech rate", "Vowel deletion", "Stress shift or rhythm change", "Spelling changes"],
+    answer: 2,
+    ref: "Clashes often lead to stress shift or adjustments in rhythm. (p.152)"
+  },
+  {
+    q: "In 'scientific', primary stress falls on the:",
+    options: ["First", "Second", "Third", "Fourth"],
+    answer: 3,
+    ref: "Scientific has stress on the last syllable: sci-en-tif-ˈic. (p.153)"
+  }
+];
+
+let current = 0;
+let score = 0;
+
+function showQuestion() {
+  const q = questions[current];
+  document.getElementById("quiz").innerHTML = `
+    <div class="question">${current + 1}/20. ${q.q}</div>
+    <div class="options">
+      ${q.options.map((opt, i) => `
+        <div class="option" onclick="checkAnswer(${i})">
+          ${String.fromCharCode(65 + i)}. ${opt}
+        </div>`).join('')}
+    </div>
+  `;
+  document.getElementById("result").textContent = '';
+  document.getElementById("explanation").textContent = '';
+}
+
+function checkAnswer(selected) {
+  const q = questions[current];
+  const correct = q.answer;
+  const resultEl = document.getElementById("result");
+  const explanation = document.getElementById("explanation");
+
+  if (selected === correct) {
+    score++;
+    resultEl.innerHTML = `<span class="correct">✅ Correct!</span>`;
+  } else {
+    resultEl.innerHTML = `<span class="incorrect">❌ Incorrect.</span> Correct answer: <strong>${String.fromCharCode(65 + correct)}</strong>`;
+  }
+
+  explanation.innerHTML = `<strong>Reference:</strong> ${q.ref}`;
+}
+
+function nextQuestion() {
+  if (current < questions.length - 1) {
+    current++;
+    showQuestion();
+  } else {
+    document.getElementById("quiz").innerHTML = `<h2>🎓 Quiz Complete</h2><p>Your Score: ${score}/20</p>`;
+    document.getElementById("result").textContent = '';
+    document.getElementById("explanation").innerHTML = `
+      <p><strong>Review source:</strong> Linda I. House, <em>Introductory Phonetics and Phonology</em>, Chapter 8: Syllable Stress (pp.148–175).</p>`;
+    document.querySelector(".btn").style.display = "none";
+  }
+}
+
+showQuestion();
+</script>
+</body>
+</html>

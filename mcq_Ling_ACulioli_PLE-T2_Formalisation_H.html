@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QCM – Antoine Culioli, Linguistique énonciative (Tome 2)</title>
+  <style>
+    body{font-family:sans-serif;background:#0b1220;color:#eee;margin:0;padding:0}
+    header{padding:1rem;background:#111;border-bottom:1px solid #333}
+    h1{margin:0;font-size:1.4rem}
+    .subtitle{font-size:.9rem;color:#aaa}
+    .wrap{display:flex;gap:1rem;padding:1rem}
+    .dashboard{width:250px;background:#111;padding:1rem;border:1px solid #333;border-radius:8px}
+    .question-card{background:#111;padding:1rem;border-radius:8px;border:1px solid #333;margin-bottom:1rem}
+    .answers{margin-top:1rem}
+    .option{display:block;margin-bottom:.5rem;padding:.5rem;border:1px solid #444;border-radius:6px;cursor:pointer}
+    .option.correct{border-color:green}
+    .option.incorrect{border-color:red}
+    .controls{margin-top:1rem;display:flex;gap:.5rem}
+    button{padding:.5rem 1rem;border:none;border-radius:6px;cursor:pointer}
+    button.primary{background:#0af;color:#000;font-weight:bold}
+    button.warn{background:#fa0;color:#000;font-weight:bold}
+    .progress{height:8px;background:#333;border-radius:4px;overflow:hidden;margin-bottom:1rem}
+    .bar{height:100%;width:0;background:#0af;transition:width .3s}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>QCM — Antoine Culioli, <em>Linguistique énonciative</em> (Tome 2)</h1>
+    <div class="subtitle">Niveau Ivy League / Oxbridge — 40 questions. Navigation complète et corrections détaillées.</div>
+  </header>
+
+  <main class="wrap">
+    <aside class="dashboard">
+      <div><button id="start" class="primary">Lancer / Recommencer</button></div>
+      <p id="m-q">0/0</p>
+      <p id="m-ans">Répondues : 0</p>
+      <p id="m-score">Score : —</p>
+    </aside>
+
+    <section style="flex:1">
+      <div class="question-card">
+        <div class="progress"><div class="bar" id="bar"></div></div>
+        <h2 id="qtitle">Bienvenue</h2>
+        <div id="qtext">Cliquez sur « Lancer » pour commencer.</div>
+        <div class="answers" id="answers"></div>
+        <div class="controls">
+          <button id="prev">← Précédent</button>
+          <button id="skip" class="warn">Sauter</button>
+          <button id="next">Suivant →</button>
+          <button id="validate" class="primary">Valider</button>
+        </div>
+      </div>
+
+      <div id="results" hidden>
+        <h3>Résultats & rétroaction détaillée</h3>
+        <div id="resultsList"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+  
+  
+  
+        /**
+     * BANQUE DE QUESTIONS (40 items)
+     * Chaque item : { id, q, options:[{t, ok}], explain, ref }
+     * NB : Les formulations et références sont construites à partir du contenu du document source ;
+     * les pages indiquées sont celles citées dans l'extrait fourni.
+     */
+    const BANK = [
+      {id:1,q:"Comment Culioli définit-il une opération énonciative ?",
+        options:[
+          {t:"Un mécanisme cognitif de construction du sens", ok:true},
+          {t:"Une transformation purement phonologique", ok:false},
+          {t:"Une règle syntaxique universelle", ok:false},
+          {t:"Une procédure grammaticale figée", ok:false}
+        ],
+        explain:"Les opérations énonciatives sont des mécanismes cognitifs par lesquels le sujet parlant construit le sens, via des représentations et des repérages.",
+        ref:"Culioli, 2000, p. 50–55"},
+      {id:2,q:"Quel est le rôle du repérage dans la théorie de l'énonciation ?",
+        options:[
+          {t:"Établir des relations entre éléments linguistiques et repères contextuels", ok:true},
+          {t:"Identifier les morphèmes", ok:false},
+          {t:"Localiser les phonèmes", ok:false},
+          {t:"Mesurer la fréquence lexicale", ok:false}
+        ],
+        explain:"Le repérage situe les éléments dans un espace de représentation selon des coordonnées temporelles, spatiales ou discursives.",
+        ref:"Culioli, 2000, p. 18, 21–22"},
+      {id:3,q:"La prédication, chez Culioli, implique :",
+        options:[
+          {t:"Une mise en relation entre un repère et une propriété", ok:true},
+          {t:"Une relation sujet–verbe au sens étroit seulement", ok:false},
+          {t:"Une transformation morphologique", ok:false},
+          {t:"Une opération sémantique dépourvue de repère", ok:false}
+        ],
+        explain:"La prédication relie un repère (R) à une propriété (P) dans un domaine notionnel.",
+        ref:"Culioli, 2000, p. 12"},
+      {id:4,q:"Qu'appelle-t-on ‘domaine notionnel’ ?",
+        options:[
+          {t:"Un espace de représentation mentale structuré", ok:true},
+          {t:"Un champ lexical usuel", ok:false},
+          {t:"Un corpus d'occurrences", ok:false},
+          {t:"Un dictionnaire des concepts", ok:false}
+        ],
+        explain:"Le domaine notionnel est l'espace structuré où s'inscrivent les opérations énonciatives qui produisent du sens.",
+        ref:"Culioli, 2000, p. 15"},
+      {id:5,q:"Fonction du repère dans la prédication :",
+        options:[
+          {t:"Point d'ancrage auquel on attribue une propriété", ok:true},
+          {t:"Marqueur exclusif de temporalité", ok:false},
+          {t:"Identifiant du locuteur seulement", ok:false},
+          {t:"Déterminant de la classe grammaticale", ok:false}
+        ],
+        explain:"Le repère est l'élément auquel on attribue la propriété prédicative.",
+        ref:"Culioli, 2000, p. 18"},
+      {id:6,q:"Comment sont distingués les niveaux de représentation ?",
+        options:[
+          {t:"Par leur degré d'abstraction (du linguistique au cognitif)", ok:true},
+          {t:"Par leur fréquence d'usage", ok:false},
+          {t:"Par leur origine étymologique", ok:false},
+          {t:"Par leur longueur moyenne", ok:false}
+        ],
+        explain:"Les niveaux sont hiérarchisés selon un gradient d'abstraction.",
+        ref:"Culioli, 2000, p. 21"},
+      {id:7,q:"Repérage vs référenciation :",
+        options:[
+          {t:"Le repérage concerne les relations internes; la référenciation, les relations externes", ok:true},
+          {t:"Le repérage est universel; la référenciation, contextuelle", ok:false},
+          {t:"Le repérage est phonologique; la référenciation, grammaticale", ok:false},
+          {t:"Le repérage est fixe; la référenciation, variable", ok:false}
+        ],
+        explain:"Le repérage structure les relations internes du système de représentation; la référenciation relie le signe à des entités du monde.",
+        ref:"Culioli, 2000, p. 22"},
+      {id:8,q:"Rôle des invariants :",
+        options:[
+          {t:"Servir de base aux variations dans les opérations énonciatives", ok:true},
+          {t:"Fixer les règles morphosyntaxiques", ok:false},
+          {t:"Définir des relations phonologiques", ok:false},
+          {t:"Assurer la fréquence lexicale", ok:false}
+        ],
+        explain:"Les invariants sont des éléments stables sur lesquels opèrent les variations.",
+        ref:"Culioli, 2000, p. 35, 60–70"},
+      {id:9,q:"Qu'est-ce qu'un repère ?",
+        options:[
+          {t:"Un point de référence dans un domaine notionnel", ok:true},
+          {t:"Un concept phonétique", ok:false},
+          {t:"Une règle syntaxique universelle", ok:false},
+          {t:"Un morphème lié", ok:false}
+        ],
+        explain:"Le repère situe les éléments dans l'espace de représentation.",
+        ref:"Culioli, 2000, p. 40"},
+      {id:10,q:"Variation linguistique selon Culioli :",
+        options:[
+          {t:"Résulte d'opérations énonciatives sur des invariants", ok:true},
+          {t:"Suit des règles universelles immuables", ok:false},
+          {t:"Est déterminée par la seule phonologie", ok:false},
+          {t:"Dépend d'une taxinomie lexicale", ok:false}
+        ],
+        explain:"La variation est produite par des opérations qui modulent des invariants au sein de domaines notionnels.",
+        ref:"Culioli, 2000, p. 50"},
+      {id:11,q:"Rôle des représentations mentales :",
+        options:[
+          {t:"Base des opérations énonciatives", ok:true},
+          {t:"Fixation de la syntaxe", ok:false},
+          {t:"Définition des relations phonologiques", ok:false},
+          {t:"Institution de règles prescriptives", ok:false}
+        ],
+        explain:"Les représentations mentales modélisent les relations entre éléments linguistiques et référents.",
+        ref:"Culioli, 2000, p. 55"},
+      {id:12,q:"Invariant linguistique :",
+        options:[
+          {t:"Concept stable utilisé dans les opérations énonciatives", ok:true},
+          {t:"Règle syntaxique universelle", ok:false},
+          {t:"Élément grammatical purement fixe et contextuel", ok:false},
+          {t:"Point de référence spatial", ok:false}
+        ],
+        explain:"L'invariant est un concept stable servant de support aux variations.",
+        ref:"Culioli, 2000, p. 60"},
+      {id:13,q:"Sens vs signification chez Culioli :",
+        options:[
+          {t:"Le sens est contextuel; la signification est liée aux invariants", ok:true},
+          {t:"Le sens est universel; la signification est contextuelle", ok:false},
+          {t:"Le sens est phonologique; la signification est grammaticale", ok:false},
+          {t:"Le sens est figé; la signification est variable", ok:false}
+        ],
+        explain:"Le sens dépend des opérations et du contexte; la signification renvoie aux invariants.",
+        ref:"Culioli, 2000, p. 65"},
+      {id:14,q:"Construction du sens : rôle des invariants",
+        options:[
+          {t:"Base des opérations énonciatives qui construisent le sens", ok:true},
+          {t:"Fixation des structures syntaxiques", ok:false},
+          {t:"Définition des relations phonologiques", ok:false},
+          {t:"Règlement de la fréquence d'usage", ok:false}
+        ],
+        explain:"Les invariants soutiennent les opérations qui produisent les valeurs contextuelles.",
+        ref:"Culioli, 2000, p. 70"},
+      {id:15,q:"Triplet fondamental de l'énonciation (structure énonciative) :",
+        options:[
+          {t:"S₀ (situation), R₀ (locuteur), T₀ (temps)", ok:true},
+          {t:"SV, SN, CP", ok:false},
+          {t:"Sujet, verbe, complément", ok:false},
+          {t:"Forme, substance, matière", ok:false}
+        ],
+        explain:"Le triplet S₀–R₀–T₀ cadre l'acte d'énonciation.",
+        ref:"Doc. structure formelle"},
+      {id:16,q:"Quelle opération note-t-on (R → P) ?",
+        options:[
+          {t:"Opération de prédication", ok:true},
+          {t:"Opération de négation", ok:false},
+          {t:"Opération de quantification", ok:false},
+          {t:"Opération de reformulation", ok:false}
+        ],
+        explain:"(R → P) attribue une propriété P à un repère R.",
+        ref:"Doc. opérations énonciatives"},
+      {id:17,q:"Quel est l'effet de l'opération de modalisation (M) ?",
+        options:[
+          {t:"Marquer l'attitude du sujet parlant vis-à-vis de P", ok:true},
+          {t:"Modifier la phonation", ok:false},
+          {t:"Réordonner la syntaxe", ok:false},
+          {t:"Remplacer le repère", ok:false}
+        ],
+        explain:"La modalisation module la valeur épistémique ou appréciative de la prédication.",
+        ref:"Doc. opérations énonciatives"},
+      {id:18,q:"Quel couple illustre la distinction aspectuelle ?",
+        options:[
+          {t:"‘Il a fini’ vs ‘Il finissait’", ok:true},
+          {t:"‘Le chat’ vs ‘les chats’", ok:false},
+          {t:"‘Ici’ vs ‘là-bas’", ok:false},
+          {t:"‘Rouge’ vs ‘bleu’", ok:false}
+        ],
+        explain:"Le contraste accompli / inaccompli illustre une variation aspectuelle.",
+        ref:"Doc. catégories et marqueurs (aspect)"},
+      {id:19,q:"La deixis est la relation entre :",
+        options:[
+          {t:"R₀ et S₀ (locuteur et situation d'énonciation)", ok:true},
+          {t:"R₁ et D₀ seulement", ok:false},
+          {t:"SN et SV", ok:false},
+          {t:"Forme et substance", ok:false}
+        ],
+        explain:"Les déictiques (‘ici’, ‘maintenant’) indexent R₀ dans S₀.",
+        ref:"Doc. structure formelle / déixis"},
+      {id:20,q:"Quelle structure note-t-on SN + SV ?",
+        options:[
+          {t:"Structure prédicative (repère + propriété)", ok:true},
+          {t:"Structure modale", ok:false},
+          {t:"Structure argumentative", ok:false},
+          {t:"Structure de reformulation", ok:false}
+        ],
+        explain:"SN joue le rôle de repère; SV exprime la propriété.",
+        ref:"Doc. structures formelles"},
+      {id:21,q:"La fonction de quantification (Q) évalue :",
+        options:[
+          {t:"La quantité associée au repère", ok:true},
+          {t:"La hauteur tonale", ok:false},
+          {t:"La polarité illocutoire", ok:false},
+          {t:"La valence verbale", ok:false}
+        ],
+        explain:"La quantification introduit un évaluation de cardinalité ou mesure.",
+        ref:"Doc. opérations énonciatives (Q)"},
+      {id:22,q:"Quelle est la portée de l'opération de négation (¬P) ?",
+        options:[
+          {t:"Annuler ou contester la propriété attribuée", ok:true},
+          {t:"Supprimer le repère", ok:false},
+          {t:"Changer la catégorie lexicale", ok:false},
+          {t:"Renforcer l'argumentation", ok:false}
+        ],
+        explain:"¬P invalide la propriété dans le cadre du repérage donné.",
+        ref:"Doc. opérations énonciatives (¬P)"},
+      {id:23,q:"La progression thématique consiste à :",
+        options:[
+          {t:"Développer le thème de manière cohérente au fil du discours", ok:true},
+          {t:"Accumuler des anaphores sans repère", ok:false},
+          {t:"Réduire la prédication à P", ok:false},
+          {t:"Neutraliser la modalité", ok:false}
+        ],
+        explain:"La progression thématique organise l'information (thème → rhème).",
+        ref:"Doc. dynamique du discours"},
+      {id:24,q:"Quelle étiquette convient à ‘C’est Marie qui a gagné’ ?",
+        options:[
+          {t:"Focalisation (focus)", ok:true},
+          {t:"Topicalisation", ok:false},
+          {t:"Subordination", ok:false},
+          {t:"Coordination", ok:false}
+        ],
+        explain:"La clivée met en relief un constituant focal.",
+        ref:"Doc. dynamique / focus"},
+      {id:25,q:"La polyphonie énonciative renvoie à :",
+        options:[
+          {t:"La présence de plusieurs voix ou points de vue", ok:true},
+          {t:"La superposition de deux timbres vocaux", ok:false},
+          {t:"Une duplication morphologique", ok:false},
+          {t:"Une concordance des temps", ok:false}
+        ],
+        explain:"La polyphonie inscrit des voix hétérogènes dans le même énoncé.",
+        ref:"Doc. dynamique / polyphonie"},
+      {id:26,q:"Dans la carte formelle, D₀ désigne :",
+        options:[
+          {t:"Le repère dans la mémoire discursive", ok:true},
+          {t:"Le repère spatial du locuteur", ok:false},
+          {t:"Le destinataire", ok:false},
+          {t:"Le domaine notionnel", ok:false}
+        ],
+        explain:"D₀ repère le stock discursif antérieur disponible.",
+        ref:"Doc. structure formelle (D₀)"},
+      {id:27,q:"Différence entre anaphore et déixis :",
+        options:[
+          {t:"L'anaphore renvoie à D₀; la déixis indexe S₀/R₀", ok:true},
+          {t:"L'anaphore est spatiale; la déixis est temporelle", ok:false},
+          {t:"Aucune: ce sont des synonymes", ok:false},
+          {t:"La déixis renvoie au lexique; l'anaphore à la phonologie", ok:false}
+        ],
+        explain:"Anaphore = reprise discursive; déixis = ancrage situationnel.",
+        ref:"Doc. structure formelle"},
+      {id:28,q:"Quelle fonction illocutoire est illustrée par ‘Je te promets’ ?",
+        options:[
+          {t:"Acte accompli par l'énonciation elle-même", ok:true},
+          {t:"Évaluation quantitative", ok:false},
+          {t:"Référenciation interne", ok:false},
+          {t:"Négation de propriété", ok:false}
+        ],
+        explain:"Les performatifs réalisent l'acte par le dire même.",
+        ref:"Doc. fonctions du langage (illocutoire)"},
+      {id:29,q:"La fonction argumentative de ‘même’ dans ‘Même lui a compris’ :",
+        options:[
+          {t:"Renforce une conclusion argumentative", ok:true},
+          {t:"Indique l'aspect accompli", ok:false},
+          {t:"Marque la déixis spatiale", ok:false},
+          {t:"Neutralise la modalité", ok:false}
+        ],
+        explain:"‘Même’ accroît le poids argumentatif de la proposition.",
+        ref:"Doc. fonctions / argumentative"},
+      {id:30,q:"Quelle différence entre référenciation externe (Rₑ) et interne (Rᵢ) ?",
+        options:[
+          {t:"Rₑ relie au monde; Rᵢ à une entité construite dans le discours", ok:true},
+          {t:"Rₑ est phonologique; Rᵢ est syntaxique", ok:false},
+          {t:"Rₑ est anaphorique; Rᵢ est déictique", ok:false},
+          {t:"Rₑ est modale; Rᵢ est aspectuelle", ok:false}
+        ],
+        explain:"La référenciation peut viser des entités extralinguistiques ou intra-discursives.",
+        ref:"Doc. structure formelle (Rₑ / Rᵢ)"},
+      {id:31,q:"Quel énoncé illustre une présupposition ?",
+        options:[
+          {t:"‘Il a encore raté son train.’", ok:true},
+          {t:"‘Peut-être qu'il vient.’", ok:false},
+          {t:"‘Viendra-t-il ?’", ok:false},
+          {t:"‘Il viendra s'il peut.’", ok:false}
+        ],
+        explain:"‘Encore’ déclenche un présupposé d'occurrence antérieure.",
+        ref:"Doc. dynamique / présupposition"},
+      {id:32,q:"Quel marqueur est typiquement déictique ?",
+        options:[
+          {t:"‘Ici’ / ‘maintenant’ / ‘moi’", ok:true},
+          {t:"‘Et’ / ‘ou’", ok:false},
+          {t:"‘Qui’ / ‘que’", ok:false},
+          {t:"‘Très’ / ‘peu’", ok:false}
+        ],
+        explain:"Ces marqueurs dépendent de S₀ et R₀.",
+        ref:"Doc. structure de l'énonciation"},
+      {id:33,q:"Quelle opération correspond à (V) dans le schéma ?",
+        options:[
+          {t:"Validation de la prédication dans un cadre de vérité", ok:true},
+          {t:"Variation aspectuelle", ok:false},
+          {t:"Vocalisation", ok:false},
+          {t:"Vérification phonétique", ok:false}
+        ],
+        explain:"V confirme la prédication relativement au système de repères.",
+        ref:"Doc. opérations énonciatives (V)"},
+      {id:34,q:"Le couple ‘repère / propriété’ se réalise syntaxiquement par :",
+        options:[
+          {t:"SN / prédicat (SV)", ok:true},
+          {t:"Déterminant / nom propre", ok:false},
+          {t:"Sujet / complétive", ok:false},
+          {t:"Quantifieur / verbe", ok:false}
+        ],
+        explain:"Le SN sert d'ancrage, le SV porte la propriété.",
+        ref:"Doc. structure prédicative"},
+      {id:35,q:"À quoi sert la fonction métalinguistique ?",
+        options:[
+          {t:"Commenter les unités linguistiques", ok:true},
+          {t:"Référer au monde externe uniquement", ok:false},
+          {t:"Établir des relations logiques", ok:false},
+          {t:"Indiquer la quantité", ok:false}
+        ],
+        explain:"Elle porte sur le code lui-même (ex.: ‘le mot \"chien\" est un nom’).",
+        ref:"Doc. fonctions du langage (métalinguistique)"},
+      {id:36,q:"La fonction perlocutoire concerne :",
+        options:[
+          {t:"L'effet produit sur le co-énonciateur", ok:true},
+          {t:"La valeur de vérité", ok:false},
+          {t:"La catégorie grammaticale", ok:false},
+          {t:"Le site de repérage spatial", ok:false}
+        ],
+        explain:"Effets comme convaincre, émouvoir, etc.",
+        ref:"Doc. fonctions du langage (perlocutoire)"},
+      {id:37,q:"Quel énoncé illustre une structure modale (M + P) ?",
+        options:[
+          {t:"‘Il pourrait venir.’", ok:true},
+          {t:"‘Il est venu.’", ok:false},
+          {t:"‘Il viendra hier.’", ok:false},
+          {t:"‘Il venait que.’", ok:false}
+        ],
+        explain:"M (modalité) précède P (contenu propositionnel).",
+        ref:"Doc. structures formelles (modale)"},
+      {id:38,q:"La structure de repérage R₀ ↔ R₁ se manifeste dans :",
+        options:[
+          {t:"‘Tu es en retard.’", ok:true},
+          {t:"‘La neige est blanche.’", ok:false},
+          {t:"‘Il neige.’", ok:false},
+          {t:"‘Il pleuvait.’", ok:false}
+        ],
+        explain:"L'adresse au destinataire R₁ s'oppose au repère du locuteur R₀.",
+        ref:"Doc. structures formelles (R₀ ↔ R₁)"},
+      {id:39,q:"‘He is reading’ illustre :",
+        options:[
+          {t:"Une structure aspectuelle (A + V)", ok:true},
+          {t:"Une structure illocutoire", ok:false},
+          {t:"Une structure anaphorique", ok:false},
+          {t:"Une simple référenciation externe", ok:false}
+        ],
+        explain:"Progressif anglais comme marqueur aspectuel.",
+        ref:"Doc. structures formelles (aspect)"},
+      {id:40,q:"Quel type d'opération marque ‘même’ dans ‘Même lui a compris’ ?",
+        options:[
+          {t:"Argumentative d'intensification", ok:true},
+          {t:"Déictique temporelle", ok:false},
+          {t:"Quantification exacte", ok:false},
+          {t:"Modalisation épistémique", ok:false}
+        ],
+        explain:"Intensifie la force argumentative de la proposition.",
+        ref:"Doc. fonctions / argumentative"}
+          {t:"La valeur absolue d'une fréquence", ok:false},
+          {t:"La traduction littérale d'un lexème", ok:false},
+          {t:"La mesure acoustique d'un son", ok:false}
+        ],
+        explain:"La valeur est la configuration résultante dans un contexte donné.",
+        ref:"Doc. opérations cognitives / valeur"},
+    ];
+	
+	
+	
+
+    let quiz=[],idx=0,answers=new Map(),validated=false;
+
+    const els={
+      start:document.getElementById('start'),
+      prev:document.getElementById('prev'),
+      next:document.getElementById('next'),
+      skip:document.getElementById('skip'),
+      validate:document.getElementById('validate'),
+      qtitle:document.getElementById('qtitle'),
+      qtext:document.getElementById('qtext'),
+      answers:document.getElementById('answers'),
+      bar:document.getElementById('bar'),
+      mQ:document.getElementById('m-q'),
+      mAns:document.getElementById('m-ans'),
+      mScore:document.getElementById('m-score'),
+      results:document.getElementById('results'),
+      resultsList:document.getElementById('resultsList')
+    };
+
+    function shuffle(arr){return arr.map(v=>[Math.random(),v]).sort((a,b)=>a[0]-b[0]).map(v=>v[1])}
+
+    function start(){quiz=shuffle(BANK).slice(0,40);idx=0;answers=new Map();validated=false;render();}
+    function render(){
+      const q=quiz[idx];
+      els.qtitle.textContent=`Question ${idx+1}`;
+      els.qtext.textContent=q.q;
+      els.answers.innerHTML='';
+      q.options.forEach((opt,i)=>{
+        const lab=document.createElement('label');
+        lab.className='option';
+        const inp=document.createElement('input');
+        inp.type='radio';inp.name='q';inp.value=i;
+        inp.onchange=()=>{answers.set(q.id,i)};
+        lab.appendChild(inp);
+        lab.append(opt.t);
+        els.answers.appendChild(lab);
+      });
+      els.bar.style.width=`${(idx/quiz.length)*100}%`;
+      els.mQ.textContent=`${idx+1}/${quiz.length}`;
+      els.mAns.textContent=`Répondues : ${answers.size}`;
+    }
+
+    function prev(){if(idx>0){idx--;render();}}
+    function next(){if(idx<quiz.length-1){idx++;render();}}
+    function skip(){if(idx<quiz.length-1){idx++;render();}}
+
+    function scoreQuiz(){let s=0;quiz.forEach(q=>{const i=answers.get(q.id);if(i!=null&&q.options[i].ok)s++;});return s;}
+
+    function validate(){validated=true;els.results.hidden=false;els.resultsList.innerHTML='';const score=scoreQuiz();els.mScore.textContent=`Score : ${score}/${quiz.length}`;
+      quiz.forEach((q,i)=>{
+        const u=answers.get(q.id);
+        const correct=q.options.find(o=>o.ok);
+        const div=document.createElement('div');
+        div.innerHTML=`<h4>Q${i+1}. ${q.q}</h4>
+          <div>Votre réponse : ${u!=null?q.options[u].t:'—'}</div>
+          <div>Clé : ${correct.t}</div>
+          <div><em>${q.explain}</em> <span style='color:#888'>(${q.ref})</span></div>`;
+        els.resultsList.appendChild(div);
+      });
+    }
+
+    els.start.onclick=start;els.prev.onclick=prev;els.next.onclick=next;els.skip.onclick=skip;els.validate.onclick=validate;
+  </script>
+</body>
+</html>

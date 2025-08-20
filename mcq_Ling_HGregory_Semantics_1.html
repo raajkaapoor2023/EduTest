@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Semantics Concepts Interactive Example with Questions</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 20px auto;
+      line-height: 1.6;
+    }
+    header, main, section, footer {
+      margin-bottom: 2rem;
+    }
+    code {
+      background: #f2f2f2;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+    }
+    .true { color: green; }
+    .false { color: red; }
+    .question {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+    }
+    .answer-area {
+      margin-top: 0.5rem;
+      font-style: italic;
+      color: #555;
+    }
+    label {
+      display: block;
+      margin: 0.3rem 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Semantics Concepts Interactive Example with 40 Questions</h1>
+    <p>This demo illustrates key ideas from Howard Gregory's Semantics workbook (Ch. 1–5) including word senses, meaning relations, truth conditions, and predicate-argument notation with 40 interactive questions.</p>
+  </header>
+  
+  <main>
+    <!-- Word senses and synonyms -->
+    <section aria-labelledby="section1">
+      <h2 id="section1">Word Senses and Synonyms (Chapters 1 & 4)</h2>
+      <p>Two words may share a <strong>word sense</strong> and thus be <em>synonyms</em>. Select pairs to see if they share a sense.</p>
+      <select id="synonymPair" aria-label="Select word pair to check synonyms">
+        <option value="">-- Select Pair --</option>
+        <option value="big-large">big - large</option>
+        <option value="car-automobile">car - automobile</option>
+        <option value="happy-sad">happy - sad</option>
+        <option value="bank-river">bank - river (homonym check)</option>
+      </select>
+      <p id="synonymResult" role="alert"></p>
+
+      <div class="question">
+        <strong>Q1:</strong> What is the difference between synonyms and homonyms? <br>
+        <label><input type="radio" name="q1" value="a"> Synonyms share at least one word sense; homonyms are one word with multiple unrelated senses.</label>
+        <label><input type="radio" name="q1" value="b"> Synonyms sound alike; homonyms look alike.</label>
+        <label><input type="radio" name="q1" value="c"> Synonyms are always antonyms.</label>
+        <div class="answer-area" id="answer1"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q2:</strong> If two words have exactly the same denotation, must they always be synonyms? <br>
+        <label><input type="radio" name="q2" value="a"> Yes, denotation and synonymy are equivalent.</label>
+        <label><input type="radio" name="q2" value="b"> No, because connotations and sense can differ.</label>
+        <label><input type="radio" name="q2" value="c"> Only if they share spelling.</label>
+        <div class="answer-area" id="answer2"></div>
+      </div>
+    </section>
+
+    <!-- Truth Conditions -->
+    <section aria-labelledby="section2">
+      <h2 id="section2">Truth Conditions and Logical Connectives (Chapter 2 & 4)</h2>
+      <p>Assign truth values and check the truth of sentences using logical connectives.</p>
+
+      <label>It is raining:
+        <select id="raining">
+          <option value="t">True</option>
+          <option value="f">False</option>
+        </select>
+      </label>
+      <label>It is cold:
+        <select id="cold">
+          <option value="t">True</option>
+          <option value="f">False</option>
+        </select>
+      </label>
+      <p><strong>Truth value of:</strong> raining &amp; cold is <span id="truthValue"></span></p>
+
+      <div class="question">
+        <strong>Q3:</strong> What is the truth value of "It is raining and it is cold" when raining is true and cold is false? <br>
+        <label><input type="radio" name="q3" value="a"> True</label>
+        <label><input type="radio" name="q3" value="b"> False</label>
+        <div class="answer-area" id="answer3"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q4:</strong> What connective is used in the sentence "Either it is raining or it is snowing"? <br>
+        <label><input type="radio" name="q4" value="a"> AND (&amp;)</label>
+        <label><input type="radio" name="q4" value="b"> OR (v)</label>
+        <label><input type="radio" name="q4" value="c"> NEGATION (~)</label>
+        <div class="answer-area" id="answer4"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q5:</strong> Is the statement "She passed the exam and she did not pass the exam" true or false? <br>
+        <label><input type="radio" name="q5" value="a"> True</label>
+        <label><input type="radio" name="q5" value="b"> False</label>
+        <div class="answer-area" id="answer5"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q6:</strong> Which logic connective negates a statement's truth value? <br>
+        <label><input type="radio" name="q6" value="a"> &amp;</label>
+        <label><input type="radio" name="q6" value="b"> v</label>
+        <label><input type="radio" name="q6" value="c"> ~</label>
+        <div class="answer-area" id="answer6"></div>
+      </div>
+    </section>
+
+    <!-- Predicate-Argument Notation -->
+    <section aria-labelledby="section3">
+      <h2 id="section3">Predicate-Argument Notation (Chapters 3 & 9)</h2>
+      <p>Analyze basic predicate-argument structures in sentences.</p>
+      <p>Example: The sentence <em>John loves Mary</em> can be represented as <code>love(john, mary)</code>.</p>
+
+      <div class="question">
+        <strong>Q7:</strong> What is the predicate in the sentence "Sarah cleared the table"? <br>
+        <label><input type="radio" name="q7" value="a"> Sarah</label>
+        <label><input type="radio" name="q7" value="b"> cleared</label>
+        <label><input type="radio" name="q7" value="c"> table</label>
+        <div class="answer-area" id="answer7"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q8:</strong> How many arguments does the predicate "give" normally require? <br>
+        <label><input type="radio" name="q8" value="a"> 1</label>
+        <label><input type="radio" name="q8" value="b"> 2</label>
+        <label><input type="radio" name="q8" value="c"> 3</label>
+        <div class="answer-area" id="answer8"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q9:</strong> Convert the sentence "Elizabeth I killed Mary Queen of Scots" into predicate-argument notation. <br>
+        <label><input type="radio" name="q9" value="a"> kill(elizabeth_i, mary_queen_of_scots)</label>
+        <label><input type="radio" name="q9" value="b"> kill(mary_queen_of_scots, elizabeth_i)</label>
+        <label><input type="radio" name="q9" value="c"> killed(elizabeth_i, mary_queen_of_scots)</label>
+        <div class="answer-area" id="answer9"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q10:</strong> In predicate-argument notation, what does the term 'argument' refer to? <br>
+        <label><input type="radio" name="q10" value="a"> The verb/ predicate</label>
+        <label><input type="radio" name="q10" value="b"> The entities filling roles in the relation described by the predicate</label>
+        <label><input type="radio" name="q10" value="c"> The tense of the verb</label>
+        <div class="answer-area" id="answer10"></div>
+      </div>
+    </section>
+
+    <!-- Lexical Relations and Hyponymy -->
+    <section aria-labelledby="section4">
+      <h2 id="section4">Lexical Relations and Hyponymy (Chapter 4 & 5)</h2>
+
+      <div class="question">
+        <strong>Q11:</strong> What does hyponymy describe? <br>
+        <label><input type="radio" name="q11" value="a"> A relation where one word's meaning includes another as a subset</label>
+        <label><input type="radio" name="q11" value="b"> Words that sound alike but have different meanings</label>
+        <label><input type="radio" name="q11" value="c"> Words that rhyme</label>
+        <div class="answer-area" id="answer11"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q12:</strong> Is "Alsatian" a hyponym or hypernym of "dog"? <br>
+        <label><input type="radio" name="q12" value="a"> Hyponym (a kind of dog)</label>
+        <label><input type="radio" name="q12" value="b"> Hypernym (a general category including dog)</label>
+        <div class="answer-area" id="answer12"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q13:</strong> If two words denote the same set of objects, what lexical relation might they have? <br>
+        <label><input type="radio" name="q13" value="a"> Synonymy</label>
+        <label><input type="radio" name="q13" value="b"> Antonymy</label>
+        <label><input type="radio" name="q13" value="c"> Homonymy</label>
+        <div class="answer-area" id="answer13"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q14:</strong> Which of the following is an example of contradictory antonyms? <br>
+        <label><input type="radio" name="q14" value="a"> married - unmarried (assuming unmarried includes any not currently married)</label>
+        <label><input type="radio" name="q14" value="b"> big - small</label>
+        <label><input type="radio" name="q14" value="c"> light - heavy</label>
+        <div class="answer-area" id="answer14"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q15:</strong> What is the difference between incompatible antonyms and contradictory antonyms? <br>
+        <label><input type="radio" name="q15" value="a"> Incompatible antonyms cannot both be true but may both be false; contradictory antonyms cannot both be true and cannot both be false.</label>
+        <label><input type="radio" name="q15" value="b"> They mean the same thing.</label>
+        <label><input type="radio" name="q15" value="c"> There is no difference.</label>
+        <div class="answer-area" id="answer15"></div>
+      </div>
+    </section>
+
+    <!-- Quantifiers -->
+    <section aria-labelledby="section5">
+      <h2 id="section5">Quantifiers and Predicate Logic (Chapter 7 & 8)</h2>
+
+      <div class="question">
+        <strong>Q16:</strong> Which quantifier denotes the assertion "for all x"? <br>
+        <label><input type="radio" name="q16" value="a"> ∃ (existential quantifier)</label>
+        <label><input type="radio" name="q16" value="b"> ∀ (universal quantifier)</label>
+        <div class="answer-area" id="answer16"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q17:</strong> In the predicate-argument expression <code>∀x (dog(x) → bark(x))</code>, what does it mean? <br>
+        <label><input type="radio" name="q17" value="a"> Some dogs bark</label>
+        <label><input type="radio" name="q17" value="b"> All dogs bark</label>
+        <label><input type="radio" name="q17" value="c"> No dogs bark</label>
+        <div class="answer-area" id="answer17"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q18:</strong> What does the existential quantifier (∃) mean in semantics? <br>
+        <label><input type="radio" name="q18" value="a"> No elements satisfy the predicate</label>
+        <label><input type="radio" name="q18" value="b"> There exists at least one element satisfying the predicate</label>
+        <label><input type="radio" name="q18" value="c"> Every element satisfies the predicate</label>
+        <div class="answer-area" id="answer18"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q19:</strong> How is the statement "Some politicians are honest" expressed in first order logic? <br>
+        <label><input type="radio" name="q19" value="a"> ∀x (politician(x) → honest(x))</label>
+        <label><input type="radio" name="q19" value="b"> ∃x (politician(x) &amp; honest(x))</label>
+        <div class="answer-area" id="answer19"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q20:</strong> Are the following two formula equivalent? <br>
+        <code>¬∃x (dog(x) &amp; bark(x))</code> and <br>
+        <code>∀x (dog(x) → ¬bark(x))</code> <br>
+        <label><input type="radio" name="q20" value="a"> Yes, they mean the same</label>
+        <label><input type="radio" name="q20" value="b"> No, they mean different things</label>
+        <div class="answer-area" id="answer20"></div>
+      </div>
+    </section>
+
+    <!-- More questions summarizing early chapters -->
+    <section aria-labelledby="section6">
+      <h2 id="section6">Additional Semantics Questions</h2>
+
+      <div class="question">
+        <strong>Q21:</strong> What is the difference between <em>sense</em> and <em>reference</em>?<br>
+        <label><input type="radio" name="q21" value="a"> Sense is the mental concept; reference is the actual object in the world</label>
+        <label><input type="radio" name="q21" value="b"> Reference is the mental concept; sense is the actual object</label>
+        <div class="answer-area" id="answer21"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q22:</strong> What is an example of a homonym pair?<br>
+        <label><input type="radio" name="q22" value="a"> bank (financial institution) and bank (river edge)</label>
+        <label><input type="radio" name="q22" value="b"> dog and canine</label>
+        <div class="answer-area" id="answer22"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q23:</strong> Which is NOT a truth value commonly used in semantics?<br>
+        <label><input type="radio" name="q23" value="a"> True</label>
+        <label><input type="radio" name="q23" value="b"> False</label>
+        <label><input type="radio" name="q23" value="c"> Indifferent</label>
+        <div class="answer-area" id="answer23"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q24:</strong> The truth table connective that produces true only when both inputs are true is called?<br>
+        <label><input type="radio" name="q24" value="a"> AND</label>
+        <label><input type="radio" name="q24" value="b"> OR</label>
+        <label><input type="radio" name="q24" value="c"> NOT</label>
+        <div class="answer-area" id="answer24"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q25:</strong> What does it mean if two statements are paraphrases?<br>
+        <label><input type="radio" name="q25" value="a"> They have opposite truth values</label>
+        <label><input type="radio" name="q25" value="b"> They have the same meaning and truth conditions</label>
+        <div class="answer-area" id="answer25"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q26:</strong> What kind of meaning relation is illustrated by the pair: "John is happy" and "John is unhappy"?<br>
+        <label><input type="radio" name="q26" value="a"> Antonymy</label>
+        <label><input type="radio" name="q26" value="b"> Synonymy</label>
+        <div class="answer-area" id="answer26"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q27:</strong> If "Mary slapped John" is true, must "Mary hit John" be true? What relation between "slap" and "hit" does this illustrate?<br>
+        <label><input type="radio" name="q27" value="a"> No relation</label>
+        <label><input type="radio" name="q27" value="b"> Hyponymy (slap is a kind of hit)</label>
+        <div class="answer-area" id="answer27"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q28:</strong> What does "token" vs "type" distinction refer to?<br>
+        <label><input type="radio" name="q28" value="a"> Token: a particular instance; Type: a category of instances</label>
+        <label><input type="radio" name="q28" value="b"> Token: word form; Type: conceptual meaning</label>
+        <div class="answer-area" id="answer28"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q29:</strong> How do mass nouns differ from count nouns semantically?<br>
+        <label><input type="radio" name="q29" value="a"> Mass nouns represent substances or uncountable entities; count nouns represent individual countable objects</label>
+        <label><input type="radio" name="q29" value="b"> Mass nouns are plural only; count nouns only singular</label>
+        <div class="answer-area" id="answer29"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q30:</strong> What does the "scope" refer to in quantified sentences?<br>
+        <label><input type="radio" name="q30" value="a"> The noun phrase restricting the quantifier</label>
+        <label><input type="radio" name="q30" value="b"> The main predicate set that the quantifier applies to</label>
+        <div class="answer-area" id="answer30"></div>
+      </div>
+
+      <!-- More general conceptual questions -->
+      <div class="question">
+        <strong>Q31:</strong> Which mathematical concept is commonly used to represent the denotation of predicates?<br>
+        <label><input type="radio" name="q31" value="a"> Set</label>
+        <label><input type="radio" name="q31" value="b"> Vector</label>
+        <label><input type="radio" name="q31" value="c"> Function</label>
+        <div class="answer-area" id="answer31"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q32:</strong> What kind of relation is described by the predicate "love" between two individuals?<br>
+        <label><input type="radio" name="q32" value="a"> One-place relation (property)</label>
+        <label><input type="radio" name="q32" value="b"> Two-place relation (binary relation)</label>
+        <div class="answer-area" id="answer32"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q33:</strong> If a verb implies an action with a cause and effect, how might its argument structure differ?<br>
+        <label><input type="radio" name="q33" value="a"> It includes an argument for the cause and an argument for the affected entity</label>
+        <label><input type="radio" name="q33" value="b"> It has no arguments</label>
+        <div class="answer-area" id="answer33"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q34:</strong> How does semantic analysis distinguish between meaning of words and of sentences?<br>
+        <label><input type="radio" name="q34" value="a"> Word meanings refer only to forms; sentence meanings involve truth conditions and logical relations</label>
+        <label><input type="radio" name="q34" value="b"> Word meanings are always longer than sentence meanings</label>
+        <div class="answer-area" id="answer34"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q35:</strong> What is a default inference in semantics?<br>
+        <label><input type="radio" name="q35" value="a"> An inference assumed provisionally unless contradicted</label>
+        <label><input type="radio" name="q35" value="b"> An unquestionable fact</label>
+        <div class="answer-area" id="answer35"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q36:</strong> What is the denotation of the predicate "red" generally considered as?<br>
+        <label><input type="radio" name="q36" value="a"> The set of all red objects</label>
+        <label><input type="radio" name="q36" value="b"> The word form "red"</label>
+        <div class="answer-area" id="answer36"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q37:</strong> What does it mean if a relation is transitive?<br>
+        <label><input type="radio" name="q37" value="a"> If it holds between x and y, and y and z, then it holds between x and z</label>
+        <label><input type="radio" name="q37" value="b"> It only holds for one pair of entities</label>
+        <div class="answer-area" id="answer37"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q38:</strong> What is a semantic network in lexical semantics?<br>
+        <label><input type="radio" name="q38" value="a"> A structure representing relations between word meanings and their hyponyms</label>
+        <label><input type="radio" name="q38" value="b"> A list of words</label>
+        <div class="answer-area" id="answer38"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q39:</strong> Which connective in logic is used for negation?<br>
+        <label><input type="radio" name="q39" value="a"> &amp;</label>
+        <label><input type="radio" name="q39" value="b"> v</label>
+        <label><input type="radio" name="q39" value="c"> ~</label>
+        <div class="answer-area" id="answer39"></div>
+      </div>
+
+      <div class="question">
+        <strong>Q40:</strong> Which of the following best describes the function "father_of" in semantics?<br>
+        <label><input type="radio" name="q40" value="a"> It associates every person with exactly one individual who is their father</label>
+        <label><input type="radio" name="q40" value="b"> It is a two-place relation with no restrictions</label>
+        <div class="answer-area" id="answer40"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Example based on Howard Gregory's <em>Semantics: An Introductory Workbook</em> (Chapters 1 to 5).</p>
+  </footer>
+
+  <script>
+    // Synonym pairs dictionary
+    const synonymPairs = {
+      "big-large": true,
+      "car-automobile": true,
+      "happy-sad": false,
+      "bank-river": false
+    };
+
+    const synonymSelect = document.getElementById('synonymPair');
+    const synonymResult = document.getElementById('synonymResult');
+    synonymSelect.addEventListener('change', () => {
+      const pair = synonymSelect.value;
+      if (!pair) {
+        synonymResult.textContent = '';
+        return;
+      }
+      const isSynonym = synonymPairs[pair];
+      synonymResult.textContent = isSynonym
+        ? 'These words share at least one word sense and can be synonyms.'
+        : 'These words do NOT share a word sense; they are not synonyms.';
+    });
+
+
+    // Logic for truth values AND connective
+    function updateTruthValue() {
+      const raining = document.getElementById('raining').value;
+      const cold = document.getElementById('cold').value;
+
+      const truth = (raining === 't' && cold === 't');
+      const truthSpan = document.getElementById('truthValue');
+      truthSpan.textContent = truth ? 'True' : 'False';
+      truthSpan.className = truth ? 'true' : 'false';
+    }
+    document.getElementById('raining').addEventListener('change', updateTruthValue);
+    document.getElementById('cold').addEventListener('change', updateTruthValue);
+    updateTruthValue();
+
+    // Handling answers for questions with radio buttons
+    const answers = {
+      q1: 'a',
+      q2: 'b',
+      q3: 'b',
+      q4: 'b',
+      q5: 'b',
+      q6: 'c',
+      q7: 'b',
+      q8: 'c',
+      q9: 'a',
+      q10: 'b',
+      q11: 'a',
+      q12: 'a',
+      q13: 'a',
+      q14: 'a',
+      q15: 'a',
+      q16: 'b',
+      q17: 'b',
+      q18: 'b',
+      q19: 'b',
+      q20: 'a',
+      q21: 'a',
+      q22: 'a',
+      q23: 'c',
+      q24: 'a',
+      q25: 'b',
+      q26: 'a',
+      q27: 'b',
+      q28: 'a',
+      q29: 'a',
+      q30: 'b',
+      q31: 'a',
+      q32: 'b',
+      q33: 'a',
+      q34: 'a',
+      q35: 'a',
+      q36: 'a',
+      q37: 'a',
+      q38: 'a',
+      q39: 'c',
+      q40: 'a'
+    };
+
+    function checkAnswer(event) {
+      const name = event.target.name;
+      const selected = event.target.value;
+      const correct = answers[name];
+      const answerArea = document.getElementById('answer' + name.substring(1));
+      if (selected === correct) {
+        answerArea.textContent = 'Correct!';
+        answerArea.style.color = 'green';
+      } else {
+        answerArea.textContent = 'Incorrect. Please try again.';
+        answerArea.style.color = 'red';
+      }
+    }
+
+    document.querySelectorAll('input[type=radio]').forEach(radio => {
+      radio.addEventListener('change', checkAnswer);
+    });
+  </script>
+</body>
+</html>

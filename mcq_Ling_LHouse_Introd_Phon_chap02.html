@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chapter 2 Quiz – Phonetics & Physiology</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #001d3d, #003566);
+      color: white;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+    .quiz-container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+      width: 90%;
+      max-width: 750px;
+    }
+    h1 {
+      text-align: center;
+      color: #ffd60a;
+    }
+    .question {
+      font-size: 1.1rem;
+      margin: 1.5rem 0 0.5rem;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+    }
+    .option {
+      background: #003566;
+      border: 2px solid #ffd60a;
+      margin: 0.5rem 0;
+      padding: 0.75rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .option:hover {
+      background: #ffc300;
+      color: black;
+    }
+    .btn {
+      margin-top: 1rem;
+      padding: 0.6rem 1.5rem;
+      background: #ffd60a;
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .result, .explanation {
+      margin-top: 2rem;
+      background: #ffffff22;
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+    .correct { color: lightgreen; }
+    .incorrect { color: #ff6b6b; }
+  </style>
+</head>
+<body>
+<div class="quiz-container">
+  <h1>Chapter 2: Anatomical & Physiological Correlates</h1>
+  <div id="quiz"></div>
+  <div class="result" id="result"></div>
+  <div class="explanation" id="explanation"></div>
+  <button class="btn" onclick="nextQuestion()">Next</button>
+</div>
+
+<script>
+const questions = [
+  {
+    q: "Which process modifies air for breathing and speaking?",
+    options: ["Phonation", "Resonation", "Articulation", "Respiration"],
+    answer: 3,
+    ref: "Respiration modifies air from the lungs. (p.11)"
+  },
+  {
+    q: "Which structure is the chief muscle of inspiration?",
+    options: ["Internal intercostals", "Diaphragm", "Scalenes", "Abdominals"],
+    answer: 1,
+    ref: "The diaphragm is the main muscle of inspiration. (p.13)"
+  },
+  {
+    q: "Which muscle group depresses the ribs during respiration?",
+    options: ["Suprahyoids", "Minor thoracic muscles", "Infrahyoids", "Internal intercostals"],
+    answer: 1,
+    ref: "Minor thoracic muscles like the transverse thoracic depress ribs. (p.13)"
+  },
+  {
+    q: "Which cartilage connects the larynx to the trachea?",
+    options: ["Thyroid", "Arytenoid", "Cricoid", "Epiglottis"],
+    answer: 2,
+    ref: "The cricoid cartilage connects the larynx to the trachea. (p.16)"
+  },
+  {
+    q: "The vocal folds vibrate to produce:",
+    options: ["Voiceless consonants", "Aspirated vowels", "Voiced phonemes", "Plosives only"],
+    answer: 2,
+    ref: "Voiced phonemes are produced by vibrating vocal folds. (p.17)"
+  },
+  {
+    q: "The myoelastic–aerodynamic theory explains:",
+    options: ["Tongue movement", "Pitch control", "Voice production", "Breath support"],
+    answer: 2,
+    ref: "This theory explains how vocal fold vibration produces voice. (p.17)"
+  },
+  {
+    q: "Which bone forms the floor of the nasal cavity?",
+    options: ["Ethmoid", "Vomer", "Maxilla", "Mandible"],
+    answer: 2,
+    ref: "The maxilla forms the nasal cavity floor. (p.18)"
+  },
+  {
+    q: "The pharyngeal cavity plays a crucial role in:",
+    options: ["Syllable timing", "Oral closure", "Voice resonance", "Velar release"],
+    answer: 2,
+    ref: "Pharyngeal shape affects resonance. (p.19)"
+  },
+  {
+    q: "Formants are:",
+    options: ["Air pockets", "Nasal cavities", "Resonant frequencies", "Vocal folds"],
+    answer: 2,
+    ref: "Formants are acoustic resonances in the vocal tract. (p.20)"
+  },
+  {
+    q: "The velopharyngeal sphincter is responsible for:",
+    options: ["Nasal breathing", "Swallowing only", "Oral/nasal closure", "Laryngeal tilt"],
+    answer: 2,
+    ref: "The sphincter closes off the nasal cavity during speech. (p.19)"
+  },
+  {
+    q: "Which is NOT an articulator?",
+    options: ["Tongue", "Velum", "Lips", "Cervical vertebrae"],
+    answer: 3,
+    ref: "Cervical vertebrae are skeletal, not articulators. (p.21)"
+  },
+  {
+    q: "The hard palate is formed by:",
+    options: ["Maxilla + zygomatic", "Mandible + vomer", "Maxilla + palatine", "Sphenoid + palatine"],
+    answer: 2,
+    ref: "The hard palate is formed by the maxillary and palatine bones. (p.22)"
+  },
+  {
+    q: "The most flexible articulator is:",
+    options: ["Jaw", "Tongue", "Lips", "Velum"],
+    answer: 1,
+    ref: "The tongue is highly flexible for articulation. (p.22)"
+  },
+  {
+    q: "Which muscles elevate the larynx?",
+    options: ["Infrahyoids", "Suprahyoids", "Intercostals", "Pterygoids"],
+    answer: 1,
+    ref: "Suprahyoids elevate the larynx. (p.16)"
+  },
+  {
+    q: "Which muscle raises the back of the tongue?",
+    options: ["Genioglossus", "Palatoglossus", "Styloglossus", "Hyoglossus"],
+    answer: 1,
+    ref: "Palatoglossus raises the tongue’s posterior. (p.25)"
+  },
+  {
+    q: "Which speech sounds require open velopharyngeal port?",
+    options: ["/b/ /d/ /g/", "/n/ /m/ /ŋ/", "/t/ /s/ /z/", "/f/ /v/ /θ/"],
+    answer: 1,
+    ref: "Nasals require an open velopharyngeal port. (p.25)"
+  },
+  {
+    q: "Which muscle flattens the tongue tip?",
+    options: ["Vertical", "Transverse", "Superior longitudinal", "Inferior longitudinal"],
+    answer: 0,
+    ref: "The vertical muscle flattens the tip. (p.25)"
+  },
+  {
+    q: "Which bone forms part of the nasal septum?",
+    options: ["Maxilla", "Ethmoid", "Palatine", "Zygomatic"],
+    answer: 1,
+    ref: "The ethmoid forms the upper nasal septum. (p.18)"
+  },
+  {
+    q: "Which muscle tenses the soft palate?",
+    options: ["Uvula", "Tensor veli palatini", "Levator veli palatini", "Stylopharyngeus"],
+    answer: 1,
+    ref: "The tensor veli palatini tenses the velum. (p.24)"
+  },
+  {
+    q: "The tonsillar ring provides:",
+    options: ["Speech modulation", "Laryngeal support", "Immune protection", "Tongue flexibility"],
+    answer: 2,
+    ref: "It’s a lymphatic structure for immune defense. (p.26)"
+  }
+];
+
+let current = 0;
+let score = 0;
+
+function showQuestion() {
+  const q = questions[current];
+  document.getElementById("quiz").innerHTML = `
+    <div class="question">${current + 1}/20. ${q.q}</div>
+    <div class="options">
+      ${q.options.map((opt, i) => `
+        <div class="option" onclick="checkAnswer(${i})">
+          ${String.fromCharCode(65 + i)}. ${opt}
+        </div>`).join('')}
+    </div>
+  `;
+  document.getElementById("result").textContent = '';
+  document.getElementById("explanation").textContent = '';
+}
+
+function checkAnswer(selected) {
+  const q = questions[current];
+  const correct = q.answer;
+  const resultEl = document.getElementById("result");
+  const explanation = document.getElementById("explanation");
+
+  if (selected === correct) {
+    score++;
+    resultEl.innerHTML = `<span class="correct">✅ Correct!</span>`;
+  } else {
+    resultEl.innerHTML = `<span class="incorrect">❌ Incorrect.</span> Correct answer: <strong>${String.fromCharCode(65 + correct)}</strong>`;
+  }
+
+  explanation.innerHTML = `<strong>Reference:</strong> ${q.ref}`;
+}
+
+function nextQuestion() {
+  if (current < questions.length - 1) {
+    current++;
+    showQuestion();
+  } else {
+    document.getElementById("quiz").innerHTML = `<h2>🎓 Quiz Complete</h2><p>Your Score: ${score}/20</p>`;
+    document.getElementById("result").textContent = '';
+    document.getElementById("explanation").innerHTML = `
+      <p><strong>Review reference:</strong> Linda I. House, *Introductory Phonetics and Phonology*, Chapter 2 (1998).</p>`;
+    document.querySelector(".btn").style.display = "none";
+  }
+}
+
+// Init
+showQuestion();
+</script>
+</body>
+</html>

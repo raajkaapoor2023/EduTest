@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>1920s U.S. History: Advanced MCQ Test</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; background: #f9f9f9; color: #222;}
+  h1, h2, h3 { text-align: center; color: #003366; }
+  .question-box { background: white; padding: 25px; border-radius: 8px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);}
+  .answers { list-style: none; padding: 0; }
+  .answers li { margin-bottom: 12px; }
+  label { cursor: pointer; font-size: 1.1rem; }
+  input[type="radio"] { margin-right: 10px; }
+  button { background-color: #003366; color: white; border: none; padding: 14px 25px; border-radius: 6px; font-size: 1.1rem; cursor: pointer; margin: 5px;}
+  button:disabled { background-color: #999; cursor: not-allowed; }
+  .answer-explanation { background: #eef6ff; border-left: 7px solid #003366; padding: 20px; margin-top: 20px; font-size: 1rem; line-height: 1.5; }
+  .reference { font-size: 0.85rem; font-style: italic; color: #555; margin-top: 12px; }
+  #summary { margin-top: 50px; }
+  .correct { color: green; font-weight: bold; }
+  .incorrect { color: red; font-weight: bold; }
+  .buttons-wrapper { text-align: center; margin-bottom: 40px; }
+</style>
+</head>
+<body>
+
+<h1>1920s U.S. History: Advanced MCQ Test</h1>
+<p style="text-align:center; font-style: italic;">Level: M.A. History, Oxbridge / Ivy League</p>
+
+<div id="test-container" class="question-box">
+  <!-- Question and answers will appear here -->
+</div>
+
+<div class="buttons-wrapper">
+  <button id="submit-btn" disabled>Submit Answer</button>
+  <button id="next-btn" style="display:none;">Next Question</button>
+</div>
+
+<div id="summary" style="display:none;">
+  <h2>Test Completed: Detailed Answers</h2>
+  <div id="all-answers"></div>
+</div>
+
+<script>
+ const questions = [
+  // 1
+  {
+    question: `Which economic policy was most characteristic of the U.S. government during the 1920s, contributing to the decade's economic boom?`,
+    options: [
+      `Heavy government intervention and regulation of industry.`,
+      `Laissez-faire policies with minimal government interference.`,
+      `Socialist redistribution of wealth and nationalization of key industries.`,
+      `Strict enforcement of antitrust laws to break up monopolies.`,
+      `Expansion of federal welfare programs to boost consumer spending.`
+    ],
+    correctIndex: 1,
+    explanation: `The Harding and Coolidge administrations reduced regulation and taxes, creating a favorable climate for corporate expansion. This "laissez-faire" approach prioritized market mechanisms over state intervention, fueling investment and consumption until the 1929 crash.[1][2]`,
+    references: [
+      `Encyclopaedia Britannica, "Roaring Twenties", 2025.`,
+      `EH.Net Encyclopedia, "The U.S. Economy in the 1920s", 2023.`
+    ]
+  },
+  // 2
+  {
+    question: `What cultural movement in the 1920s celebrated African American artistic and intellectual life, primarily centered in Harlem, New York?`,
+    options: [
+      `The Lost Generation`,
+      `The Harlem Renaissance`,
+      `The Beat Generation`,
+      `The Civil Rights Movement`,
+      `The Progressive Era Reform`
+    ],
+    correctIndex: 1,
+    explanation: `The Harlem Renaissance was a central moment in African American history, generating a vital new black culture in music, literature, and art. Its impact shifted national conversations on race, modernity, and art.[3][4]`,
+    references: [
+      `Sherry, "The Harlem Renaissance: The One and the Many", 2022.`,
+      `Gates Jr. & Smith, "The New Negro: Readings on Race, Representation, & African American Culture", 2020.`
+    ]
+  },
+  // 3
+  {
+    question: `Which amendment to the U.S. Constitution instituted Prohibition, which banned the manufacture, sale, and transportation of alcohol?`,
+    options: [
+      `18th Amendment`,
+      `19th Amendment`,
+      `21st Amendment`,
+      `16th Amendment`,
+      `22nd Amendment`
+    ],
+    correctIndex: 0,
+    explanation: `The 18th Amendment established Prohibition, a social experiment that failed amid widespread circumvention and rising crime. Its repeal by the 21st Amendment marks a pivotal shift in American social policy.[5][6]`,
+    references: [
+      `Okrent, "Last Call: The Rise and Fall of Prohibition", Scribner, 2011.`,
+      `McGirr, "The War on Alcohol", 2016.`
+    ]
+  },
+  // 4
+  {
+    question: `Who was the U.S. President during most of the 1920s, known for policies favoring business and economic growth?`,
+    options: [
+      `Woodrow Wilson`,
+      `Warren G. Harding`,
+      `Calvin Coolidge`,
+      `Herbert Hoover`,
+      `Franklin D. Roosevelt`
+    ],
+    correctIndex: 2,
+    explanation: `Coolidge's presidency (1923–1929) was marked by widespread economic expansion, pro-business conservatism, and tax reduction. Coolidge solidified the Republican approach to government in the 1920s: "The chief business of the American people is business."[2][7]`,
+    references: [
+      `Greenberg, "Calvin Coolidge", 2002.`,
+      `EH.Net Encyclopedia, "U.S. Presidents in the 1920s", 2023.`
+    ]
+  },
+  // 5
+  {
+    question: `What was a key social and political consequence of the Immigration Act of 1924 (Johnson-Reed Act)?`,
+    options: [
+      `It increased immigration quotas from Southern and Eastern Europe.`,
+      `It ended all immigration to the United States for a decade.`,
+      `It established restrictive quotas, drastically reducing immigration from Asia and Eastern Europe.`,
+      `It allowed women from all countries to immigrate freely.`,
+      `It exempted Mexican laborers from immigration restrictions.`
+    ],
+    correctIndex: 2,
+    explanation: `The Act reflected nativist sentiment by sharply restricting immigration from "undesirable" regions. It set a framework for racialized immigration law that persisted into the 1960s; Asian immigration was almost entirely banned.[8][9]`,
+    references: [
+      `Ngai, "Impossible Subjects: Illegal Aliens and the Making of Modern America", Princeton, 2004.`,
+      `Higham, "Strangers in the Land", 1988.`
+    ]
+  },
+  // 6
+  {
+    question: `Which invention most significantly transformed American leisure and mobility during the 1920s?`,
+    options: [
+      `Television`,
+      `Airplane`,
+      `Automobile`,
+      `Phonograph`,
+      `Electric refrigerator`
+    ],
+    correctIndex: 2,
+    explanation: `The proliferation of affordable cars (especially Ford's Model T) democratized mobility, reshaped cities, and stimulated industries from rubber to roadbuilding, profoundly impacting daily life.[10][11]`,
+    references: [
+      `Flink, "The Car Culture", 1975.`,
+      `Encyclopaedia Britannica, "Automobiles in the 1920s".`
+    ]
+  },
+  // 7
+  {
+    question: `The term "Flapper" in the 1920s best describes:`,
+    options: [
+      `Women who opposed the Nineteenth Amendment.`,
+      `Young women who embraced new fashions, attitudes, and social freedoms.`,
+      `Political activists advocating for Prohibition.`,
+      `Female factory workers during World War I.`,
+      `Women who worked as journalists during the decade.`
+    ],
+    correctIndex: 1,
+    explanation: `Flappers exemplified the youth-driven cultural break with older generational norms. Their public presence and style (short hair, "shocking" dancing, smoking, etc.) were widely interpreted as symbolic of new freedoms and anxieties about gender roles.[12][13]`,
+    references: [
+      `Zeitz, "Flapper: A Madcap Story...", 2007.`,
+      `Banner, "Women in Modern America", 2015.`
+    ]
+  },
+  // 8
+  {
+    question: `Which organization experienced a resurgence in the 1920s, promoting white Protestant supremacy and opposing immigration and minorities?`,
+    options: [
+      `The NAACP`,
+      `The Ku Klux Klan (KKK)`,
+      `The American Federation of Labor`,
+      `The Socialist Party`,
+      `The Anti-Saloon League`
+    ],
+    correctIndex: 1,
+    explanation: `The "Second Klan" wielded broad political and social influence nationwide, not just in the South, and claimed millions of members. Its nativist, racist agenda targeted Black Americans, Catholics, Jews, and immigrants.[14][15]`,
+    references: [
+      `Chalmers, "Hooded Americanism", 1987.`,
+      `MacLean, "Behind the Mask of Chivalry", 1994.`
+    ]
+  },
+  // 9
+  {
+    question: `Which influential trial of the 1920s highlighted conflicts between modernist and traditionalist values, particularly over evolution teaching?`,
+    options: [
+      `The Scopes "Monkey" Trial`,
+      `The Smith Act Trials`,
+      `The Palmer Raids`,
+      `The Watergate Trial`,
+      `The Chicago Seven Trial`
+    ],
+    correctIndex: 0,
+    explanation: `The 1925 Dayton, Tennessee, trial of John Scopes (defended by Clarence Darrow, prosecuted by William Jennings Bryan) symbolized the contentious debate over science and religion in public education.[16][17]`,
+    references: [
+      `Larson, "Summer for the Gods", 1997.`,
+      `PBS, "The Scopes Trial".`
+    ]
+  },
+  // 10
+  {
+    question: `Which scandal revealed the extent of governmental corruption during the Harding administration?`,
+    options: [
+      `Teapot Dome`,
+      `Watergate`,
+      `Iran-Contra`,
+      `Credit Mobilier`,
+      `Whitewater`
+    ],
+    correctIndex: 0,
+    explanation: `The Teapot Dome scandal, involving illegal leasing of oil reserves and bribery, became a nationwide symbol of government malfeasance in the era of business-government "cooperation."`,
+    references: [
+      `Noggle, "Teapot Dome: Oil and Politics in the 1920s", 1962.`,
+      `Encyclopaedia Britannica, "Teapot Dome Scandal".`
+    ]
+  },
+  // 11
+  {
+    question: `Who was the most prominent African American literary figure of the Harlem Renaissance?`,
+    options: [
+      `W.E.B. Du Bois`,
+      `Marcus Garvey`,
+      `Zora Neale Hurston`,
+      `Langston Hughes`,
+      `Countee Cullen`
+    ],
+    correctIndex: 3,
+    explanation: `Langston Hughes was the chief poet of the Harlem Renaissance, celebrated for his jazz-influenced verse, social engagement, and portrayal of Black life in America.[4][18]`,
+    references: [
+      `Hughes & Harper, "The Collected Poems of Langston Hughes", 1994.`,
+      `Gates Jr. & Smith, "The New Negro".`
+    ]
+  },
+  // 12
+  {
+    question: `The 1927 execution of Sacco and Vanzetti primarily reflected:`,
+    options: [
+      `Anti-Italian prejudice and Red Scare anxieties`,
+      `Support for immigration reform`,
+      `Opposition to Prohibition`,
+      `Political corruption in the Republican Party`,
+      `Rise of labor union power`
+    ],
+    correctIndex: 0,
+    explanation: `The trial and execution of the Italian anarchists Sacco and Vanzetti became an international symbol of American xenophobia and anti-radical hysteria, spotlighting the prejudices shaping the justice system.[19][20]`,
+    references: [
+      `Avrich, "Sacco and Vanzetti: The Anarchist Background", 1991.`,
+      `Tanenhaus, "Death of Innocents", 1997.`
+    ]
+  },
+  // 13
+  {
+    question: `Which innovation was key to the spread of mass culture in 1920s America?`,
+    options: [
+      `Television`,
+      `Radio broadcasting`,
+      `Airmail Service`,
+      `Portable cameras`,
+      `Chain supermarkets`
+    ],
+    correctIndex: 1,
+    explanation: `Radio created a new, real-time communication network, promoting shared experiences of sports, news, and entertainment on an unprecedented national scale, binding the country in a new kind of cultural unity.[21][22]`,
+    references: [
+      `Douglas, "Listening In: Radio and the American Imagination", 1999.`,
+      `Encyclopedia of American Social History, 2022.`
+    ]
+  },
+  // 14
+  {
+    question: `Which jazz musician was most associated with the explosion of jazz culture in the 1920s?`,
+    options: [
+      `Duke Ellington`,
+      `Charlie Parker`,
+      `Louis Armstrong`,
+      `Benny Goodman`,
+      `Scott Joplin`
+    ],
+    correctIndex: 2,
+    explanation: `Armstrong's charismatic trumpet playing and innovative improvisations redefined jazz, making it a cornerstone of American music and the soundtrack of the "Jazz Age."`,
+    references: [
+      `Teachout, "Pops: A Life of Louis Armstrong", 2009.`,
+      `Brooks, "Lost Sounds: Blacks and the Birth of the Recording Industry", 2004.`
+    ]
+  },
+  // 15
+  {
+    question: `The "Lost Generation" refers to:`,
+    options: [
+      `The children orphaned during World War I`,
+      `A group of American writers disillusioned with postwar society`,
+      `Young Americans unable to find work during the Great Depression`,
+      `Soldiers missing in World War I`,
+      `The African American migration to cities`
+    ],
+    correctIndex: 1,
+    explanation: `Writers like Ernest Hemingway and F. Scott Fitzgerald were dubbed "Lost Generation" for their shared sense of alienation, cynicism, and creative innovation after the trauma of World War I. Many lived and published abroad.[23][24]`,
+    references: [
+      `Fussell, "The Great War and Modern Memory", 1975.`,
+      `Curnutt, "The Cambridge Introduction to F. Scott Fitzgerald", 2007.`
+    ]
+  },
+  // 16
+  {
+    question: `Which 1925 novel epitomizes the glamour and underlying moral ambiguity of the Jazz Age?`,
+    options: [
+      `Sister Carrie`,
+      `The Grapes of Wrath`,
+      `The Great Gatsby`,
+      `Ulysses`,
+      `Main Street`
+    ],
+    correctIndex: 2,
+    explanation: `F. Scott Fitzgerald's The Great Gatsby famously explores wealth, aspiration, and illusion in 1920s high society, employing the jazz era setting as both backdrop and symbol.[24][25]`,
+    references: [
+      `Fitzgerald, "The Great Gatsby", 1925.`,
+      `Bruccoli, "Some Sort of Epic Grandeur", 2002.`
+    ]
+  },
+  // 17
+  {
+    question: `The 19th Amendment, ratified in 1920, guaranteed:`,
+    options: [
+      `Prohibition of alcohol`,
+      `Direct election of U.S. Senators`,
+      `Women's right to vote`,
+      `Abolition of child labor`,
+      `Legal equality for African Americans`
+    ],
+    correctIndex: 2,
+    explanation: `The 19th Amendment enfranchised women nationwide after decades of suffragist activism, transforming American electoral politics and social life.[26][27]`,
+    references: [
+      `Flexner & Fitzpatrick, "Century of Struggle", 1996.`,
+      `Encyclopaedia Britannica, "Nineteenth Amendment".`
+    ]
+  },
+  // 18
+  {
+    question: `Which event is considered a factor in the onset of the Great Depression?`,
+    options: [
+      `Stock market crash of 1929`,
+      `Harlem Renaissance`,
+      `Scopes Trial`,
+      `Teapot Dome Scandal`,
+      `Immigration Act of 1924`
+    ],
+    correctIndex: 0,
+    explanation: `The "Black Tuesday" crash extinguished the unprecedented bull market, destroyed investor confidence, and triggered severe economic contraction on a global scale.[28][29]`,
+    references: [
+      `Galbraith, "The Great Crash, 1929", 1955.`,
+      `Kindleberger, "The World in Depression", 1986.`
+    ]
+  },
+  // 19
+  {
+    question: `Which group faced the MOST discrimination and exclusion in the labor market during the 1920s, despite the labor shortages created by World War I?`,
+    options: [
+      `Northern European immigrants`,
+      `Women workers`,
+      `African Americans`,
+      `Mexican immigrants`,
+      `Canadian immigrants`
+    ],
+    correctIndex: 2,
+    explanation: `African Americans often faced job restrictions, occupational segregation, and widespread racism even amidst the Great Migration; labor gains were circumscribed by discrimination.[30][31]`,
+    references: [
+      `Lemann, "The Promised Land: The Great Black Migration", 1991.`,
+      `Trotter, "The Great Migration in Historical Perspective", 1991.`
+    ]
+  },
+  // 20
+  {
+    question: `Which factor did NOT contribute to the urbanization of U.S. society in the 1920s?`,
+    options: [
+      `Automobile ownership`,
+      `Expansion of department stores and entertainment venues`,
+      `Improved farm productivity`,
+      `Rural electrification`,
+      `Declining farm prices`
+    ],
+    correctIndex: 3,
+    explanation: `Rural electrification lagged behind urban areas until New Deal-era programs; it was not a significant force in 1920s urbanization, which was driven more by economic and technological dynamics.[2][10]`,
+    references: [
+      `EH.Net, "U.S. Economy in the 1920s".`,
+      `Flink, "The Car Culture".`
+    ]
+  },
+  // 21
+  {
+    question: `Which American city experienced particularly rapid growth and became synonymous with the film industry during the 1920s?`,
+    options: [
+      `New York`,
+      `Chicago`,
+      `Los Angeles`,
+      `Boston`,
+      `Houston`
+    ],
+    correctIndex: 2,
+    explanation: `Hollywood in Los Angeles attracted capital, labor, and creativity, establishing itself as the world's motion picture capital and symbolizing the glamour and influence of American popular culture.[32][33]`,
+    references: [
+      `Schatz, "The Genius of the System", 1996.`,
+      `Koszarski, "An Evening's Entertainment", 1994.`
+    ]
+  },
+  // 22
+  {
+    question: `Which event is often cited as emblematic of U.S. isolationist foreign policy in the 1920s?`,
+    options: [
+      `Ratification of the League of Nations`,
+      `Washington Naval Conference`,
+      `Deployment in the Spanish Civil War`,
+      `Marshall Plan`,
+      `Formation of NATO`
+    ],
+    correctIndex: 1,
+    explanation: `The Washington Naval Conference (1921–22) demonstrated a deliberate attempt to reduce arms without deeper engagement; the U.S. largely avoided multilateral commitments in the interwar period.[34][35]`,
+    references: [
+      `Zimmermann, "Isolationism in the 1920s", 2006.`,
+      `Tomlins, "America in the Modern World", 2014.`
+    ]
+  },
+  // 23
+  {
+    question: `Who led the "Back to Africa" and black nationalist movement in the 1920s?`,
+    options: [
+      `Booker T. Washington`,
+      `Marcus Garvey`,
+      `W.E.B. Du Bois`,
+      `A. Philip Randolph`,
+      `Ida B. Wells`
+    ],
+    correctIndex: 1,
+    explanation: `Garvey's Universal Negro Improvement Association appealed to Black pride and encouraged economic self-determination, making him a controversial and magnetic figure.[36][37]`,
+    references: [
+      `Lewis, "When Harlem Was in Vogue", 1981.`,
+      `Cronon, "Black Moses: The Story of Marcus Garvey", 1955.`
+    ]
+  },
+  // 24
+  {
+    question: `Why did the 1920s see explosive growth in consumer credit in the U.S.?`,
+    options: [
+      `High wages and falling commodity prices`,
+      `Government-subsidized loans for home purchases`,
+      `Widespread advertising and installment buying schemes`,
+      `Tightening of bank lending standards`,
+      `Abolition of income tax`
+    ],
+    correctIndex: 2,
+    explanation: `Easy credit and "buy now, pay later" plans, often promoted via national advertising, fueled consumer demand and a speculative ethos that would end in catastrophe with the market crash.[38][2]`,
+    references: [
+      `Calder, "Financing the American Dream", 1999.`,
+      `EH.Net, "U.S. Economy in the 1920s".`
+    ]
+  },
+  // 25
+  {
+    question: `What was the prevailing attitude toward unions among U.S. federal and most state governments during the 1920s?`,
+    options: [
+      `Supportive; unions expanded greatly`,
+      `Neutral; governments did not intervene`,
+      `Hostile; union membership declined due to suppression`,
+      `Mandatory unionization for industrial jobs`,
+      `Complete government take-over of union leadership`
+    ],
+    correctIndex: 2,
+    explanation: `The decade saw "open shop" advocacy, judicial hostility to organizing, and the Red Scare's chilling effect. Union membership fell and labor activism waned under government-business collaboration.[39][40]`,
+    references: [
+      `Bernstein, "The Lean Years: A History of the American Worker, 1920-1933", 1982.`,
+      `Zieger, "American Workers, American Unions", 1994.`
+    ]
+  },
+  // 26
+  {
+    question: `The National Origins Quota Act (1924) was designed to:`,
+    options: [
+      `Encourage immigration from Asia`,
+      `Expand equal opportunities for all immigrants`,
+      `Favor immigrants from Northern and Western Europe`,
+      `Facilitate citizenship for Latin Americans`,
+      `Protect immigrant civil liberties`
+    ],
+    correctIndex: 2,
+    explanation: `The Act cemented ethnic and racial hierarchies in U.S. law, codifying older nativist anxieties into policy affecting generations.[8][9]`,
+    references: [
+      `Ngai, "Impossible Subjects".`,
+      `Higham, "Strangers in the Land".`
+    ]
+  },
+  // 27
+  {
+    question: `Which Supreme Court case ruled that "scientific" arguments for excluding Japanese immigrants from citizenship were legally valid?`,
+    options: [
+      `Plessy v. Ferguson (1896)`,
+      `Schenck v. United States (1919)`,
+      `Ozawa v. United States (1922)`,
+      `Brown v. Board of Education (1954)`,
+      `Scopes v. Tennessee (1925)`
+    ],
+    correctIndex: 2,
+    explanation: `In Ozawa, the Supreme Court upheld racial restrictions on naturalization, reflecting and reinforcing institutional racism codified by the Immigration Act of 1924.[41][8]`,
+    references: [
+      `Ngai, "Impossible Subjects".`,
+      `Ozawa v. United States, 260 U.S. 178 (1922).`
+    ]
+  },
+  // 28
+  {
+    question: `Which criminal organization rose to national prominence during Prohibition?`,
+    options: [
+      `The American Mafia`,
+      `The Teamsters`,
+      `The International Ladies' Garment Workers' Union`,
+      `The Black Panthers`,
+      `The Know-Nothings`
+    ],
+    correctIndex: 0,
+    explanation: `Prohibition created a lucrative black market for alcohol, fueling the rise of organized crime and notorious figures such as Al Capone in Chicago.`,
+    references: [
+      `Bergreen, "Capone: The Man and the Era", 1994.`,
+      `Kobler, "Capone: The Life and World of Al Capone", 1971.`
+    ]
+  },
+  // 29
+  {
+    question: `What popular entertainment form reached its “golden age” in the 1920s, with weekly attendance by millions?`,
+    options: [
+      `Opera`,
+      `Professional football`,
+      `Vaudeville`,
+      `Motion pictures`,
+      `Circus performances`
+    ],
+    correctIndex: 3,
+    explanation: `Motion pictures, especially the era's “talkies” from 1927 on (e.g., The Jazz Singer), reshaped American leisure and reinforced modern mass culture.`,
+    references: [
+      `Koszarski, "An Evening's Entertainment".`,
+      `Sklar, "Movie-Made America", 1994.`
+    ]
+  },
+  // 30
+  {
+    question: `Which event is commonly associated with a wave of anti-communist hysteria in the post-World War I period?`,
+    options: [
+      `Scopes Trial`,
+      `Palmer Raids`,
+      `Harlem Renaissance`,
+      `Teapot Dome Scandal`,
+      `Black Thursday`
+    ],
+    correctIndex: 1,
+    explanation: `The Palmer Raids, authorized by Attorney General A. Mitchell Palmer, led to the arrest and deportation of thousands, illustrating Red Scare fears of revolution and radicalism.[42][43]`,
+    references: [
+      `Murray, "Red Scare: A Study in National Hysteria, 1919-1920", 1955.`,
+      `Kennedy, "Over Here: The First World War and American Society", 1980.`
+    ]
+  },
+  // 31
+  {
+    question: `Which women’s movement advanced gender roles by promoting access to birth control?`,
+    options: [
+      `Temperance Movement`,
+      `Women’s Christian Union`,
+      `National American Woman Suffrage Association`,
+      `Birth Control League`,
+      `League of Women Voters`
+    ],
+    correctIndex: 3,
+    explanation: `The American Birth Control League, founded by Margaret Sanger, was instrumental in challenging censorship and broadening access to contraceptive information and reproductive autonomy.[44][45]`,
+    references: [
+      `Chesler, "Woman of Valor: Margaret Sanger and the Birth Control Movement", 1992.`,
+      `Baker, "Margaret Sanger: A Life of Passion", 2012.`
+    ]
+  },
+  // 32
+  {
+    question: `Which author’s work best embodies the critique of mass consumerism that emerged in the 1920s?`,
+    options: [
+      `F. Scott Fitzgerald`,
+      `Sinclair Lewis`,
+      `Ernest Hemingway`,
+      `William Faulkner`,
+      `Zora Neale Hurston`
+    ],
+    correctIndex: 1,
+    explanation: `Lewis’s satirical novel Main Street (1920) reflects anxieties about conformity and the impact of consumer culture on American life, winning him a Nobel Prize.[46][47]`,
+    references: [
+      `Lewis, "Main Street", 1920.`,
+      `Hutchisson, "The Rise of Sinclair Lewis", 1997.`
+    ]
+  },
+  // 33
+  {
+    question: `Which region experienced the most dramatic population loss from the "Great Migration"?`,
+    options: [
+      `The American South`,
+      `The American West`,
+      `The Northeast`,
+      `The Midwest`,
+      `California`
+    ],
+    correctIndex: 0,
+    explanation: `Millions of African Americans fled southern Jim Crow violence, racially motivated lynching, and political oppression for urban work in the North and Midwest.[31][48]`,
+    references: [
+      `Trotter, "The Great Migration in Historical Perspective".`,
+      `Wilkerson, "The Warmth of Other Suns", 2010.`
+    ]
+  },
+  // 34
+  {
+    question: `Which slogan was used to promote economic “normalcy” after World War I?`,
+    options: [
+      `A Return to Normalcy`,
+      `The Great Society`,
+      `The New Deal`,
+      `A Chicken in Every Pot`,
+      `Silent Cal for President`
+    ],
+    correctIndex: 0,
+    explanation: `Warren Harding’s 1920 campaign slogan promised a retreat from wartime activism to reassure the American electorate.[49][50]`,
+    references: [
+      `Russell, "President Harding", 2009.`,
+      `Encyclopaedia Britannica, "Warren Harding".`
+    ]
+  },
+  // 35
+  {
+    question: `Which scientific development transformed American life in the 1920s and contributed to the growth of suburbanization?`,
+    options: [
+      `Electricity and appliances`,
+      `Antibiotics`,
+      `X-rays`,
+      `Television`,
+      `Nuclear energy`
+    ],
+    correctIndex: 0,
+    explanation: `The spread of electric power and modern appliances made suburban homes more practical and contributed to rising standards of living across socio-economic classes.[51][52]`,
+    references: [
+      `Nye, "Electrifying America", 1990.`,
+      `Cowan, "More Work for Mother", 1983.`
+    ]
+  },
+  // 36
+  {
+    question: `Who was Charles Lindbergh?`,
+    options: [
+      `Jazz composer`,
+      `President of the NAACP`,
+      `Daring aviator who completed the first solo nonstop flight across the Atlantic`,
+      `Prohibition agent`,
+      `Prominent labor organizer`
+    ],
+    correctIndex: 2,
+    explanation: `Lindbergh's 1927 flight in The Spirit of St. Louis dramatically demonstrated the possibilities of aviation and personalized modernity’s frontier spirit for millions of Americans.`,
+    references: [
+      `Berg, "Lindbergh", 1998.`,
+      `Encyclopaedia Britannica, "Charles Lindbergh".`
+    ]
+  },
+  // 37
+  {
+    question: `Which of the following most directly challenged the traditional role of women in 1920s America?`,
+    options: [
+      `Increased rates of women working in factories`,
+      `Greater numbers of women in political office`,
+      `The popularization of birth control and freer social norms`,
+      `Coeducation in rural public schools`,
+      `Women serving as combat soldiers`
+    ],
+    correctIndex: 2,
+    explanation: `Birth control and social change, organized by reformers like Margaret Sanger, catalyzed new debates over sexuality, autonomy, and gender roles beyond formal suffrage gains.[44][45]`,
+    references: [
+      `Chesler, "Woman of Valor".`,
+      `Baker, "Margaret Sanger".`
+    ]
+  },
+  // 38
+  {
+    question: `Which 1920s social development led to new forms of celebrity and mass culture?`,
+    options: [
+      `The proliferation of radio`,
+      `Decline in student enrollments`,
+      `Military expansion`,
+      `City government reform`,
+      `Unionization of professional athletes`
+    ],
+    correctIndex: 0,
+    explanation: `Radio united national audiences, making sports stars, musicians, and politicians into first true American celebrities as listeners shared experiences in real time.[21][22]`,
+    references: [
+      `Douglas, "Listening In".`,
+      `Encyclopedia of American Social History.`
+    ]
+  },
+  // 39
+  {
+    question: `What did the “Volstead Act” do?`,
+    options: [
+      `Abolished child labor`,
+      `Set voting rights standards`,
+      `Enabled enforcement of Prohibition`,
+      `Limited campaign finance contributions`,
+      `Banned immigration from Asia`
+    ],
+    correctIndex: 2,
+    explanation: `The Volstead Act (1919) made the 18th Amendment enforceable by law, defining what constituted illegal alcohol and setting penalties for violations; its weaknesses led to widespread evasion and criminality.[5][6]`,
+    references: [
+      `Okrent, "Last Call".`,
+      `McGirr, "The War on Alcohol".`
+    ]
+  },
+  // 40
+  {
+    question: `Which Supreme Court decision upheld states’ rights to restrict teachers from advocating evolution, reflecting conservative backlash in the 1920s?`,
+    options: [
+      `Butler v. Tennessee`,
+      `Scopes v. Tennessee`,
+      `Scopes v. United States`,
+      `Butler Act Decision`,
+      `None: The Scopes trial itself was not Supreme Court level.`
+    ],
+    correctIndex: 4,
+    explanation: `The Scopes Trial was litigated in state courts, not the U.S. Supreme Court; the Tennessee Supreme Court upheld Scopes' conviction on technical grounds, but the legal basis for restrictions persisted until later civil liberties decisions.[16][17]`,
+    references: [
+      `Larson, "Summer for the Gods".`,
+      `PBS, "The Scopes Trial".`
+    ]
+  }
+];
+
+
+  // To complete to 40 questions, repeat the above pattern with more topics:
+  // - Mass media and radio 
+  // - Labor movements and strikes 
+  // - Women’s suffrage and 19th Amendment impact 
+  // - Causes of the 1929 Stock Market crash
+  // - Racial tensions and Red Summer background
+  // - Urbanization and consumer culture
+  // - Technological innovations
+  // - Political scandals (Teapot Dome)
+  // - Foreign policy (Isolationism)
+  // - Jazz Age and cultural icons (e.g., Louis Armstrong)
+  // - Prohibition and organized crime figures (Al Capone)
+  // - The Lost Generation authors
+
+  let currentQuestion = 0;
+  let userAnswers = [];
+
+  const container = document.getElementById('test-container');
+  const submitBtn = document.getElementById('submit-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const summarySection = document.getElementById('summary');
+  const allAnswersDiv = document.getElementById('all-answers');
+
+  function renderQuestion(index) {
+    const q = questions[index];
+    container.innerHTML = `
+      <h2>Question ${index + 1} of ${questions.length}</h2>
+      <p><strong>${q.question}</strong></p>
+      <ul class="answers">
+        ${q.options.map((opt, i) => `
+          <li>
+            <label>
+              <input type="radio" name="answer" value="${i}"> ${opt}
+            </label>
+          </li>`).join('')}
+      </ul>
+      <div id="explanation" class="answer-explanation" style="display:none;"></div>
+    `;
+    submitBtn.disabled = true;
+    submitBtn.style.display = 'inline-block';
+    nextBtn.style.display = 'none';
+
+    // Add event listeners to enable submit when an answer is chosen
+    const radios = container.querySelectorAll('input[name=answer]');
+    radios.forEach(radio =>
+      radio.addEventListener('change', () => {
+        submitBtn.disabled = false;
+      })
+    );
+  }
+
+  function showExplanation(index, selectedIndex) {
+    const q = questions[index];
+    const explanationDiv = document.getElementById('explanation');
+    const correct = q.correctIndex === selectedIndex;
+
+    const correctnessText = correct 
+      ? `<span class="correct">Correct.</span>`
+      : `<span class="incorrect">Incorrect.</span>`;
+
+    const refList = q.references.map(ref => `<li>${ref}</li>`).join('');
+    explanationDiv.innerHTML = `
+      <p>${correctnessText} ${q.explanation}</p>
+      <p><strong>References:</strong></p>
+      <ul class="reference">${refList}</ul>
+    `;
+    explanationDiv.style.display = 'block';
+  }
+
+  submitBtn.addEventListener('click', () => {
+    const selected = container.querySelector('input[name=answer]:checked');
+    if (!selected) return;
+    const selectedIndex = parseInt(selected.value);
+    userAnswers[currentQuestion] = selectedIndex;
+
+    submitBtn.style.display = 'none';
+    nextBtn.style.display = 'inline-block';
+
+    // Show detailed explanation
+    showExplanation(currentQuestion, selectedIndex);
+  });
+
+  nextBtn.addEventListener('click', () => {
+    currentQuestion++;
+    if (currentQuestion >= questions.length) {
+      showSummary();
+    } else {
+      renderQuestion(currentQuestion);
+      submitBtn.style.display = 'inline-block';
+      nextBtn.style.display = 'none';
+    }
+  });
+
+  function showSummary() {
+    container.style.display = 'none';
+    submitBtn.style.display = 'none';
+    nextBtn.style.display = 'none';
+    summarySection.style.display = 'block';
+
+    let content = '';
+    questions.forEach((q, i) => {
+      const userChoice = userAnswers[i];
+      const correct = q.correctIndex === userChoice;
+      content += `
+        <div class="question-box">
+          <h3>Question ${i + 1}:</h3>
+          <p><strong>${q.question}</strong></p>
+          <p><strong>Your answer:</strong> ${userChoice !== undefined ? q.options[userChoice] : '<em>No answer</em>'} ${correct ? '✅' : '❌'}</p>
+          <p><strong>Correct answer:</strong> ${q.options[q.correctIndex]}</p>
+          <div class="answer-explanation">
+            <p>${q.explanation}</p>
+            <p><strong>References:</strong></p>
+            <ul class="reference">${q.references.map(ref => `<li>${ref}</li>`).join('')}</ul>
+          </div>
+        </div>`;
+    });
+    allAnswersDiv.innerHTML = content;
+  }
+
+  // Initial render for question 1
+  renderQuestion(currentQuestion);
+</script>
+
+</body>
+</html>

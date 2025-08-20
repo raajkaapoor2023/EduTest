@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QCM – Antoine Culioli, Linguistique énonciative (Tome 2)</title>
+  <style>
+    :root{
+      --bg:#0f172a;           /* slate-900 */
+      --panel:#111827;        /* gray-900 */
+      --panel-2:#0b1220;      /* deeper */
+      --muted:#94a3b8;        /* slate-400 */
+      --text:#e5e7eb;         /* gray-200 */
+      --accent:#60a5fa;       /* blue-400 */
+      --accent-2:#22d3ee;     /* cyan-400 */
+      --good:#34d399;         /* green-400 */
+      --bad:#f87171;          /* red-400 */
+      --warn:#fbbf24;         /* amber-400 */
+      --card:#0b1220;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue";margin:0;color:var(--text);background:radial-gradient(1200px 800px at 10% -10%, #1e293b 0%, #0b1220 45%, #050a16 100%)}
+    header{position:sticky;top:0;background:linear-gradient(180deg,#0b1220,rgba(11,18,32,.6));backdrop-filter:blur(10px);padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.06);z-index:10}
+    h1{margin:0;font-size: clamp(1.2rem, 1.4rem + 1vw, 2rem);letter-spacing:.3px}
+    .subtitle{color:var(--muted);font-size:.95rem}
+    .wrap{display:grid;grid-template-columns:340px 1fr;gap:18px;max-width:1200px;margin:22px auto;padding:0 18px}
+    @media (max-width: 1000px){.wrap{grid-template-columns:1fr}}
+
+    /* Left panel: dashboard */
+    .dashboard{background:linear-gradient(180deg, #0f172a 0%, #0b1220 100%);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+    .section-title{font-size:.9rem;color:var(--muted);margin:8px 0 6px 0;text-transform:uppercase;letter-spacing:.08em}
+    .metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .metric{background:linear-gradient(180deg,#101827,#0c1322);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:12px}
+    .metric .label{font-size:.8rem;color:var(--muted)}
+    .metric .value{font-size:1.3rem;font-weight:700;margin-top:6px}
+    .row{display:flex;gap:10px;align-items:center;margin:8px 0}
+    .row input[type="number"], .row select{flex:1;background:#0b1220;color:var(--text);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px}
+    .toggle{display:flex;align-items:center;gap:10px}
+    .toggle input{appearance:none;width:46px;height:26px;background:#1f2a44;border-radius:999px;position:relative;outline:none;transition:.2s;border:1px solid rgba(255,255,255,.08)}
+    .toggle input:checked{background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+    .toggle input:before{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:.2s}
+    .toggle input:checked:before{left:23px}
+
+    button{cursor:pointer;border:none;border-radius:12px;padding:12px 14px;background:linear-gradient(180deg, #1e293b, #0f172a);color:var(--text);box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.08);transition:.2s}
+    button:hover{transform:translateY(-1px);box-shadow:0 14px 32px rgba(0,0,0,.4)}
+    button.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#041019;font-weight:700}
+    button.warn{background:linear-gradient(90deg,#f59e0b,#fbbf24);color:#1b1304;font-weight:700}
+    button.ghost{background:transparent;border:1px dashed rgba(255,255,255,.18)}
+
+    .question-card{background:linear-gradient(180deg,#0f172a 0%, #0b1220 100%);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+    .qtext{font-size:1.05rem;line-height:1.5}
+    .answers{margin-top:12px;display:grid;gap:10px}
+    .option{display:flex;gap:10px;align-items:flex-start;background:#0b1220;border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:10px;transition:.15s}
+    .option input{margin-top:3px}
+    .option:hover{border-color:var(--accent);background:linear-gradient(180deg,#0c1322,#0b1220)}
+    .option.correct{border-color:var(--good)}
+    .option.incorrect{border-color:var(--bad)}
+    .explain{margin-top:12px;padding:12px;border-left:4px solid var(--accent);background:#0b1220;border-radius:10px}
+
+    .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .nav{display:flex;justify-content:space-between;gap:10px;margin-top:14px}
+
+    .progress{height:10px;background:#0b1220;border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
+    .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .2s}
+
+    .grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin-top:10px}
+    .cell{height:28px;border-radius:7px;background:#0b1220;border:1px solid rgba(255,255,255,.08);font-size:.8rem;display:flex;align-items:center;justify-content:center;color:var(--muted);cursor:pointer}
+    .cell.answered{background:rgba(96,165,250,.15);color:var(--text);border-color:rgba(96,165,250,.4)}
+    .cell.skipped{background:rgba(251,191,36,.12);color:#fbbf24;border-color:rgba(251,191,36,.4)}
+    .cell.current{outline:2px solid var(--accent)}
+
+    .panel{background:linear-gradient(180deg,#0f172a,#0b1220);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:18px}
+    .footnote{color:var(--muted);font-size:.85rem}
+
+    .results{margin-top:16px}
+    .result-item{background:#0b1220;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;margin:10px 0}
+    .result-item h4{margin:0 0 6px 0}
+    .tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:.75rem;margin-right:8px}
+    .tag.ok{background:rgba(52,211,153,.15);color:var(--good);border:1px solid rgba(52,211,153,.4)}
+    .tag.ko{background:rgba(248,113,113,.12);color:var(--bad);border:1px solid rgba(248,113,113,.4)}
+    .muted{color:var(--muted)}
+    .kbd{display:inline-block;border:1px solid rgba(255,255,255,.18);padding:2px 6px;border-radius:6px;background:#0b1220;color:var(--text);font-size:.75rem}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>QCM — Antoine Culioli, <em>Linguistique énonciative</em> (Tome 2)</h1>
+    <div class="subtitle">Niveau Ivy League / Oxbridge — 50 questions. Aléa des items et des séquences. Navigation « Précédent / Suivant », saut des questions, validation à tout moment.</div>
+  </header>
+
+  <main class="wrap">
+    <!-- DASHBOARD / SETTINGS -->
+    <aside class="dashboard">
+      <div class="section-title">Paramètres</div>
+      <div class="row">
+        <label for="count" class="muted" style="min-width:140px">Nombre de questions</label>
+        <select id="count">
+          <option value="50" selected>50</option>
+          <option value="40">40</option>
+          <option value="30">30</option>
+          <option value="20">20</option>
+          <option value="10">10</option>
+        </select>
+      </div>
+      <div class="row toggle"><label for="shuffleQ" class="muted" style="min-width:140px">Ordre aléatoire</label><input id="shuffleQ" type="checkbox" checked></div>
+      <div class="row toggle"><label for="shuffleA" class="muted" style="min-width:140px">Choix aléatoires</label><input id="shuffleA" type="checkbox" checked></div>
+      <div class="row"><button id="start" class="primary">Lancer / Recommencer</button><button id="reset" class="ghost">Réinitialiser</button></div>
+
+      <div class="section-title">Progression</div>
+      <div class="metrics">
+        <div class="metric"><div class="label">Question</div><div class="value" id="m-q">0/0</div></div>
+        <div class="metric"><div class="label">Répondues</div><div class="value" id="m-ans">0</div></div>
+        <div class="metric"><div class="label">Sautées</div><div class="value" id="m-skip">0</div></div>
+        <div class="metric"><div class="label">Précision</div><div class="value" id="m-acc">—</div></div>
+        <div class="metric"><div class="label">Score</div><div class="value" id="m-score">0</div></div>
+        <div class="metric"><div class="label">Temps</div><div class="value" id="m-time">00:00</div></div>
+      </div>
+
+      <div class="section-title">Carte des items</div>
+      <div id="grid" class="grid"></div>
+
+      <div class="section-title">Aide</div>
+      <div class="panel footnote">
+        <p><span class="kbd">←</span> / <span class="kbd">→</span> : naviguer — <span class="kbd">S</span> : sauter — <span class="kbd">V</span> : valider — <span class="kbd">R</span> : recommencer.</p>
+        <p>Les explications détaillées et les références apparaissent après validation.</p>
+      </div>
+    </aside>
+
+    <!-- MAIN QUESTION AREA -->
+    <section>
+      <div class="question-card">
+        <div class="progress" aria-hidden="true"><div class="bar" id="bar"></div></div>
+        <h2 id="qtitle" style="margin:12px 0 4px 0">Bienvenue</h2>
+        <div class="qtext" id="qtext">Choisissez vos paramètres puis cliquez sur « Lancer / Recommencer ».</div>
+        <div class="answers" id="answers"></div>
+        <div class="nav">
+          <div class="controls">
+            <button id="prev">← Précédent</button>
+            <button id="skip" class="warn">Sauter</button>
+            <button id="next">Suivant →</button>
+          </div>
+          <div class="controls">
+            <button id="validate" class="primary">Valider</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel results" id="results" hidden>
+        <h3>Résultats & rétroaction détaillée</h3>
+        <p class="footnote">Les références entre parenthèses renvoient à : Antoine Culioli, <em>Linguistique énonciative</em>, Tome 1 (Paris : 2000), avec pagination indicative au sein du corpus étudié.</p>
+        <div id="resultsList"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    /**
+     * BANQUE DE QUESTIONS (50 items)
+     * Chaque item : { id, q, options:[{t, ok}], explain, ref }
+     * NB : Les formulations et références sont construites à partir du contenu du document source ;
+     * les pages indiquées sont celles citées dans l'extrait fourni.
+     */
+    const BANK = [
+      {id:1,q:"Comment Culioli définit-il une opération énonciative ?",
+        options:[
+          {t:"Un mécanisme cognitif de construction du sens", ok:true},
+          {t:"Une transformation purement phonologique", ok:false},
+          {t:"Une règle syntaxique universelle", ok:false},
+          {t:"Une procédure grammaticale figée", ok:false}
+        ],
+        explain:"Les opérations énonciatives sont des mécanismes cognitifs par lesquels le sujet parlant construit le sens, via des représentations et des repérages.",
+        ref:"Culioli, 2000, p. 50–55"},
+      {id:2,q:"Quel est le rôle du repérage dans la théorie de l'énonciation ?",
+        options:[
+          {t:"Établir des relations entre éléments linguistiques et repères contextuels", ok:true},
+          {t:"Identifier les morphèmes", ok:false},
+          {t:"Localiser les phonèmes", ok:false},
+          {t:"Mesurer la fréquence lexicale", ok:false}
+        ],
+        explain:"Le repérage situe les éléments dans un espace de représentation selon des coordonnées temporelles, spatiales ou discursives.",
+        ref:"Culioli, 2000, p. 18, 21–22"},
+      {id:3,q:"La prédication, chez Culioli, implique :",
+        options:[
+          {t:"Une mise en relation entre un repère et une propriété", ok:true},
+          {t:"Une relation sujet–verbe au sens étroit seulement", ok:false},
+          {t:"Une transformation morphologique", ok:false},
+          {t:"Une opération sémantique dépourvue de repère", ok:false}
+        ],
+        explain:"La prédication relie un repère (R) à une propriété (P) dans un domaine notionnel.",
+        ref:"Culioli, 2000, p. 12"},
+      {id:4,q:"Qu'appelle-t-on ‘domaine notionnel’ ?",
+        options:[
+          {t:"Un espace de représentation mentale structuré", ok:true},
+          {t:"Un champ lexical usuel", ok:false},
+          {t:"Un corpus d'occurrences", ok:false},
+          {t:"Un dictionnaire des concepts", ok:false}
+        ],
+        explain:"Le domaine notionnel est l'espace structuré où s'inscrivent les opérations énonciatives qui produisent du sens.",
+        ref:"Culioli, 2000, p. 15"},
+      {id:5,q:"Fonction du repère dans la prédication :",
+        options:[
+          {t:"Point d'ancrage auquel on attribue une propriété", ok:true},
+          {t:"Marqueur exclusif de temporalité", ok:false},
+          {t:"Identifiant du locuteur seulement", ok:false},
+          {t:"Déterminant de la classe grammaticale", ok:false}
+        ],
+        explain:"Le repère est l'élément auquel on attribue la propriété prédicative.",
+        ref:"Culioli, 2000, p. 18"},
+      {id:6,q:"Comment sont distingués les niveaux de représentation ?",
+        options:[
+          {t:"Par leur degré d'abstraction (du linguistique au cognitif)", ok:true},
+          {t:"Par leur fréquence d'usage", ok:false},
+          {t:"Par leur origine étymologique", ok:false},
+          {t:"Par leur longueur moyenne", ok:false}
+        ],
+        explain:"Les niveaux sont hiérarchisés selon un gradient d'abstraction.",
+        ref:"Culioli, 2000, p. 21"},
+      {id:7,q:"Repérage vs référenciation :",
+        options:[
+          {t:"Le repérage concerne les relations internes; la référenciation, les relations externes", ok:true},
+          {t:"Le repérage est universel; la référenciation, contextuelle", ok:false},
+          {t:"Le repérage est phonologique; la référenciation, grammaticale", ok:false},
+          {t:"Le repérage est fixe; la référenciation, variable", ok:false}
+        ],
+        explain:"Le repérage structure les relations internes du système de représentation; la référenciation relie le signe à des entités du monde.",
+        ref:"Culioli, 2000, p. 22"},
+      {id:8,q:"Rôle des invariants :",
+        options:[
+          {t:"Servir de base aux variations dans les opérations énonciatives", ok:true},
+          {t:"Fixer les règles morphosyntaxiques", ok:false},
+          {t:"Définir des relations phonologiques", ok:false},
+          {t:"Assurer la fréquence lexicale", ok:false}
+        ],
+        explain:"Les invariants sont des éléments stables sur lesquels opèrent les variations.",
+        ref:"Culioli, 2000, p. 35, 60–70"},
+      {id:9,q:"Qu'est-ce qu'un repère ?",
+        options:[
+          {t:"Un point de référence dans un domaine notionnel", ok:true},
+          {t:"Un concept phonétique", ok:false},
+          {t:"Une règle syntaxique universelle", ok:false},
+          {t:"Un morphème lié", ok:false}
+        ],
+        explain:"Le repère situe les éléments dans l'espace de représentation.",
+        ref:"Culioli, 2000, p. 40"},
+      {id:10,q:"Variation linguistique selon Culioli :",
+        options:[
+          {t:"Résulte d'opérations énonciatives sur des invariants", ok:true},
+          {t:"Suit des règles universelles immuables", ok:false},
+          {t:"Est déterminée par la seule phonologie", ok:false},
+          {t:"Dépend d'une taxinomie lexicale", ok:false}
+        ],
+        explain:"La variation est produite par des opérations qui modulent des invariants au sein de domaines notionnels.",
+        ref:"Culioli, 2000, p. 50"},
+      {id:11,q:"Rôle des représentations mentales :",
+        options:[
+          {t:"Base des opérations énonciatives", ok:true},
+          {t:"Fixation de la syntaxe", ok:false},
+          {t:"Définition des relations phonologiques", ok:false},
+          {t:"Institution de règles prescriptives", ok:false}
+        ],
+        explain:"Les représentations mentales modélisent les relations entre éléments linguistiques et référents.",
+        ref:"Culioli, 2000, p. 55"},
+      {id:12,q:"Invariant linguistique :",
+        options:[
+          {t:"Concept stable utilisé dans les opérations énonciatives", ok:true},
+          {t:"Règle syntaxique universelle", ok:false},
+          {t:"Élément grammatical purement fixe et contextuel", ok:false},
+          {t:"Point de référence spatial", ok:false}
+        ],
+        explain:"L'invariant est un concept stable servant de support aux variations.",
+        ref:"Culioli, 2000, p. 60"},
+      {id:13,q:"Sens vs signification chez Culioli :",
+        options:[
+          {t:"Le sens est contextuel; la signification est liée aux invariants", ok:true},
+          {t:"Le sens est universel; la signification est contextuelle", ok:false},
+          {t:"Le sens est phonologique; la signification est grammaticale", ok:false},
+          {t:"Le sens est figé; la signification est variable", ok:false}
+        ],
+        explain:"Le sens dépend des opérations et du contexte; la signification renvoie aux invariants.",
+        ref:"Culioli, 2000, p. 65"},
+      {id:14,q:"Construction du sens : rôle des invariants",
+        options:[
+          {t:"Base des opérations énonciatives qui construisent le sens", ok:true},
+          {t:"Fixation des structures syntaxiques", ok:false},
+          {t:"Définition des relations phonologiques", ok:false},
+          {t:"Règlement de la fréquence d'usage", ok:false}
+        ],
+        explain:"Les invariants soutiennent les opérations qui produisent les valeurs contextuelles.",
+        ref:"Culioli, 2000, p. 70"},
+      {id:15,q:"Triplet fondamental de l'énonciation (structure énonciative) :",
+        options:[
+          {t:"S₀ (situation), R₀ (locuteur), T₀ (temps)", ok:true},
+          {t:"SV, SN, CP", ok:false},
+          {t:"Sujet, verbe, complément", ok:false},
+          {t:"Forme, substance, matière", ok:false}
+        ],
+        explain:"Le triplet S₀–R₀–T₀ cadre l'acte d'énonciation.",
+        ref:"Doc. structure formelle"},
+      {id:16,q:"Quelle opération note-t-on (R → P) ?",
+        options:[
+          {t:"Opération de prédication", ok:true},
+          {t:"Opération de négation", ok:false},
+          {t:"Opération de quantification", ok:false},
+          {t:"Opération de reformulation", ok:false}
+        ],
+        explain:"(R → P) attribue une propriété P à un repère R.",
+        ref:"Doc. opérations énonciatives"},
+      {id:17,q:"Quel est l'effet de l'opération de modalisation (M) ?",
+        options:[
+          {t:"Marquer l'attitude du sujet parlant vis-à-vis de P", ok:true},
+          {t:"Modifier la phonation", ok:false},
+          {t:"Réordonner la syntaxe", ok:false},
+          {t:"Remplacer le repère", ok:false}
+        ],
+        explain:"La modalisation module la valeur épistémique ou appréciative de la prédication.",
+        ref:"Doc. opérations énonciatives"},
+      {id:18,q:"Quel couple illustre la distinction aspectuelle ?",
+        options:[
+          {t:"‘Il a fini’ vs ‘Il finissait’", ok:true},
+          {t:"‘Le chat’ vs ‘les chats’", ok:false},
+          {t:"‘Ici’ vs ‘là-bas’", ok:false},
+          {t:"‘Rouge’ vs ‘bleu’", ok:false}
+        ],
+        explain:"Le contraste accompli / inaccompli illustre une variation aspectuelle.",
+        ref:"Doc. catégories et marqueurs (aspect)"},
+      {id:19,q:"La deixis est la relation entre :",
+        options:[
+          {t:"R₀ et S₀ (locuteur et situation d'énonciation)", ok:true},
+          {t:"R₁ et D₀ seulement", ok:false},
+          {t:"SN et SV", ok:false},
+          {t:"Forme et substance", ok:false}
+        ],
+        explain:"Les déictiques (‘ici’, ‘maintenant’) indexent R₀ dans S₀.",
+        ref:"Doc. structure formelle / déixis"},
+      {id:20,q:"Quelle structure note-t-on SN + SV ?",
+        options:[
+          {t:"Structure prédicative (repère + propriété)", ok:true},
+          {t:"Structure modale", ok:false},
+          {t:"Structure argumentative", ok:false},
+          {t:"Structure de reformulation", ok:false}
+        ],
+        explain:"SN joue le rôle de repère; SV exprime la propriété.",
+        ref:"Doc. structures formelles"},
+      {id:21,q:"La fonction de quantification (Q) évalue :",
+        options:[
+          {t:"La quantité associée au repère", ok:true},
+          {t:"La hauteur tonale", ok:false},
+          {t:"La polarité illocutoire", ok:false},
+          {t:"La valence verbale", ok:false}
+        ],
+        explain:"La quantification introduit un évaluation de cardinalité ou mesure.",
+        ref:"Doc. opérations énonciatives (Q)"},
+      {id:22,q:"Quelle est la portée de l'opération de négation (¬P) ?",
+        options:[
+          {t:"Annuler ou contester la propriété attribuée", ok:true},
+          {t:"Supprimer le repère", ok:false},
+          {t:"Changer la catégorie lexicale", ok:false},
+          {t:"Renforcer l'argumentation", ok:false}
+        ],
+        explain:"¬P invalide la propriété dans le cadre du repérage donné.",
+        ref:"Doc. opérations énonciatives (¬P)"},
+      {id:23,q:"La progression thématique consiste à :",
+        options:[
+          {t:"Développer le thème de manière cohérente au fil du discours", ok:true},
+          {t:"Accumuler des anaphores sans repère", ok:false},
+          {t:"Réduire la prédication à P", ok:false},
+          {t:"Neutraliser la modalité", ok:false}
+        ],
+        explain:"La progression thématique organise l'information (thème → rhème).",
+        ref:"Doc. dynamique du discours"},
+      {id:24,q:"Quelle étiquette convient à ‘C’est Marie qui a gagné’ ?",
+        options:[
+          {t:"Focalisation (focus)", ok:true},
+          {t:"Topicalisation", ok:false},
+          {t:"Subordination", ok:false},
+          {t:"Coordination", ok:false}
+        ],
+        explain:"La clivée met en relief un constituant focal.",
+        ref:"Doc. dynamique / focus"},
+      {id:25,q:"La polyphonie énonciative renvoie à :",
+        options:[
+          {t:"La présence de plusieurs voix ou points de vue", ok:true},
+          {t:"La superposition de deux timbres vocaux", ok:false},
+          {t:"Une duplication morphologique", ok:false},
+          {t:"Une concordance des temps", ok:false}
+        ],
+        explain:"La polyphonie inscrit des voix hétérogènes dans le même énoncé.",
+        ref:"Doc. dynamique / polyphonie"},
+      {id:26,q:"Dans la carte formelle, D₀ désigne :",
+        options:[
+          {t:"Le repère dans la mémoire discursive", ok:true},
+          {t:"Le repère spatial du locuteur", ok:false},
+          {t:"Le destinataire", ok:false},
+          {t:"Le domaine notionnel", ok:false}
+        ],
+        explain:"D₀ repère le stock discursif antérieur disponible.",
+        ref:"Doc. structure formelle (D₀)"},
+      {id:27,q:"Différence entre anaphore et déixis :",
+        options:[
+          {t:"L'anaphore renvoie à D₀; la déixis indexe S₀/R₀", ok:true},
+          {t:"L'anaphore est spatiale; la déixis est temporelle", ok:false},
+          {t:"Aucune: ce sont des synonymes", ok:false},
+          {t:"La déixis renvoie au lexique; l'anaphore à la phonologie", ok:false}
+        ],
+        explain:"Anaphore = reprise discursive; déixis = ancrage situationnel.",
+        ref:"Doc. structure formelle"},
+      {id:28,q:"Quelle fonction illocutoire est illustrée par ‘Je te promets’ ?",
+        options:[
+          {t:"Acte accompli par l'énonciation elle-même", ok:true},
+          {t:"Évaluation quantitative", ok:false},
+          {t:"Référenciation interne", ok:false},
+          {t:"Négation de propriété", ok:false}
+        ],
+        explain:"Les performatifs réalisent l'acte par le dire même.",
+        ref:"Doc. fonctions du langage (illocutoire)"},
+      {id:29,q:"La fonction argumentative de ‘même’ dans ‘Même lui a compris’ :",
+        options:[
+          {t:"Renforce une conclusion argumentative", ok:true},
+          {t:"Indique l'aspect accompli", ok:false},
+          {t:"Marque la déixis spatiale", ok:false},
+          {t:"Neutralise la modalité", ok:false}
+        ],
+        explain:"‘Même’ accroît le poids argumentatif de la proposition.",
+        ref:"Doc. fonctions / argumentative"},
+      {id:30,q:"Quelle différence entre référenciation externe (Rₑ) et interne (Rᵢ) ?",
+        options:[
+          {t:"Rₑ relie au monde; Rᵢ à une entité construite dans le discours", ok:true},
+          {t:"Rₑ est phonologique; Rᵢ est syntaxique", ok:false},
+          {t:"Rₑ est anaphorique; Rᵢ est déictique", ok:false},
+          {t:"Rₑ est modale; Rᵢ est aspectuelle", ok:false}
+        ],
+        explain:"La référenciation peut viser des entités extralinguistiques ou intra-discursives.",
+        ref:"Doc. structure formelle (Rₑ / Rᵢ)"},
+      {id:31,q:"Quel énoncé illustre une présupposition ?",
+        options:[
+          {t:"‘Il a encore raté son train.’", ok:true},
+          {t:"‘Peut-être qu'il vient.’", ok:false},
+          {t:"‘Viendra-t-il ?’", ok:false},
+          {t:"‘Il viendra s'il peut.’", ok:false}
+        ],
+        explain:"‘Encore’ déclenche un présupposé d'occurrence antérieure.",
+        ref:"Doc. dynamique / présupposition"},
+      {id:32,q:"Quel marqueur est typiquement déictique ?",
+        options:[
+          {t:"‘Ici’ / ‘maintenant’ / ‘moi’", ok:true},
+          {t:"‘Et’ / ‘ou’", ok:false},
+          {t:"‘Qui’ / ‘que’", ok:false},
+          {t:"‘Très’ / ‘peu’", ok:false}
+        ],
+        explain:"Ces marqueurs dépendent de S₀ et R₀.",
+        ref:"Doc. structure de l'énonciation"},
+      {id:33,q:"Quelle opération correspond à (V) dans le schéma ?",
+        options:[
+          {t:"Validation de la prédication dans un cadre de vérité", ok:true},
+          {t:"Variation aspectuelle", ok:false},
+          {t:"Vocalisation", ok:false},
+          {t:"Vérification phonétique", ok:false}
+        ],
+        explain:"V confirme la prédication relativement au système de repères.",
+        ref:"Doc. opérations énonciatives (V)"},
+      {id:34,q:"Le couple ‘repère / propriété’ se réalise syntaxiquement par :",
+        options:[
+          {t:"SN / prédicat (SV)", ok:true},
+          {t:"Déterminant / nom propre", ok:false},
+          {t:"Sujet / complétive", ok:false},
+          {t:"Quantifieur / verbe", ok:false}
+        ],
+        explain:"Le SN sert d'ancrage, le SV porte la propriété.",
+        ref:"Doc. structure prédicative"},
+      {id:35,q:"À quoi sert la fonction métalinguistique ?",
+        options:[
+          {t:"Commenter les unités linguistiques", ok:true},
+          {t:"Référer au monde externe uniquement", ok:false},
+          {t:"Établir des relations logiques", ok:false},
+          {t:"Indiquer la quantité", ok:false}
+        ],
+        explain:"Elle porte sur le code lui-même (ex.: ‘le mot \"chien\" est un nom’).",
+        ref:"Doc. fonctions du langage (métalinguistique)"},
+      {id:36,q:"La fonction perlocutoire concerne :",
+        options:[
+          {t:"L'effet produit sur le co-énonciateur", ok:true},
+          {t:"La valeur de vérité", ok:false},
+          {t:"La catégorie grammaticale", ok:false},
+          {t:"Le site de repérage spatial", ok:false}
+        ],
+        explain:"Effets comme convaincre, émouvoir, etc.",
+        ref:"Doc. fonctions du langage (perlocutoire)"},
+      {id:37,q:"Quel énoncé illustre une structure modale (M + P) ?",
+        options:[
+          {t:"‘Il pourrait venir.’", ok:true},
+          {t:"‘Il est venu.’", ok:false},
+          {t:"‘Il viendra hier.’", ok:false},
+          {t:"‘Il venait que.’", ok:false}
+        ],
+        explain:"M (modalité) précède P (contenu propositionnel).",
+        ref:"Doc. structures formelles (modale)"},
+      {id:38,q:"La structure de repérage R₀ ↔ R₁ se manifeste dans :",
+        options:[
+          {t:"‘Tu es en retard.’", ok:true},
+          {t:"‘La neige est blanche.’", ok:false},
+          {t:"‘Il neige.’", ok:false},
+          {t:"‘Il pleuvait.’", ok:false}
+        ],
+        explain:"L'adresse au destinataire R₁ s'oppose au repère du locuteur R₀.",
+        ref:"Doc. structures formelles (R₀ ↔ R₁)"},
+      {id:39,q:"‘He is reading’ illustre :",
+        options:[
+          {t:"Une structure aspectuelle (A + V)", ok:true},
+          {t:"Une structure illocutoire", ok:false},
+          {t:"Une structure anaphorique", ok:false},
+          {t:"Une simple référenciation externe", ok:false}
+        ],
+        explain:"Progressif anglais comme marqueur aspectuel.",
+        ref:"Doc. structures formelles (aspect)"},
+      {id:40,q:"Quel type d'opération marque ‘même’ dans ‘Même lui a compris’ ?",
+        options:[
+          {t:"Argumentative d'intensification", ok:true},
+          {t:"Déictique temporelle", ok:false},
+          {t:"Quantification exacte", ok:false},
+          {t:"Modalisation épistémique", ok:false}
+        ],
+        explain:"Intensifie la force argumentative de la proposition.",
+        ref:"Doc. fonctions / argumentative"},
+      {id:41,q:"L'hétérogénéité énonciative correspond à :",
+        options:[
+          {t:"L'intégration d'un autre point de vue dans l'énoncé", ok:true},
+          {t:"La contradiction syntaxique", ok:false},
+          {t:"La variation phonétique", ok:false},
+          {t:"La suppression du repérage", ok:false}
+        ],
+        explain:"Ex. ‘Selon le rapport…’ insère une voix tierce.",
+        ref:"Doc. dynamique / hétérogénéité"},
+      {id:42,q:"La structure R → R′ décrit :",
+        options:[
+          {t:"Une opération de reformulation", ok:true},
+          {t:"Une opération de négation", ok:false},
+          {t:"Une opération de focalisation", ok:false},
+          {t:"Une opération de quantification", ok:false}
+        ],
+        explain:"Transformation d'un repère en un équivalent reformulé.",
+        ref:"Doc. opérations énonciatives (reformulation)"},
+      {id:43,q:"Quel énoncé illustre une inférence pragmatique ?",
+        options:[
+          {t:"‘Il a laissé ses clés. Il est encore là.’", ok:true},
+          {t:"‘Il est là. Il est là.’", ok:false},
+          {t:"‘Il vient et vient.’", ok:false},
+          {t:"‘Il est.’", ok:false}
+        ],
+        explain:"À partir d'un fait, on déduit un état de choses probable.",
+        ref:"Doc. dynamique / inférence"},
+      {id:44,q:"Quel marqueur ouvre une lecture épistémique ?",
+        options:[
+          {t:"‘Il se peut que…’", ok:true},
+          {t:"‘Et’", ok:false},
+          {t:"‘Qui’", ok:false},
+          {t:"‘Très’", ok:false}
+        ],
+        explain:"Modalité épistémique de possibilité.",
+        ref:"Doc. dynamique / modalité épistémique"},
+      {id:45,q:"La détermination ‘un’ vs ‘le’ illustre :",
+        options:[
+          {t:"Une opération de spécification du référent", ok:true},
+          {t:"Une relation strictement phonologique", ok:false},
+          {t:"Une pure question d'accord verbal", ok:false},
+          {t:"Un phénomène prosodique", ok:false}
+        ],
+        explain:"La détermination situe le référent (spécifique / défini).",
+        ref:"Doc. catégories et marqueurs (détermination)"},
+      {id:46,q:"La structure argumentative associe typiquement :",
+        options:[
+          {t:"R + M + V (repère + marqueur + validation)", ok:true},
+          {t:"SN + SP adjoint", ok:false},
+          {t:"V + V", ok:false},
+          {t:"N + Adj", ok:false}
+        ],
+        explain:"Les marqueurs comme ‘même’ contribuent à la validation argumentative.",
+        ref:"Doc. structures formelles (argumentative)"},
+      {id:47,q:"Le topique correspond à :",
+        options:[
+          {t:"Un élément connu / présupposé sur lequel porte le commentaire", ok:true},
+          {t:"Le foyer d'accentuation prosodique", ok:false},
+          {t:"Le morphème le plus long", ok:false},
+          {t:"Le prédicat secondaire", ok:false}
+        ],
+        explain:"Le topique établit le cadre informationnel.",
+        ref:"Doc. dynamique / topique"},
+      {id:48,q:"Dans ‘John came in. He looked tired.’, ‘He’ est :",
+        options:[
+          {t:"Anaphorique (renvoi à un repère antérieur)", ok:true},
+          {t:"Déictique", ok:false},
+          {t:"Cataphorique vers un élément futur", ok:false},
+          {t:"Quantifieur universel", ok:false}
+        ],
+        explain:"Reprise d'un repère introduit précédemment (John).",
+        ref:"Doc. structure de l'énonciation / anaphore"},
+      {id:49,q:"Quelle fonction sert à ‘évaluer la quantité associée au référent’ ?",
+        options:[
+          {t:"Quantification (Q)", ok:true},
+          {t:"Validation (V)", ok:false},
+          {t:"Modalisation (M)", ok:false},
+          {t:"Déixis", ok:false}
+        ],
+        explain:"Q introduit des expressions de quantité, mesure ou cardinalité.",
+        ref:"Doc. opérations énonciatives (Q)"},
+      {id:50,q:"La ‘valeur’ (au sens culiolien) correspond à :",
+        options:[
+          {t:"Le résultat contextuel d'une opération sur un invariant", ok:true},
+          {t:"La valeur absolue d'une fréquence", ok:false},
+          {t:"La traduction littérale d'un lexème", ok:false},
+          {t:"La mesure acoustique d'un son", ok:false}
+        ],
+        explain:"La valeur est la configuration résultante dans un contexte donné.",
+        ref:"Doc. opérations cognitives / valeur"},
+    ];
+
+    // STATE
+    let quiz = [];
+    let idx = 0;
+    let answers = new Map(); // key: id, value: index of selected option
+    let skipped = new Set();
+    let validated = false;
+    let startTime = null, timerInt = null;
+
+    // DOM
+    const els = {
+      count: document.getElementById('count'),
+      shuffleQ: document.getElementById('shuffleQ'),
+      shuffleA: document.getElementById('shuffleA'),
+      start: document.getElementById('start'),
+      reset: document.getElementById('reset'),
+      prev: document.getElementById('prev'),
+      next: document.getElementById('next'),
+      skip: document.getElementById('skip'),
+      validate: document.getElementById('validate'),
+      qtitle: document.getElementById('qtitle'),
+      qtext: document.getElementById('qtext'),
+      answers: document.getElementById('answers'),
+      mQ: document.getElementById('m-q'),
+      mAns: document.getElementById('m-ans'),
+      mSkip: document.getElementById('m-skip'),
+      mAcc: document.getElementById('m-acc'),
+      mScore: document.getElementById('m-score'),
+      mTime: document.getElementById('m-time'),
+      bar: document.getElementById('bar'),
+      grid: document.getElementById('grid'),
+      results: document.getElementById('results'),
+      resultsList: document.getElementById('resultsList')
+    };
+
+    function fmt(n){return n<10?`0${n}`:`${n}`}
+    function setTime(){if(!startTime)return;const d=Date.now()-startTime;const m=Math.floor(d/60000), s=Math.floor((d%60000)/1000);els.mTime.textContent=`${fmt(m)}:${fmt(s)}`}
+
+    function shuffle(arr){return arr.map(v=>[Math.random(),v]).sort((a,b)=>a[0]-b[0]).map(v=>v[1])}
+
+    function start(){
+      const N = parseInt(els.count.value,10);
+      quiz = [...BANK];
+      if(els.shuffleQ.checked) quiz = shuffle(quiz);
+      quiz = quiz.slice(0,N).map(q=>({
+        ...q,
+        options: els.shuffleA.checked ? shuffle(q.options) : q.options
+      }));
+      idx = 0; answers = new Map(); skipped = new Set(); validated=false;
+      startTime = Date.now(); clearInterval(timerInt); timerInt = setInterval(setTime,1000); setTime();
+      els.results.hidden = true; els.resultsList.innerHTML = '';
+      renderGrid();
+      render();
+    }
+
+    function renderGrid(){
+      els.grid.innerHTML='';
+      quiz.forEach((q,i)=>{
+        const c = document.createElement('div');
+        c.className='cell'+(i===idx?' current':'')+(answers.has(q.id)?' answered':'')+(skipped.has(q.id)?' skipped':'');
+        c.textContent=i+1;
+        c.title=`Aller à la question ${i+1}`;
+        c.onclick=()=>{idx=i; render()};
+        els.grid.appendChild(c);
+      });
+    }
+
+    function render(){
+      if(!quiz.length){els.qtitle.textContent='Bienvenue';els.qtext.textContent='Cliquez sur « Lancer » pour commencer.';els.answers.innerHTML='';return}
+      const q = quiz[idx];
+      els.qtitle.textContent = `Question ${idx+1}`;
+      els.qtext.textContent = q.q;
+
+      els.answers.innerHTML = '';
+      q.options.forEach((opt, i)=>{
+        const wrap=document.createElement('label');
+        wrap.className='option';
+        const input=document.createElement('input');
+        input.type='radio'; input.name='q'; input.value=i;
+        input.checked = answers.get(q.id)===i;
+        input.onchange=()=>{answers.set(q.id,i); skipped.delete(q.id);updateMetrics();renderGrid()};
+        const span=document.createElement('span'); span.textContent=opt.t;
+        wrap.appendChild(input); wrap.appendChild(span);
+        els.answers.appendChild(wrap);
+      });
+
+      // progress
+      els.bar.style.width = `${((idx)/quiz.length)*100}%`;
+      els.mQ.textContent = `${idx+1}/${quiz.length}`;
+      updateMetrics();
+      renderGrid();
+
+      // Explain states if already validated
+      if(validated){
+        showCorrectionFor(q.id);
+      }
+    }
+
+    function updateMetrics(){
+      els.mAns.textContent = answers.size;
+      els.mSkip.textContent = skipped.size;
+      if(validated){
+        const score = scoreQuiz();
+        els.mScore.textContent = `${score}/${quiz.length}`;
+        const acc = quiz.length? Math.round(100*score/quiz.length):0;
+        els.mAcc.textContent = acc+"%";
+      } else {
+        els.mScore.textContent = '—';
+        els.mAcc.textContent = '—';
+      }
+    }
+
+    function prev(){ if(!quiz.length) return; idx = Math.max(0, idx-1); render(); }
+    function next(){ if(!quiz.length) return; idx = Math.min(quiz.length-1, idx+1); render(); }
+    function skip(){ if(!quiz.length) return; const q = quiz[idx]; skipped.add(q.id); if(idx < quiz.length-1){ idx++; } render(); }
+
+    function scoreQuiz(){
+      let s=0; quiz.forEach(q=>{ const i = answers.get(q.id); if(i!=null && q.options[i].ok) s++; }); return s;
+    }
+
+    function validate(){
+      if(!quiz.length) return;
+      validated = true;
+      // Show per-question corrections in-place
+      showCorrectionFor(quiz[idx].id);
+      // Build global results
+      buildResults();
+      updateMetrics();
+      els.bar.style.width = `100%`;
+    }
+
+    function showCorrectionFor(qid){
+      const q = quiz.find(x=>x.id===qid);
+      if(!q) return;
+      // decorate options
+      const labels = Array.from(els.answers.querySelectorAll('.option'));
+      labels.forEach((lab,i)=>{
+        const chosen = answers.get(q.id)===i;
+        const isOk = q.options[i].ok;
+        lab.classList.toggle('correct', isOk);
+        lab.classList.toggle('incorrect', chosen && !isOk);
+      });
+      // explanation block
+      let block = document.querySelector('.explain');
+      if(block) block.remove();
+      const div=document.createElement('div');
+      div.className='explain';
+      const u = answers.get(q.id);
+      const correctIndex = q.options.findIndex(o=>o.ok);
+      const verdict = (u==null? 'Non répondu' : (q.options[u].ok? 'Correct' : 'Incorrect'));
+      div.innerHTML = `<strong>Bilan :</strong> ${verdict}.<br/><em>Clé :</em> ${q.options[correctIndex].t}.<br/><em>Explication :</em> ${q.explain} <span class="muted">(${q.ref})</span>`;
+      els.answers.after(div);
+    }
+
+    function buildResults(){
+      els.results.hidden = false;
+      els.resultsList.innerHTML = '';
+      const score = scoreQuiz();
+      const acc = quiz.length? Math.round(100*score/quiz.length):0;
+      const header = document.createElement('div');
+      header.className = 'panel';
+      header.innerHTML = `<strong>Score :</strong> ${score}/${quiz.length} • <strong>Précision :</strong> ${acc}% • <strong>Temps :</strong> ${els.mTime.textContent}`;
+      els.resultsList.appendChild(header);
+
+      quiz.forEach((q,i)=>{
+        const item=document.createElement('div'); item.className='result-item';
+        const u = answers.get(q.id); const uText = u==null? '<span class="muted">—</span>' : q.options[u].t;
+        const ok = u!=null && q.options[u].ok; const tag = ok? '<span class="tag ok">Correct</span>' : '<span class="tag ko">Incorrect</span>';
+        const correctText = q.options.find(o=>o.ok).t;
+        item.innerHTML = `<h4>Q${i+1}. ${q.q}</h4>${tag}
+        <div><em>Votre réponse :</em> ${uText}</div>
+        <div><em>Clé :</em> ${correctText}</div>
+        <div class="footnote"><em>Explication :</em> ${q.explain} <span class="muted">(${q.ref})</span></div>`;
+        els.resultsList.appendChild(item);
+      });
+    }
+
+    // EVENTS
+    els.start.onclick = start; els.reset.onclick=()=>{location.reload()};
+    els.prev.onclick = prev; els.next.onclick = next; els.skip.onclick = skip; els.validate.onclick = validate;
+
+    window.addEventListener('keydown', (e)=>{
+      if(e.key==='ArrowLeft') prev();
+      else if(e.key==='ArrowRight') next();
+      else if(e.key==='v' || e.key==='V') validate();
+      else if(e.key==='s' || e.key==='S') skip();
+      else if(e.key==='r' || e.key==='R') start();
+    });
+  </script>
+</body>
+</html>

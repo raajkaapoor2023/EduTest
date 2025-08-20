@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Great Gatsby MCQ Quiz (30 Questions)</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 900px; margin: 20px auto; }
+    .question { margin-bottom: 1em; }
+    .option { display: block; margin-bottom: 0.20em;}
+    .correct { color: green; }
+    .incorrect { color: red; }
+    #submit { margin-top: 20px; }
+    .explanation { font-size: 0.97em; margin: 0.25em 0 1.25em 2em; }
+  </style>
+</head>
+<body>
+  <h1>The Great Gatsby: 30-Question MCQ Quiz</h1>
+  <form id="quizForm"></form>
+  <button id="submit">Submit Answers</button>
+  <div id="results"></div>
+  <script>
+const questions = [
+  {
+    q: "Who is the narrator of The Great Gatsby?",
+    opts: [
+      "Jay Gatsby",
+      "Jordan Baker",
+      "Nick Carraway",
+      "Tom Buchanan"
+    ],
+    a: 2,
+    explanation: "Nick Carraway is the novel's narrator, recounting the story from his perspective."
+  },
+  {
+    q: "Where does Gatsby's mansion locate?",
+    opts: [
+      "West Egg",
+      "East Egg",
+      "Long Island City",
+      "Manhattan"
+    ],
+    a: 0,
+    explanation: "Gatsby's mansion is in West Egg, known for 'new money' in the novel."
+  },
+  {
+    q: "Which phrase best describes Daisy Buchanan’s voice?",
+    opts: [
+      "Grating and harsh",
+      "Full of money",
+      "Sharp and precise",
+      "Low and sinister"
+    ],
+    a: 1,
+    explanation: "Gatsby claims Daisy's voice is 'full of money,' symbolizing wealth and allure."
+  },
+  {
+    q: "What is Meyer Wolfsheim rumored to have 'fixed'?",
+    opts: [
+      "A real estate deal",
+      "The 1919 World Series",
+      "The stock market crash",
+      "Tom and Daisy's marriage"
+    ],
+    a: 1,
+    explanation: "Wolfsheim is rumored to have fixed the 1919 World Series, linking Gatsby to criminal enterprises."
+  },
+  {
+    q: "Why does Gatsby throw extravagant parties?",
+    opts: [
+      "To make friends",
+      "To show off his wealth",
+      "To attract Daisy",
+      "Because he is lonely"
+    ],
+    a: 2,
+    explanation: "Gatsby hopes Daisy will attend one of his parties, so he throws them to attract her."
+  },
+  {
+    q: "What is the significance of the green light at the end of Daisy’s dock?",
+    opts: [
+      "It’s used for boating",
+      "It represents Gatsby’s hope",
+      "It is Gatsby’s secret signal",
+      "It marks a dangerous area"
+    ],
+    a: 1,
+    explanation: "The green light symbolizes Gatsby's hopes and dreams for the future, especially with Daisy."
+  },
+  {
+    q: "How are Nick and Daisy related?",
+    opts: [
+      "Brother and sister",
+      "Second cousins, once removed",
+      "Distant friends",
+      "They are not related"
+    ],
+    a: 1,
+    explanation: "Nick and Daisy are second cousins, once removed."
+  },
+  {
+    q: "Who kills Myrtle Wilson?",
+    opts: [
+      "Tom Buchanan",
+      "Jay Gatsby",
+      "Daisy Buchanan",
+      "George Wilson"
+    ],
+    a: 2,
+    explanation: "Daisy, driving Gatsby's car, strikes and kills Myrtle, though Gatsby takes the blame."
+  },
+  {
+    q: "How does Gatsby earn his fortune, according to rumors?",
+    opts: [
+      "Inheritance",
+      "Prohibition bootlegging",
+      "Gambling",
+      "Stock market investments"
+    ],
+    a: 1,
+    explanation: "Gatsby is widely rumored to be involved in bootlegging during Prohibition."
+  },
+  {
+    q: "Which best describes Nick Carraway's self-image?",
+    opts: [
+      "He is highly cynical",
+      "He is nonjudgmental",
+      "He is flamboyant",
+      "He is careless"
+    ],
+    a: 1,
+    explanation: "Nick claims to reserve all judgments and prides himself on being nonjudgmental."
+  },
+  {
+    q: "What is the Eyes of Doctor T. J. Eckleburg a symbol for?",
+    opts: [
+      "The possibility of redemption",
+      "Moral and spiritual blindness of society",
+      "Religious guidance",
+      "Gatsby’s misguided hope"
+    ],
+    a: 1,
+    explanation: "The eyes are interpreted as a symbol for the loss of spiritual values in America."
+  },
+  {
+    q: "What role does Jordan Baker have in the novel?",
+    opts: [
+      "Daisy’s friend and Nick’s romantic interest",
+      "Tom’s mistress",
+      "Myrtle’s cousin",
+      "Gatsby’s business partner"
+    ],
+    a: 0,
+    explanation: "Jordan is a friend of Daisy’s and becomes romantically involved with Nick."
+  },
+  {
+    q: "Where does Tom have his extramarital affair?",
+    opts: [
+      "Chicago",
+      "East Egg",
+      "The Valley of Ashes",
+      "New York City"
+    ],
+    a: 3,
+    explanation: "Tom meets Myrtle in New York City at their rented apartment."
+  },
+  {
+    q: "Why does Gatsby stop throwing his parties?",
+    opts: [
+      "He runs out of money",
+      "He gets Daisy’s attention",
+      "The police intervene",
+      "He becomes reclusive"
+    ],
+    a: 1,
+    explanation: "After being reunited with Daisy, Gatsby has no more need to throw parties."
+  },
+  {
+    q: "Who attends Gatsby's funeral?",
+    opts: [
+      "Hundreds of guests",
+      "Only Nick, Gatsby's father, and a few others",
+      "Daisy and Tom",
+      "All of his business associates"
+    ],
+    a: 1,
+    explanation: "Only a handful, including Nick and Gatsby’s father, attend; most guests do not show up."
+  },
+  {
+    q: "What does Gatsby do when he sees Daisy at Nick’s house?",
+    opts: [
+      "Becomes nervous and awkward",
+      "Leaves immediately",
+      "Proposes to her on the spot",
+      "Acts cold toward her"
+    ],
+    a: 0,
+    explanation: "Gatsby is visibly nervous and overwhelmed when he reunites with Daisy."
+  },
+  {
+    q: "How does Gatsby try to demonstrate his wealth to Daisy?",
+    opts: [
+      "By showing her his car",
+      "By showing her his shirts and mansion",
+      "By taking her boating",
+      "By buying her jewelry"
+    ],
+    a: 1,
+    explanation: "Gatsby famously shows Daisy his mansion and shirts, displaying his material success."
+  },
+  {
+    q: "Where did Gatsby and Daisy first meet?",
+    opts: [
+      "Chicago",
+      "Louisville",
+      "New York",
+      "Boston"
+    ],
+    a: 1,
+    explanation: "They met as a young officer and debutante in Louisville."
+  },
+  {
+    q: "Who does Tom Buchanan suspect of being a 'bootlegger'?",
+    opts: [
+      "Jordan Baker",
+      "Nick Carraway",
+      "Jay Gatsby",
+      "Meyer Wolfsheim"
+    ],
+    a: 2,
+    explanation: "Tom becomes suspicious of Gatsby's wealth and accuses him of bootlegging."
+  },
+  {
+    q: "Which color is most closely associated with Daisy Buchanan?",
+    opts: [
+      "Yellow",
+      "Blue",
+      "White",
+      "Green"
+    ],
+    a: 2,
+    explanation: "White symbolizes Daisy’s supposed purity and innocence."
+  },
+  {
+    q: "Who 'fixes' the clock at Nick's house?",
+    opts: [
+      "Nick",
+      "Gatsby",
+      "Daisy",
+      "Tom"
+    ],
+    a: 1,
+    explanation: "During his nervous reunion with Daisy, Gatsby knocks over a clock and catches it."
+  },
+  {
+    q: "What business does George Wilson own?",
+    opts: [
+      "A car garage/gas station",
+      "A bakery",
+      "A jewelry shop",
+      "A grocery store"
+    ],
+    a: 0,
+    explanation: "George owns a garage and gas station in the Valley of Ashes."
+  },
+  {
+    q: "How does Myrtle Wilson die?",
+    opts: [
+      "Shot by George",
+      "Poisoned by Tom",
+      "Hit by a car",
+      "Drowned"
+    ],
+    a: 2,
+    explanation: "She is hit by a car—Daisy driving Gatsby's car."
+  },
+  {
+    q: "Which event is a turning point for Gatsby and Tom’s rivalry?",
+    opts: [
+      "The first party",
+      "The meeting at the Plaza Hotel",
+      "The funeral",
+      "Tom's trip to Chicago"
+    ],
+    a: 1,
+    explanation: "The confrontation at the Plaza Hotel reveals all the underlying tensions."
+  },
+  {
+    q: "Which is NOT a theme in The Great Gatsby?",
+    opts: [
+      "The decline of the American Dream",
+      "Class and social status",
+      "Religious redemption",
+      "Love and longing"
+    ],
+    a: 2,
+    explanation: "Religious redemption is not a central theme in the novel."
+  },
+  {
+    q: "What does Gatsby repeat to Nick about the past?",
+    opts: [
+      "'The past is lost.'",
+      "'You can’t repeat the past.'",
+      "'Of course you can repeat the past.'",
+      "'There is only the present.'"
+    ],
+    a: 2,
+    explanation: "Gatsby passionately claims, 'Of course you can repeat the past.'"
+  },
+  {
+    q: "What does the 'Valley of Ashes' symbolize?",
+    opts: [
+      "The decay of morality",
+      "Gatsby’s lost dreams",
+      "Nick’s hometown",
+      "Old money tradition"
+    ],
+    a: 0,
+    explanation: "It represents the moral and social decay produced by materialism."
+  },
+  {
+    q: "What elite university did Gatsby attend (for a brief time)?",
+    opts: [
+      "Harvard",
+      "Yale",
+      "Oxford",
+      "Princeton"
+    ],
+    a: 2,
+    explanation: "Gatsby briefly attends Oxford after the war, an ambiguous part of his background."
+  },
+  {
+    q: "Who is the only character who knows the whole truth about Myrtle’s death?",
+    opts: [
+      "Nick",
+      "Jordan",
+      "Tom",
+      "Gatsby"
+    ],
+    a: 0,
+    explanation: "Nick knows Daisy drove the car but Gatsby took the blame; few others know the full story."
+  },
+  {
+    q: "What weather often signals important events in the novel?",
+    opts: [
+      "Strong winds",
+      "Rain and heat",
+      "Snow"
+    ,
+      "Thunderstorms"
+    ],
+    a: 1,
+    explanation: "Both rain (reunion with Daisy) and oppressive heat (Plaza Hotel scene) signal key moments."
+  },
+  {
+    q: "The final line, 'So we beat on, boats against the current...' is an example of:",
+    opts: [
+      "Irony",
+      "Metaphor",
+      "Symbolism",
+      "Foreshadowing"
+    ],
+    a: 1,
+    explanation: "It's a metaphor for striving for dreams and being pulled back by the past."
+  }
+];
+
+// -------- Rendering and Grading Logic (as before) -----------
+const form = document.getElementById('quizForm');
+questions.forEach((q, i) => {
+  const container = document.createElement('div');
+  container.className = 'question';
+  const title = document.createElement('div');
+  title.textContent = `${i + 1}. ${q.q}`;
+  container.appendChild(title);
+  q.opts.forEach((opt, idx) => {
+    const label = document.createElement('label');
+    label.className = 'option';
+    const input = document.createElement('input');
+    input.type = 'radio';
+    input.name = `q${i}`;
+    input.value = idx;
+    label.appendChild(input);
+    label.appendChild(document.createTextNode(opt));
+    container.appendChild(label);
+  });
+  form.appendChild(container);
+});
+
+document.getElementById('submit').onclick = function(e) {
+  e.preventDefault();
+  const results = document.getElementById('results');
+  let correct = 0;
+  let output = "";
+  questions.forEach((q, i) => {
+    const selected = (form[`q${i}`].value !== undefined) ? form[`q${i}`].value : null;
+    const qDiv = form.children[i];
+    let correctAnswer = q.opts[q.a];
+    let userAnswer = selected !== null ? q.opts[selected] : "(no answer)";
+    [ ...qDiv.querySelectorAll('.option') ].forEach((optLabel, idx) => {
+      optLabel.classList.remove('correct', 'incorrect');
+      if (selected !== null && selected == idx) {
+        if (idx == q.a) {
+          optLabel.classList.add('correct');
+          correct++;
+        } else {
+          optLabel.classList.add('incorrect');
+        }
+      }
+      if (idx === q.a && selected != idx)
+        optLabel.classList.add('correct');
+    });
+    output += `<div>
+      <b>Q${i + 1}:</b> ${q.q}<br>
+      <b>Your answer:</b> ${userAnswer}<br>
+      <b>Correct answer:</b> ${correctAnswer}<br>
+      <span class="explanation"><b>Explanation:</b> ${q.explanation}</span>
+    </div>`;
+  });
+  results.innerHTML = `<p>You got <b>${correct}</b> out of ${questions.length} correct.</p>${output}`;
+};
+  </script>
+</body>
+</html>

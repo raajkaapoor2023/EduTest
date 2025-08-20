@@ -1,0 +1,677 @@
+rdin<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>1920s US History, Society & Politics Quiz</title>
+<style>
+  body {
+    font-family: 'Georgia', serif;
+    background: linear-gradient(135deg, #f3f6f8, #cbd6e6);
+    margin: 0; padding: 0;
+    display: flex; justify-content: center; align-items: flex-start;
+    min-height: 100vh;
+    padding: 30px 10px;
+    color: #2c3e50;
+  }
+  #quiz-container {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+    max-width: 800px;
+    width: 100%;
+    padding: 35px 45px 45px 45px;
+  }
+  h1 {
+    text-align: center;
+    font-weight: 700;
+    color: #1b263b;
+    margin-bottom: 30px;
+    font-size: 2.1rem;
+  }
+  #question-number {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #34495e;
+    margin-bottom: 14px;
+  }
+  #question-text {
+    font-size: 1.22rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    line-height: 1.4;
+  }
+  ul.options {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 35px;
+  }
+  li.option {
+    background: #d6e9f8;
+    padding: 14px 22px;
+    border-radius: 14px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    border: 2px solid transparent;
+    color: #2c3e50;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    user-select: none;
+  }
+  li.option:hover {
+    background-color: #1abc9c;
+    color: white;
+    border-color: #16a085;
+  }
+  li.option.selected {
+    background-color: #16a085;
+    border-color: #138d75;
+    color: white;
+  }
+  #next-btn {
+    display: block;
+    width: 100%;
+    padding: 16px 0;
+    font-size: 1.3rem;
+    border: none;
+    border-radius: 14px;
+    background-color: #1abc9c;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 5px 14px rgba(26, 188, 156, 0.4);
+    transition: background-color 0.3s;
+  }
+  #next-btn:disabled {
+    background-color: #a2d5c6;
+    box-shadow: none;
+    cursor: default;
+  }
+  #result-container {
+    max-height: 480px;
+    overflow-y: auto;
+    display: none;
+    margin-top: 5px;
+  }
+  #score {
+    font-size: 2rem;
+    font-weight: 800;
+    text-align: center;
+    color: #27ae60;
+    margin-bottom: 12px;
+  }
+  #feedback-text {
+    text-align: center;
+    font-size: 1.15rem;
+    margin-bottom: 28px;
+    font-style: italic;
+  }
+  #detailed-answers section {
+    border-top: 2px solid #1abc9c;
+    margin-bottom: 28px;
+    padding-top: 18px;
+  }
+  #detailed-answers h3 {
+    font-weight: 700;
+    color: #117a65;
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+  }
+  #detailed-answers p {
+    color: #34495e;
+    font-size: 0.97rem;
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+  #play-again-btn {
+    margin-top: 15px;
+    background-color: #16a085;
+    color: white;
+    font-weight: 700;
+    font-size: 1.2rem;
+    padding: 16px 0;
+    border: none;
+    border-radius: 14px;
+    width: 100%;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(22, 160, 133, 0.5);
+    transition: background-color 0.3s;
+  }
+  #play-again-btn:hover {
+    background-color: #138d75;
+  }
+  /* Scrollbar Styling */
+  #result-container::-webkit-scrollbar {
+    width: 10px;
+  }
+  #result-container::-webkit-scrollbar-track {
+    background: #ecf0f1;
+  }
+  #result-container::-webkit-scrollbar-thumb {
+    background-color: #16a085;
+    border-radius: 20px;
+    border: 3px solid #ecf0f1;
+  }
+
+  @media (max-width: 520px) {
+    #quiz-container {
+      padding: 25px 25px 35px 25px;
+    }
+    h1 {
+      font-size: 1.6rem;
+    }
+    #question-text {
+      font-size: 1.05rem;
+    }
+    li.option {
+      font-size: 1rem;
+      padding: 12px 18px;
+      margin-bottom: 12px;
+    }
+    #next-btn, #play-again-btn {
+      font-size: 1.1rem;
+      padding: 14px 0;
+    }
+  }
+</style>
+</head>
+<body>
+<div id="quiz-container">
+  <h1>1920s US History, Society & Politics Quiz</h1>
+
+  <div id="quiz-content">
+    <div id="question-number"></div>
+    <div id="question-text"></div>
+    <ul class="options" id="options-list"></ul>
+    <button disabled id="next-btn">Next</button>
+  </div>
+
+  <div id="result-container">
+    <div id="score"></div>
+    <div id="feedback-text"></div>
+    <div id="detailed-answers"></div>
+    <button id="play-again-btn">Retake Quiz</button>
+  </div>
+</div>
+
+<script>
+  const questions = [
+    {
+      question: "Which of the following was a primary economic characteristic of the United States in the 1920s?",
+      options: [
+        "A significant decline in industrial production and widespread unemployment.",
+        "A period of unprecedented economic growth, consumerism, and widespread adoption of new technologies.",
+        "A shift from an industrial economy to an agrarian one.",
+        "Strict government regulation of businesses to prevent monopolies."
+      ],
+      answer: 1,
+      explanation: `The 1920s, often called the "Roaring Twenties," saw significant economic growth, mass consumerism, and adoption of technologies like automobiles, radios, and household appliances.<br><strong>Reference:</strong> Leuchtenburg, W. E. The Perils of Prosperity, 1914-32. University of Chicago Press.`
+    },
+    {
+      question: "The 'Red Scare' of the early 1920s was primarily fueled by:",
+      options: [
+        "Fear of a resurgence of the Ku Klux Klan.",
+        "Concerns about environmental degradation.",
+        "Anxiety over the spread of communism and anarchism following the Bolshevik Revolution.",
+        "A widespread belief in the superiority of American isolationism."
+      ],
+      answer: 2,
+      explanation: `Red Scare was driven by fears of communist revolution after the Russian Bolshevik Revolution leading to government crackdowns on radicals.<br><strong>Reference:</strong> Murray, R. K. Red Scare: A Study in National Hysteria, 1919-1920. University of Minnesota Press.`
+    },
+    {
+      question: "Which amendment to the U.S. Constitution, ratified in 1920, granted women the right to vote?",
+      options: [
+        "18th Amendment",
+        "17th Amendment",
+        "19th Amendment",
+        "20th Amendment"
+      ],
+      answer: 2,
+      explanation: `The 19th Amendment prohibited denying voting rights based on sex, marking a historic victory for women's suffrage in 1920.<br><strong>Reference:</strong> National Archives, 19th Amendment to the U.S. Constitution.`
+    },
+    {
+      question: "The Scopes Trial (1925) primarily concerned:",
+      options: [
+        "Labor union rights.",
+        "The teaching of evolution in public schools versus creationism.",
+        "Prohibition enforcement.",
+        "Immigration quotas."
+      ],
+      answer: 1,
+      explanation: `The Scopes "Monkey" Trial was over the legality of teaching evolution in Tennessee public schools, highlighting tensions between science and religion.<br><strong>Reference:</strong> Larson, E. J. Summer for the Gods: The Scopes Trial and America's Continuing Debate Over Science and Religion.`
+    },
+    {
+      question: "What was the primary impact of Henry Ford's assembly line on American society in the 1920s?",
+      options: [
+        "It led to a decrease in the production of automobiles.",
+        "It primarily benefited agricultural workers.",
+        "It revolutionized manufacturing, making automobiles affordable for the average American and fostering a consumer culture.",
+        "It resulted in widespread unemployment due to automation."
+      ],
+      answer: 2,
+      explanation: `Ford's moving assembly line drastically cut production time making cars affordable and enabling the growth of consumer culture.<br><strong>Reference:</strong> Hounshell, D. A. From the American System to Mass Production, 1800-1932.`
+    },
+    {
+      question: "The Harlem Renaissance was a significant cultural movement that celebrated:",
+      options: [
+        "Rural American traditions.",
+        "African American art, literature, music, and intellectual thought.",
+        "The rise of jazz music in New Orleans exclusively.",
+        "European artistic movements."
+      ],
+      answer: 1,
+      explanation: `The Harlem Renaissance celebrated African American cultural and intellectual achievements centering in Harlem during the 1920s.<br><strong>Reference:</strong> Lewis, D. L. When Harlem Was in Vogue.`
+    },
+    {
+      question: "Which of the following best describes the 'flapper' image of the 1920s?",
+      options: [
+        "A woman who adhered strictly to traditional Victorian social norms.",
+        "A woman primarily focused on domestic duties and family life.",
+        "A young woman who challenged traditional social conventions through her dress, behavior, and lifestyle.",
+        "A woman who advocated for a return to agrarian values."
+      ],
+      answer: 2,
+      explanation: `Flappers were young women rejecting Victorian norms, embracing new fashion and freedoms, symbolizing social change.<br><strong>Reference:</strong> Fass, P. S. The Damned and the Beautiful: American Youth in the 1920s.`
+    },
+    {
+      question: "The Teapot Dome Scandal during the Harding administration involved:",
+      options: [
+        "Illegal sales of alcohol during Prohibition.",
+        "The secret leasing of federal oil reserves to private companies for personal gain.",
+        "Bribery related to the construction of the Panama Canal.",
+        "Misappropriation of funds intended for veterans' benefits."
+      ],
+      answer: 1,
+      explanation: `The Teapot Dome Scandal was a major corruption case involving leased naval oil reserves to private firms for bribes.<br><strong>Reference:</strong> Noggle, B. Teapot Dome: Oil and Politics in the 1920s.`
+    },
+    {
+      question: "Which of the following was a major cause of the Great Migration during the 1920s?",
+      options: [
+        "The Dust Bowl.",
+        "African Americans seeking economic opportunities and escaping racial discrimination in the South.",
+        "The California Gold Rush.",
+        "Increased immigration from Europe."
+      ],
+      answer: 1,
+      explanation: `The Great Migration was driven by African Americans fleeing racial violence and seeking industrial jobs in the North.<br><strong>Reference:</strong> Wilkerson, I. The Warmth of Other Suns.`
+    },
+    {
+      question: "The Volstead Act (1919) was enacted to enforce which constitutional amendment?",
+      options: [
+        "16th Amendment",
+        "18th Amendment",
+        "19th Amendment",
+        "21st Amendment"
+      ],
+      answer: 1,
+      explanation: `The Volstead Act enforced Prohibition (18th Amendment) by defining intoxicating liquors and penalties.<br><strong>Reference:</strong> Okrent, D. Last Call: The Rise and Fall of Prohibition.`
+    },
+    {
+      question: "What was the primary goal of the Ku Klux Klan's resurgence in the 1920s?",
+      options: [
+        "To promote racial equality and civil rights.",
+        "To advocate for increased immigration.",
+        "To promote white supremacy, nativism, and anti-Catholic, anti-Jewish, and anti-immigrant sentiments.",
+        "To support the labor movement."
+      ],
+      answer: 2,
+      explanation: `The Klan promoted white Protestant supremacy and targeted immigrants, Catholics, and Jews during its resurgence.<br><strong>Reference:</strong> MacLean, N. Behind the Mask of Chivalry: The Making of the Second Ku Klux Klan.`
+    },
+    {
+      question: "The Kellogg-Briand Pact (1928) aimed to:",
+      options: [
+        "Establish a global economic union.",
+        "Outlaw war as an instrument of national policy.",
+        "Create a new international organization for peace.",
+        "Regulate international trade."
+      ],
+      answer: 1,
+      explanation: `The pact renounced war as a policy tool but lacked enforcement, representing postwar peace hopes.<br><strong>Reference:</strong> Ferrell, R. H. Peace in Their Time: The Origins of the Kellogg-Briand Pact.`
+    },
+    {
+      question: "Which of the following was a significant technological innovation that transformed American homes and leisure in the 1920s?",
+      options: [
+        "The personal computer.",
+        "The radio.",
+        "The internet.",
+        "The television."
+      ],
+      answer: 1,
+      explanation: `The radio rapidly became a primary source of entertainment and information, uniting American culture.<br><strong>Reference:</strong> Smulyan, S. Popular Ideologies: The Radio in American Life, 1920-1935.`
+    },
+    {
+      question: "The 'Lost Generation' refers to:",
+      options: [
+        "A group of American politicians who failed to address economic issues.",
+        "A group of American writers and artists who felt disillusioned with American society after World War I and often lived abroad.",
+        "A generation of soldiers lost in the trenches of World War I.",
+        "A demographic group that experienced significant population decline."
+      ],
+      answer: 1,
+      explanation: `The Lost Generation were writers/artists like Fitzgerald and Hemingway disillusioned by WWI’s aftermath.<br><strong>Reference:</strong> Mellow, J. R. Charmed Circle: Gertrude Stein & Company.`
+    },
+    {
+      question: "What was the primary reason for the rise of speakeasies during the 1920s?",
+      options: [
+        "A desire for new forms of entertainment.",
+        "The illegal nature of alcohol sales during Prohibition.",
+        "A lack of public spaces for social gatherings.",
+        "The popularity of jazz music."
+      ],
+      answer: 1,
+      explanation: `Speakeasies were illicit bars that emerged due to the illegal sale of alcohol during Prohibition.<br><strong>Reference:</strong> Lerner, M. A. Dry Manhattan: Prohibition in New York City.`
+    },
+    {
+      question: "Which president served during the 1920s, advocating for a return to 'normalcy'?",
+      options: [
+        "Franklin D. Roosevelt",
+        "Calvin Coolidge",
+        "Warren G. Harding",
+        "Herbert Hoover"
+      ],
+      answer: 2,
+      explanation: `Harding campaigned on a "Return to Normalcy" after WWI, emphasizing peace and limited government.<br><strong>Reference:</strong> Russell, F. The Shadow of Blooming Grove: Warren G. Harding in His Times.`
+    },
+    {
+      question: "The Sacco and Vanzetti case (1920-1927) became a symbol of:",
+      options: [
+        "The triumph of justice in the American legal system.",
+        "Nativism and anti-immigrant sentiment, as well as concerns about judicial bias.",
+        "The effectiveness of the American labor movement.",
+        "The decline of anarchism in the United States."
+      ],
+      answer: 1,
+      explanation: `The controversial trial and execution highlighted prejudice against immigrants and radicals.<br><strong>Reference:</strong> Frankfurter, F. The Case of Sacco and Vanzetti: A Critical Analysis.`
+    },
+    {
+      question: "What impact did the automobile have on American suburbs in the 1920s?",
+      options: [
+        "It led to a decline in suburban populations.",
+        "It made suburbs less accessible.",
+        "It facilitated the growth of suburbs by making commuting to cities easier.",
+        "It had no significant impact on suburban development."
+      ],
+      answer: 2,
+      explanation: `Autos enabled people to live farther from urban centers, fueling suburban growth.<br><strong>Reference:</strong> Jackson, K. T. Crabgrass Frontier: The Suburbanization of the United States.`
+    },
+    {
+      question: "The rise of mass media, particularly newspapers and magazines, in the 1920s contributed to:",
+      options: [
+        "A decrease in public awareness of national events.",
+        "The creation of a more unified national culture and shared experiences.",
+        "A decline in literacy rates.",
+        "Increased regional isolation."
+      ],
+      answer: 1,
+      explanation: `Mass media helped unify disparate regions through shared cultural experiences and news.<br><strong>Reference:</strong> Schudson, M. Discovering the News: A Social History of American Newspapers.`
+    },
+    {
+      question: "Which of the following best describes the economic policy favored by Republican administrations in the 1920s?",
+      options: [
+        "Increased government regulation and social welfare programs.",
+        "Laissez-faire policies, tax cuts for the wealthy, and limited government intervention in the economy.",
+        "Nationalization of key industries.",
+        "Protectionist tariffs to limit international trade."
+      ],
+      answer: 1,
+      explanation: `Republican presidents Harding, Coolidge, and Hoover favored laissez-faire economics and lower taxes for growth.<br><strong>Reference:</strong> Nash, G. H. The Life of Herbert Hoover: The Engineer, 1874-1914.`
+    },
+    {
+      question: "The 'Jazz Age' is a term often used to describe the 1920s, reflecting:",
+      options: [
+        "A period of economic depression.",
+        "The widespread popularity and cultural influence of jazz music, symbolizing a new era of social and cultural change.",
+        "A focus on classical music.",
+        "A decline in musical innovation."
+      ],
+      answer: 1,
+      explanation: `Jazz symbolized the vibrant cultural shifts and modernism of the 1920s.<br><strong>Reference:</strong> Ward, G. C., & Burns, K. Jazz: A History of America's Music.`
+    },
+    {
+      question: "What was a significant social consequence of Prohibition?",
+      options: [
+        "A dramatic decrease in crime rates.",
+        "The rise of organized crime and illegal alcohol production and distribution.",
+        "Increased respect for the law.",
+        "A decline in the consumption of alcoholic beverages."
+      ],
+      answer: 1,
+      explanation: `Prohibition unintentionally fostered organized crime syndicates controlling bootlegging.<br><strong>Reference:</strong> Behr, E. Prohibition: Thirteen Years That Changed America.`
+    },
+    {
+      question: "The Immigration Act of 1924 (Johnson-Reed Act) primarily aimed to:",
+      options: [
+        "Increase immigration from all parts of the world.",
+        "Establish strict quotas on immigration, particularly from Southern and Eastern Europe and Asia.",
+        "Promote open borders.",
+        "Encourage skilled workers to immigrate to the U.S."
+      ],
+      answer: 1,
+      explanation: `The act restricted immigration based on national origins, reflecting nativist views.<br><strong>Reference:</strong> Higham, J. Strangers in the Land: Patterns of American Nativism, 1860-1925.`
+    },
+    {
+      question: "Which of the following was a major factor contributing to the agricultural depression in the 1920s?",
+      options: [
+        "Increased demand for American agricultural products.",
+        "Overproduction, declining prices, and reduced demand after World War I.",
+        "Government subsidies for farmers.",
+        "A shift from large-scale farming to subsistence farming."
+      ],
+      answer: 1,
+      explanation: `Postwar surplus and falling prices caused farm incomes and rural economies to decline.<br><strong>Reference:</strong> Fite, G. C. American Farmers: The New Minority.`
+    },
+    {
+      question: "The rise of spectator sports, such as baseball and boxing, in the 1920s was facilitated by:",
+      options: [
+        "A decline in leisure time.",
+        "Increased disposable income, urbanization, and improved transportation.",
+        "Government mandates for physical activity.",
+        "A decrease in media coverage."
+      ],
+      answer: 1,
+      explanation: `Economic prosperity and urban growth allowed more people leisure time and access to sporting events.<br><strong>Reference:</strong> Riess, S. A. Sport in Industrial America, 1850-1920.`
+    },
+    {
+      question: "What role did advertising play in the consumer culture of the 1920s?",
+      options: [
+        "It had minimal impact on consumer behavior.",
+        "It primarily focused on promoting essential goods.",
+        "It became a powerful tool for creating demand for new products and shaping consumer desires.",
+        "It was heavily regulated by the government."
+      ],
+      answer: 2,
+      explanation: `Advertising evolved into a persuasive industry shaping desires for new consumer goods in the 1920s.<br><strong>Reference:</strong> Lears, T. J. Jackson. Fables of Abundance: A Cultural History of Advertising in America.`
+    },
+    {
+      question: "The Washington Naval Conference (1921-1922) aimed to:",
+      options: [
+        "Increase naval arms races among major powers.",
+        "Limit naval armaments among major world powers to prevent another global conflict.",
+        "Establish new naval bases in the Pacific.",
+        "Promote unrestricted submarine warfare."
+      ],
+      answer: 1,
+      explanation: `The conference resulted in treaties limiting naval tonnage to reduce tensions post-WWI.<br><strong>Reference:</strong> Buckley, T. H. The United States and the Washington Conference, 1921-1922.`
+    },
+    {
+      question: "Which of the following best describes the 'Return to Normalcy' promised by Warren G. Harding?",
+      options: [
+        "A return to progressive reforms and government intervention.",
+        "A focus on international diplomacy and global leadership.",
+        "A desire to return to the pre-World War I era of peace, prosperity, and limited government intervention.",
+        "A commitment to social revolution."
+      ],
+      answer: 2,
+      explanation: `Harding promised stability after WWI and the Progressive Era, with less government involvement.<br><strong>Reference:</strong> Sinclair, A. The Available Man: The Life Behind the Masks of Warren Gamaliel Harding.`
+    },
+    {
+      question: "The growth of department stores and chain stores in the 1920s reflected:",
+      options: [
+        "A decline in consumer spending.",
+        "The expansion of consumerism and new retail strategies to meet growing demand.",
+        "A shift towards local, independent businesses.",
+        "Increased government control over retail."
+      ],
+      answer: 1,
+      explanation: `Retail chains expanded, reflecting the booming consumer economy and new marketing/distribution techniques.<br><strong>Reference:</strong> Strasser, S. Satisfaction Guaranteed: The Making of the American Mass Market.`
+    },
+    {
+      question: "The cultural clash between urban and rural values in the 1920s was most evident in debates over:",
+      options: [
+        "Economic policy.",
+        "Foreign relations.",
+        "Prohibition, evolution, and changing social norms.",
+        "Industrial production."
+      ],
+      answer: 2,
+      explanation: `This era’s tensions emerged sharply around religion, science (Scopes Trial), and social behaviors.<br><strong>Reference:</strong> Link, A. S., & McCormick, R. L. Progressivism.`
+    }
+  ];
+
+  function shuffle(array) {
+    let n = array.length, i;
+    while (n > 0) {
+      i = Math.floor(Math.random() * n);
+      n--;
+      [array[n], array[i]] = [array[i], array[n]];
+    }
+    return array;
+  }
+
+  let shuffledQuestions = [];
+  let currentIndex = 0;
+  let score = 0;
+  let selectedOption = null;
+  let userAnswers = [];
+
+  const questionNumberEl = document.getElementById('question-number');
+  const questionTextEl = document.getElementById('question-text');
+  const optionsListEl = document.getElementById('options-list');
+  const nextBtn = document.getElementById('next-btn');
+  const quizContent = document.getElementById('quiz-content');
+  const resultContainer = document.getElementById('result-container');
+  const scoreEl = document.getElementById('score');
+  const feedbackText = document.getElementById('feedback-text');
+  const detailedAnswers = document.getElementById('detailed-answers');
+  const playAgainBtn = document.getElementById('play-again-btn');
+
+  function startQuiz() {
+    shuffledQuestions = shuffle([...questions]);
+    currentIndex = 0;
+    score = 0;
+    selectedOption = null;
+    userAnswers = [];
+
+    quizContent.style.display = 'block';
+    resultContainer.style.display = 'none';
+    nextBtn.disabled = true;
+
+    showQuestion();
+  }
+
+  function showQuestion() {
+    const currentQ = shuffledQuestions[currentIndex];
+
+    questionNumberEl.textContent = `Question ${currentIndex + 1} of ${shuffledQuestions.length}`;
+    questionTextEl.textContent = currentQ.question;
+
+    optionsListEl.innerHTML = '';
+
+    const opts = shuffle(currentQ.options.map((opt, i) => ({text: opt, index: i})));
+
+    opts.forEach(({text, index}) => {
+      const li = document.createElement('li');
+      li.className = 'option';
+      li.textContent = text;
+      li.dataset.index = index;
+
+      li.onclick = () => {
+        [...optionsListEl.children].forEach(elem => elem.classList.remove('selected'));
+        li.classList.add('selected');
+        selectedOption = index;
+        nextBtn.disabled = false;
+      };
+
+      optionsListEl.appendChild(li);
+    });
+
+    nextBtn.textContent = (currentIndex === shuffledQuestions.length - 1) ? 'Finish' : 'Next';
+    nextBtn.disabled = true;
+  }
+
+  nextBtn.onclick = () => {
+    userAnswers[currentIndex] = selectedOption;
+    if (selectedOption === shuffledQuestions[currentIndex].answer) {
+      score++;
+    }
+    currentIndex++;
+    selectedOption = null;
+    if (currentIndex < shuffledQuestions.length) {
+      showQuestion();
+    } else {
+      showResults();
+    }
+  };
+
+  function showResults() {
+    quizContent.style.display = 'none';
+    resultContainer.style.display = 'block';
+
+    scoreEl.textContent = `Your Score: ${score} / ${shuffledQuestions.length}`;
+
+    const percent = (score / shuffledQuestions.length) * 100;
+
+    if (percent >= 85) {
+      feedbackText.textContent = "Excellent! You have a strong mastery of 1920s US history, society, and politics.";
+      feedbackText.style.color = '#27ae60';
+    } else if (percent >= 60) {
+      feedbackText.textContent = "Good job! Review the detailed answers to strengthen your understanding.";
+      feedbackText.style.color = '#f39c12';
+    } else {
+      feedbackText.textContent = "Consider studying the explanations carefully to improve.";
+      feedbackText.style.color = '#c0392b';
+    }
+
+    detailedAnswers.innerHTML = '';
+    shuffledQuestions.forEach((q, idx) => {
+      const userIdx = userAnswers[idx];
+      const userText = (typeof userIdx === 'number' && q.options[userIdx]) ? q.options[userIdx] : "No answer selected";
+      const correctText = q.options[q.answer];
+      const isCorrect = userIdx === q.answer;
+
+      const section = document.createElement('section');
+
+      const h3 = document.createElement('h3');
+      h3.textContent = `Q${idx + 1}: ${q.question}`;
+      section.appendChild(h3);
+
+      const pUser = document.createElement('p');
+      pUser.innerHTML = `Your answer: <strong>${userText}</strong> ${isCorrect ? '✅' : '❌'}`;
+      section.appendChild(pUser);
+
+      if (!isCorrect) {
+        const pCorrect = document.createElement('p');
+        pCorrect.innerHTML = `Correct answer: <strong>${correctText}</strong>`;
+        section.appendChild(pCorrect);
+      }
+
+      const pExplanation = document.createElement('p');
+      pExplanation.innerHTML = `<em>Explanation:</em> ${q.explanation}`;
+      section.appendChild(pExplanation);
+
+      detailedAnswers.appendChild(section);
+    });
+    
+    // Scroll to results top for convenience
+    resultContainer.scrollTop = 0;
+  }
+
+  playAgainBtn.onclick = () => {
+    startQuiz();
+    window.scrollTo(0,0);
+  };
+
+  window.onload = startQuiz;
+</script>
+</body>
+</html>

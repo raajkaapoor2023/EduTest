@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>1920s USA History Quiz - 30 Questions</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 700px;
+    margin: 40px auto;
+    background-color: #f3f6f9;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  }
+  h1 {
+    text-align: center;
+    color: #2c3e50;
+  }
+  #question-container {
+    margin-top: 20px;
+  }
+  #question {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+  .option {
+    background-color: #fff;
+    padding: 10px 15px;
+    margin: 8px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+  .option:hover {
+    border-color: #2980b9;
+  }
+  .option.selected {
+    background-color: #d6eaff;
+    border-color: #2980b9;
+  }
+  button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    font-size: 1rem;
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button:disabled {
+    background-color: #839cbf;
+    cursor: not-allowed;
+  }
+  #score-container {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 1.3rem;
+    color: #27ae60;
+  }
+</style>
+</head>
+<body>
+<h1>U.S. History - The 1920s Quiz (30 Questions)</h1>
+<div id="question-container">
+  <div id="question"></div>
+  <div id="options"></div>
+  <button id="next-btn" disabled>Next</button>
+</div>
+<div id="score-container" style="display:none;"></div>
+
+<script>
+  // Array of 30 questions, with options and index of correct answer
+  const questions = [
+    {
+      question: "1. What was the nickname given to the 1920s in the United States?",
+      options: ["The Long Twenties", "The Roaring Twenties", "The Great Depression", "The Gilded Age"],
+      answer: 1
+    },
+    {
+      question: "2. Which amendment to the US Constitution started Prohibition in 1920?",
+      options: ["18th Amendment", "19th Amendment", "21st Amendment", "16th Amendment"],
+      answer: 0
+    },
+    {
+      question: "3. The 19th Amendment, ratified in 1920, granted which right to American women?",
+      options: ["Right to vote", "Right to own property", "Right to education", "Right to equal pay"],
+      answer: 0
+    },
+    {
+      question: "4. Which cultural movement centered in Harlem marked a flourishing of African-American arts in the 1920s?",
+      options: ["Harlem Renaissance", "Beat Generation", "Transcendentalism", "Lost Generation"],
+      answer: 0
+    },
+    {
+      question: "5. The term “flapper” in the 1920s referred to:",
+      options: ["A popular jazz musician", "A rebellious young woman", "A type of dance", "A political leader"],
+      answer: 1
+    },
+    {
+      question: "6. Who was a famous American gangster during the Prohibition era?",
+      options: ["Al Capone", "John Dillinger", "Franklin D. Roosevelt", "J. Edgar Hoover"],
+      answer: 0
+    },
+    {
+      question: "7. The first successful solo nonstop transatlantic flight was completed by:",
+      options: ["Charles Lindbergh", "Amelia Earhart", "Howard Hughes", "Wright Brothers"],
+      answer: 0
+    },
+    {
+      question: "8. What did the National Origins Act of 1924 do?",
+      options: ["Encouraged immigration", "Restricted immigration", "Ended Prohibition", "Granted women suffrage"],
+      answer: 1
+    },
+    {
+      question: "9. Which economic event ended the prosperity of the 1920s?",
+      options: ["The Stock Market Crash of 1929", "The Dust Bowl", "The Korean War", "World War II"],
+      answer: 0
+    },
+    {
+      question: "10. What was the main economic characteristic of the 1920s?",
+      options: ["Economic depression", "Economic boom and consumerism", "Agricultural collapse", "Industrial stagnation"],
+      answer: 1
+    },
+    {
+      question: "11. The Scopes Trial of 1925 revolved around:",
+      options: ["Prohibition enforcement", "Evolution vs. Creationism in schools", "Women's right to vote", "Labor union strikes"],
+      answer: 1
+    },
+    {
+      question: "12. Jazz music became popular due to which 1920s cultural phenomenon?",
+      options: ["Harlem Renaissance", "Silent movies", "Flapper culture", "Women's suffrage movement"],
+      answer: 0
+    },
+    {
+      question: "13. Which invention revolutionized communication in the 1920s?",
+      options: ["Television", "Radio", "Internet", "Telephone"],
+      answer: 1
+    },
+    {
+      question: "14. The “Lost Generation” refers to:",
+      options: ["A group of disillusioned post-WWI writers", "Gangsters operating in Chicago", "Prohibition agents", "Women in new jobs"],
+      answer: 0
+    },
+    {
+      question: "15. What was the major material commodity that saw a boom due to the Model T car?",
+      options: ["Steel", "Oil", "Cotton", "Textiles"],
+      answer: 1
+    },
+    {
+      question: "16. Which legislation repealed Prohibition in 1933?",
+      options: ["18th Amendment", "19th Amendment", "20th Amendment", "21st Amendment"],
+      answer: 3
+    },
+    {
+      question: "17. Which term describes the intense fear of communism in the 1920s USA?",
+      options: ["The Red Scare", "The New Deal", "The Jazz Age", "The Great Migration"],
+      answer: 0
+    },
+    {
+      question: "18. The Ku Klux Klan in the 1920s was:",
+      options: ["Declining politically", "Resurgent with millions of members", "Focused on labor rights", "A jazz band"],
+      answer: 1
+    },
+    {
+      question: "19. Which sport became hugely popular in the 1920s with stars like Babe Ruth?",
+      options: ["Basketball", "Baseball", "Football", "Boxing"],
+      answer: 1
+    },
+    {
+      question: "20. The “Dust Bowl” phenomenon mostly affected:",
+      options: ["Midwestern farmers", "Northeastern factories", "Southern plantations", "Western mining towns"],
+      answer: 0
+    },
+    {
+      question: "21. What was the significance of the “19th Amendment” passed in 1920?",
+      options: ["Prohibited alcohol", "Gave women the right to vote", "Ended WWI", "Started the New Deal"],
+      answer: 1
+    },
+    {
+      question: "22. Which author wrote ‘The Great Gatsby’ capturing the spirit of the 1920s?",
+      options: ["Ernest Hemingway", "F. Scott Fitzgerald", "William Faulkner", "T.S. Eliot"],
+      answer: 1
+    },
+    {
+      question: "23. Which city was considered the birthplace of jazz music?",
+      options: ["Chicago", "New Orleans", "New York", "Detroit"],
+      answer: 1
+    },
+    {
+      question: "24. The 1927 film _The Jazz Singer_ was significant because:",
+      options: ["It was the first color film", "It was the first talkie (sound film)", "It was banned", "It was silent"],
+      answer: 1
+    },
+    {
+      question: "25. Which sector suffered most from overproduction leading up to the Great Depression?",
+      options: ["Agriculture", "Automobile", "Technology", "Entertainment"],
+      answer: 0
+    },
+    {
+      question: "26. Who was the US President during most of the 1920s?",
+      options: ["Woodrow Wilson", "Calvin Coolidge", "Herbert Hoover", "Warren G. Harding"],
+      answer: 1
+    },
+    {
+      question: "27. The Harlem Renaissance is best known for:",
+      options: ["Economic reforms", "Cultural, artistic, and intellectual African-American awakening", "Political campaigns", "Prohibition laws"],
+      answer: 1
+    },
+    {
+      question: "28. What was Harding’s presidency known for?",
+      options: ["Progressive reforms", "Corruption scandals", "Ending WWI", "Women's suffrage"],
+      answer: 1
+    },
+    {
+      question: "29. Which major event directly triggered the Great Depression?",
+      options: ["The Wall Street Crash (Black Tuesday)", "Prohibition repeal", "Start of WWI", "Dust Bowl"],
+      answer: 0
+    },
+    {
+      question: "30. In 1925, the famous novel ‘The Great Gatsby’ portrayed:",
+      options: ["The hopeful American dream and its corruption", "Life during the Civil War", "The pioneering West", "The Great Depression struggles"],
+      answer: 0
+    }
+  ];
+
+  let currentQuestion = 0;
+  let score = 0;
+  let selectedOptionIndex = null;
+
+  const questionElement = document.getElementById('question');
+  const optionsContainer = document.getElementById('options');
+  const nextButton = document.getElementById('next-btn');
+  const scoreContainer = document.getElementById('score-container');
+
+  function showQuestion() {
+    clearOptions();
+    selectedOptionIndex = null;
+    nextButton.disabled = true;
+    const q = questions[currentQuestion];
+    questionElement.innerText = q.question;
+    q.options.forEach((option, index) => {
+      const optionDiv = document.createElement('div');
+      optionDiv.classList.add('option');
+      optionDiv.innerText = option;
+      optionDiv.addEventListener('click', () => selectOption(index, optionDiv));
+      optionsContainer.appendChild(optionDiv);
+    });
+  }
+
+  function clearOptions() {
+    optionsContainer.innerHTML = '';
+  }
+
+  function selectOption(index, optionDiv) {
+    const allOptions = optionsContainer.querySelectorAll('.option');
+    allOptions.forEach(opt => opt.classList.remove('selected'));
+    optionDiv.classList.add('selected');
+    selectedOptionIndex = index;
+    nextButton.disabled = false;
+  }
+
+  nextButton.addEventListener('click', () => {
+    if (selectedOptionIndex === null) return;
+    if (selectedOptionIndex === questions[currentQuestion].answer) {
+      score++;
+    }
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+      showQuestion();
+    } else {
+      showScore();
+    }
+  });
+
+  function showScore() {
+    questionElement.style.display = 'none';
+    optionsContainer.style.display = 'none';
+    nextButton.style.display = 'none';
+    scoreContainer.style.display = 'block';
+    scoreContainer.innerHTML = `<h2>Your score: ${score} out of ${questions.length}</h2>`;
+  }
+
+  showQuestion();
+
+</script>
+</body>
+</html>

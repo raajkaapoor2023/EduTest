@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QCM Phonologie - Séquence 1 (GFerre 2015) - L3-M1</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #4b79a1, #283e51);
+      color: #f2f2f2;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 30px;
+      display: flex; justify-content: center; align-items: flex-start;
+      min-height: 100vh;
+    }
+    .container {
+      background: rgba(0,0,0,0.75);
+      border-radius: 16px;
+      max-width: 680px;
+      width: 100%;
+      padding: 30px 40px;
+      box-shadow: 0 0 18px rgba(255,255,255,0.3);
+      user-select: none;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 24px;
+      font-weight: 700;
+      font-size: 2em;
+      color: #a6c8ff;
+      text-shadow: 0 0 8px #bbe1fa;
+    }
+    .question {
+      font-size: 1.2em;
+      font-weight: 700;
+      margin-bottom: 18px;
+      color: #b0d6ff;
+    }
+    .options label {
+      display: block;
+      background: linear-gradient(90deg, #1e2a47 0%, #375a7d 100%);
+      border-radius: 14px;
+      padding: 13px 22px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      font-size: 1.08em;
+      color: #c6d9ff;
+      transition: background 0.3s ease, color 0.3s ease;
+      box-shadow: inset 1px 1px 6px rgba(255,255,255,0.15);
+    }
+    .options label:hover {
+      background: linear-gradient(90deg, #5772b7 0%, #a1bdff 100%);
+      color: #0c1f38;
+    }
+    input[type="radio"] {
+      display: none;
+    }
+    input[type="radio"]:checked + span {
+      font-weight: 800;
+      color: #dbe9ff;
+      text-shadow: 0 0 8px #80b3ff;
+    }
+    #feedback {
+      margin-top: 18px;
+      border-radius: 16px;
+      padding: 18px 24px;
+      font-weight: 700;
+      font-size: 1.15em;
+      max-width: 650px;
+      user-select: text;
+    }
+    #feedback.correct {
+      background-color: #1e4635;
+      color: #abe1a0;
+      box-shadow: 0 0 15px #6ecc69;
+    }
+    #feedback.incorrect {
+      background-color: #5e2f31;
+      color: #ffbab3;
+      box-shadow: 0 0 15px #f3645f;
+    }
+    #score {
+      font-size: 1.6em;
+      font-weight: 700;
+      margin-top: 36px;
+      text-align: center;
+      color: #aac7f7;
+      user-select: text;
+    }
+    #restart {
+      cursor: pointer;
+      background: #355a9c;
+      color: #e0e9ff;
+      width: 170px;
+      display: none;
+      border: none;
+      font-weight: 700;
+      font-size: 1.1em;
+      border-radius: 36px;
+      padding: 14px 0;
+      margin: 22px auto 0;
+      box-shadow: 0 5px 18px rgba(41, 65, 126, 0.8);
+      user-select: none;
+      transition: background 0.3s ease;
+    }
+    #restart:hover {
+      background: #2a4a7d;
+      box-shadow: 0 7px 24px rgba(33, 58, 107, 0.95);
+    }
+    #reference {
+      margin-top: 36px;
+      background: rgba(27, 41, 71, 0.95);
+      padding: 22px 28px;
+      border-left: 6px solid #a8c4ff;
+      border-radius: 12px;
+      max-height: 320px;
+      overflow-y: auto;
+      font-size: 0.9em;
+      line-height: 1.45;
+      color: #c0d4ff;
+      white-space: pre-wrap;
+      display: none;
+      user-select: text;
+    }
+    #reference h2 {
+      margin-top: 0;
+      color: #b2cfff;
+      font-weight: 700;
+      border-bottom: 1.8px solid #4c6799;
+      padding-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="main" aria-label="QCM Phonologie Séquence 1 GFerre 2015">
+    <h1>QCM Phonologie Séquence 1<br><small>GFerre 2015 - Licence/Master 1</small></h1>
+    <div id="quiz"></div>
+    <div id="feedback" aria-live="assertive" role="alert"></div>
+    <div id="score"></div>
+    <button id="restart" aria-label="Recommencer le quiz">Recommencer le quiz</button>
+    <div id="reference" aria-label="Réponses détaillées"></div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        q: "1. How is the phonemic transcription of functional words (like prepositions and conjunctions) generally treated in continuous speech according to Ferré (2015)?",
+        options: [
+          "They are fully stressed and pronounced with full vowels.",
+          "They lose their lexical stress and are frequently pronounced reduced or with schwa.",
+          "They are always accented and pronounced distinctly.",
+          "They are omitted completely from transcription."
+        ],
+        answer: 1,
+        reference: "Ferré (2015, p. 25): Functional words lose their lexical stress when unstressed and often appear in reduced forms with schwa vowels in continuous speech, e.g., 'of' pronounced /ə/ or /ɪ/ in unstressed contexts."
+      },
+      {
+        q: "2. According to the sequence, what principle explains why two adjacent strong stresses in English words are avoided?",
+        options: [
+          "Rhythmic Principle",
+          "Accentual Clash Avoidance Principle",
+          "Voicing Assimilation Principle",
+          "Law of Least Effort"
+        ],
+        answer: 1,
+        reference: "Ferré (2015, p. 27): The Stress Clash Avoidance Principle states that English tends to avoid stress on adjacent syllables, leading to secondary stress assignment or stress shifting."
+      },
+      {
+        q: "3. How is the English plural morpheme /-s/ pronounced after voiceless consonants in words like 'cats'?",
+        options: [
+          "/z/ voiced fricative",
+          "/s/ voiceless fricative",
+          "/ʃ/ postalveolar fricative",
+          "/ɪz/ vowel insertion"
+        ],
+        answer: 1,
+        reference: "Ferré (2015, p. 28): The plural /-s/ is pronounced as voiceless /s/ after voiceless consonants due to progressive assimilation of voicing."
+      },
+      {
+        q: "4. What is the phonological process underlying the insertion of a vowel in plurals such as 'places' and 'fields'?",
+        options: [
+          "Epenthesis to avoid two consecutive sibilants",
+          "Deletion of the consonant cluster",
+          "Final consonant devoicing",
+          "Nasal assimilation"
+        ],
+        answer: 0,
+        reference: "Ferré (2015, p. 28): Vowel epenthesis /ɪ/ is inserted after sibilants to avoid sequences of two sibilants in plural forms like 'places' /ˈpleɪsɪz/."
+      },
+      {
+        q: "5. What does the 'Lion Rule' mentioned in the sequence refer to in terms of English word stress?",
+        options: [
+          "Stress is always on the first syllable of a word.",
+          "Primary stress falls on the syllable before a cluster of consonants.",
+          "Primary stress is placed where a following syllable contains a vowel plus consonant 'ia'.",
+          "Stress placement depends solely on word length."
+        ],
+        answer: 2,
+        reference: "Ferré (2015, p. 27): The Lion Rule places primary stress on the penultimate syllable when followed by a consonant plus 'ia' sequence, as in words like 'enthusiasm'."
+      },
+      {
+        q: "6. In compounds like 'first-class railway carriage', how is stress typically assigned?",
+        options: [
+          "Primary stress only on the last word",
+          "Equal stress on all words",
+          "Primary stress on the first word of each compound, secondary or no stress on others",
+          "Stress randomly assigned"
+        ],
+        answer: 2,
+        reference: "Ferré (2015, p. 26): Stress in compound nouns usually falls on the first element, with subsequent elements receiving secondary or reduced stress."
+      },
+      {
+        q: "7. What process explains the reduction or neutralization of vowels in grammatical words during connected speech?",
+        options: [
+          "Elision",
+          "Vowel Lowering",
+          "Vowel Reduction to schwa or centralized vowels",
+          "Nasalization"
+        ],
+        answer: 2,
+        reference: "Ferré (2015, p. 25): Vowel reduction in unstressed grammatical words leads to schwa or centralized vowels, aiding fluency."
+      },
+      {
+        q: "8. What is the typical transcription notation for accents in monosyllabic grammatical words in continuous speech as recommended?",
+        options: [
+          "Always mark primary accent",
+          "No accent marks are needed, but can be marked if contrastive",
+          "Mark secondary accent",
+          "Use capital letters"
+        ],
+        answer: 1,
+        reference: "Ferré (2015, p. 26): Monosyllabic grammatical words usually lose lexical accent in continuous speech; accent is marked if contrastive."
+      },
+      {
+        q: "9. According to Ferré (2015), how should the 'th' digraph be transcribed in words like 'this' and 'thin'?",
+        options: [
+          "/θ/ in both cases",
+          "/ð/ in both cases",
+          "/ð/ voiced interdental fricative in 'this', /θ/ voiceless interdental fricative in 'thin'",
+          "/s/ sound for simplicity"
+        ],
+        answer: 2,
+        reference: "Ferré (2015, p. 29): 'th' represents /ð/ (voiced) in words like 'this' and /θ/ (voiceless) in words like 'thin'."
+      },
+      {
+        q: "10. How does Ferré (2015) recommend candidates to organize answers in phonology for clarity?",
+        options: [
+          "By random order of questions",
+          "By starting with the most complex terms",
+          "By grouping similar terms and going from simpler to more complex",
+          "By separately answering each question briefly"
+        ],
+        answer: 2,
+        reference: "Ferré (2015, p. 26): Organize answers by grouping similar phenomena and progressing from simple to complex for clarity and coherence."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    const quiz = document.getElementById("quiz");
+    const feedback = document.getElementById("feedback");
+    const scoreDisplay = document.getElementById("score");
+    const restartBtn = document.getElementById("restart");
+    const reference = document.getElementById("reference");
+
+    function renderQuestion() {
+      feedback.style.display = "none";
+      reference.style.display = "none";
+      restartBtn.style.display = "none";
+      scoreDisplay.textContent = "";
+      const q = questions[currentQuestion];
+      quiz.innerHTML = `
+        <div class="question">${q.q}</div>
+        <div class="options">
+          ${q.options.map((opt,i) => `
+            <label>
+              <input type="radio" name="option" value="${i}" />
+              <span>${opt}</span>
+            </label>`).join("")}
+        </div>`;
+      const optionInputs = quiz.querySelectorAll("input[name=option]");
+      optionInputs.forEach(opt => {
+        opt.addEventListener("change", () => checkAnswer(parseInt(opt.value)));
+      });
+    }
+
+    function checkAnswer(selected) {
+      const correct = questions[currentQuestion].answer;
+      feedback.style.display = "block";
+      if (selected === correct) {
+        score++;
+        feedback.className = "correct";
+        feedback.textContent = "✅ Correct!";
+      } else {
+        feedback.className = "incorrect";
+        feedback.innerHTML = `❌ Incorrect! The correct answer is: <b>${questions[currentQuestion].options[correct]}</b>`;
+      }
+      disableOptions();
+      setTimeout(() => {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+          renderQuestion();
+        } else {
+          finishQuiz();
+        }
+      }, 1600);
+    }
+
+    function disableOptions() {
+      quiz.querySelectorAll("input[name=option]").forEach(i => i.disabled = true);
+    }
+
+    function finishQuiz() {
+      quiz.innerHTML = "";
+      feedback.style.display = "none";
+      scoreDisplay.textContent = `You scored ${score} out of ${questions.length}.`;
+      restartBtn.style.display = "block";
+
+      let refsHTML = `<h2>Detailed Referenced Answers (GFerre, 2015, pp. 16-32)</h2>`;
+      refsHTML += questions.map((q,i) =>
+        `<b>Q${i+1}:</b> ${q.reference}`
+      ).join("<br><br>");
+      reference.innerHTML = refsHTML;
+      reference.style.display = "block";
+    }
+
+    restartBtn.addEventListener("click", () => {
+      currentQuestion = 0;
+      score = 0;
+      reference.style.display = "none";
+      restartBtn.style.display = "none";
+      scoreDisplay.textContent = "";
+      renderQuestion();
+    });
+
+    // Start quiz
+    renderQuestion();
+  </script>
+
+</body>
+</html>

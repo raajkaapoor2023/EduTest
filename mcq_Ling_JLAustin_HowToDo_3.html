@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>MCQ: How to Do Things with Words (Lectures IX–XII)</title>
+  <style>
+    body {
+      background-color: #eef2f7;
+      color: #2a2a2a;
+      font-family: Georgia, serif;
+      margin: 0; padding: 1em;
+    }
+    h1 {
+      text-align: center;
+      color: #1b3a57;
+      margin-bottom: 0.5em;
+    }
+    #quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .question-card {
+      border: 1px solid #ccc;
+      border-left: 6px solid #1b3a57;
+      border-radius: 4px;
+      padding: 1em;
+      margin-bottom: 1em;
+      background: #fff;
+    }
+    .question-card h2 {
+      margin: 0 0 0.5em;
+      font-size: 1.1em;
+      color: #1b3a57;
+    }
+    .options label {
+      display: block;
+      margin: 0.4em 0;
+      cursor: pointer;
+    }
+    .options input[type="radio"] {
+      margin-right: 0.5em;
+    }
+    #navigation {
+      display: flex;
+      justify-content: space-between;
+      margin: 1em 0;
+    }
+    .btn {
+      background-color: #1b3a57;
+      color: #fff;
+      border: none;
+      padding: 0.6em 1.2em;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    .btn:disabled {
+      background-color: #ccc;
+      cursor: default;
+    }
+    #results {
+      max-width: 800px;
+      margin: 2em auto;
+      background: #dde8f0;
+      padding: 1em;
+      border: 1px solid #1b3a57;
+      border-radius: 4px;
+    }
+    #results h2 {
+      color: #1b3a57;
+    }
+    .answer-block {
+      margin: 1em 0;
+      padding: 0.5em;
+      border-radius: 3px;
+    }
+    .answer-block.correct {
+      border-left: 4px solid #006400;
+      background: #f4fff4;
+    }
+    .answer-block.incorrect {
+      border-left: 4px solid #8b0000;
+      background: #fff4f4;
+    }
+    .explanation {
+      margin-top: 0.5em;
+      font-size: 0.95em;
+      color: #444;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #ccc;
+      margin: 1.5em 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>MCQ Test: How to Do Things with Words<br>(Lectures IX–XII)</h1>
+  <div id="quiz-container">
+    <div id="question-card" class="question-card"></div>
+    <div id="navigation">
+      <button id="prevBtn" class="btn">Previous</button>
+      <button id="skipBtn" class="btn">Skip</button>
+      <button id="nextBtn" class="btn">Next</button>
+      <button id="submitBtn" class="btn">Submit</button>
+    </div>
+  </div>
+  <div id="results"></div>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const questions = [
+      // Lecture IX (1–10)
+      {
+        question: "Lecture IX introduces the concept of locutionary acts. A locutionary act is:",
+        options: [
+          "Uttering noises, words, and their meaning",
+          "The intended effect on the listener",
+          "The speaker's mental state",
+          "A written inscription"
+        ],
+        answer: 0,
+        explanation: "A locutionary act covers uttering sounds (phonetic), forming words (phatic), and conveying meaning (rhetic)."
+      },
+      {
+        question: "An illocutionary act differs from a locutionary act by:",
+        options: [
+          "Focusing on effect on the world",
+          "Being purely phonetic",
+          "Carrying a conventional force like warning",
+          "Remaining entirely internal"
+        ],
+        answer: 2,
+        explanation: "Illocutionary acts use conventions to perform acts like informing or ordering."
+      },
+      {
+        question: "A perlocutionary act refers to:",
+        options: [
+          "A blunt factual report",
+          "The speaker's intention",
+          "The grammatical mood",
+          "The effects upon listeners"
+        ],
+        answer: 3,
+        explanation: "Perlocutionary acts capture consequences such as persuading or amusing the listener."
+      },
+      {
+        question: "Which formula distinguishes illocutionary from perlocutionary acts?",
+        options: [
+          "By saying x I did y",
+          "If x then y",
+          "Because x, y",
+          "In saying x I was doing y"
+        ],
+        answer: 3,
+        explanation: "'In saying x I was doing y' highlights force (illocution) rather than effect."
+      },
+      {
+        question: "Which formula best signals a perlocutionary focus?",
+        options: [
+          "In saying x I was doing y",
+          "By saying x I did y",
+          "Under x then y",
+          "Because x, y"
+        ],
+        answer: 1,
+        explanation: "'By saying x I did y' emphasizes the effect of the utterance on the listener."
+      },
+      {
+        question: "To separate an illocution from a perlocution, Austin advises:",
+        options: [
+          "Ignoring meaning",
+          "Drawing a hard line after the utterance",
+          "Merging both acts",
+          "Focusing on syntax"
+        ],
+        answer: 1,
+        explanation: "He argues the illocutionary act ends when force is performed; consequences come after."
+      },
+      {
+        question: "Locutionary and illocutionary acts are related how?",
+        options: [
+          "They can occur separately",
+          "Illocution includes locution",
+          "They are identical",
+          "Locution includes illocution"
+        ],
+        answer: 1,
+        explanation: "Every illocutionary act involves a locutionary act, but not vice versa."
+      },
+      {
+        question: "Why does Austin reject reducing illocutions to perlocutions?",
+        options: [
+          "Effects vary widely",
+          "Perlocutions are grammatical",
+          "Illocutions are meaningless",
+          "Locutions come first"
+        ],
+        answer: 0,
+        explanation: "Consequences are too broad—illocutions are defined by conventions, not by any effect."
+      },
+      {
+        question: "Which is NOT a feature of the perlocutionary act?",
+        options: [
+          "Persuading",
+          "Causing a reaction",
+          "Securing uptake",
+          "Convincing"
+        ],
+        answer: 2,
+        explanation: "Securing uptake is an illocutionary goal; perlocutions focus on actual consequences."
+      },
+      {
+        question: "A judge’s verdict that installs a law is best classified as a:",
+        options: [
+          "Locutionary act",
+          "Illocutionary act",
+          "Perlocutionary act",
+          "Rhetic act"
+        ],
+        answer: 1,
+        explanation: "Delivering a legal judgment exercises institutional force—an illocution."
+      },
+
+      // Lecture X (11–20)
+      {
+        question: "Lecture X examines 'in' vs. 'by' formulas. Which use of 'in' accounts for the means or manner?",
+        options: [
+          "In doing A I was doing B (process)",
+          "In doing A I was doing B (criterion)",
+          "In A I did B (goal)",
+          "In B I did A (inverse)"
+        ],
+        answer: 0,
+        explanation: "The 'process' sense: 'in doing A I was doing B' marks how A involves B as method."
+      },
+      {
+        question: "Which use of 'in' marks a criterion rather than a process?",
+        options: [
+          "In doing A I was doing B (process)",
+          "In doing A I was in the process of doing B",
+          "In being A I did B",
+          "In A I did B"
+        ],
+        answer: 3,
+        explanation: "The 'criterion' sense: 'In doing A I was B' classifies the act under B."
+      },
+      {
+        question: "To test if 'in saying x I was y-ing' names an illocution, you check if:",
+        options: [
+          "y can appear in non-continuous tense",
+          "in can be replaced by by",
+          "x is a question",
+          "y is a noun"
+        ],
+        answer: 1,
+        explanation: "If 'in' can’t become 'by' without oddness, it likely names an illocution."
+      },
+      {
+        question: "Which verb resists the 'in' test, showing perlocutionary force?",
+        options: [
+          "Warn",
+          "Persuade",
+          "Order",
+          "Promise"
+        ],
+        answer: 1,
+        explanation: "'In saying x I was persuading him' feels off; we prefer 'By saying x I persuaded him.'"
+      },
+      {
+        question: "When 'by' is used in a criterion sense, it:",
+        options: [
+          "Marks a method",
+          "Indicates result",
+          "Specifies classification",
+          "Signals an apology"
+        ],
+        answer: 2,
+        explanation: "The 'criterion' sense of 'by' helps label the act (e.g., 'By saying x I was naming it.')."
+      },
+      {
+        question: "Austin’s criteria with 'in' and 'by' are:",
+        options: [
+          "Perfect and exhaustive",
+          "Slippery and partial tests",
+          "Purely grammatical rules",
+          "Universal laws"
+        ],
+        answer: 1,
+        explanation: "He warns they remain informal, “slippery tests,” not fixed definitions."
+      },
+      {
+        question: "Which substitution often flips illocutionary to perlocutionary framing?",
+        options: [
+          "In → to",
+          "In → by",
+          "By → in",
+          "To → in"
+        ],
+        answer: 1,
+        explanation: "'By' formulas emphasize effects (perlocution) rather than force."
+      },
+      {
+        question: "Using 'in' with a non-verbal act produces:",
+        options: [
+          "Illocution",
+          "Perlocution",
+          "Locution",
+          "Mixed signals"
+        ],
+        answer: 3,
+        explanation: "'In' formulas extend beyond speech acts, leading to ambiguity."
+      },
+      {
+        question: "The 'by' formula in 'By uttering x I achieved y' best captures:",
+        options: [
+          "Locutionary forms",
+          "Illocutionary force",
+          "Perlocutionary consequences",
+          "Rhetic meaning"
+        ],
+        answer: 2,
+        explanation: "It highlights the actual result or effect of the utterance on the audience."
+      },
+      {
+        question: "Lecture X concludes that 'in' and 'by' tests are:",
+        options: [
+          "Grammatical absolutes",
+          "Perfect definitions",
+          "Heuristic guidelines",
+          "Unusable"
+        ],
+        answer: 2,
+        explanation: "They serve as loose heuristics rather than strict analytical tools."
+      },
+
+      // Lecture XI (21–30)
+      {
+        question: "Lecture XI asks whether statements are always mere constatives. He finds that statements:",
+        options: [
+          "Never entertain infelicities",
+          "Always escape illocution",
+          "Also carry illocutionary acts",
+          "Are only perlocutions"
+        ],
+        answer: 2,
+        explanation: "He shows 'He did not X' can also perform an illocutionary act like protesting."
+      },
+      {
+        question: "Austin shows a verdictive utterance like 'I find you guilty' is:",
+        options: [
+          "Only a statement",
+          "Only a performative",
+          "Both statement and performative",
+          "Neither"
+        ],
+        answer: 2,
+        explanation: "It states a fact and enacts a judicial decision—illustrating overlap."
+      },
+      {
+        question: "Which dimension do statements and performatives share, per Lecture XI?",
+        options: [
+          "Only truth vs happiness",
+          "Only force vs effect",
+          "Both felicity and truth",
+          "Neither"
+        ],
+        answer: 2,
+        explanation: "Both can be felicitous/infelicitous and true/false in different senses."
+      },
+      {
+        question: "Austin warns that the classification of utterances into two boxes is:",
+        options: [
+          "Necessary and clear",
+          "Overly simplistic",
+          "Determined solely by grammar",
+          "Legally mandated"
+        ],
+        answer: 1,
+        explanation: "He calls the strict performative/constative split an oversimplification."
+      },
+      {
+        question: "He concludes that a speech act ideally demands examination of:",
+        options: [
+          "Word order only",
+          "Locution + illocution",
+          "Speaker’s handwriting",
+          "Font choice"
+        ],
+        answer: 1,
+        explanation: "Both what is said (locution) and how it is done (illocution) must be analyzed."
+      },
+      {
+        question: "Why does Austin reject a pure dichotomy in Lecture XI?",
+        options: [
+          "All utterances blend saying and doing",
+          "Nobody listens anymore",
+          "Language is dead",
+          "He lost interest"
+        ],
+        answer: 0,
+        explanation: "He finds that every utterance simultaneously says and does something."
+      },
+      {
+        question: "Austin’s final verdict on true vs happy is that:",
+        options: [
+          "True speaks to facts, happy to convention",
+          "Both mean the same",
+          "Only happy matters",
+          "Both are worthless"
+        ],
+        answer: 0,
+        explanation: "He keeps truth for constatives and felicity for performatives, but sees overlap."
+      },
+      {
+        question: "The notion that pure statements are immune to critique is:",
+        options: [
+          "Supported by Austin",
+          "Seen as a myth",
+          "Found in legal codes",
+          "Basic to logic"
+        ],
+        answer: 1,  
+        explanation: "He debunks the idea that statements alone are free from speech-act failures."
+      },
+      {
+        question: "Lecture XI sets the stage for classifying:",
+        options: [
+          "Five speech-act categories",
+          "Imperatives only",
+          "Lexical semantics",
+          "Syntactic trees"
+        ],
+        answer: 0,
+        explanation: "He previews a formal taxonomy of illocutionary forces into five classes."
+      },
+
+      // Lecture XII (31–40)
+      {
+        question: "Lecture XII proposes how many major illocutionary classes?",
+        options: ["3", "4", "5", "6"],
+        answer: 2,
+        explanation: "He identifies five: Verdictives, Exercitives, Commissives, Behabitives, Expositives."
+      },
+      {
+        question: "Verdictives include all except:",
+        options: ["Judge's verdict", "Estimate", "Assent", "Diagnosis"],
+        answer: 2,
+        explanation: "Assent is a commissive or behabitive; verdictives focus on judgments."
+      },
+      {
+        question: "Exercitives are acts that:",
+        options: ["Express attitudes", "Exercise authority or power", "Provide assessments", "Tell stories"],
+        answer: 1,
+        explanation: "Exercitives like 'order' or 'appoint' use institutional power."
+      },
+      {
+        question: "Commissives are defined by:",
+        options: ["Judging outcomes", "Exercising rights", "Committing the speaker", "Expressing emotion"],
+        answer: 2,
+        explanation: "Commissives like 'promise' bind the speaker to future action."
+      },
+      {
+        question: "Behabitives cover:",
+        options: ["Requests and commands", "Judicial decisions", "Expressions of feeling or attitude", "Scientific definitions"],
+        answer: 2,
+        explanation: "Behabitives like 'apologize' or 'congratulate' express social attitudes."
+      },
+      {
+        question: "Expositives primarily involve:",
+        options: ["Clarifying discourse structure and reason", "Formal contracts", "Judgments on value", "Silent actions"],
+        answer: 0,
+        explanation: "Expositives like 'explain' or 'conclude' guide the flow of argument."
+      },
+      {
+        question: "Which is a classic verdictive verb?",
+        options: ["Order", "Promise", "Convict", "Thank"],
+        answer: 2,
+        explanation: "'Convict' gives an official finding—a hallmark of verdictives."
+      },
+      {
+        question: "Which is a canonical exercitive?",
+        options: ["Applaud", "Issue a summons", "Blame", "Define"],
+        answer: 1,
+        explanation: "Issuing summonses exercises legal authority—an exercitive act."
+      },
+      {
+        question: "Which best exemplifies a commissive?",
+        options: ["I adjudge you innocent", "I delegate authority", "I promise to pay", "I lament your loss"],
+        answer: 2,
+        explanation: "'I promise' commits the speaker to future action—central to commissives."
+      },
+      {
+        question: "Which class does 'thank' belong to?",
+        options: ["Verdictive", "Exercitive", "Commissive", "Behabitive"],
+        answer: 3,
+        explanation: "'Thank' expresses social courtesy and attitude, typical of behabitive acts."
+      }
+    ];
+
+    let currentIndex = 0;
+    const userAnswers = Array(questions.length).fill(null);
+
+    const cardEl = document.getElementById('question-card');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const skipBtn = document.getElementById('skipBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const resultsEl = document.getElementById('results');
+
+    function loadQuestion() {
+      const { question, options } = questions[currentIndex];
+      cardEl.innerHTML = `
+        <h2>Question ${currentIndex + 1} of ${questions.length}</h2>
+        <p>${question}</p>
+        <div class="options">
+          ${options.map((opt, i) => `
+            <label>
+              <input
+                type="radio"
+                name="option"
+                value="${i}"
+                ${userAnswers[currentIndex] === i ? 'checked' : ''}
+              />
+              ${opt}
+            </label>`
+          ).join('')}
+        </div>
+      `;
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === questions.length - 1;
+    }
+
+    function showResults() {
+      let correctCount = 0;
+      const blocks = questions.map((q, i) => {
+        const userAns = userAnswers[i];
+        const isCorrect = userAns === q.answer;
+        if (isCorrect) correctCount++;
+        return `
+          <div class="answer-block ${isCorrect ? 'correct' : 'incorrect'}">
+            <strong>Q${i + 1}:</strong> ${q.question}<br/>
+            Your answer: ${userAns !== null ? q.options[userAns] : '<em>Skipped</em>'}<br/>
+            Correct answer: ${q.options[q.answer]}
+            <div class="explanation">${q.explanation}</div>
+          </div>
+        `;
+      }).join('<hr/>');
+
+      resultsEl.innerHTML = `
+        <h2>Your Score: ${correctCount} / ${questions.length}</h2>
+        ${blocks}
+      `;
+      document.getElementById('quiz-container').style.display = 'none';
+    }
+
+    // event delegation for radio clicks
+    cardEl.addEventListener('change', (e) => {
+      if (e.target.name === 'option') {
+        userAnswers[currentIndex] = parseInt(e.target.value, 10);
+      }
+    });
+
+    prevBtn.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        loadQuestion();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentIndex < questions.length - 1) {
+        currentIndex++;
+        loadQuestion();
+      }
+    });
+
+    skipBtn.addEventListener('click', () => {
+      userAnswers[currentIndex] = null;
+      if (currentIndex < questions.length - 1) {
+        currentIndex++;
+        loadQuestion();
+      }
+    });
+
+    submitBtn.addEventListener('click', () => {
+      if (confirm('Are you sure you want to submit?')) {
+        showResults();
+      }
+    });
+
+    // initialize first question
+    loadQuestion();
+  });
+  </script>
+</body>
+</html>

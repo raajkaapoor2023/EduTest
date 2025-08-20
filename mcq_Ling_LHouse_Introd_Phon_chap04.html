@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chapter 4: Diphthongs – Linguistics Quiz</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(120deg, #2a5298, #1e3c72);
+      color: #f0f0f0;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+    .quiz-container {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      width: 90%;
+      max-width: 750px;
+    }
+    h1 {
+      text-align: center;
+      color: #ffca28;
+    }
+    .question {
+      font-size: 1.1rem;
+      margin: 1.5rem 0 0.5rem;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+    }
+    .option {
+      background: #0f2027;
+      border: 2px solid #ffca28;
+      margin: 0.5rem 0;
+      padding: 0.75rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .option:hover {
+      background: #f9a825;
+      color: black;
+    }
+    .btn {
+      margin-top: 1rem;
+      padding: 0.6rem 1.5rem;
+      background: #ff6f00;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .result, .explanation {
+      margin-top: 2rem;
+      background: #ffffff11;
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+    .correct { color: lightgreen; }
+    .incorrect { color: #ef5350; }
+  </style>
+</head>
+<body>
+<div class="quiz-container">
+  <h1>Chapter 4: Diphthongs (Ivy League Level)</h1>
+  <div id="quiz"></div>
+  <div class="result" id="result"></div>
+  <div class="explanation" id="explanation"></div>
+  <button class="btn" onclick="nextQuestion()">Next</button>
+</div>
+
+<script>
+const questions = [
+  {
+    q: "What is a diphthong?",
+    options: ["A blend of two consonants", "A glottalized vowel", "A vowel glide from one position to another", "A voiceless fricative"],
+    answer: 2,
+    ref: "Diphthongs involve a single syllable with a vowel quality that changes, or glides, during articulation. (p.33)"
+  },
+  {
+    q: "Which of the following is a diphthong in General American English?",
+    options: ["/æ/", "/ɪ/", "/aɪ/", "/u/"],
+    answer: 2,
+    ref: "/aɪ/ is a typical diphthong (e.g., 'eye'). (p.34)"
+  },
+  {
+    q: "Which is NOT a phonemic diphthong in General American English?",
+    options: ["/aɪ/", "/eɪ/", "/oʊ/", "/iː/"],
+    answer: 3,
+    ref: "/iː/ is a monophthong in IPA transcription. (p.34)"
+  },
+  {
+    q: "In the diphthong /aʊ/, the glide moves from:",
+    options: ["Front to back", "Back to front", "Mid to high front", "Low central to high back"],
+    answer: 3,
+    ref: "/aʊ/ starts low-central and glides to high-back rounded. (p.35)"
+  },
+  {
+    q: "Which word contains the diphthong /ɔɪ/?",
+    options: ["Boy", "Boat", "Bat", "Boot"],
+    answer: 0,
+    ref: "'Boy' contains /ɔɪ/ as in /bɔɪ/. (p.34)"
+  },
+  {
+    q: "Diphthongs are always:",
+    options: ["Unstressed", "Two-syllable sequences", "Single phonemes", "Retroflex vowels"],
+    answer: 2,
+    ref: "Diphthongs are single phonemes within a syllable. (p.33)"
+  },
+  {
+    q: "Which diphthong begins with a mid-back rounded vowel?",
+    options: ["/eɪ/", "/aʊ/", "/oʊ/", "/ɔɪ/"],
+    answer: 2,
+    ref: "/oʊ/ begins with a mid-back rounded vowel. (p.34)"
+  },
+  {
+    q: "What is the articulatory path of /eɪ/?",
+    options: ["High to low", "Front to back", "Mid-front to high-front", "Back to central"],
+    answer: 2,
+    ref: "/eɪ/ moves from mid-front to high-front. (p.34)"
+  },
+  {
+    q: "Which pair of diphthongs end with a high front glide?",
+    options: ["/aɪ/ and /ɔɪ/", "/oʊ/ and /aʊ/", "/aʊ/ and /i/", "/eɪ/ and /iː/"],
+    answer: 0,
+    ref: "/aɪ/ and /ɔɪ/ both glide to high-front [ɪ]. (p.34)"
+  },
+  {
+    q: "The diphthong /aɪ/ in General American is found in:",
+    options: ["Heat", "Hide", "Hood", "Heard"],
+    answer: 1,
+    ref: "'Hide' contains the /aɪ/ diphthong. (p.34)"
+  },
+  {
+    q: "In articulatory terms, diphthongs involve:",
+    options: ["Two separate vowel nuclei", "Vowel movement in a single syllable", "Laryngeal vibration cessation", "Complete lip closure"],
+    answer: 1,
+    ref: "Diphthongs involve a continuous vowel movement across the syllable. (p.33)"
+  },
+  {
+    q: "Which diphthong is found in the word 'go' in General American?",
+    options: ["/aɪ/", "/eɪ/", "/oʊ/", "/aʊ/"],
+    answer: 2,
+    ref: "'Go' uses the diphthong /oʊ/ in GA. (p.34)"
+  },
+  {
+    q: "Which feature best distinguishes diphthongs from monophthongs acoustically?",
+    options: ["Formant stability", "Vocal fry", "Pitch contour", "Formant transitions"],
+    answer: 3,
+    ref: "Diphthongs show clear formant transitions (especially F1 and F2). (p.35)"
+  },
+  {
+    q: "Which diphthong is characterized by a significant change in both F1 and F2?",
+    options: ["/ɪ/", "/eɪ/", "/aɪ/", "/i/"],
+    answer: 2,
+    ref: "/aɪ/ shows steep F1-F2 shifts, marking clear vowel movement. (p.35)"
+  },
+  {
+    q: "Diphthongs in English contrast with:",
+    options: ["Fricatives", "Monophthongs", "Consonant clusters", "Vowels"],
+    answer: 1,
+    ref: "They contrast with monophthongs, which remain stable in articulation. (p.33)"
+  },
+  {
+    q: "The symbol /eɪ/ is often used instead of /e/ because:",
+    options: ["/e/ does not exist in English", "It reflects actual pronunciation", "It's easier to teach", "It avoids confusion with /i/"],
+    answer: 1,
+    ref: "GA English tends to diphthongize /e/ as /eɪ/. (p.34)"
+  },
+  {
+    q: "Which diphthong is used in the word 'cow'?",
+    options: ["/aʊ/", "/aɪ/", "/oʊ/", "/ɔɪ/"],
+    answer: 0,
+    ref: "'Cow' is pronounced /kaʊ/. (p.34)"
+  },
+  {
+    q: "Which diphthong ends in a high-back rounded glide?",
+    options: ["/aɪ/", "/aʊ/", "/eɪ/", "/ɔɪ/"],
+    answer: 1,
+    ref: "/aʊ/ glides to high-back [ʊ]. (p.34)"
+  },
+  {
+    q: "The phonetic symbol /ɔɪ/ represents the vowel in:",
+    options: ["Foil", "Foot", "Full", "Fall"],
+    answer: 0,
+    ref: "Foil = /fɔɪl/ contains the /ɔɪ/ diphthong. (p.34)"
+  },
+  {
+    q: "Which term is most appropriate to describe diphthongs acoustically?",
+    options: ["Segmental glide", "Static vowel", "Voiceless syllable", "Nasal resonance"],
+    answer: 0,
+    ref: "Diphthongs function as segmental glides in vowel space. (p.35)"
+  }
+];
+
+let current = 0;
+let score = 0;
+
+function showQuestion() {
+  const q = questions[current];
+  document.getElementById("quiz").innerHTML = `
+    <div class="question">${current + 1}/20. ${q.q}</div>
+    <div class="options">
+      ${q.options.map((opt, i) => `
+        <div class="option" onclick="checkAnswer(${i})">
+          ${String.fromCharCode(65 + i)}. ${opt}
+        </div>`).join('')}
+    </div>
+  `;
+  document.getElementById("result").textContent = '';
+  document.getElementById("explanation").textContent = '';
+}
+
+function checkAnswer(selected) {
+  const q = questions[current];
+  const correct = q.answer;
+  const resultEl = document.getElementById("result");
+  const explanation = document.getElementById("explanation");
+
+  if (selected === correct) {
+    score++;
+    resultEl.innerHTML = `<span class="correct">✅ Correct!</span>`;
+  } else {
+    resultEl.innerHTML = `<span class="incorrect">❌ Incorrect.</span> Correct answer: <strong>${String.fromCharCode(65 + correct)}</strong>`;
+  }
+
+  explanation.innerHTML = `<strong>Reference:</strong> ${q.ref}`;
+}
+
+function nextQuestion() {
+  if (current < questions.length - 1) {
+    current++;
+    showQuestion();
+  } else {
+    document.getElementById("quiz").innerHTML = `<h2>🎓 Quiz Complete</h2><p>Your Score: ${score}/20</p>`;
+    document.getElementById("result").textContent = '';
+    document.getElementById("explanation").innerHTML = `
+      <p><strong>Review reference:</strong> Linda I. House, <em>Introductory Phonetics and Phonology</em>, Chapter 4: Diphthongs (1998).</p>`;
+    document.querySelector(".btn").style.display = "none";
+  }
+}
+
+showQuestion();
+</script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QCM Phonologie - Séquence 2 (GFerre 2015) - L3/M1</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #243B55, #141E30);
+      color: #f0f4ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 30px;
+      display: flex; justify-content: center; align-items: flex-start;
+      min-height: 100vh;
+    }
+    .container {
+      background: rgba(20, 30, 50, 0.9);
+      border-radius: 16px;
+      max-width: 750px;
+      width: 100%;
+      padding: 30px 40px;
+      box-shadow: 0 0 24px rgba(10, 20, 40, 0.7);
+      user-select: none;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 28px;
+      font-weight: 700;
+      font-size: 2em;
+      color: #9bc9ff;
+      text-shadow: 0 0 10px #77aaff;
+    }
+    .question {
+      font-size: 1.3em;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #a3c5ff;
+    }
+    .options label {
+      display: block;
+      background: linear-gradient(90deg, #304e8a 0%, #4b6dbc 100%);
+      border-radius: 14px;
+      padding: 14px 24px;
+      margin-bottom: 14px;
+      cursor: pointer;
+      font-size: 1.1em;
+      color: #d1e2ff;
+      box-shadow: inset 2px 2px 7px rgba(255,255,255,0.25);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .options label:hover {
+      background: linear-gradient(90deg, #5575b8 0%, #8ca6ff 100%);
+      color: #0c1f40;
+    }
+    input[type="radio"] {
+      display: none;
+    }
+    input[type="radio"]:checked + span {
+      font-weight: 800;
+      color: #ffffd9;
+      text-shadow: 0 0 6px #a3bfff;
+    }
+    #feedback {
+      margin-top: 22px;
+      border-radius: 16px;
+      padding: 20px 26px;
+      font-weight: 700;
+      font-size: 1.17em;
+      max-width: 700px;
+      user-select: text;
+    }
+    #feedback.correct {
+      background-color: #2f4c36;
+      color: #b8e1a0;
+      box-shadow: 0 0 20px #82ca78;
+    }
+    #feedback.incorrect {
+      background-color: #6a3131;
+      color: #ffbcca;
+      box-shadow: 0 0 20px #f4717f;
+    }
+    #score {
+      font-size: 1.7em;
+      font-weight: 700;
+      margin-top: 40px;
+      text-align: center;
+      color: #8db5ff;
+      user-select: text;
+    }
+    #restart {
+      cursor: pointer;
+      background: #4868b5;
+      color: #eaf0ff;
+      width: 180px;
+      display: none;
+      border: none;
+      font-weight: 700;
+      font-size: 1.15em;
+      border-radius: 36px;
+      padding: 16px 0;
+      margin: 28px auto 0;
+      box-shadow: 0 5px 22px rgba(72, 104, 181, 0.85);
+      user-select: none;
+      transition: background 0.3s ease;
+    }
+    #restart:hover {
+      background: #3755a0;
+      box-shadow: 0 7px 28px rgba(55, 85, 160, 0.95);
+    }
+    #reference {
+      margin-top: 42px;
+      background: rgba(28, 38, 65, 0.95);
+      padding: 26px 30px;
+      border-left: 6px solid #83a3ff;
+      border-radius: 14px;
+      max-height: 360px;
+      overflow-y: auto;
+      font-size: 0.95em;
+      line-height: 1.5;
+      color: #d8e3ff;
+      white-space: pre-wrap;
+      display: none;
+      user-select: text;
+    }
+    #reference h2 {
+      margin-top: 0;
+      color: #a7c1ff;
+      font-weight: 700;
+      border-bottom: 2px solid #5a7dbf;
+      padding-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="container" role="main" aria-label="QCM Phonologie Séquence 2 GFerre 2015">
+  <h1>QCM Phonologie - Séquence 2<br><small>GFerre 2015 - Niveau Licence / Master 1</small></h1>
+  <div id="quiz"></div>
+  <div id="feedback" aria-live="assertive" role="alert"></div>
+  <div id="score"></div>
+  <button id="restart" aria-label="Recommencer le quiz">Recommencer</button>
+  <div id="reference" aria-label="Réponses détaillées"></div>
+</div>
+
+<script>
+  const questions = [
+    {
+      q: "1. Dans la parole suivie décrite par Ferré (2015), comment les mots grammaticaux comme « for » et « my » sont-ils réalisés phonétiquement ?",
+      options: [
+        "Ils sont toujours prononcés avec leur forme pleine standard.",
+        "Certains prennent une forme réduite (ex. /fə/), d'autres sont souvent pleins selon le contexte.",
+        "Ils sont systématiquement élidés.",
+        "Ils conservent toujours leur accent lexical."
+      ],
+      answer: 1,
+      reference: "Ferré (2015, pp. 38-40) : Certains mots grammaticaux peuvent être réduits (ex. 'for' réduit à /fə/), alors que d'autres gardent leur forme pleine selon contexte et variété régionale."
+    },
+    {
+      q: "2. Comment se manifeste le phénomène de liaison (linking / intrusive r) en anglais britannique (SBE) dans la parole continue selon Ferré ?",
+      options: [
+        "Le /r/ est toujours prononcé, quelle que soit la position.",
+        "Le /r/ est prononcé devant une voyelle, même s'il est absent en graphie, ou intrusivement ajouté.",
+        "Le /r/ est prononcé qu'à la fin des mots.",
+        "Le /r/ n'est jamais prononcé en anglais britannique."
+      ],
+      answer: 1,
+      reference: "Ferré (2015, p. 40) : En SBE, le /r/ est prononcé pour réaliser une liaison devant voyelle (linking r), et parfois inséré sans graphie (intrusive r)."
+    },
+    {
+      q: "3. Quelle est la différence principale dans la prononciation du /h/ en début de mot selon Ferré ?",
+      options: [
+        "Le /h/ est toujours prononcé avec netteté en toutes situations.",
+        "Le /h/ peut être élidé devant certains mots grammaticaux inaccentués.",
+        "Le /h/ est prononcé uniquement en anglais américain.",
+        "Le /h/ est systématiquement muet devant une voyelle."
+      ],
+      answer: 1,
+      reference: "Ferré (2015, p. 39) : Le /h/ est parfois élidé après un mot inaccentué, surtout dans le cas de mots grammaticaux."
+    },
+    {
+      q: "4. Quelle règle phonologique explique la dévocalisation progressive de /r/ et /l/ dans les groupes consonantiques en anglais américain (GA), selon Ferré ?",
+      options: [
+        "Assimilation progressive pour ajuster la voisement entre consonnes voisées",
+        "Assimilation régressive des liquides vers les consonnes sourdes voisines",
+        "Insertion d'un épenthèse vocalique /ɪ/",
+        "Aucune règle ne régit cette dévocalisation"
+      ],
+      answer: 1,
+      reference: "Ferré (2015, p. 39) : En GA, /r/ et /l/ peuvent se dévoiser dans certains groupes consonantiques après consonnes sourdes (assimilation régressive)."
+    },
+    {
+      q: "5. Comment les voyelles /u/ et /ʊ/ sont-elles traitées dans les mots comme « russet » et « abrupt » selon Ferré ?",
+      options: [
+        "Ces voyelles subissent un étirement (tension) et une diphtongaison systématique.",
+        "/u/ peut être un voyelle contrôlée (checked), variant selon le contexte syllabique et l'accentuation.",
+        "Elles ne changent jamais en fonction de la syllabe.",
+        "/u/ est toujours prononcée comme un /a/ devant certaines consonnes."
+      ],
+      answer: 1,
+      reference: "Ferré (2015, pp. 41-42) : La voyelle /u/ est souvent checked, avec tension ou réduction selon l'accentuation et la clôture syllabique."
+    },
+    {
+      q: "6. Quels phénomènes phonologiques explique Ferré pour /t/ et /d/ suivis du glide /j/ dans des mots comme « actually » et « produce » ?",
+      options: [
+        "Devoisement obligatoire et disparition du glide.",
+        "Affrication facultative ou suppression du glide selon dialecte et syllabe accentuée.",
+        "Insertion d'un /r/ après le glide.",
+        "Aucune interaction entre les phonèmes."
+      ],
+      answer: 1,
+      reference: "Ferré (2015, p. 42) : Affrication de /t/ et /d/ suivis de /j/ est fréquente en syllabe inaccentuée ; en GA, le glide est souvent supprimé."
+    },
+    {
+      q: "7. Que décrit Ferré concernant la nasalisation en anglais dans les mots contenant /n/ suivi d’une consonne ?",
+      options: [
+        "Assimilation homorganique progressive ou régressive selon le contexte consonantique.",
+        "Les nasales sont toujours prononcées de la même manière.",
+        "Le /n/ est remplacé par /m/ systématiquement.",
+        "Les nasales sont supprimées entre consonnes."
+      ],
+      answer: 0,
+      reference: "Ferré (2015, p. 43) : Règle d'assimilation homorganique impactant la prononciation des nasales devant consonnes en fonction du lieu d'articulation."
+    },
+    {
+      q: "8. Quelle différence d’intonation est soulignée dans la question sur les groupes tonals autour de phrases comme « What is she kept at home for? » ?",
+      options: [
+        "La division en groupes intonatifs dépend du sens pragmatique, avec plusieurs accents nucléaires.",
+        "L’intonation est toujours monotone sans variation.",
+        "Une seule pause est possible à la fin de la phrase.",
+        "L’accent nucléaire est toujours sur le dernier mot."
+      ],
+      answer: 0,
+      reference: "Ferré (2015, pp. 44-45) : L’intonation anglaise divise les phrases complexes en groupes tonals, chaque groupe portant un accent nucléaire spécifique selon la fonction pragmatique."
+    },
+    {
+      q: "9. Quel phénomène explique la variation de prononciation entre /ð/ et /θ/ dans certains mots fonctionnels comme « that » ?",
+      options: [
+        "Alternance harmonique entre consonnes voisées et non voisées selon fonction grammaticale.",
+        "Interchangeabilité totale sans distinction.",
+        "Le /θ/ est toujours préféré en anglais américain.",
+        "La prononciation dépend de la position dans le mot seulement."
+      ],
+      answer: 0,
+      reference: "Ferré (2015, p. 44) : Les mots fonctionnels alternent entre /ð/ (voisé) et /θ/ (non voisé) selon leur rôle grammatical (déterminant, conjonction, pronom)."
+    },
+    {
+      q: "10. Quelle recommandation méthodologique Ferré donne-t-elle pour l’organisation des réponses en phonologie ?",
+      options: [
+        "Répondre question par question sans regroupement.",
+        "Analyser les faits phonologiques isolément sans mise en perspective.",
+        "Organisation progressive, du fait le plus simple aux cas complexes, avec regroupement thématique.",
+        "Présenter les réponses dans l’ordre alphabétique des termes."
+      ],
+      answer: 2,
+      reference: "Ferré (2015, p. 26) : Organisation claire et progressive des réponses, regroupant les phénomènes similaires et allant du simple au complexe."
+    }
+  ];
+
+  let currentQuestion = 0;
+  let score = 0;
+
+  const quiz = document.getElementById("quiz");
+  const feedback = document.getElementById("feedback");
+  const scoreDisplay = document.getElementById("score");
+  const restartBtn = document.getElementById("restart");
+  const reference = document.getElementById("reference");
+
+  function renderQuestion() {
+    feedback.style.display = "none";
+    reference.style.display = "none";
+    restartBtn.style.display = "none";
+    scoreDisplay.textContent = "";
+    const q = questions[currentQuestion];
+    quiz.innerHTML = `
+      <div class="question">${q.q}</div>
+      <div class="options">
+        ${q.options.map((opt, i) => `
+          <label>
+            <input type="radio" name="option" value="${i}" />
+            <span>${opt}</span>
+          </label>`).join('')}
+      </div>`;
+    const optionInputs = quiz.querySelectorAll("input[name=option]");
+    optionInputs.forEach(opt => {
+      opt.addEventListener("change", () => checkAnswer(parseInt(opt.value)));
+    });
+  }
+
+  function checkAnswer(selected) {
+    const correct = questions[currentQuestion].answer;
+    feedback.style.display = "block";
+    if (selected === correct) {
+      score++;
+      feedback.className = "correct";
+      feedback.textContent = "✅ Bonne réponse !";
+    } else {
+      feedback.className = "incorrect";
+      feedback.innerHTML = `❌ Mauvaise réponse. La bonne réponse est : <b>${questions[currentQuestion].options[correct]}</b>`;
+    }
+    disableOptions();
+    // délai plus long de 3 secondes entre questions pour approfondir la réflexion
+    setTimeout(() => {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        renderQuestion();
+      } else {
+        finishQuiz();
+      }
+    }, 3000);
+  }
+
+  function disableOptions() {
+    quiz.querySelectorAll("input[name=option]").forEach(i => i.disabled = true);
+  }
+
+  function finishQuiz() {
+    quiz.innerHTML = "";
+    feedback.style.display = "none";
+    scoreDisplay.textContent = `Score final : ${score} / ${questions.length}`;
+    restartBtn.style.display = "block";
+
+    let refsHTML = `<h2>Réponses détaillées et références (GFerre, 2015 ; sources académiques) :</h2>`;
+    refsHTML += questions.map((q, i) => `<b>Q${i+1} :</b> ${q.reference}`).join("<br><br>");
+
+    // Ajout de références académiques complémentaires
+    refsHTML += `<br><hr><br><b>Références académiques complémentaires : </b>
+<ul>
+<li>Hammond, M. (1992). An Introduction to English Phonology. Edinburgh University Press.</li>
+<li>Hayes, B. (1984). Theoretical Aspects of Rhythm and Meter. Linguistics Department, UCLA.</li>
+<li>Liberman, M. & Prince, A. (1977). On Stress and Linguistic Rhythm. Linguistic Inquiry.</li>
+<li>Couper-Kuhlen, E. (1986). An Introduction to English Prosody. Routledge.</li>
+<li>Ladefoged, P., & Johnson, K. (2011). A Course in Phonetics (6th ed.). Cengage Learning.</li>
+</ul>`;
+    
+    reference.innerHTML = refsHTML;
+    reference.style.display = "block";
+  }
+
+  restartBtn.addEventListener("click", () => {
+    currentQuestion = 0;
+    score = 0;
+    reference.style.display = "none";
+    restartBtn.style.display = "none";
+    scoreDisplay.textContent = "";
+    renderQuestion();
+  });
+
+  // Lancement initial
+  renderQuestion();
+</script>
+</body>
+</html>

@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Great Gatsby: Literary Historical Criticism Quiz</title>
+<style>
+  body {
+    font-family: 'Palatino Linotype', Palatino, serif;
+    background: linear-gradient(120deg, #f0f4f8, #d9e2ec);
+    margin: 0; padding: 0;
+    display: flex; justify-content: center; align-items: center;
+    min-height: 100vh;
+    color: #222;
+  }
+  #quiz-container {
+    background: white;
+    border-radius: 16px;
+    max-width: 750px;
+    width: 95vw;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    padding: 35px 50px 50px 50px;
+  }
+  h1 {
+    text-align: center;
+    font-weight: 900;
+    color: #003049;
+    margin-bottom: 30px;
+  }
+  #question-number {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #d62828;
+    margin-bottom: 12px;
+  }
+  #question-text {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: #303030;
+    line-height: 1.4;
+  }
+  ul.options {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 30px;
+  }
+  li.option {
+    background: #fefefe;
+    border: 2px solid #d9d9d9;
+    border-radius: 14px;
+    padding: 15px 25px;
+    margin-bottom: 14px;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: background-color 0.25s, border-color 0.25s, color 0.25s;
+    user-select: none;
+  }
+  li.option:hover {
+    background-color: #d62828;
+    border-color: #b00000;
+    color: white;
+  }
+  li.option.selected {
+    background-color: #f77f00;
+    border-color: #d45200;
+    color: white;
+  }
+  #next-btn {
+    display: block;
+    width: 100%;
+    background-color: #003049;
+    color: white;
+    font-weight: 700;
+    font-size: 1.2rem;
+    padding: 16px 0;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,48,73,0.4);
+    transition: background-color 0.3s;
+  }
+  #next-btn:disabled {
+    background-color: #b9bcc0;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+  #result-container {
+    max-height: 470px;
+    overflow-y: auto;
+    display: none;
+  }
+  #score {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #007f5f;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  #feedback-text {
+    text-align: center;
+    font-size: 1.15rem;
+    margin-bottom: 30px;
+    font-style: italic;
+  }
+  #detailed-answers section {
+    border-top: 2px solid #d62828;
+    margin-bottom: 30px;
+    padding-top: 18px;
+  }
+  #detailed-answers h3 {
+    color: #d62828;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+  }
+  #detailed-answers p {
+    font-size: 0.96rem;
+    color: #222;
+    line-height: 1.48;
+    margin-bottom: 12px;
+  }
+  #play-again-btn {
+    margin-top: 15px;
+    background-color: #d62828;
+    color: white;
+    font-weight: 700;
+    font-size: 1.15rem;
+    padding: 15px;
+    border: none;
+    border-radius: 14px;
+    width: 100%;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(214,40,40,0.7);
+  }
+  #play-again-btn:hover {
+    background-color: #b22222;
+  }
+  /* Scrollbar */
+  #result-container::-webkit-scrollbar {
+    width: 10px;
+  }
+  #result-container::-webkit-scrollbar-track {
+    background: #f0f4f8;
+  }
+  #result-container::-webkit-scrollbar-thumb {
+    background-color: #d62828;
+    border-radius: 10px;
+    border: 3px solid #f0f4f8;
+  }
+
+  @media (max-width: 500px) {
+    #quiz-container {
+      padding: 25px 30px 35px 30px;
+    }
+    #question-text {
+      font-size: 1.15rem;
+    }
+    li.option {
+      font-size: 1rem;
+      padding: 12px 20px;
+      margin-bottom: 12px;
+    }
+    #next-btn, #play-again-btn {
+      font-size: 1.1rem;
+      padding: 14px 0;
+    }
+  }
+</style>
+</head>
+<body>
+  <div id="quiz-container">
+    <h1>The Great Gatsby: Literary Historical Criticism Quiz</h1>
+    
+    <div id="quiz-content">
+      <div id="question-number"></div>
+      <div id="question-text"></div>
+      <ul class="options" id="options-list"></ul>
+      <button disabled id="next-btn">Next</button>
+    </div>
+
+    <div id="result-container">
+      <div id="score"></div>
+      <div id="feedback-text"></div>
+      <div id="detailed-answers"></div>
+      <button id="play-again-btn">Retry Quiz</button>
+    </div>
+  </div>
+
+<script>
+  // Question bank on literary historical criticism of The Great Gatsby with detailed referenced answers
+  const questions = [
+    {
+      question: "Which literary criticism approach views 'The Great Gatsby' as a reflection of 1920s post-war American society and its moral decline?",
+      options: [
+        "Psychoanalytic criticism",
+        "Formalist criticism",
+        "Historicism",
+        "Marxist criticism"
+      ],
+      answer: 2,
+      explanation: `Historicism interprets the novel as a product and critique of its specific historical context—the Roaring Twenties, post-World War I economic boom, and moral decay in America. Fitzgerald's critique of greed, excess, and the failure of the American Dream fits this approach.<br><strong>Reference:</strong> Study.com Literary Criticism of The Great Gatsby.`
+    },
+    {
+      question: "In psychoanalytic criticism of Gatsby, what does Gatsby most commonly symbolize according to scholars?",
+      options: [
+        "The superficiality of wealth",
+        "Fitzgerald's own hidden desires and anxieties",
+        "The stable American Dream",
+        "Racial tensions of the 1920s"
+      ],
+      answer: 1,
+      explanation: `Psychoanalytic criticism reads Gatsby as an embodiment of the author's innermost dreams and anxieties, reflecting tensions between idealism and harsh reality.<br><strong>Reference:</strong> Study.com Literary Criticism section on psychoanalytic interpretations.`
+    },
+    {
+      question: "Formalist critics often highlight which symbol in 'The Great Gatsby' as representing Gatsby's hopes and the American Dream?",
+      options: [
+        "The eyes of Dr. T. J. Eckleburg",
+        "The Valley of Ashes",
+        "The green light at Daisy's dock",
+        "Gatsby's yellow car"
+      ],
+      answer: 2,
+      explanation: `Formalist analysis isolates symbols like the <em>green light</em> as external representations of Gatsby’s elusive hopes and the broader American Dream ideal.<br><strong>Reference:</strong> Huddleston & Pullum (approx. classic formalist approach).`
+    },
+    {
+      question: "Which social class division is emphasized through the contrasting settings of East Egg and West Egg?",
+      options: [
+        "Old money vs. new money",
+        "North vs. South",
+        "Urban vs. rural",
+        "Immigrant vs. native-born"
+      ],
+      answer: 0,
+      explanation: `East Egg represents established, old wealth, while West Egg typifies newly wealthy individuals lacking social pedigree, highlighting class tensions central to the novel’s critique.<br><strong>Reference:</strong> Morton-Mollo, Sherry. The Great Gatsby Analysis of Setting, 2022.`
+    },
+    {
+      question: "The 'Valley of Ashes' in Gatsby is often interpreted as a symbol of:",
+      options: [
+        "Hope and renewal",
+        "Moral and social decay",
+        "Prosperity and success",
+        "Romantic idealism"
+      ],
+      answer: 1,
+      explanation: `The Valley of Ashes represents decay and the consequence of pursuing wealth without ethics or spirituality, a stark social commentary on the era.<br><strong>Reference:</strong> Morton-Mollo (2022), EBSCO Analysis.`
+    },
+    {
+      question: "Fredric Jameson's Marxist interpretation of Gatsby focuses on:",
+      options: [
+        "Daisy's symbolic transformation of materiality",
+        "The failure of personal relationships",
+        "The rise of the jazz age",
+        "Sexual politics"
+      ],
+      answer: 0,
+      explanation: `Jameson notes how Daisy exemplifies consumer culture’s illusions, turning material objects into ephemeral dreams linked with social status.<br><strong>Reference:</strong> Frederick Jameson quoted in literary criticism overviews.`
+    },
+    {
+      question: "Which critic described Gatsby as 'a man from nowhere, absolutely self-made in the image of an obscure and undefined ideal'?",
+      options: [
+        "William Rose Benet",
+        "Isabel Paterson",
+        "Carl Von Vechten",
+        "Gary Scrimgeour"
+      ],
+      answer: 1,
+      explanation: `Isabel Paterson (1925) highlighted Gatsby’s ambiguous social origins and idealistic self-reinvention, a key early interpretation.<br><strong>Reference:</strong> Paterson's 1925 critique, as cited in analytical collections.`
+    },
+    {
+      question: "How does Susan Resneck interpret Daisy's role in the novel?",
+      options: [
+        "As a victim of societal pressures who uses illusions to cope",
+        "As a symbol of unwavering moral clarity",
+        "As Gatsby's faithful partner",
+        "As a marginalized outsider"
+      ],
+      answer: 0,
+      explanation: `Resneck views Daisy as deliberately embracing illusory roles to give meaning and cope with external societal pressures.<br><strong>Reference:</strong> Susan Resneck literary criticism.`
+    },
+    {
+      question: "Which theme is central to Nick Carraway’s narrative perspective in Gatsby?",
+      options: [
+        "Idealistic optimism",
+        "Disillusionment with the American Dream",
+        "Romantic escapism",
+        "Moral absolutism"
+      ],
+      answer: 1,
+      explanation: `Nick's disillusionment reflects the critique of the American Dream’s failure post-WWI, illustrating moral emptiness beneath wealth and glamour.<br><strong>Reference:</strong> Study.com literary criticism and summary.`
+    },
+    {
+      question: "In historical criticism, Fitzgerald’s novel is often seen as a response to:",
+      options: [
+        "The Great Depression",
+        "World War I aftermath and the Roaring Twenties",
+        "The Civil Rights Movement",
+        "The Cold War tensions"
+      ],
+      answer: 1,
+      explanation: `The novel critiques the post-WWI era, known as the Roaring Twenties, marked by economic boom and moral ambiguity.<br><strong>Reference:</strong> Common academic consensus; Study.com and Morton-Mollo (2022).`
+    },
+    {
+      question: "Which element reflects Fitzgerald’s critique of materialism?",
+      options: [
+        "Gatsby's parties and lavish lifestyle",
+        "The rural Midwest setting",
+        "Daisy's moral purity",
+        "The novel’s epilogue"
+      ],
+      answer: 0,
+      explanation: `Gatsby’s extravagant parties symbolize the excessive materialism and superficial pleasures dominating 1920s society.<br><strong>Reference:</strong> Popular literary criticism and general analysis.`
+    },
+    {
+      question: "Why is Gatsby considered a 'mythic' character according to some critics?",
+      options: [
+        "Because of his supernatural abilities",
+        "He embodies the conflict between illusion and reality in the American Dream",
+        "He is based on a historical figure",
+        "Because the narrative is told in myths"
+      ],
+      answer: 1,
+      explanation: `Gatsby represents the idealistic yet ultimately unattainable dream, personifying the mythic American Dream tension.<br><strong>Reference:</strong> Bewley’s critical interpretations.`
+    },
+    {
+      question: "What does Carl Von Vechten highlight about Gatsby’s personality?",
+      options: [
+        "His realistic pragmatism",
+        "His passionate idealism and charming but cheap imagination",
+        "His political ambitions",
+        "His academic intellect"
+      ],
+      answer: 1,
+      explanation: `Von Vechten describes Gatsby as possessing a passionate but curiously cheap imagination, which evokes sympathy despite flaws.<br><strong>Reference:</strong> Carl Von Vechten, 1925 literary commentary.`
+    },
+    {
+      question: "Which literary theme is explored through Daisy’s character across several literary criticisms?",
+      options: [
+        "Symbol of spiritual redemption",
+        "Representation of illusory femininity and material fetishism",
+        "Embodiment of feminist ideals",
+        "A political revolutionary"
+      ],
+      answer: 1,
+      explanation: `Many critics interpret Daisy as a symbol of superficial femininity tied to wealth and social status rather than substantive identity.<br><strong>Reference:</strong> Leland S Person and Fredric Jameson’s analyses.`
+    },
+    {
+      question: "Gary Scrimgeour interprets Nick’s defining narrative trait as:",
+      options: [
+        "Impartial journalist",
+        "Crucial honesty forming the reader’s trust",
+        "Naive dreamer",
+        "Corrupt insider"
+      ],
+      answer: 1,
+      explanation: `Nick’s honesty provides the reader with a reliable baseline, framing the narrative as credible yet critical.<br><strong>Reference:</strong> Gary Scrimgeour 1966.`
+    },
+    {
+      question: "Why is Gatsby’s death significant in literary historical criticism?",
+      options: [
+        "It symbolizes the ultimate failure of the American Dream",
+        "It represents victory over corruption",
+        "It signals a new beginning",
+        "It is an ironic twist unrelated to the novel’s themes"
+      ],
+      answer: 0,
+      explanation: `Gatsby’s death by murder highlights the ultimate futility and tragedy of striving for the American Dream, destroyed by social inequalities.<br><strong>Reference:</strong> PMC Article on American Dream in Gatsby.`
+    },
+    {
+      question: "Which narrative style device is commonly noted as shaping the reader’s perception?",
+      options: [
+        "First-person unreliable narration by Nick Carraway",
+        "Third-person omniscient narration",
+        "Stream-of-consciousness",
+        "Multiple narrators"
+      ],
+      answer: 0,
+      explanation: `Nick Carraway’s first-person, often morally ambivalent narration shapes the novel’s tone and themes, creating subtle unreliability.<br><strong>Reference:</strong> SparkNotes and literary analyses.`
+    },
+    {
+      question: "In critiques, Gatsby's lavish parties are often seen as:",
+      options: [
+        "Pure celebrations of joy and community",
+        "Symptomatic of the era’s emptiness and social superficiality",
+        "Romantic gatherings",
+        "Political rallies"
+      ],
+      answer: 1,
+      explanation: `Fitzgerald uses Gatsby’s parties to highlight societal emptiness disguised by glittering excess.<br><strong>Reference:</strong> Common critical literature including CliffsNotes.`
+    },
+    {
+      question: "Which historical event indirectly influences the despair present in Gatsby's world?",
+      options: [
+        "World War I",
+        "World War II",
+        "The Great Depression",
+        "The Cold War"
+      ],
+      answer: 0,
+      explanation: `The aftermath of World War I and its cultural disillusionment set the novel’s broader context of lost innocence and moral crisis.<br><strong>Reference:</strong> General literary historical criticism.`
+    },
+    {
+      question: "Overall, literary historical criticism of Gatsby reflects that the novel primarily critiques:",
+      options: [
+        "Rural life and farming traditions",
+        "The hollowness of material success and social stratification",
+        "Technological progress",
+        "Political institutions"
+      ],
+      answer: 1,
+      explanation: `The novel critiques the moral and social decay hidden beneath wealth and the American Dream's illusions.<br><strong>Reference:</strong> Synthesized from multiple scholarly sources.`
+    }
+  ];
+
+  // Fisher-Yates shuffle
+  function shuffle(array) {
+    let currentIndex = array.length, randomIndex;
+    while (currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+    return array;
+  }
+
+  let shuffledQuestions = [];
+  let currentQuestionIndex = 0;
+  let score = 0;
+  let selectedOptionIndex = null;
+  let userAnswers = [];
+
+  const questionNumberEl = document.getElementById('question-number');
+  const questionTextEl = document.getElementById('question-text');
+  const optionsListEl = document.getElementById('options-list');
+  const nextBtn = document.getElementById('next-btn');
+  const quizContent = document.getElementById('quiz-content');
+  const resultContainer = document.getElementById('result-container');
+  const scoreEl = document.getElementById('score');
+  const feedbackText = document.getElementById('feedback-text');
+  const detailedAnswers = document.getElementById('detailed-answers');
+  const playAgainBtn = document.getElementById('play-again-btn');
+
+  function startQuiz() {
+    score = 0;
+    currentQuestionIndex = 0;
+    selectedOptionIndex = null;
+    userAnswers = [];
+
+    shuffledQuestions = shuffle([...questions]);
+
+    quizContent.style.display = 'block';
+    resultContainer.style.display = 'none';
+
+    showQuestion();
+  }
+
+  function showQuestion() {
+    selectedOptionIndex = null;
+    nextBtn.disabled = true;
+
+    const currentQ = shuffledQuestions[currentQuestionIndex];
+
+    questionNumberEl.textContent = `Question ${currentQuestionIndex + 1} of ${shuffledQuestions.length}`;
+    questionTextEl.textContent = currentQ.question;
+
+    optionsListEl.innerHTML = '';
+
+    let optionsShuffled = shuffle(currentQ.options.map((opt, i) => ({ text: opt, index: i })));
+
+    optionsShuffled.forEach(({text, index}) => {
+      const li = document.createElement('li');
+      li.classList.add('option');
+      li.textContent = text;
+      li.dataset.originalIndex = index;
+
+      li.addEventListener('click', () => {
+        [...optionsListEl.children].forEach(el => el.classList.remove('selected'));
+        li.classList.add('selected');
+        selectedOptionIndex = parseInt(li.dataset.originalIndex);
+        nextBtn.disabled = false;
+      });
+
+      optionsListEl.appendChild(li);
+    });
+
+    nextBtn.textContent = (currentQuestionIndex === shuffledQuestions.length -1) ? 'Finish' : 'Next';
+  }
+
+  nextBtn.addEventListener('click', () => {
+    userAnswers.push(selectedOptionIndex);
+
+    if(selectedOptionIndex === shuffledQuestions[currentQuestionIndex].answer){
+      score++;
+    }
+
+    currentQuestionIndex++;
+
+    if(currentQuestionIndex < shuffledQuestions.length){
+      showQuestion();
+    } else {
+      showResults();
+    }
+  });
+
+  function showResults() {
+    quizContent.style.display = 'none';
+    resultContainer.style.display = 'block';
+
+    scoreEl.textContent = `Your Score: ${score} / ${shuffledQuestions.length}`;
+
+    const percentage = (score / shuffledQuestions.length) * 100;
+    if (percentage >= 85) {
+      feedbackText.textContent = "Excellent! You show strong mastery of literary historical criticism on The Great Gatsby.";
+      feedbackText.style.color = '#007f5f';
+    } else if (percentage >= 60) {
+      feedbackText.textContent = "Good work! Review the detailed explanations to deepen your understanding.";
+      feedbackText.style.color = '#dab785';
+    } else {
+      feedbackText.textContent = "Consider reviewing the notes carefully; understanding criticism is key to mastery.";
+      feedbackText.style.color = '#d62828';
+    }
+
+    detailedAnswers.innerHTML = '';
+    shuffledQuestions.forEach((q, idx) => {
+      const userAnswer = userAnswers[idx];
+      const correctAnswer = q.answer;
+      const correctText = q.options[correctAnswer];
+      const userText = typeof userAnswer === 'number' && q.options[userAnswer] ? q.options[userAnswer] : 'No answer selected';
+
+      const section = document.createElement('section');
+
+      const h3 = document.createElement('h3');
+      h3.textContent = `Q${idx +1}: ${q.question}`;
+      section.appendChild(h3);
+
+      const pUser = document.createElement('p');
+      pUser.innerHTML = `Your answer: <strong>${userText}</strong> ${userAnswer === correctAnswer ? '✅' : '❌'}`;
+      section.appendChild(pUser);
+
+      if(userAnswer !== correctAnswer){
+        const pCorrect = document.createElement('p');
+        pCorrect.innerHTML = `Correct answer: <strong>${correctText}</strong>`;
+        section.appendChild(pCorrect);
+      }
+
+      const pExpl = document.createElement('p');
+      pExpl.innerHTML = `<em>Explanation:</em> ${q.explanation}`;
+      section.appendChild(pExpl);
+
+      detailedAnswers.appendChild(section);
+    });
+  }
+
+  playAgainBtn.addEventListener('click', () => {
+    startQuiz();
+    window.scrollTo(0,0);
+  });
+
+  // Start quiz on load
+  window.onload = startQuiz;
+</script>
+</body>
+</html>

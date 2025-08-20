@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chapter 6: Suprasegmentals – Linguistics Quiz</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(120deg, #3a0ca3, #4361ee);
+      color: #f8f9fa;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+    .quiz-container {
+      background: rgba(255, 255, 255, 0.07);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+      width: 90%;
+      max-width: 750px;
+    }
+    h1 {
+      text-align: center;
+      color: #ffd60a;
+    }
+    .question {
+      font-size: 1.1rem;
+      margin: 1.5rem 0 0.5rem;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+    }
+    .option {
+      background: #1e1e30;
+      border: 2px solid #ffd60a;
+      margin: 0.4rem 0;
+      padding: 0.6rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+    .option:hover {
+      background: #ffd60a;
+      color: black;
+    }
+    .btn {
+      margin-top: 1rem;
+      padding: 0.6rem 1.5rem;
+      background: #ff6f00;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .result, .explanation {
+      margin-top: 2rem;
+      background: #ffffff11;
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+    .correct { color: lightgreen; }
+    .incorrect { color: #f94144; }
+  </style>
+</head>
+<body>
+<div class="quiz-container">
+  <h1>Chapter 6: Suprasegmentals – Ivy League BLing</h1>
+  <div id="quiz"></div>
+  <div class="result" id="result"></div>
+  <div class="explanation" id="explanation"></div>
+  <button class="btn" onclick="nextQuestion()">Next</button>
+</div>
+
+<script>
+const questions = [
+  {
+    q: "What are suprasegmentals?",
+    options: ["Features of consonants", "Word-internal morphemes", "Features that extend across segments", "Allophonic variations"],
+    answer: 2,
+    ref: "Suprasegmentals are features like stress and intonation that extend beyond individual sounds. (p.49)"
+  },
+  {
+    q: "Which is NOT typically considered a suprasegmental?",
+    options: ["Intonation", "Stress", "Nasality", "Pitch"],
+    answer: 2,
+    ref: "Nasality is segmental; pitch, stress, and intonation are suprasegmental. (p.49)"
+  },
+  {
+    q: "Lexical stress refers to:",
+    options: ["Stress in every syllable", "Stress on prefixes only", "Word-level stress patterns", "Sentence intonation"],
+    answer: 2,
+    ref: "Lexical stress occurs at the word level, often distinguishing meanings. (p.49)"
+  },
+  {
+    q: "In English, primary stress is marked by:",
+    options: ["Raising pitch", "Greater intensity", "Longer duration", "All of the above"],
+    answer: 3,
+    ref: "Primary stress includes higher pitch, loudness, and longer vowel duration. (p.49–50)"
+  },
+  {
+    q: "Which IPA symbol indicates primary stress?",
+    options: ["ˌ", "ˈ", "ː", "."],
+    answer: 1,
+    ref: "ˈ precedes a syllable with primary stress. (p.50)"
+  },
+  {
+    q: "Which sentence feature does intonation most directly affect?",
+    options: ["Lexical class", "Stress assignment", "Syllable count", "Meaning and attitude"],
+    answer: 3,
+    ref: "Intonation conveys meaning, such as questions vs. statements. (p.52)"
+  },
+  {
+    q: "Which tone pattern typically marks yes/no questions in English?",
+    options: ["Falling", "Level", "Rising", "Creaky"],
+    answer: 2,
+    ref: "Rising intonation is common in English yes/no questions. (p.52)"
+  },
+  {
+    q: "What is tone in tonal languages?",
+    options: ["Pitch variation across clauses", "Syllable-level pitch distinguishing meaning", "Stress patterns", "Allophonic resonance"],
+    answer: 1,
+    ref: "Tone languages use pitch to differentiate word meanings. (p.51)"
+  },
+  {
+    q: "Which of the following languages is NOT tonal?",
+    options: ["Mandarin", "Thai", "Japanese", "Yoruba"],
+    answer: 2,
+    ref: "Japanese is pitch-accent, not fully tonal. (p.51)"
+  },
+  {
+    q: "Stress-timed languages like English:",
+    options: ["Have equal syllable durations", "Space stresses at regular intervals", "Only stress content words", "Rely solely on pitch"],
+    answer: 1,
+    ref: "Stress-timed rhythm spaces stressed syllables more evenly than unstressed. (p.52)"
+  },
+  {
+    q: "Which of the following is a syllable-timed language?",
+    options: ["English", "Russian", "French", "German"],
+    answer: 2,
+    ref: "French tends to be syllable-timed. (p.52)"
+  },
+  {
+    q: "Contrastive stress is used to:",
+    options: ["Mark grammatical categories", "Distinguish emotions", "Emphasize differing elements", "Clarify plosives"],
+    answer: 2,
+    ref: "Contrastive stress shifts to highlight differences (e.g., 'I wanted the RED one'). (p.51)"
+  },
+  {
+    q: "In IPA, secondary stress is marked by:",
+    options: ["ˌ", "ˈ", ".", "~"],
+    answer: 0,
+    ref: "ˌ precedes the syllable receiving secondary stress. (p.50)"
+  },
+  {
+    q: "Which best describes English intonation patterns?",
+    options: ["Monotone", "Flat-rising-falling", "Falling or rising contours over utterances", "Stress-only variation"],
+    answer: 2,
+    ref: "English intonation patterns often fall or rise across utterances. (p.52)"
+  },
+  {
+    q: "What kind of stress differentiates 'record' (noun) vs. 'record' (verb)?",
+    options: ["Fixed stress", "Lexical stress", "Contrastive stress", "Tonal stress"],
+    answer: 1,
+    ref: "Lexical stress differentiates grammatical function. (p.50)"
+  },
+  {
+    q: "Which suprasegmental feature signals speaker emotion?",
+    options: ["Segment duration", "Voicing", "Intonation contour", "Syllable count"],
+    answer: 2,
+    ref: "Intonation helps convey emotional content like surprise or sarcasm. (p.52)"
+  },
+  {
+    q: "Which pair of words differs solely in tone in Mandarin?",
+    options: ["ma (mother) vs. ma (horse)", "shi vs. she", "da vs. ta", "ping vs. pong"],
+    answer: 0,
+    ref: "Tone changes the meaning of 'ma' in Mandarin: e.g., mother vs. horse. (p.51)"
+  },
+  {
+    q: "Duration is a cue primarily used in English to signal:",
+    options: ["Stress and phrase finality", "Nasalization", "Tone quality", "Syllable boundary"],
+    answer: 0,
+    ref: "Lengthening vowels or syllables helps indicate stress or prosodic boundary. (p.49)"
+  },
+  {
+    q: "What is a pitch accent?",
+    options: ["Stress only", "A form of contrastive nasalization", "Use of pitch to mark prominence", "A segmental articulation feature"],
+    answer: 2,
+    ref: "Pitch accents mark prominence through tonal movement. (p.52)"
+  },
+  {
+    q: "Which is NOT a feature of suprasegmentals?",
+    options: ["Pitch", "Tone", "Aspiration", "Stress"],
+    answer: 2,
+    ref: "Aspiration is segmental, not suprasegmental. (p.49)"
+  }
+];
+
+let current = 0;
+let score = 0;
+
+function showQuestion() {
+  const q = questions[current];
+  document.getElementById("quiz").innerHTML = `
+    <div class="question">${current + 1}/20. ${q.q}</div>
+    <div class="options">
+      ${q.options.map((opt, i) => `
+        <div class="option" onclick="checkAnswer(${i})">
+          ${String.fromCharCode(65 + i)}. ${opt}
+        </div>`).join('')}
+    </div>
+  `;
+  document.getElementById("result").textContent = '';
+  document.getElementById("explanation").textContent = '';
+}
+
+function checkAnswer(selected) {
+  const q = questions[current];
+  const correct = q.answer;
+  const resultEl = document.getElementById("result");
+  const explanation = document.getElementById("explanation");
+
+  if (selected === correct) {
+    score++;
+    resultEl.innerHTML = `<span class="correct">✅ Correct!</span>`;
+  } else {
+    resultEl.innerHTML = `<span class="incorrect">❌ Incorrect.</span> Correct answer: <strong>${String.fromCharCode(65 + correct)}</strong>`;
+  }
+
+  explanation.innerHTML = `<strong>Reference:</strong> ${q.ref}`;
+}
+
+function nextQuestion() {
+  if (current < questions.length - 1) {
+    current++;
+    showQuestion();
+  } else {
+    document.getElementById("quiz").innerHTML = `<h2>🎓 Quiz Complete</h2><p>Your Score: ${score}/20</p>`;
+    document.getElementById("result").textContent = '';
+    document.getElementById("explanation").innerHTML = `
+      <p><strong>Review source:</strong> Linda I. House, <em>Introductory Phonetics and Phonology</em>, Chapter 6: Suprasegmentals (1998).</p>`;
+    document.querySelector(".btn").style.display = "none";
+  }
+}
+
+showQuestion();
+</script>
+</body>
+</html>

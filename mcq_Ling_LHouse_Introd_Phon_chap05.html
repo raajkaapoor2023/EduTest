@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chapter 5: Consonants Quiz – Linguistics</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(130deg, #1a1a40, #4b5d67);
+      color: #f1f1f1;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+    .quiz-container {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      width: 90%;
+      max-width: 750px;
+    }
+    h1 {
+      text-align: center;
+      color: #ffc300;
+    }
+    .question {
+      font-size: 1.1rem;
+      margin: 1.5rem 0 0.5rem;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+    }
+    .option {
+      background: #2c2c54;
+      border: 2px solid #ffc300;
+      margin: 0.4rem 0;
+      padding: 0.6rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+    .option:hover {
+      background: #ffc300;
+      color: black;
+    }
+    .btn {
+      margin-top: 1rem;
+      padding: 0.6rem 1.5rem;
+      background: #ff5733;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .result, .explanation {
+      margin-top: 2rem;
+      background: #ffffff11;
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+    .correct { color: lightgreen; }
+    .incorrect { color: #ff6b6b; }
+  </style>
+</head>
+<body>
+<div class="quiz-container">
+  <h1>Chapter 5: Consonants – Ivy League Level</h1>
+  <div id="quiz"></div>
+  <div class="result" id="result"></div>
+  <div class="explanation" id="explanation"></div>
+  <button class="btn" onclick="nextQuestion()">Next</button>
+</div>
+
+<script>
+const questions = [
+  {
+    q: "Which three features are used to classify consonants in the IPA?",
+    options: ["Place, pitch, duration", "Place, manner, voicing", "Manner, rounding, aspiration", "Height, nasality, tension"],
+    answer: 1,
+    ref: "Consonants are classified by place of articulation, manner of articulation, and voicing. (p.39)"
+  },
+  {
+    q: "Which of the following is a voiceless bilabial plosive?",
+    options: ["/b/", "/m/", "/p/", "/f/"],
+    answer: 2,
+    ref: "/p/ is voiceless, bilabial, and a plosive. (p.40)"
+  },
+  {
+    q: "The consonant /ʃ/ is classified as:",
+    options: ["Voiced alveolar stop", "Voiceless postalveolar fricative", "Voiced velar fricative", "Voiceless dental plosive"],
+    answer: 1,
+    ref: "/ʃ/ is voiceless, produced behind the alveolar ridge with friction. (p.42)"
+  },
+  {
+    q: "Which of these consonants is a nasal?",
+    options: ["/s/", "/n/", "/g/", "/t/"],
+    answer: 1,
+    ref: "/n/ is voiced alveolar nasal, produced with nasal airflow. (p.41)"
+  },
+  {
+    q: "Which of these is a glottal sound?",
+    options: ["/k/", "/ʔ/", "/h/", "both B and C"],
+    answer: 3,
+    ref: "/ʔ/ (glottal stop) and /h/ are produced at the glottis. (p.44)"
+  },
+  {
+    q: "The English /θ/ as in 'thin' is a:",
+    options: ["Voiced interdental fricative", "Voiceless interdental fricative", "Voiceless alveolar stop", "Voiced dental nasal"],
+    answer: 1,
+    ref: "/θ/ is voiceless and produced with tongue tip at the teeth. (p.41)"
+  },
+  {
+    q: "Which consonant is an affricate?",
+    options: ["/dʒ/", "/z/", "/k/", "/m/"],
+    answer: 0,
+    ref: "/dʒ/ is a voiced postalveolar affricate. (p.43)"
+  },
+  {
+    q: "Which of the following are cognates?",
+    options: ["/t/ and /d/", "/m/ and /n/", "/g/ and /ŋ/", "/r/ and /l/"],
+    answer: 0,
+    ref: Cognates differ only in voicing: /t/ (voiceless) vs. /d/ (voiced). (p.40)"
+  },
+  {
+    q: "A lateral approximant allows air to:",
+    options: ["Be fully stopped", "Pass through the nose", "Pass over the tongue sides", "Escape through lips"],
+    answer: 2,
+    ref: Lateral approximants like /l/ let air flow along the sides of the tongue. (p.42)"
+  },
+  {
+    q: "Which consonant is a voiced velar nasal?",
+    options: ["/n/", "/ŋ/", "/g/", "/m/"],
+    answer: 1,
+    ref: /ŋ/ is voiced, nasal, and produced at the velum. (p.41)"
+  },
+  {
+    q: "What is the difference between /s/ and /z/?",
+    options: ["Place", "Manner", "Voicing", "Aspiration"],
+    answer: 2,
+    ref: /s/ is voiceless, /z/ is voiced; all other features are shared. (p.41)"
+  },
+  {
+    q: "Which of the following is NOT a plosive?",
+    options: ["/b/", "/t/", "/g/", "/f/"],
+    answer: 3,
+    ref: /f/ is a voiceless labiodental fricative. (p.40)"
+  },
+  {
+    q: "Which sound is an alveolar tap in American English?",
+    options: ["/t/", "/d/", "[ɾ]", "/ʔ/"],
+    answer: 2,
+    ref: [ɾ] occurs in 'butter', 'ladder', etc., as a quick tap. (p.44)"
+  },
+  {
+    q: "Which consonant is a glide (semi-vowel)?",
+    options: ["/r/", "/w/", "/ʃ/", "/ŋ/"],
+    answer: 1,
+    ref: /w/ is a bilabial glide, with vowel-like articulatory qualities. (p.42)"
+  },
+  {
+    q: "Which consonants are considered sonorants?",
+    options: ["/m n ŋ/", "/p t k/", "/f θ ʃ/", "/dʒ tʃ/"],
+    answer: 0,
+    ref: Sonorants include nasals, liquids, and glides – sounds produced without turbulence. (p.41)"
+  },
+  {
+    q: "Which pair differs by place of articulation?",
+    options: ["/f/ and /v/", "/t/ and /k/", "/s/ and /z/", "/n/ and /m/"],
+    answer: 1,
+    ref: /t/ is alveolar, /k/ is velar – differing in place. (p.40)"
+  },
+  {
+    q: "What is the defining feature of fricatives?",
+    options: ["Nasal resonance", "Complete closure", "Turbulent airflow", "Aspiration"],
+    answer: 2,
+    ref: Fricatives are produced with a narrow constriction and turbulent airflow. (p.41)"
+  },
+  {
+    q: "Which of the following is a palatal approximant?",
+    options: ["/ʃ/", "/j/", "/ɹ/", "/dʒ/"],
+    answer: 1,
+    ref: /j/ as in 'yes' is a palatal glide. (p.42)"
+  },
+  {
+    q: "Which place of articulation describes /k/ and /g/?",
+    options: ["Alveolar", "Palatal", "Velar", "Labiodental"],
+    answer: 2,
+    ref: /k/ and /g/ are velar stops. (p.40)"
+  },
+  {
+    q: "Which is NOT a manner of articulation in the IPA consonant chart?",
+    options: ["Plosive", "Trill", "Nasopharyngeal", "Fricative"],
+    answer: 2,
+    ref: 'Nasopharyngeal' is not recognized as a manner in IPA. (p.40–42)"
+  }
+];
+
+let current = 0;
+let score = 0;
+
+function showQuestion() {
+  const q = questions[current];
+  document.getElementById("quiz").innerHTML = `
+    <div class="question">${current + 1}/20. ${q.q}</div>
+    <div class="options">
+      ${q.options.map((opt, i) => `
+        <div class="option" onclick="checkAnswer(${i})">
+          ${String.fromCharCode(65 + i)}. ${opt}
+        </div>`).join('')}
+    </div>
+  `;
+  document.getElementById("result").textContent = '';
+  document.getElementById("explanation").textContent = '';
+}
+
+function checkAnswer(selected) {
+  const q = questions[current];
+  const correct = q.answer;
+  const resultEl = document.getElementById("result");
+  const explanation = document.getElementById("explanation");
+
+  if (selected === correct) {
+    score++;
+    resultEl.innerHTML = `<span class="correct">✅ Correct!</span>`;
+  } else {
+    resultEl.innerHTML = `<span class="incorrect">❌ Incorrect.</span> Correct answer: <strong>${String.fromCharCode(65 + correct)}</strong>`;
+  }
+
+  explanation.innerHTML = `<strong>Reference:</strong> ${q.ref}`;
+}
+
+function nextQuestion() {
+  if (current < questions.length - 1) {
+    current++;
+    showQuestion();
+  } else {
+    document.getElementById("quiz").innerHTML = `<h2>🎓 Quiz Complete</h2><p>Your Score: ${score}/20</p>`;
+    document.getElementById("result").textContent = '';
+    document.getElementById("explanation").innerHTML = `
+      <p><strong>Review source:</strong> Linda I. House, <em>Introductory Phonetics and Phonology</em>, Chapter 5: Consonants.</p>`;
+    document.querySelector(".btn").style.display = "none";
+  }
+}
+
+showQuestion();
+</script>
+</body>
+</html>

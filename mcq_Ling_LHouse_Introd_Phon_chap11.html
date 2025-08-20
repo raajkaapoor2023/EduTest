@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chapter 11: Pronunciation & Dialects Quiz</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      color: #f8f9fa;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+    .quiz-container {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+      width: 90%;
+      max-width: 750px;
+    }
+    h1 {
+      text-align: center;
+      color: #fcbf49;
+    }
+    .question {
+      font-size: 1.1rem;
+      margin: 1.5rem 0 0.5rem;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+    }
+    .option {
+      background: #274c77;
+      border: 2px solid #fcbf49;
+      margin: 0.4rem 0;
+      padding: 0.6rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .option:hover {
+      background: #fcbf49;
+      color: black;
+    }
+    .btn {
+      margin-top: 1rem;
+      padding: 0.6rem 1.5rem;
+      background: #ef476f;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .result, .explanation {
+      margin-top: 2rem;
+      background: #ffffff11;
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+    .correct { color: lightgreen; }
+    .incorrect { color: #ff4d6d; }
+  </style>
+</head>
+<body>
+<div class="quiz-container">
+  <h1>Chapter 11: Standards of Pronunciation & Dialects</h1>
+  <div id="quiz"></div>
+  <div class="result" id="result"></div>
+  <div class="explanation" id="explanation"></div>
+  <button class="btn" onclick="nextQuestion()">Next</button>
+</div>
+
+<script>
+const questions = [
+  {
+    q: "What is considered a 'standard' dialect?",
+    options: [
+      "A regionally marked variety",
+      "A dialect with prestige and widespread acceptance",
+      "A dialect without any variation",
+      "An artificial form of speech"
+    ],
+    answer: 1,
+    ref: "Standard dialects carry prestige and are often used in formal and educational settings. (p.210)"
+  },
+  {
+    q: "General American English is:",
+    options: [
+      "The only standard dialect",
+      "A prestige dialect commonly used in media and education",
+      "A southern dialect of the US",
+      "Used only in legal contexts"
+    ],
+    answer: 1,
+    ref: "General American is a non-regional standard often heard in news broadcasting. (p.210–211)"
+  },
+  {
+    q: "What distinguishes an accent from a dialect?",
+    options: [
+      "Dialects are more formal",
+      "Dialects include grammar, vocabulary, and pronunciation; accents only affect pronunciation",
+      "Accents are written",
+      "Dialects are learned; accents are natural"
+    ],
+    answer: 1,
+    ref: "Accents refer to pronunciation only; dialects include grammar and lexicon. (p.211)"
+  },
+  {
+    q: "Sociolinguistic variation refers to:",
+    options: [
+      "Biological speech disorders",
+      "Accent-only variation",
+      "Linguistic variation influenced by social identity and context",
+      "Slang development"
+    ],
+    answer: 2,
+    ref: "Social factors like class, region, and identity affect language variation. (p.211–212)"
+  },
+  {
+    q: "What role does prestige play in dialect recognition?",
+    options: [
+      "It determines correctness",
+      "It causes dialect leveling",
+      "It influences societal perception of a variety",
+      "It is irrelevant to standard dialects"
+    ],
+    answer: 2,
+    ref: "Prestige affects how 'standard' or 'correct' a variety is perceived to be. (p.210–211)"
+  },
+  {
+    q: "Regional dialects are:",
+    options: [
+      "Errors in standard speech",
+      "Socially deviant forms",
+      "Naturally occurring variations shaped by geography",
+      "Only found in rural communities"
+    ],
+    answer: 2,
+    ref: "Regional dialects reflect geographic variation in speech. (p.211)"
+  },
+  {
+    q: "Code-switching refers to:",
+    options: [
+      "Spelling differences",
+      "Switching between languages or dialects based on context",
+      "Incorrect use of grammar",
+      "Speech repair"
+    ],
+    answer: 1,
+    ref: "Code-switching is shifting between linguistic codes depending on context. (p.212)"
+  },
+  {
+    q: "Which factor does NOT influence dialect use?",
+    options: ["Region", "Social class", "Eye color", "Age"],
+    answer: 2,
+    ref: "Physical traits like eye color do not affect linguistic variation. (p.212)"
+  },
+  {
+    q: "The statement 'Standard dialects are superior' is:",
+    options: [
+      "Linguistically valid",
+      "Sociolinguistically false",
+      "A biological fact",
+      "A regional rule"
+    ],
+    answer: 1,
+    ref: "All dialects are linguistically equal; perceived superiority is social. (p.213)"
+  },
+  {
+    q: "A speaker adapting their pronunciation to fit a perceived standard is engaging in:",
+    options: ["Hypercorrection", "Dialect leveling", "Accommodation", "Assimilation"],
+    answer: 2,
+    ref: "Accommodation is adjusting speech toward a more 'standard' or accepted form. (p.213)"
+  },
+  {
+    q: "Which variety is most likely to be taught to non-native speakers in the U.S.?",
+    options: ["Southern English", "AAVE", "General American English", "New York English"],
+    answer: 2,
+    ref: "General American is often used in ESL contexts due to perceived neutrality. (p.210–211)"
+  },
+  {
+    q: "Which of the following is an example of a regional lexical item?",
+    options: ["'Soda' vs. 'pop'", "'Have' vs. 'has'", "'Can' vs. 'could'", "'More' vs. 'most'"],
+    answer: 0,
+    ref: "Regional dialects show variation in vocabulary (lexical items). (p.211)"
+  },
+  {
+    q: "Which field studies variation in pronunciation across social contexts?",
+    options: ["Phonetics", "Sociolinguistics", "Syntax", "Morphology"],
+    answer: 1,
+    ref: "Sociolinguistics investigates pronunciation variation due to social identity. (p.212)"
+  },
+  {
+    q: "Dialect leveling is:",
+    options: [
+      "A disappearance of dialects",
+      "A convergence toward a more uniform variety",
+      "The rise of slang",
+      "Grammar correction"
+    ],
+    answer: 1,
+    ref: "Dialect leveling reduces differences across regions. (p.212–213)"
+  },
+  {
+    q: "Which of the following is true?",
+    options: [
+      "Only rural speakers use dialects",
+      "Dialects are inherently incorrect",
+      "All speakers use some dialect",
+      "Standard English is the only grammatical form"
+    ],
+    answer: 2,
+    ref: "Everyone speaks a dialect—it is a natural linguistic system. (p.213)"
+  },
+  {
+    q: "Non-standard dialects are:",
+    options: [
+      "Wrong English",
+      "Unintelligible",
+      "Rule-governed and systematic",
+      "Only used by uneducated speakers"
+    ],
+    answer: 2,
+    ref: "Non-standard forms follow consistent linguistic rules. (p.213–214)"
+  },
+  {
+    q: "Linguistic prejudice is:",
+    options: [
+      "Linguistic analysis",
+      "Bias against non-standard varieties",
+      "Teaching phonetics",
+      "Disliking foreign languages"
+    ],
+    answer: 1,
+    ref: "Judging speakers based on accent or dialect reflects social bias. (p.214–215)"
+  },
+  {
+    q: "An example of a stigmatized feature in American English is:",
+    options: [
+      "Final consonant deletion",
+      "Use of schwa",
+      "Unreleased stops",
+      "R-coloring"
+    ],
+    answer: 0,
+    ref: "Stigmatized features (e.g., [wɪnə] for 'winner') carry social judgment. (p.214)"
+  },
+  {
+    q: "Which of the following is NOT true?",
+    options: [
+      "Dialect use varies by context",
+      "Standard dialects are inherently better",
+      "All dialects are linguistically valid",
+      "Language attitudes shape perception"
+    ],
+    answer: 1,
+    ref: "Standardness is social, not linguistic superiority. (p.214)"
+  },
+  {
+    q: "A speaker switching between formal and informal English is shifting their:",
+    options: ["Register", "Dialect", "Phoneme inventory", "Orthography"],
+    answer: 0,
+    ref: "Register refers to language variation based on formality. (p.215–216)"
+  }
+];
+
+let current = 0;
+let score = 0;
+
+function showQuestion() {
+  const q = questions[current];
+  document.getElementById("quiz").innerHTML = `
+    <div class="question">${current + 1}/20. ${q.q}</div>
+    <div class="options">
+      ${q.options.map((opt, i) => `
+        <div class="option" onclick="checkAnswer(${i})">
+          ${String.fromCharCode(65 + i)}. ${opt}
+        </div>`).join('')}
+    </div>
+  `;
+  document.getElementById("result").textContent = '';
+  document.getElementById("explanation").textContent = '';
+}
+
+function checkAnswer(selected) {
+  const q = questions[current];
+  const correct = q.answer;
+  const resultEl = document.getElementById("result");
+  const explanation = document.getElementById("explanation");
+
+  if (selected === correct) {
+    score++;
+    resultEl.innerHTML = `<span class="correct">✅ Correct!</span>`;
+  } else {
+    resultEl.innerHTML = `<span class="incorrect">❌ Incorrect.</span> Correct answer: <strong>${String.fromCharCode(65 + correct)}</strong>`;
+  }
+
+  explanation.innerHTML = `<strong>Reference:</strong> ${q.ref}`;
+}
+
+function nextQuestion() {
+  if (current < questions.length - 1) {
+    current++;
+    showQuestion();
+  } else {
+    document.getElementById("quiz").innerHTML = `<h2>🎓 Quiz Complete</h2><p>Your Score: ${score}/20</p>`;
+    document.getElementById("result").textContent = '';
+    document.getElementById("explanation").innerHTML = `
+      <p><strong>Review source:</strong> Linda I. House, <em>Introductory Phonetics and Phonology</em>, Chapter 11: Standards of Pronunciation and Dialects (pp.210–216).</p>`;
+    document.querySelector(".btn").style.display = "none";
+  }
+}
+
+showQuestion();
+</script>
+</body>
+</html>

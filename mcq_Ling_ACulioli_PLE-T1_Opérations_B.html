@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>QCM Tome 1 – Culioli : Linguistique de l'Énonciation</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; max-width: 960px; margin: auto; background: #f4f6f8; }
+    h1 { color: #34495e; }
+    .question { background: #ffffff; padding: 1rem; border-left: 4px solid #2980b9; margin-bottom: 1.5rem; border-radius: 6px; }
+    .question p { font-weight: bold; }
+    label { display: block; margin: 0.4rem 0; }
+    button { padding: 0.7rem 1.2rem; margin-top: 1rem; background: #2980b9; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    .result { font-size: 1.2rem; margin-top: 2rem; color: #27ae60; }
+    .answers { margin-top: 2rem; background: #fef9e7; padding: 1rem; border-left: 4px solid #f1c40f; }
+  </style>
+</head>
+<body>
+  <h1>QCM (30 questions) – Antoine Culioli : Tome 1 – Opérations et représentations</h1>
+  <form id="quizForm"></form>
+
+  <script>
+    const questions = [
+      // I. Opérations et représentations
+      { q: "Quel est l’objectif principal de l’ouvrage Tome 1 de Culioli ?", opts: ["Étudier la phonétique", "Analyser les représentations mentales sous-jacentes à l’activité langagière", "Répertorier les structures syntaxiques", "Classifier les langues naturelles"], a: 1 },
+      { q: "Que désigne le terme 'opération' chez Culioli ?", opts: ["Une action physique du locuteur", "Une transformation syntaxique visible", "Un processus cognitif de construction de représentations", "Une règle grammaticale universelle"], a: 2 },
+      { q: "Dans l’approche de Culioli, la langue est avant tout :", opts: ["Un code de communication", "Un ensemble clos de signes", "Un système d’opérations de représentation", "Une grammaire descriptive"], a: 2 },
+      { q: "Qu’est-ce qu’une 'notion' pour Culioli ?", opts: ["Un signe linguistique", "Un concept universel figé", "Un invariant abstrait accessible par opération", "Une catégorie morphologique"], a: 2 },
+      { q: "Quelle est la différence entre 'notion' et 'concept' dans l’œuvre de Culioli ?", opts: ["Le concept est empirique, la notion est logique", "La notion est opératoire, le concept est figé culturellement", "Il n’y a pas de distinction", "La notion est lexicale, le concept est syntaxique"], a: 1 },
+      { q: "La notion de 'valeur' chez Culioli implique :", opts: ["Une correspondance directe avec un référent", "Une relation différentielle entre formes dans un contexte donné", "Une propriété lexicale invariable", "Un jugement subjectif"], a: 1 },
+      { q: "Qu’est-ce qu’un 'invariant opératoire' ?", opts: ["Une structure syntaxique récurrente", "Un élément non analysable du discours", "Une base abstraite permettant des variations contextuelles", "Une formule logique prédéfinie"], a: 2 },
+      { q: "La représentation est définie chez Culioli comme :", opts: ["Une image mentale pure", "Une opération figée de traduction", "Un construit opératoire visant à rendre compte de phénomènes linguistiques", "Une perception sensorielle directe"], a: 2 },
+      { q: "Dans la linguistique culiolienne, que désigne le 'schéma opératoire' ?", opts: ["Une structure syntaxique universelle", "Un cadre grammatical descriptif", "Une modélisation abstraite des opérations mobilisées dans l’énonciation", "Une règle de style"], a: 2 },
+      
+      // II. Repérage spatio-temporel
+      { q: "Les 'opérations de repérage' servent à :", opts: ["Désigner les objets dans l’espace", "Inscrire un événement dans une temporalité et un point de vue", "Exprimer l’émotion du locuteur", "Segmenter une phrase"], a: 1 },
+      { q: "Que permet le repère zéro ?", opts: ["Il marque une absence de temps", "Il fournit un point d’ancrage initial pour les repérages", "Il indique un temps passé", "Il fonctionne comme négation contextuelle"], a: 1 },
+      { q: "Comment se structure le repérage temporel dans l'approche culiolienne ?", opts: ["Passé / présent / futur", "Repéré / repérant / repère zéro", "Actuel / virtuel / réalisé", "Antériorité / postériorité / simultanéité"], a: 1 },
+      { q: "La forme 'avait mangé' implique :", opts: ["Un procès irréel", "Un repérage antérieur au passé repérant", "Un aspect inchoatif", "Une hypothèse modale"], a: 1 },
+      { q: "Dans l'expression 'je suis en train de lire', le repérage indique :", opts: ["Un procès passé", "Un procès en cours au moment de l’énonciation", "Un procès irréalisé", "Une action future probable"], a: 1 },
+
+      // III. Modalité et virtualité
+      { q: "Culioli distingue deux types majeurs de modalités :", opts: ["Déclarative et interrogative", "Assertive et narrative", "Déontique et épistémique", "Figée et dynamique"], a: 2 },
+      { q: "La modalité épistémique concerne :", opts: ["L’obligation du locuteur", "L’intention du destinataire", "Le degré de certitude d’un énoncé", "La perspective grammaticale"], a: 2 },
+      { q: "La virtualité désigne :", opts: ["Un fait déjà accompli", "Une action envisagée mais non réalisée", "Une notion syntaxique", "Un élément de discours indirect"], a: 1 },
+      { q: "Quel est le rôle des marqueurs comme 'devrait' ou 'pourrait' ?", opts: ["Ils expriment l’invariant syntaxique", "Ils modalisent un procès dans une dimension non-réelle", "Ils marquent le genre de l’énonciateur", "Ils introduisent une structure passive"], a: 1 },
+      { q: "'Il aurait pu venir' correspond à :", opts: ["Un fait passé irréalisé avec modalité virtuelle", "Une certitude logique", "Un fait présent accompli", "Une construction neutre"], a: 0 },
+
+      // IV. Domaine notionnel et paramétrisation
+      { q: "Un 'domaine notionnel' est :", opts: ["Une catégorie lexicale", "Un espace structuré d’opérations de représentation", "Un champ sémantique clos", "Une relation grammaticale"], a: 1 },
+      { q: "Les 'paramètres' servent à :", opts: ["Exprimer des émotions", "Structurer la syntaxe uniquement", "Différencier les valeurs opératoires dans un domaine donné", "Limiter les interprétations contextuelles"], a: 2 },
+      { q: "Le paramètre de quantité est illustré par :", opts: ["Passé / présent", "Peu / beaucoup / trop", "Oui / non", "Chaud / froid"], a: 1 },
+      { q: "Les marqueurs comme 'plus', 'moins', 'autant' relèvent :", opts: ["De l’argumentation", "De la syntaxe transformationnelle", "De la paramétrisation dans le domaine quantitatif", "D’une classe lexicale figée"], a: 2 },
+      { q: "Un exemple de paramétrisation temporelle serait :", opts: ["La phrase passive", "La désinence verbale", "La relation passé / futur dans un énoncé modalisé", "Le déterminant défini"], a: 2 },
+
+      // V. Marqueurs et valeurs
+      { q: "Les marqueurs linguistiques chez Culioli sont :", opts: ["Des éléments à valeur opératoire variable selon le contexte", "Des étiquettes fixes", "Des objets logiques", "Des symboles prosodiques"], a: 0 },
+      { q: "'Même' dans 'même Jean l’a fait' signale :", opts: ["Un aspect d’énonciation neutre", "Une valeur de focalisation en contraste avec une attente", "Un marqueur de temps", "Une opération négative"], a: 1 },
+      { q: "'Déjà' implique :", opts: ["Une absence de temporalité", "Une valeur argumentative implicite liée à l’anticipation", "Un procès hypothétique", "Un effet de doute"], a: 1 },
+      { q: "Les opérateurs comme 'si', 'donc', 'même si' indiquent :", opts: ["Des relations textuelles figées", "Des paramètres lexicaux", "Des relations opératoires logiques dans l’énonciation", "Des marques de style narratif"], a: 2 },
+      { q: "La 'valeur' d’un marqueur est :", opts: ["Son sens dans le dictionnaire", "Sa position syntaxique", "L’ensemble des effets interprétatifs qu’il permet dans un contexte", "Un invariant morphologique"], a: 2 }
+    ];
+
+    function buildQuiz() {
+      const form = document.getElementById("quizForm");
+      questions.forEach((item, i) => {
+        const div = document.createElement("div");
+        div.className = "question";
+        div.innerHTML = `<p>${i + 1}. ${item.q}</p>` +
+          item.opts.map((opt, j) =>
+            `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`
+          ).join("");
+        form.appendChild(div);
+      });
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = "Valider le questionnaire";
+      btn.onclick = grade;
+      form.appendChild(btn);
+    }
+
+    function grade() {
+      let score = 0;
+      questions.forEach((item, i) => {
+        const sel = document.querySelector(`input[name=q${i}]:checked`);
+        if (sel && Number(sel.value) === item.a) score++;
+      });
+      const form = document.getElementById("quizForm");
+      form.insertAdjacentHTML('beforeend', `<div class="result">Votre score : ${score} sur ${questions.length}</div>`);
+      const btn2 = document.createElement("button");
+      btn2.type = "button";
+      btn2.textContent = "Afficher les réponses détaillées avec références";
+      btn2.onclick = showAnswers;
+      form.appendChild(btn2);
+    }
+
+    function showAnswers() {
+      const div = document.createElement("div");
+      div.className = "answers";
+      let html = "<h2>Réponses détaillées et références</h2>";
+      questions.forEach((item, i) => {
+        html += `<p><strong>Q${i + 1}.</strong> ${item.q}<br>` +
+                `✅ <em>${item.opts[item.a]}</em><br>` +
+                `<small>Réf. : A. Culioli, <em>Pour une linguistique de l’énonciation – Tome 1 : Opérations</em>; voir aussi : D. Paillard, C. Fuchs, L. Danon-Boileau</small></p>`;
+      });
+      div.innerHTML = html;
+      document.getElementById("quizForm").appendChild(div);
+    }
+
+    window.onload = buildQuiz;
+  </script>
+</body>
+</html>

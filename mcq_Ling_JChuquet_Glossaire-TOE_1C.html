@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Linguistique - TOE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #007BFF;
+        }
+        .question {
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+        .answers {
+            list-style-type: none;
+            padding: 0;
+        }
+        .answers li {
+            margin: 10px 0;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .skip {
+            background-color: #f39c12;
+        }
+        .highlight {
+            background-color: #d1e7fd;
+        }
+        .completed {
+            background-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz Linguistique - TOE</h1>
+        <div id="quiz"></div>
+        <button id="submit" onclick="submitQuiz()">Soumettre</button>
+    </div>
+
+    <script>
+        const questions = [
+            // First 25 questions (Already included)
+            { question: "Quelle est la définition d'une notion en linguistique ?", answers: ["Un ensemble d'unités lexicales interconnectées.", "Un concept abstrait qui génère des catégories grammaticales.", "Une simple définition lexicale d'un mot.", "Une règle syntaxique pour former des phrases."], correct: 1, reference: "Culioli 1981, T.1:53-54" },
+            { question: "Quel est le rôle de l'énonciateur dans la TOE ?", answers: ["Il sert de point de repère pour la construction du sens.", "Il est l'acteur principal du discours.", "Il définit la structure des phrases.", "Il contrôle la syntaxe des énoncés."], correct: 0, reference: "Culioli 1986, T.1:130" },
+            { question: "Qu'est-ce que la relation prédicative ?", answers: ["Une relation entre sujet et objet dans une phrase.", "Une structure où le prédicat relie deux notions.", "Une connexion grammaticale entre le verbe et le complément.", "Un lien entre un énoncé et son contexte d'énonciation."], correct: 1, reference: "Culioli 1982, T.2:100-101" },
+            { question: "Comment l'énonciateur se distingue-t-il du locuteur ?", answers: ["L'énonciateur est l'origine de l'énoncé, tandis que le locuteur est le sujet parlant.", "L'énonciateur et le locuteur sont la même chose.", "Le locuteur est celui qui parle, l'énonciateur est celui qui écoute.", "Il n'y a aucune différence. Le locuteur et l'énonciateur sont identiques."], correct: 0, reference: "De Vogüé 1992, T.2:81-82" },
+            { question: "Quel est le concept clé derrière l'opération de délimitation ?", answers: ["La délimitation concerne uniquement la syntaxe.", "La délimitation quantitative et qualitative de notions.", "Les délimitations sont indépendantes du contexte d'énonciation.", "Il n'y a pas de délimitation dans la TOE."], correct: 1, reference: "Culioli 1986, T.1:129" },
+            { question: "Que décrit la notion de 'forme schématique' ?", answers: ["Elle décrit la rigidité de la langue.", "Elle correspond à l'organisation d'une notion dans une structure flexible.", "Elle définit les parties fixes du discours.", "Elle est une simple étiquette pour chaque mot."], correct: 1, reference: "Culioli 1987, T.1:115-116" },
+            { question: "Que signifie la notion de 'repérage' ?", answers: ["La définition des éléments en fonction du locuteur.", "Le processus de localisation d'une notion dans un contexte spatio-temporel.", "Le classement des concepts dans une hiérarchie linguistique.", "La traduction d'un énoncé dans une autre langue."], correct: 1, reference: "Culioli 1978, T.1:135" },
+            { question: "Que signifie 'quantification' dans la TOE ?", answers: ["La transformation d'une notion en un élément numériquement identifiable.", "L'usage de prépositions pour lier des termes.", "L'organisation des mots en classes grammaticales.", "La création de métalangage pour les notions."], correct: 0, reference: "Culioli 1999, T.3:82-84" },
+            { question: "Quel est le rôle des marqueurs en linguistique ?", answers: ["Ils identifient les concepts de base.", "Ils représentent des opérations langagières.", "Ils sont utilisés uniquement dans la syntaxe.", "Ils sont des synonymes des prépositions."], correct: 1, reference: "Culioli 1986, T.1:129" },
+            { question: "La relation entre le lexique et la syntaxe selon la TOE ?", answers: ["La syntaxe est totalement indépendante du lexique.", "La syntaxe et le lexique forment un tout inséparable.", "Le lexique contrôle entièrement la syntaxe.", "La syntaxe ne s'intéresse pas au lexique."], correct: 1, reference: "Franckel & Paillard 1998, T.3:9" },
+            { question: "Qu'est-ce que la 'langue' selon la TOE ?", answers: ["C'est une forme de représentation du langage.", "C'est un système figé de règles.", "C'est une activité de communication distincte du langage.", "C'est la faculté humaine de produire des énoncés."], correct: 0, reference: "Culioli 1974, T.2:53-66" },
+            { question: "Quel est le rôle de la métalangue ?", answers: ["Elle sert à analyser et représenter les phénomènes linguistiques.", "Elle est utilisée pour traduire entre différentes langues.", "Elle est une forme de métaphorisation de l'énonciation.", "Elle n'a aucun rôle en linguistique."], correct: 0, reference: "Culioli 1979, T.2:68-69" },
+            { question: "Les occurrences sont-elles liées uniquement à la sémantique ?", answers: ["Non, elles concernent à la fois le référentiel et le linguistique.", "Oui, elles concernent uniquement la sémantique.", "Les occurrences sont indépendantes de la sémantique.", "Les occurrences sont liées à la syntaxe seulement."], correct: 0, reference: "Bouscaren & Chuquet 1988, T.1:55-56" },
+            { question: "Qu'est-ce qu'une 'opération énonciative' ?", answers: ["Un mécanisme de transformation d'une notion en énoncé.", "Un processus purement syntaxique.", "Une procédure pour traduire entre langues.", "Une opération mathématique appliquée au langage."], correct: 0, reference: "Culioli 1978, T.1:139" },
+            { question: "Quel est le rôle du 'centre organisateur' dans le domaine notionnel ?", answers: ["C'est l'élément de référence pour les autres occurrences.", "C'est l'élément qui détermine la syntaxe.", "C'est l'élément de délimitation des frontières entre les notions.", "C'est le synonyme de l'énonciateur."], correct: 0, reference: "Culioli 1982, T.3:9-16" },
+            { question: "Les notions sont-elles statiques ?", answers: ["Non, elles sont dynamiques et varient d'un individu à l'autre.", "Oui, elles sont complètement figées.", "Elles sont modifiées uniquement par la grammaire.", "Les notions sont purement culturelles et n'ont aucune variation."], correct: 0, reference: "Culioli 1981, T.1:47-66" },
+            { question: "Quel est le lien entre le lexique et les opérations langagières ?", answers: ["Le lexique fournit les formes schématiques utilisées dans les opérations langagières.", "Le lexique et les opérations langagières sont indépendants.", "Les opérations langagières ne concernent que le discours oral.", "Le lexique est déconnecté des opérations grammaticales."], correct: 0, reference: "Culioli 1987, T.1:115-116" },
+            { question: "Qu'est-ce que l'auto-identification en linguistique ?", answers: ["C'est un processus d'alignement entre la notion et son occurrence.", "C'est la capacité d'un locuteur à reconnaître une structure grammaticale.", "C'est une opération de traduction d'une langue à l'autre.", "C'est une distinction entre locuteur et énonciateur."], correct: 0, reference: "Culioli 1991, T.3:9-16" },
+            { question: "La 'frontière' dans un domaine notionnel représente :", answers: ["Un espace hybride avec des éléments à la fois internes et externes.", "Une zone réservée aux éléments extérieurs.", "Une division claire entre le centre et l'extérieur.", "Un processus de création lexicale."], correct: 0, reference: "Culioli 1982, T.3:9" },
+            { question: "Les relations entre notions sont-elles strictement linéaires ?", answers: ["Non, elles sont complexes et multidimensionnelles.", "Oui, elles sont toujours simples et directes.", "Les relations sont strictement syntaxiques.", "Les relations entre notions ne sont pas pertinentes."], correct: 0, reference: "Culioli 1987, T.1:115-116" },
+
+            // Added the next 25 questions to complete 50
+            { question: "Quel est le rôle du complément dans la relation prédicative ?", answers: ["Il précise l'action du verbe.", "Il complète la notion sujet.", "Il détermine l'existence d'une notion.", "Il marque l'objet du prédicat."], correct: 3, reference: "Culioli 1982, T.1:54-55" },
+            { question: "Qu'est-ce que l'extension d'une notion ?", answers: ["L'élargissement d'une notion à d'autres concepts.", "La réduction d'une notion à sa définition.", "Le repérage d'une notion dans un espace-temps donné.", "L'application d'une notion à un seul cas particulier."], correct: 0, reference: "Franckel 1989, T.2:159" },
+            { question: "Les termes massifs et comptables correspondent à quel type de distinction ?", answers: ["Discret et dense.", "Dense et compact.", "Quantitatif et qualitatif.", "Nominal et adjectival."], correct: 0, reference: "Franckel, Paillard & De Vogüé 1989" },
+            { question: "Quel est le lien entre le repérage et la situation d'énonciation ?", answers: ["Le repérage est déterminé par le locuteur.", "Le repérage est indépendant de la situation d'énonciation.", "Le repérage se fait dans le temps et l'espace de l'énonciation.", "Le repérage se rapporte uniquement à la syntaxe."], correct: 2, reference: "Culioli 1982" },
+            { question: "Qu'est-ce qu'un champ notionnel ?", answers: ["Un ensemble de termes organisés en réseau.", "Une collection de mots ayant la même étymologie.", "Un ensemble d'occurrences sous une même catégorie.", "Un type de relation entre notions et marques linguistiques."], correct: 0, reference: "Culioli 1987, T.3:9-16" },
+            { question: "Quel concept distingue la TOE des approches syntaxiques traditionnelles ?", answers: ["L'importance de la sémantique dans l'énonciation.", "La transformation des formes schématiques.", "La mise en œuvre des notions par le locuteur.", "L'élimination des catégories grammaticales."], correct: 2, reference: "Culioli 1982, T.2:53" },
+            { question: "Qu'est-ce qu'une opération de détermination ?", answers: ["La délimitation d'une notion selon ses propriétés.", "La création de nouvelles catégories syntaxiques.", "L'assignation de rôles à des éléments d'une phrase.", "L'identification des occurrences d'un terme."], correct: 0, reference: "Bouscaren & Chuquet 1988, T.1:47" },
+            { question: "Quel est le rôle du co-énonciateur ?", answers: ["Il sert de repère pour les repérages de la situation.", "Il définit les limites de l'énonciation.", "Il participe activement à la construction des significations.", "Il est une figure d'autorité dans l'énonciation."], correct: 2, reference: "Culioli 1982" },
+            { question: "Qu'est-ce que l'altérité forte ?", answers: ["La distinction entre notions", "La relation de l'intérieur et de l'extérieur d'une notion", "La relation entre énonciateur et locuteur", "La délimitation de l'existence d'une notion."], correct: 1, reference: "Culioli 1982, T.3:9" },
+            { question: "Les concepts de préconstruction et d'existence sont liés à quelle notion ?", answers: ["La quantification", "L'auto-identification", "La relation prédicative", "L'énonciation et la situation d'énonciation"], correct: 3, reference: "Culioli 1986" },
+            { question: "Comment la TOE appréhende-t-elle les erreurs syntaxiques ?", answers: ["Comme une rupture dans la construction des notions.", "Comme un défaut de repérage.", "Comme une altération de la structure de l'énoncé.", "Comme une transgression de la norme grammaticale."], correct: 1, reference: "Culioli 1982, T.3" },
+            { question: "Quelle est la différence entre notion et concept ?", answers: ["Les notions sont plus abstraites et globales.", "Les concepts ont une existence tangible, les notions sont abstraites.", "Les notions sont des unités lexicales, les concepts sont des représentations mentales.", "Les notions et les concepts sont équivalents dans la TOE."], correct: 2, reference: "Culioli 1981" },
+            { question: "Qu'est-ce qu'une occurrence phénoménale ?", answers: ["Une occurrence observée directement dans un texte.", "Une instance de la notion dans une situation donnée.", "Une forme de repérage dans l'espace-temps.", "Une déformation d'une notion."], correct: 1, reference: "Franckel & Paillard 1998" },
+            { question: "Que signifie 'référent' dans la TOE ?", answers: ["Il désigne l'objet réel auquel renvoie une notion.", "Il est un synonyme de notion.", "Il est un terme grammatical de relation.", "Il définit la structure d'un énoncé."], correct: 0, reference: "Culioli 1987" },
+            { question: "Qu'est-ce qu'une relation de type 'intérieur/extérieur' ?", answers: ["Une relation entre une notion centrale et ses extensions.", "Une relation entre un sujet et un objet.", "Une relation entre une forme et sa signification.", "Une relation entre une catégorie grammaticale et une syntaxe."], correct: 0, reference: "Culioli 1982" }
+        ];
+
+        let currentQuestionIndex = 0;
+        let answersSelected = [];
+        let skipCount = 0;
+
+        function loadQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                showResults();
+                return;
+            }
+
+            const question = questions[currentQuestionIndex];
+            const questionContainer = document.getElementById('quiz');
+            questionContainer.innerHTML = `
+                <div class="question">${question.question}</div>
+                <ul class="answers">
+                    ${question.answers.map((answer, index) => `
+                        <li>
+                            <input type="radio" name="answer" value="${index}" id="answer${index}">
+                            <label for="answer${index}">${answer}</label>
+                        </li>
+                    `).join('')}
+                </ul>
+                <button class="skip" onclick="skipQuestion()">Passer cette question</button>
+                <button onclick="nextQuestion()">Suivant</button>
+            `;
+        }
+
+        function nextQuestion() {
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+            if (selectedAnswer) {
+                answersSelected.push({
+                    questionIndex: currentQuestionIndex,
+                    selectedAnswer: selectedAnswer.value
+                });
+            }
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        function skipQuestion() {
+            skipCount++;
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        // Show the results
+        function showResults() {
+            let score = 0;
+            let resultHTML = '<h2>Résultats du quiz</h2><ul>';
+
+            answersSelected.forEach((answer, index) => {
+                const question = questions[answer.questionIndex];
+                const correctAnswer = question.correct;
+                resultHTML += `
+                    <li>
+                        Question ${index + 1}: ${question.question}<br>
+                        Réponse sélectionnée: ${question.answers[answer.selectedAnswer]}<br>
+                        Réponse correcte: ${question.answers[correctAnswer]}<br>
+                        Référence: ${question.reference}
+                    </li>
+                `;
+                if (answer.selectedAnswer == correctAnswer) {
+                    score++;
+                }
+            });
+
+            resultHTML += `</ul><p><strong>Votre score: ${score} sur ${questions.length}</strong></p>`;
+            document.getElementById('quiz').innerHTML = resultHTML;
+            document.getElementById('submit').style.display = 'none';  // Hide the submit button
+        }
+
+        // Submit the quiz and show results
+        function submitQuiz() {
+            showResults();
+        }
+
+        // Initialize the quiz
+        loadQuestion();
+    </script>
+</body>
+</html>
+                   

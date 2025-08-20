@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>MCQ: How to Do Things with Words (Lectures I–IV)</title>
+  <style>
+    body {
+      background-color: #fdfaf5;
+      color: #333;
+      font-family: Georgia, serif;
+      margin: 0;
+      padding: 1em;
+    }
+    h1 {
+      text-align: center;
+      color: #800000;
+      margin-bottom: 0.5em;
+    }
+    #quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .question-card {
+      border: 1px solid #ccc;
+      border-left: 6px solid #800000;
+      border-radius: 4px;
+      padding: 1em;
+      margin-bottom: 1em;
+      background: #fff;
+    }
+    .question-card h2 {
+      margin: 0 0 0.5em;
+      font-size: 1.1em;
+      color: #800000;
+    }
+    .options label {
+      display: block;
+      margin: 0.4em 0;
+      cursor: pointer;
+    }
+    .options input[type="radio"] {
+      margin-right: 0.5em;
+    }
+    #navigation {
+      display: flex;
+      justify-content: space-between;
+      margin: 1em 0;
+    }
+    .btn {
+      background-color: #800000;
+      color: #fff;
+      border: none;
+      padding: 0.6em 1.2em;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    .btn:disabled {
+      background-color: #ccc;
+      cursor: default;
+    }
+    #results {
+      max-width: 800px;
+      margin: 2em auto;
+      background: #ffe;
+      padding: 1em;
+      border: 1px solid #800000;
+      border-radius: 4px;
+    }
+    #results h2 {
+      color: #800000;
+    }
+    .answer-block {
+      margin: 1em 0;
+      padding: 0.5em;
+      border-radius: 3px;
+    }
+    .answer-block.correct {
+      border-left: 4px solid #006400;
+      background: #f4fff4;
+    }
+    .answer-block.incorrect {
+      border-left: 4px solid #8b0000;
+      background: #fff4f4;
+    }
+    .explanation {
+      margin-top: 0.5em;
+      font-size: 0.95em;
+      color: #555;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #ccc;
+      margin: 1.5em 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>MCQ Test: How to Do Things with Words<br/>(Lectures I–IV)</h1>
+  <div id="quiz-container">
+    <div id="question-card" class="question-card"></div>
+    <div id="navigation">
+      <button id="prevBtn" class="btn">Previous</button>
+      <button id="skipBtn" class="btn">Skip</button>
+      <button id="nextBtn" class="btn">Next</button>
+      <button id="submitBtn" class="btn">Submit</button>
+    </div>
+  </div>
+  <div id="results"></div>
+
+  <script>
+  // Full 40‐question bank on Lectures I–IV
+  const questions = [
+    // Lecture I (1–10)
+    {question:"What distinguishes a performative utterance from a constative in Austin’s Lecture I?",
+     options:["It describes a state of affairs","It performs an action","It uses hypotheticals","It always has an auxiliary"],
+     answer:1,
+     explanation:"Performatives enact an action (e.g. “I name…”), rather than describe facts. (Austin, Lecture I)"},
+
+    {question:"Which of these is NOT a performative example in Lecture I?",
+     options:["I bet you sixpence","I bequeath my watch","I name this ship","The cat is on the mat"],
+     answer:3,
+     explanation:"“The cat is on the mat” merely states a fact—it’s constative. (Austin, Lecture I)"},
+
+    {question:"Why does Austin reject private spiritual acts as bases for performatives?",
+     options:["They’re all silent","They can’t be made explicit","They lack grammar","They’re illogical"],
+     answer:1,
+     explanation:"He stresses that it is the utterance itself, not hidden inward acts, that performs the action. (Lecture I)"},
+
+    {question:"Which term did Austin discard because it was too narrow for his new category?",
+     options:["Operative","Declarative","Constative","Imperative"],
+     answer:0,
+     explanation:"“Operative” was too legalistic. He coined “performative” free of such baggage. (Lecture I)"},
+
+    {question:"In a wedding ceremony, “I do” is a classic performative because:",
+     options:["It states legal facts","It expresses emotion","It enacts the marriage","It cites a clause"],
+     answer:2,
+     explanation:"Saying “I do” *is* the act of marrying—no separate description needed. (Lecture I)"},
+
+    {question:"Which objection acknowledges actions outside speech but keeps utterances primary?",
+     options:["Intention matters","Insincerity possible","Nonverbal equivalents","Translation issues"],
+     answer:2,
+     explanation:"Austin admits you can marry by cohabiting or bet via a machine, but the performative utterance remains essential. (Lecture I)"},
+
+    {question:"Austin calls confusing statements and performatives the:",
+     options:["Performative fallacy","Descriptive fallacy","Constative crisis","Logical slip"],
+     answer:1,
+     explanation:"Ignoring speech’s action‐performing uses is the “descriptive fallacy.” (Lecture I)"},
+
+    {question:"Which grammatical shape marks prototypical explicit performatives?",
+     options:["Imperative mood","First‐person present","Infinitive clause","Subjunctive mood"],
+     answer:1,
+     explanation:"Formulas like “I promise…”, “I bet…”, “I name…” all use 1st person present. (Lecture I)"},
+
+    {question:"Why did Austin prefer “performative” over older terms?",
+     options:["Novelty","Precision","Avoid bias","Simplicity"],
+     answer:2,
+     explanation:"He wanted a neutral term unburdened by existing technical connotations. (Lecture I)"},
+
+    {question:"Which did he deliberately exclude from his six felicity conditions?",
+     options:["Official context","Appropriate speaker","Recital completeness","Duress or dupe"],
+     answer:3,
+     explanation:"He ruled out mistakes like duress—those belong to general action‐failures, not speech‐ritual failures. (Lecture II)"},
+
+    // Lecture II (11–20)
+    {question:"How many core “infelicities” does Austin define?",
+     options:["4","5","6","7"],
+     answer:2,
+     explanation:"He lists six: A.1, A.2, B.1, B.2, T.1, T.2—covering misfires, misapplications, hitches, and insincerities. (Lecture II)"},
+
+    {question:"A.1 “Misinvocation” means:",
+     options:["Wrong wording","No accepted ritual","Speaker mistake","Audience error"],
+     answer:1,
+     explanation:"No valid procedure exists or is accepted—for example, marrying a monkey. (Lecture II)"},
+
+    {question:"A.2 “Misapplication” vs. B.1 “Flaw”:",
+     options:["Context vs. formula","Inner vs. outer","Audience vs. speaker","They’re the same"],
+     answer:0,
+     explanation:"Misapplication: wrong person/circumstances. Flaw: correct context but wrong wording. (Lecture III)"},
+
+    {question:"Which covers a valid ritual never completed?",
+     options:["Misinvocation","Flaw","Hitch","Insincerity"],
+     answer:2,
+     explanation:"B.2 “Hitches” are incomplete executions of an otherwise valid procedure—e.g. no acceptance of a bet. (Lecture III)"},
+
+    {question:"What are “Abuses” (T.1/T.2)?",
+     options:["Unhappy opponents","Acts in bad faith","Technicalities","Void ceremonies"],
+     answer:1,
+     explanation:"Ceremony completes but in bad faith—insincere promises, false apologies, etc. (Lecture II)"},
+
+    {question:"T.1 “Insincerity” demands that:",
+     options:["Words be honest","Context exist","Speaker hold required attitude","Ritual finish"],
+     answer:2,
+     explanation:"The speaker must actually have the feelings, thoughts, or intentions the ritual prescribes. (Lecture IV)"},
+
+    {question:"Which infelicity is failing to keep your promise?",
+     options:["Misapplication","Flaw","Non-implementation","Misinvocation"],
+     answer:2,
+     explanation:"Not doing what you promised while ceremony completes → T.2 Non-implementation. (Lecture II)"},
+
+    {question:"A “Misfire” vs “Abuse” differs how?",
+     options:["Null act vs. hollow act","Intent vs. context","Speaker vs. audience","They’re identical"],
+     answer:0,
+     explanation:"Misfires void the act altogether; Abuses yield the act but misuse it. (Lecture II)"},
+
+    {question:"Calling “I apologize” in jest is:",
+     options:["A.Misinvocation","Flaw","Hitch","Non-serious use"],
+     answer:3,
+     explanation:"Joking strips away seriousness—an etiolated, non-serious use, not a ritual error. (Lecture IV)"},
+
+    {question:"Refusing an order “Go!” is:",
+     options:["Misinvocation","Misapplication","Flaw","Hitch"],
+     answer:0,
+     explanation:"You can’t order someone who won’t accept—no accepted context → Misinvocation (A.1). (Lecture III)"},
+
+    // Lecture III (21–30)
+    {question:"Saying “I marry you” without authority is:",
+     options:["Misinvocation","Misapplication","Flaw","Insincerity"],
+     answer:1,
+     explanation:"Procedure exists but wrong person → Misapplication (A.2). (Lecture III)"},
+
+    {question:"Wrong words in a valid ritual is:",
+     options:["Misinvocation","Flaw","Hitch","Insincerity"],
+     answer:1,
+     explanation:"B.1 “Flaw” = incorrect formula in correct context. (Lecture III)"},
+
+    {question:"Kicking away chocks before “I launch…” is:",
+     options:["Misfire","Hitch","Abuse","Flaw"],
+     answer:1,
+     explanation:"Unfinished ritual → Hitch (B.2). (Lecture III)"},
+
+    {question:"“I find you innocent” while believing guilt is:",
+     options:["Misapplication","Flaw","Insincerity","Misinvocation"],
+     answer:2,
+     explanation:"Delivering verdict contrary to belief → Insincerity (T.1). (Lecture IV)"},
+
+    {question:"Not handing over a gift after “I give…” =",
+     options:["Misapplication","Flaw","Hitch","Insincerity"],
+     answer:2,
+     explanation:"Ceremony incomplete without transfer → Hitch (B.2). (Lecture III)"},
+
+    {question:"Bigamy (“I do” twice) is a:",
+     options:["Misfire","Abuse","Flaw","Non-play"],
+     answer:0,
+     explanation:"Second “I do” void → Misfire. You can’t marry twice. (Lecture II)"},
+
+    {question:"Adding “hereby” signals an:",
+     options:["Expostulate","Explicit performative","Constative","Etiolation"],
+     answer:1,
+     explanation:"“Hereby” marks written utterance as its own action. (Lecture I)"},
+
+    // Lecture IV (31–40)
+    {question:"Saying “I congratulate” without pleasure is:",
+     options:["Misfire","Flaw","Insincerity","Etiolated"],
+     answer:2,
+     explanation:"No genuine feeling → Insincerity. (Lecture IV)"},
+
+    {question:"“I promise” with no intent =",
+     options:["Misapplication","Hitch","Abuse","Misfire"],
+     answer:2,
+     explanation:"Utterance complete but faithless → Abuse (T.1). (Lecture IV)"},
+
+    {question:"“All unicorns have horns” when none exist →",
+     options:["False","Void","Meaningless","Nonsensical"],
+     answer:1,
+     explanation:"Presupposes existence → void, not simply false. (Lecture IV)"},
+
+    {question:"“All men blush” entails “Some men blush.” This is:",
+     options:["Implication","Presupposition","Entailment","Contradiction"],
+     answer:2,
+     explanation:"Universal → existential entailment: ¬(Some) → ¬(All). (Lecture IV)"},
+
+    {question:"“The cat is on the mat” implies speaker belief. This is:",
+     options:["Entailment","Implication","Presupposition","Inference"],
+     answer:1,
+     explanation:"Reporting rain implies the speaker believes it. (Moore’s insight, Lecture IV)"},
+
+    {question:"Universal statements presuppose existence under which marker?",
+     options:["ω","∀","∃","⇒"],
+     answer:2,
+     explanation:"Presupposition survives negation (e.g. “Even if no bald kids, presuppose kids exist”). (Lecture IV)"},
+
+    {question:"Which device unambiguously fixes force but not content?",
+     options:["Tone","Explicit performatives","Vocabulary","Rhythm"],
+     answer:1,
+     explanation:"Explicit performative verbs (e.g. “I warn”) make force clear. (Lecture VI)"},
+
+    {question:"Which fallacy confuses saying with doing?",
+     options:["Descriptive","Performative","Constative","Grammatical"],
+     answer:0,
+     explanation:"Treating all utterances as descriptive statements is the descriptive fallacy. (Lecture I)"},
+
+    {question:"Saying “I swear” in a promise ceremony yields which felicity?",
+     options:["T.2 non-impl.","B.2 hitch","A.1 misinv.","A.2 misapp."],
+     answer:2,
+     explanation:"No valid ceremony → Misinvocation. (Lecture III)"},
+
+    {question:"Summing up, pure statements aim for truth; pure performatives aim for:",
+     options:["Rhyme","Happiness","Falsity","Melody"],
+     answer:1,
+     explanation:"Statements strive to be true/false; performatives strive to be happy/unhappy. (Lecture XI)"}
+  ];
+
+  // shuffle questions and options
+  let quiz = questions
+    .map(q => {
+      const deep = JSON.parse(JSON.stringify(q));
+      const opts = deep.options
+        .map((o,i) => ({o,i}))
+        .sort(()=>Math.random()-0.5);
+      const ans = opts.findIndex(x=>x.i===deep.answer);
+      return {
+        question: deep.question,
+        options: opts.map(x=>x.o),
+        answer: ans,
+        explanation: deep.explanation
+      };
+    })
+    .sort(()=>Math.random()-0.5);
+
+  let current=0, answers=Array(quiz.length).fill(null);
+
+  function render(){
+    const q=quiz[current];
+    let html = `<h2>Q${current+1} of ${quiz.length}</h2>
+                <p>${q.question}</p><div class="options">`;
+    q.options.forEach((opt,i)=>{
+      const chk = answers[current]===i?"checked":"";
+      html+=`<label>
+               <input type="radio" name="opt" value="${i}" ${chk}/>
+               ${opt}
+             </label>`;
+    });
+    html+="</div>";
+    document.getElementById("question-card").innerHTML=html;
+    prevBtn.disabled = current===0;
+    nextBtn.disabled = current===quiz.length-1;
+  }
+
+  function store(){
+    const sel = document.querySelector('input[name="opt"]:checked');
+    answers[current] = sel ? +sel.value : null;
+  }
+
+  function showResults(){
+    store();
+    let score=0, out=`<h2>Your Score: 0 / ${quiz.length}</h2>`;
+    quiz.forEach((q,i)=>{
+      const ok = answers[i]===q.answer;
+      if(ok) score++;
+      out+=`
+        <div class="answer-block ${ok?"correct":"incorrect"}">
+          <strong>Q${i+1}:</strong> ${q.question}<br/>
+          <em>Your answer:</em> ${
+            answers[i]===null
+              ?"<span style='color:#888'>No answer</span>"
+              :q.options[answers[i]]}
+          <br/>
+          <em>${ok?"✅ Correct":"❌ Incorrect, correct was"}${
+            ok?"":" "+q.options[q.answer]}
+          </em>
+          <div class="explanation">${q.explanation}</div>
+        </div><hr/>`;
+    });
+    document.getElementById("results").innerHTML=out.replace(
+      /Your Score: 0/,
+      `Your Score: ${score}`
+    );
+    document.getElementById("quiz-container").style.display="none";
+    document.getElementById("results").scrollIntoView({behavior:"smooth"});
+  }
+
+  window.onload = ()=>{
+    render();
+    prevBtn.onclick = ()=>{
+      store();
+      if(current>0) current--, render();
+    };
+    nextBtn.onclick = ()=>{
+      store();
+      if(current<quiz.length-1) current++, render();
+    };
+    skipBtn.onclick = ()=>{
+      answers[current]=null;
+      if(current<quiz.length-1) current++, render();
+    };
+    submitBtn.onclick = showResults;
+  };
+  </script>
+</body>
+</html>

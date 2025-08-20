@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>QCM - Phonologie (Ferré 2015) - L3/M1</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #4b79a1, #283e51);
+      color: #f2f2f2;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 30px;
+      display: flex; justify-content: center; align-items: flex-start;
+      min-height: 100vh;
+    }
+    .container {
+      background: rgba(0, 0, 0, 0.75);
+      border-radius: 16px;
+      max-width: 700px;
+      width: 100%;
+      padding: 30px 40px;
+      box-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
+      user-select: none;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 28px;
+      font-weight: 700;
+      font-size: 2em;
+      color: #a6c8ff;
+      text-shadow: 0 0 8px #bbe1fa;
+    }
+    .question {
+      font-size: 1.2em;
+      font-weight: 700;
+      margin-bottom: 18px;
+      color: #b0d6ff;
+    }
+    .options label {
+      display: block;
+      background: linear-gradient(90deg, #1e2a47 0%, #375a7d 100%);
+      border-radius: 14px;
+      padding: 13px 22px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      font-size: 1.08em;
+      color: #c6d9ff;
+      transition: background 0.3s ease, color 0.3s ease;
+      box-shadow: inset 1px 1px 6px rgba(255, 255, 255, 0.15);
+    }
+    .options label:hover {
+      background: linear-gradient(90deg, #5772b7 0%, #a1bdff 100%);
+      color: #0c1f38;
+    }
+    input[type="radio"] {
+      display: none;
+    }
+    input[type="radio"]:checked + span {
+      font-weight: 800;
+      color: #dbe9ff;
+      text-shadow: 0 0 8px #80b3ff;
+    }
+    #feedback {
+      margin-top: 18px;
+      border-radius: 16px;
+      padding: 20px 24px;
+      font-weight: 700;
+      font-size: 1.15em;
+      max-width: 650px;
+      user-select: text;
+    }
+    #feedback.correct {
+      background-color: #1e4635;
+      color: #abe1a0;
+      box-shadow: 0 0 15px #6ecc69;
+    }
+    #feedback.incorrect {
+      background-color: #5e2f31;
+      color: #ffbab3;
+      box-shadow: 0 0 15px #f3645f;
+    }
+    #score {
+      font-size: 1.6em;
+      font-weight: 700;
+      margin-top: 36px;
+      text-align: center;
+      color: #aac7f7;
+      user-select: text;
+    }
+    #restart {
+      cursor: pointer;
+      background: #355a9c;
+      color: #e0e9ff;
+      width: 160px;
+      display: none;
+      border: none;
+      font-weight: 700;
+      font-size: 1.1em;
+      border-radius: 36px;
+      padding: 14px 0;
+      margin: 22px auto 0;
+      box-shadow: 0 5px 18px rgba(41, 65, 126, 0.8);
+      user-select: none;
+      transition: background 0.3s ease;
+    }
+    #restart:hover {
+      background: #2a4a7d;
+      box-shadow: 0 7px 24px rgba(33, 58, 107, 0.95);
+    }
+    #reference {
+      margin-top: 36px;
+      background: rgba(27, 41, 71, 0.95);
+      padding: 22px 28px;
+      border-left: 6px solid #a8c4ff;
+      border-radius: 12px;
+      max-height: 340px;
+      overflow-y: auto;
+      font-size: 0.9em;
+      line-height: 1.45;
+      color: #c0d4ff;
+      white-space: pre-wrap;
+      display: none;
+      user-select: text;
+    }
+    #reference h2 {
+      margin-top: 0;
+      color: #b2cfff;
+      font-weight: 700;
+      border-bottom: 1.8px solid #4c6799;
+      padding-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="main" aria-label="QCM Phonologie Ferré 2015">
+    <h1>QCM Phonologie<br><small>Séquence 1 – Ferré (2015), Niveau L3/M1</small></h1>
+    <div id="quiz"></div>
+    <div id="feedback" aria-live="assertive" role="alert"></div>
+    <div id="score"></div>
+    <button id="restart" aria-label="Recommencer le quiz">Recommencer</button>
+    <div id="reference" aria-label="Références détaillées"></div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        q: "1. Selon Ferré (2015), comment les mots fonctionnels comme les prépositions sont-ils traités phonémiquement dans la parole continue ?",
+        options: [
+          "Ils conservent un accent lexical complet avec une voyelle pleine.",
+          "Ils perdent l’accent lexical et sont souvent réduits à un schwa ou à une voyelle faible.",
+          "Ils sont toujours accentués, peu importe leur position dans la phrase.",
+          "Ils sont omis dans la transcription."
+        ],
+        answer: 1,
+        reference: "Ferré (2015, p. 25) : Les mots fonctionnels perdent l’accent lexical lorsqu’ils ne sont pas accentués et sont souvent réduits à un schwa ou une voyelle faible, ex. « of » /ə/ ou /ɪ/."
+      },
+      {
+        q: "2. Quel principe phonologique explique l’évitement de deux accents forts consécutifs dans les mots anglais ?",
+        options: [
+          "Principe rythmique",
+          "Principe d’évitement de clash d’accentuation",
+          "Principe d’assimilation",
+          "Principe de lénition"
+        ],
+        answer: 1,
+        reference: "Ferré (2015, p. 27) : Le principe d’évitement de clash d’accentuation évite deux accents forts consécutifs par déplacement ou atténuation."
+      },
+      {
+        q: "3. Dans les mots comme 'cats', comment le morphème du pluriel /-s/ est-il généralement réalisé ?",
+        options: [
+          "Sonore /z/",
+          "Sourd /s/",
+          "Ajout d’une voyelle /ɪz/",
+          "Coarticulé /ʒ/"
+        ],
+        answer: 1,
+        reference: "Ferré (2015, p. 28) : Après les consonnes sourdes, le pluriel /-s/ est réalisé comme /s/ par assimilation progressive."
+      },
+      {
+        q: "4. Quel processus phonologique entraîne l’insertion d’une voyelle dans les pluriels comme 'places' ou 'fields' ?",
+        options: [
+          "Épenthèse pour éviter deux sifflantes consécutives",
+          "Suppression d’un groupe consonantique",
+          "Dévoisement final",
+          "Nasalisation"
+        ],
+        answer: 0,
+        reference: "Ferré (2015, p. 28) : Une voyelle épenthétique /ɪ/ est insérée après les sifflantes pour les séparer dans les pluriels."
+      },
+      {
+        q: "5. Quelle est la 'règle du lion' concernant l’accentuation en anglais ?",
+        options: [
+          "L’accent tombe toujours sur la première syllabe",
+          "L’accent principal se place avant une séquence consonne + 'ia'",
+          "L’accent dépend de la longueur du mot",
+          "L’accent tombe sur la dernière syllabe dans les composés"
+        ],
+        answer: 1,
+        reference: "Ferré (2015, p. 27) : La 'règle du lion' place l’accent principal avant un groupe consonne + 'ia'."
+      },
+      {
+        q: "6. Comment l’accentuation fonctionne-t-elle dans les noms composés comme 'first-class railway carriage' ?",
+        options: [
+          "Accent uniquement sur le dernier mot",
+          "Accent égal sur tous les mots",
+          "Accent principal sur le premier élément de chaque composé",
+          "Accentuation aléatoire"
+        ],
+        answer: 2,
+        reference: "Ferré (2015, p. 26) : Le premier élément du composé porte l’accent principal ; les suivants ont un accent secondaire ou sont réduits."
+      },
+      {
+        q: "7. Quel processus explique la réduction vocalique dans les mots grammaticaux inaccentués ?",
+        options: [
+          "Élision",
+          "Réduction vocalique vers un schwa ou une voyelle centralisée",
+          "Nasalisation",
+          "Épenthèse"
+        ],
+        answer: 1,
+        reference: "Ferré (2015, p. 25) : Les mots grammaticaux inaccentués montrent souvent une réduction vocalique vers un schwa ou une voyelle centrale."
+      },
+      {
+        q: "8. Comment marquer l’accent sur les mots grammaticaux monosyllabiques dans la parole continue ?",
+        options: [
+          "Toujours marqués avec un accent principal",
+          "Pas d’accent sauf en cas de mise en relief",
+          "Accent secondaire systématique",
+          "Accent marqué par des majuscules"
+        ],
+        answer: 1,
+        reference: "Ferré (2015, p. 26) : Les mots grammaticaux monosyllabiques perdent généralement l’accent sauf en cas d’emphase."
+      },
+      {
+        q: "9. Comment se prononce le digraphe 'th' dans 'this' et 'thin' ?",
+        options: [
+          "/θ/ dans les deux",
+          "/ð/ dans les deux",
+          "/ð/ dans 'this', /θ/ dans 'thin'",
+          "/s/ pour simplifier"
+        ],
+        answer: 2,
+        reference: "Ferré (2015, p. 29) : 'th' = /ð/ dans 'this' (voisé), /θ/ dans 'thin' (non voisé)."
+      },
+      {
+        q: "10. Quelle méthode d’organisation Ferré (2015) recommande-t-il pour présenter clairement les réponses en phonologie ?",
+        options: [
+          "Ordre aléatoire des questions",
+          "Commencer par les termes complexes",
+          "Regrouper les phénomènes similaires, du simple au complexe",
+          "Réponses brèves et isolées"
+        ],
+        answer: 2,
+        reference: "Ferré (2015, p. 26) : Il est recommandé de regrouper les phénomènes similaires et d’aller du simple au complexe pour plus de clarté."
+      }
+    ];
+
+    let currentIndex = 0;
+    let score = 0;
+
+    const quizDiv = document.getElementById("quiz");
+    const feedbackDiv = document.getElementById("feedback");
+    const scoreDiv = document.getElementById("score");
+    const restartBtn = document.getElementById("restart");
+    const referenceDiv = document.getElementById("reference");
+
+    function renderQuestion() {
+      feedbackDiv.style.display = "none";
+      referenceDiv.style.display = "none";
+      restartBtn.style.display = "none";
+      scoreDiv.textContent = "";
+      const q = questions[currentIndex];
+      quizDiv.innerHTML = `
+        <div class="question">${q.q}</div>
+        <div class="options">
+          ${q.options.map((opt, i) => `
+            <label>
+              <input type="radio" name="option" value="${i}" />
+              <span>${opt}</span>
+            </label>`).join('')}
+        </div>`;
+      const options = quizDiv.querySelectorAll('input[name="option"]');
+      options.forEach(opt => {
+        opt.addEventListener('change', () => checkAnswer(parseInt(opt.value)));
+      });
+    }
+
+    function checkAnswer(selected) {
+      const correct = questions[currentIndex].answer;
+      feedbackDiv.style.display = "block";
+      if (selected === correct) {
+        score++;
+        feedbackDiv.className = "correct";
+        feedbackDiv.textContent = "✅ Bonne réponse !";
+      } else {
+        feedbackDiv.className = "incorrect";
+        feedbackDiv.innerHTML = `❌ Mauvaise réponse. La bonne réponse est : <b>${questions[currentIndex].options[correct]}</b>`;
+      }
+      disableOptions();
+      setTimeout(() => {
+        currentIndex++;
+        if (currentIndex < questions.length) {
+          renderQuestion();
+        } else {
+          finishQuiz();
+        }
+      }, 1600);
+    }
+
+    function disableOptions() {
+      const options = quizDiv.querySelectorAll('input[name="option"]');
+      options.forEach(i => i.disabled = true);
+    }
+
+    function finishQuiz() {
+      quizDiv.innerHTML = "";
+      feedbackDiv.style.display = "none";
+      scoreDiv.textContent = `Score final : ${score} / ${questions.length}`;
+      restartBtn.style.display = "block";
+
+      let refsHtml = `<h2>Références détaillées (Ferré, 2015, pp. 16–32)</h2>`;
+      refsHtml += questions.map((q, i) => `<b>Q${i+1} :</b> ${q.reference}`).join('<br><br>');
+      referenceDiv.innerHTML = refsHtml;
+      referenceDiv.style.display = "block";
+    }
+
+    restartBtn.addEventListener("click", () => {
+      currentIndex = 0;
+      score = 0;
+      referenceDiv.style.display = "none";
+      restartBtn.style.display = "none";
+      scoreDiv.textContent = "";
+      renderQuestion();
+    });
+
+    renderQuestion();
+  </script>
+</body>
+</html>

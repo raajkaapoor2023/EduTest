@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chapter 3: Vowels (Graduate Phonetics Quiz)</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #1d3557, #457b9d);
+      color: #f1faee;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+    .quiz-container {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+      width: 90%;
+      max-width: 750px;
+    }
+    h1 {
+      text-align: center;
+      color: #ffb703;
+    }
+    .question {
+      font-size: 1.1rem;
+      margin: 1.5rem 0 0.5rem;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+    }
+    .option {
+      background: #264653;
+      border: 2px solid #e9c46a;
+      margin: 0.4rem 0;
+      padding: 0.6rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+    .option:hover {
+      background: #f4a261;
+      color: black;
+    }
+    .btn {
+      margin-top: 1rem;
+      padding: 0.6rem 1.5rem;
+      background: #e76f51;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .result, .explanation {
+      margin-top: 2rem;
+      background: #ffffff11;
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+    .correct { color: lightgreen; }
+    .incorrect { color: #ff6b6b; }
+  </style>
+</head>
+<body>
+<div class="quiz-container">
+  <h1>Chapter 3: Vowels – Ivy League Level</h1>
+  <div id="quiz"></div>
+  <div class="result" id="result"></div>
+  <div class="explanation" id="explanation"></div>
+  <button class="btn" onclick="nextQuestion()">Next</button>
+</div>
+
+<script>
+const questions = [
+  {
+    q: "Which three dimensions are used by the IPA to define vowels?",
+    options: ["Pitch, Stress, Duration", "Tension, Nasality, Backness", "Height, Frontness, Rounding", "Tongue root, Voicing, Place"],
+    answer: 2,
+    ref: "Vowel dimensions include height (vertical), frontness (horizontal), and lip rounding. (p.29)"
+  },
+  {
+    q: "The vowel /i/ is classified as:",
+    options: ["Open-mid central rounded", "Close front unrounded", "Close back rounded", "Near-close central"],
+    answer: 1,
+    ref: "/i/ is a close (high), front, unrounded vowel. (p.30)"
+  },
+  {
+    q: "The term 'near-close' describes vowels:",
+    options: ["Between close and open", "Between close and close-mid", "Centralized back vowels", "Nasalized front vowels"],
+    answer: 1,
+    ref: "Near-close vowels are between close and close-mid on the vertical axis. (p.30)"
+  },
+  {
+    q: "Which vowel is the most open in General American English?",
+    options: ["/æ/", "/ɑ/", "/ʌ/", "/ə/"],
+    answer: 1,
+    ref: "/ɑ/ is produced with the mandible fully depressed and the tongue low. (p.30)"
+  },
+  {
+    q: "Which of the following is a back rounded vowel?",
+    options: ["/æ/", "/ɛ/", "/u/", "/i/"],
+    answer: 2,
+    ref: "/u/ is a back vowel produced with lip rounding. (p.30)"
+  },
+  {
+    q: "What is the acoustic correlate of vowel height?",
+    options: ["F0", "Formant 1 (F1)", "Formant 2 (F2)", "Amplitude"],
+    answer: 1,
+    ref: "F1 varies inversely with vowel height: lower F1 = higher tongue position. (p.30)"
+  },
+  {
+    q: "What happens to F2 when a vowel becomes more fronted?",
+    options: ["F2 decreases", "F2 remains constant", "F2 increases", "F1 increases"],
+    answer: 2,
+    ref: "F2 increases with greater tongue advancement (frontness). (p.30)"
+  },
+  {
+    q: "Which IPA symbol represents a mid-central vowel often used in unstressed syllables?",
+    options: ["/e/", "/ɜ/", "/ə/", "/ʊ/"],
+    answer: 2,
+    ref: "/ə/ (schwa) is a central mid vowel used in unstressed syllables. (p.30)"
+  },
+  {
+    q: "Which vowel pair differs in rounding only?",
+    options: ["/i/ and /ɪ/", "/u/ and /ʊ/", "/i/ and /y/", "/o/ and /ɔ/"],
+    answer: 2,
+    ref: "/i/ and /y/ share height/frontness but differ in rounding. (noted in IPA design)"
+  },
+  {
+    q: "Which of these vowels is classified as near-open front unrounded?",
+    options: ["/æ/", "/ɛ/", "/a/", "/ɐ/"],
+    answer: 0,
+    ref: "/æ/ is near-open, front, and unrounded. (p.30)"
+  },
+  {
+    q: "Which is NOT a true monophthong in General American English?",
+    options: ["/u/", "/æ/", "/o/", "/ɪ/"],
+    answer: 2,
+    ref: "/o/" is typically produced as /oʊ/, a diphthong in GA. (p.29)"
+  },
+  {
+    q: "How many vowel phonemes are generally identified in General American English?",
+    options: ["10", "12", "14", "15"],
+    answer: 3,
+    ref: "15 vowels are recognized in General American English. (p.29)"
+  },
+  {
+    q: "Which of the following is a tense vowel?",
+    options: ["/ɪ/", "/æ/", "/i/", "/ʊ/"],
+    answer: 2,
+    ref: "Tense vowels include /i/, /e/, /u/, and /o/. (p.30)"
+  },
+  {
+    q: "Which dimension is primarily responsible for differentiating /u/ from /ʊ/?",
+    options: ["Height", "Rounding", "Tenseness", "Backness"],
+    answer: 2,
+    ref: "/u/ is tense and /ʊ/ is lax; both are high, back, rounded. (p.30)"
+  },
+  {
+    q: "Which vowel is characterized by low F1 and high F2?",
+    options: ["/i/", "/ɑ/", "/ɔ/", "/ʌ/"],
+    answer: 0,
+    ref: "/i/ has high tongue height (low F1) and is fronted (high F2). (p.30)"
+  },
+  {
+    q: "Which of these is NOT a dimension in the vowel quadrilateral?",
+    options: ["Height", "Backness", "Voicing", "Rounding"],
+    answer: 2,
+    ref: Voicing is not used to classify vowels; all vowels are voiced. (p.29)"
+  },
+  {
+    q: "What articulatory gesture distinguishes /ɛ/ from /æ/?",
+    options: ["Rounded lips", "More nasal airflow", "Greater jaw opening", "Retroflexion"],
+    answer: 2,
+    ref: /æ/ is lower (more jaw opening) than /ɛ/. (p.30)"
+  },
+  {
+    q: "Which vowel is used in the second syllable of 'sofa'?",
+    options: ["/ʌ/", "/ə/", "/ɚ/", "/e/"],
+    answer: 1,
+    ref: /ə/ (schwa) appears in unstressed syllables like 'sofa'. (p.30)"
+  },
+  {
+    q: "Which of the following symbols represents a mid-back rounded vowel?",
+    options: ["/ɔ/", "/ɜ/", "/ə/", "/i/"],
+    answer: 0,
+    ref: /ɔ/ is mid, back, and rounded. (p.30)"
+  },
+  {
+    q: "Which dialectal vowel is used in Eastern American English but not in General American?",
+    options: ["/a/", "/æ/", "/ɪ/", "/ʌ/"],
+    answer: 0,
+    ref: /a/ is more prominent in Eastern dialects (not in GA vowel set). (p.29)"
+  }
+];
+
+let current = 0;
+let score = 0;
+
+function showQuestion() {
+  const q = questions[current];
+  document.getElementById("quiz").innerHTML = `
+    <div class="question">${current + 1}/20. ${q.q}</div>
+    <div class="options">
+      ${q.options.map((opt, i) => `
+        <div class="option" onclick="checkAnswer(${i})">
+          ${String.fromCharCode(65 + i)}. ${opt}
+        </div>`).join('')}
+    </div>
+  `;
+  document.getElementById("result").textContent = '';
+  document.getElementById("explanation").textContent = '';
+}
+
+function checkAnswer(selected) {
+  const q = questions[current];
+  const correct = q.answer;
+  const resultEl = document.getElementById("result");
+  const explanation = document.getElementById("explanation");
+
+  if (selected === correct) {
+    score++;
+    resultEl.innerHTML = `<span class="correct">✅ Correct!</span>`;
+  } else {
+    resultEl.innerHTML = `<span class="incorrect">❌ Incorrect.</span> Correct answer: <strong>${String.fromCharCode(65 + correct)}</strong>`;
+  }
+
+  explanation.innerHTML = `<strong>Reference:</strong> ${q.ref}`;
+}
+
+function nextQuestion() {
+  if (current < questions.length - 1) {
+    current++;
+    showQuestion();
+  } else {
+    document.getElementById("quiz").innerHTML = `<h2>🎓 Quiz Complete</h2><p>Your Score: ${score}/20</p>`;
+    document.getElementById("result").textContent = '';
+    document.getElementById("explanation").innerHTML = `
+      <p><strong>Review reference:</strong> Linda I. House, <em>Introductory Phonetics and Phonology</em>, Chapter 3: Vowels (1998).</p>`;
+    document.querySelector(".btn").style.display = "none";
+  }
+}
+
+showQuestion();
+</script>
+</body>
+</html>

@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Test de fin d'études en linguistique : Pour une linguistique de l'énonciation - Formalisation et opérations de repérage (Tome 2) par Antoine Culioli</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { text-align: center; }
+        .dashboard { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .progress { width: 100%; background: #ddd; height: 10px; border-radius: 5px; margin: 0 10px; flex-grow: 1; }
+        .progress-bar { background: #4caf50; height: 10px; border-radius: 5px; width: 0%; }
+        .question { margin-bottom: 20px; }
+        .options label { display: block; margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; transition: background 0.3s; }
+        .options input { margin-right: 10px; }
+        .options input:checked + span { background: #d4edda; color: #155724; font-weight: bold; }
+        .navigation { display: flex; justify-content: space-between; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; transition: background 0.3s; }
+        button:hover { background: #0056b3; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        #results { display: none; }
+        .highlight-correct { background: #d4edda; padding: 10px; border-radius: 4px; margin-bottom: 10px; }
+        .highlight-wrong { background: #f8d7da; padding: 10px; border-radius: 4px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test de fin d'études en linguistique : Pour une linguistique de l'énonciation - Formalisation et opérations de repérage (Tome 2) par Antoine Culioli</h1>
+        <div class="dashboard">
+            <div>Questions répondues : <span id="answered">0</span>/60</div>
+            <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+            <div>Temps écoulé : <span id="time">0:00</span></div>
+        </div>
+        <div class="question">
+            <h2 id="question-number"></h2>
+            <p id="question-text"></p>
+            <div class="options" id="options"></div>
+        </div>
+        <div class="navigation">
+            <button id="prev">Précédent</button>
+            <button id="next">Suivant</button>
+            <button id="submit">Valider</button>
+        </div>
+        <div id="results">
+            <h2>Résultats</h2>
+            <p>Score : <span id="score"></span>/60</p>
+            <div id="detailed-results"></div>
+        </div>
+    </div>
+    <script>
+        const questions = [
+            {
+                question: "Selon la préface, pourquoi Culioli publie-t-il des articles plutôt qu'un ouvrage de synthèse ?",
+                options: [
+                    "Pour éviter les critiques",
+                    "Car il n'y a pas de version définitive et pour montrer la construction progressive des problèmes",
+                    "Pour gagner plus d'argent",
+                    "Parce qu'il n'a pas le temps d'écrire un livre"
+                ],
+                correct: "Car il n'y a pas de version définitive et pour montrer la construction progressive des problèmes",
+                explanation: "Culioli explique que les articles permettent de montrer la difficulté de construire des procédures d'abstraction respectueuses des observations. Référence académique : Préface (pp. 1). Cela s'aligne sur son approche paradoxale en linguistique, influencée par Benveniste."
+            },
+            {
+                question: "Quelle est la seconde question dans la préface concernant les articles ?",
+                options: [
+                    "Pourquoi sont-ils si longs ?",
+                    "Pourquoi certains paraissent péremptoires ou répétitifs ?",
+                    "Pourquoi sont-ils en anglais ?",
+                    "Pourquoi ne sont-ils pas gratuits ?"
+                ],
+                correct: "Pourquoi certains paraissent péremptoires ou répétitifs ?",
+                explanation: "Culioli justifie le maintien de textes d'étape pour illustrer les difficultés. Référence académique : Préface (pp. 1). Lien avec la méthodologie énonciative."
+            },
+            {
+                question: "Quel est le concept n°1 dans les structures fondamentales ?",
+                options: [
+                    "Sujet énonciateur",
+                    "Situation d’énonciation (S0)",
+                    "Temps de l’énonciation",
+                    "Repérage spatial"
+                ],
+                correct: "Situation d’énonciation (S0)",
+                explanation: "C'est le cadre spatio-temporel de l'énonciation, ex. 'Je suis ici maintenant'. Référence académique : Page 2. Fondamental pour le repérage énonciatif."
+            },
+            {
+                question: "Quel exemple illustre le sujet énonciateur (R0) ?",
+                options: [
+                    "Je pense que…",
+                    "Il est parti hier",
+                    "Il est là",
+                    "Le président"
+                ],
+                correct: "Je pense que…",
+                explanation: "Repère du locuteur dans S0. Référence académique : Page 2. Porteur de l'intention."
+            },
+            {
+                question: "Qu'est-ce que le temps de l’énonciation (T0) ?",
+                options: [
+                    "Repère temporel de référence",
+                    "Repère de localisation",
+                    "Constitue le repère auquel une propriété est attribuée",
+                    "Exprime la propriété"
+                ],
+                correct: "Repère temporel de référence",
+                explanation: "Ex. 'Il est parti hier'. Référence académique : Page 2. Base pour l'aspect temporel."
+            },
+            {
+                question: "Quel est le repérage spatial (L0) ?",
+                options: [
+                    "Repère de localisation dans l’espace de S0",
+                    "Opération d’attribution",
+                    "Exprime l’attitude du locuteur",
+                    "Annulation d’une propriété"
+                ],
+                correct: "Repère de localisation dans l’espace de S0",
+                explanation: "Ex. 'Il est là'. Référence académique : Page 2. Composante spatiale."
+            },
+            {
+                question: "Le syntagme nominal (SN) est ?",
+                options: [
+                    "Le repère auquel une propriété est attribuée",
+                    "Exprime la propriété",
+                    "Opération d’attribution",
+                    "Exprime l’attitude"
+                ],
+                correct: "Le repère auquel une propriété est attribuée",
+                explanation: "Ex. 'Le président'. Référence académique : Page 2. Base syntaxique."
+            },
+            {
+                question: "Le syntagme verbal (SV) exprime ?",
+                options: [
+                    "La propriété ou le processus",
+                    "Le repère",
+                    "L’attitude du locuteur",
+                    "L’annulation"
+                ],
+                correct: "La propriété ou le processus",
+                explanation: "Ex. 'a parlé calmement'. Référence académique : Page 2. Complément au SN."
+            },
+            {
+                question: "La prédication est ?",
+                options: [
+                    "Attribution d’une propriété à un repère",
+                    "Exprime l’attitude",
+                    "Confirme une prédication",
+                    "Rejet d’une propriété"
+                ],
+                correct: "Attribution d’une propriété à un repère",
+                explanation: "Ex. 'Marie est fatiguée'. Référence académique : Page 2. Opération de base."
+            },
+            {
+                question: "La modalisation (M) exprime ?",
+                options: [
+                    "L’attitude du locuteur vis-à-vis de la prédication",
+                    "La confirmation",
+                    "La négation",
+                    "La localisation"
+                ],
+                correct: "L’attitude du locuteur vis-à-vis de la prédication",
+                explanation: "Ex. 'Il pourrait venir'. Référence académique : Page 2. Modulation énonciative."
+            },
+            {
+                question: "La validation (V) est ?",
+                options: [
+                    "Opération qui confirme ou infirme une prédication",
+                    "Rejet d’une propriété",
+                    "Localisation dans S0",
+                    "Attribution d’une propriété"
+                ],
+                correct: "Opération qui confirme ou infirme une prédication",
+                explanation: "Ex. 'C’est vrai qu’il est parti'. Référence académique : Page 2. Validation référentielle."
+            },
+            {
+                question: "La négation (¬P) est ?",
+                options: [
+                    "Annulation ou rejet d’une propriété attribuée",
+                    "Confirmation",
+                    "Attitude du locuteur",
+                    "Repère temporel"
+                ],
+                correct: "Annulation ou rejet d’une propriété attribuée",
+                explanation: "Ex. 'Il ne viendra pas'. Référence académique : Page 2. Opération de disconnection."
+            },
+            {
+                question: "Le repérage interne (Ri) est ?",
+                options: [
+                    "Repère construit dans le discours",
+                    "Lien entre le signe et une entité du monde",
+                    "Relation directe avec S0",
+                    "Reprise d’un repère antérieur"
+                ],
+                correct: "Repère construit dans le discours",
+                explanation: "Ex. 'Ce livre est intéressant'. Référence académique : Page 2. Repérage endophorique."
+            },
+            {
+                question: "La référenciation externe (Re) est ?",
+                options: [
+                    "Lien entre le signe et une entité du monde",
+                    "Repère construit dans le discours",
+                    "Relation directe avec S0",
+                    "Deux expressions renvoient au même référent"
+                ],
+                correct: "Lien entre le signe et une entité du monde",
+                explanation: "Ex. 'La Tour Eiffel est célèbre'. Référence académique : Page 2. Référence exophorique."
+            },
+            {
+                question: "La deixis (R0↔S0) est ?",
+                options: [
+                    "Relation directe entre le repère et la situation d’énonciation",
+                    "Reprise d’un repère antérieur",
+                    "Suppose que le procès était vrai auparavant",
+                    "Q est déduit de P"
+                ],
+                correct: "Relation directe entre le repère et la situation d’énonciation",
+                explanation: "Ex. 'Je suis ici'. Référence académique : Page 2. Déictiques purs."
+            },
+            {
+                question: "L'anaphore (R1↔R0) est ?",
+                options: [
+                    "Reprise d’un repère antérieur",
+                    "Deux expressions renvoient au même référent",
+                    "Transformation explicative",
+                    "Mise en relief d’un repère"
+                ],
+                correct: "Reprise d’un repère antérieur",
+                explanation: "Ex. 'Marie est venue. Elle était fatiguée'. Référence académique : Page 2. Anaphore textuelle."
+            },
+            {
+                question: "La co-référence est ?",
+                options: [
+                    "Deux expressions renvoient au même référent",
+                    "Suppose que le procès était vrai auparavant",
+                    "Q est déduit de P",
+                    "Mise en relief d’un repère"
+                ],
+                correct: "Deux expressions renvoient au même référent",
+                explanation: "Ex. 'Jean a parlé. Le professeur a répondu'. Référence académique : Page 2. Co-référence."
+            },
+            {
+                question: "La présupposition (P→Q) est ?",
+                options: [
+                    "Suppose que le processus était vrai auparavant",
+                    "Q est déduit de P",
+                    "Transformation explicative",
+                    "Élément présupposé ou connu"
+                ],
+                correct: "Suppose que le processus était vrai auparavant",
+                explanation: "Ex. 'Il a arrêté de fumer'. Référence académique : Page 2. Présupposé."
+            },
+            {
+                question: "L'inférence (P ⇒ Q) est ?",
+                options: [
+                    "Q est déduit de P",
+                    "Transformation explicative",
+                    "Mise en relief d’un repère",
+                    "Élément présupposé"
+                ],
+                correct: "Q est déduit de P",
+                explanation: "Ex. 'Il est parti tôt. Il devait être fatigué'. Référence académique : Page 3. Inférence pragmatique."
+            },
+            {
+                question: "La reformulation (R→R′) est ?",
+                options: [
+                    "Transformation explicative d’un repère",
+                    "Mise en relief d’un repère",
+                    "Élément présupposé ou connu",
+                    "Triplet fondamental"
+                ],
+                correct: "Transformation explicative d’un repère",
+                explanation: "Ex. 'Autrement dit, il a échoué'. Référence académique : Page 3. Reformulation."
+            },
+            {
+                question: "La focalisation (F(R)) est ?",
+                options: [
+                    "Mise en relief d’un repère",
+                    "Élément présupposé ou connu",
+                    "Relation entre repère et propriété",
+                    "Ajout d’une modalité"
+                ],
+                correct: "Mise en relief d’un repère",
+                explanation: "Ex. 'C’est Paul qui a gagné'. Référence académique : Page 3. Focus."
+            },
+            {
+                question: "Le topique (T) est ?",
+                options: [
+                    "Élément présupposé ou connu",
+                    "Triplet fondamental de l’énonciation",
+                    "Déroulement du processus",
+                    "Renforcement ou nuance"
+                ],
+                correct: "Élément présupposé ou connu",
+                explanation: "Ex. 'Quant à Marie, elle est absente'. Référence académique : Page 3. Thème."
+            },
+            {
+                question: "La structure énonciative est ?",
+                options: [
+                    "Triplet fondamental (S0, R0, T0)",
+                    "Relation entre repère et propriété",
+                    "Ajout d’une modalité",
+                    "Déroulement du processus"
+                ],
+                correct: "Triplet fondamental (S0, R0, T0)",
+                explanation: "Ex. 'Je suis ici maintenant'. Référence académique : Page 3. Structure de base."
+            },
+            {
+                question: "La structure prédicative est ?",
+                options: [
+                    "Relation entre repère et propriété (SN+SV)",
+                    "Ajout d’une modalité",
+                    "Renforcement ou nuance",
+                    "Variation aspectuelle"
+                ],
+                correct: "Relation entre repère et propriété (SN+SV)",
+                explanation: "Ex. 'Le chat dort'. Référence académique : Page 3. Prédication."
+            },
+            {
+                question: "La structure modale est ?",
+                options: [
+                    "Ajout d’une modalité à la prédication (M+P)",
+                    "Déroulement du processus",
+                    "Renforcement de la prédication",
+                    "Variation sur un invariant"
+                ],
+                correct: "Ajout d’une modalité à la prédication (M+P)",
+                explanation: "Ex. 'Il pourrait venir'. Référence académique : Page 3. Modalité."
+            },
+            {
+                question: "La structure aspectuelle est ?",
+                options: [
+                    "Déroulement du processus (A+V)",
+                    "Renforcement ou nuance",
+                    "Variation aspectuelle",
+                    "Transformation explicative"
+                ],
+                correct: "Déroulement du processus (A+V)",
+                explanation: "Ex. 'Il est en train de lire'. Référence académique : Page 3. Aspect."
+            },
+            {
+                question: "La structure argumentative est ?",
+                options: [
+                    "Renforcement ou nuance de la prédication (R+M+V)",
+                    "Variation aspectuelle",
+                    "Multiplicité de points de vue",
+                    "Refus ou annulation"
+                ],
+                correct: "Renforcement ou nuance de la prédication (R+M+V)",
+                explanation: "Ex. 'Même Jean a compris'. Référence académique : Page 3. Argumentation."
+            },
+            {
+                question: "La structure de variation est ?",
+                options: [
+                    "Variation aspectuelle sur un invariant (R+V1/V2)",
+                    "Transformation explicative",
+                    "Multiplicité de points de vue",
+                    "Confirmation de la prédication"
+                ],
+                correct: "Variation aspectuelle sur un invariant (R+V1/V2)",
+                explanation: "Ex. 'Il marche / Il est en train de marcher'. Référence académique : Page 3. Variation."
+            },
+            {
+                question: "La structure de reformulation est ?",
+                options: [
+                    "Transformation explicative (R→R′)",
+                    "Multiplicité de points de vue",
+                    "Refus ou annulation",
+                    "Confirmation"
+                ],
+                correct: "Transformation explicative (R→R′)",
+                explanation: "Ex. 'Il a démissionné. C’est-à-dire qu’il a quitté son poste'. Référence académique : Page 3. Reformulation."
+            },
+            {
+                question: "La structure de polyphonie est ?",
+                options: [
+                    "Multiplicité de points de vue (R0+R1+R2)",
+                    "Refus ou annulation",
+                    "Confirmation de la prédication",
+                    "Renvoie à une entité extérieure"
+                ],
+                correct: "Multiplicité de points de vue (R0+R1+R2)",
+                explanation: "Ex. 'Il paraît qu’il est malade'. Référence académique : Page 3. Polyphonie."
+            },
+            {
+                question: "La structure de négation est ?",
+                options: [
+                    "Refus ou annulation du processus (¬P)",
+                    "Confirmation de la prédication",
+                    "Exprime une attitude",
+                    "Décrit le déroulement"
+                ],
+                correct: "Refus ou annulation du processus (¬P)",
+                explanation: "Ex. 'Il n’est pas venu'. Référence académique : Page 3. Négation."
+            },
+            {
+                question: "La structure de validation est ?",
+                options: [
+                    "Confirmation de la prédication (V(P))",
+                    "Renvoie à une entité extérieure",
+                    "Exprime une attitude",
+                    "Renforce la portée"
+                ],
+                correct: "Confirmation de la prédication (V(P))",
+                explanation: "Ex. 'C’est vrai qu’il est parti'. Référence académique : Page 3. Validation."
+            },
+            {
+                question: "La fonction référentielle est ?",
+                options: [
+                    "Renvoie à une entité extérieure",
+                    "Exprime une attitude ou probabilité",
+                    "Renforce la portée de l’énoncé",
+                    "Situe le processus dans le temps"
+                ],
+                correct: "Renvoie à une entité extérieure",
+                explanation: "Ex. 'La lune est brillante'. Référence académique : Page 3. Fonction référentielle."
+            },
+            {
+                question: "La fonction modalisante est ?",
+                options: [
+                    "Exprime une attitude ou probabilité",
+                    "Renforce la portée",
+                    "Décrit le déroulement",
+                    "Exprime une perception"
+                ],
+                correct: "Exprime une attitude ou probabilité",
+                explanation: "Ex. 'Il pourrait venir'. Référence académique : Page 3. Modalité."
+            },
+            {
+                question: "La fonction argumentative est ?",
+                options: [
+                    "Renforce la portée de l’énoncé",
+                    "Décrit le déroulement du processus",
+                    "Exprime une perception ou croyance",
+                    "Commente une unité linguistique"
+                ],
+                correct: "Renforce la portée de l’énoncé",
+                explanation: "Ex. 'Même lui a compris'. Référence académique : Page 3. Argumentation."
+            },
+            {
+                question: "La fonction temporelle est ?",
+                options: [
+                    "Situe le processus dans le temps",
+                    "Décrit le déroulement",
+                    "Exprime une perception",
+                    "Commente une unité"
+                ],
+                correct: "Situe le processus dans le temps",
+                explanation: "Ex. 'Il est parti hier'. Référence académique : Page 4. Temps."
+            },
+            {
+                question: "La fonction aspectuelle est ?",
+                options: [
+                    "Décrit le déroulement du processus",
+                    "Exprime une perception ou croyance",
+                    "Commente une unité linguistique",
+                    "Acte accompli par l’énonciation"
+                ],
+                correct: "Décrit le déroulement du processus",
+                explanation: "Ex. 'Il est en train de lire'. Référence académique : Page 4. Aspect."
+            },
+            {
+                question: "La fonction cognitive est ?",
+                options: [
+                    "Exprime une perception ou une croyance",
+                    "Commente une unité linguistique",
+                    "Acte accompli par l’énonciation",
+                    "Effet produit sur le co-énonciateur"
+                ],
+                correct: "Exprime une perception ou une croyance",
+                explanation: "Ex. 'Il semble fatigué'. Référence académique : Page 4. Cognition."
+            },
+            {
+                question: "La fonction métalinguistique est ?",
+                options: [
+                    "Commente une unité linguistique",
+                    "Acte accompli par l’énonciation",
+                    "Effet produit sur le co-énonciateur",
+                    "Développement cohérent du thème"
+                ],
+                correct: "Commente une unité linguistique",
+                explanation: "Ex. 'Le mot ‘chien’ est un nom'. Référence académique : Page 4. Métalangue."
+            },
+            {
+                question: "La fonction illocutoire est ?",
+                options: [
+                    "Acte accompli par l’énonciation elle-même",
+                    "Effet produit sur le co-énonciateur",
+                    "Développement cohérent du thème",
+                    "Élément présupposé ou déjà introduit"
+                ],
+                correct: "Acte accompli par l’énonciation elle-même",
+                explanation: "Ex. 'Je promets'. Référence académique : Page 4. Illocution."
+            },
+            {
+                question: "La fonction perlocutoire est ?",
+                options: [
+                    "Effet produit sur le co-énonciateur",
+                    "Développement cohérent du thème",
+                    "Mise en relief d’un repère",
+                    "Suppose que le processus s’est produit auparavant"
+                ],
+                correct: "Effet produit sur le co-énonciateur",
+                explanation: "Ex. 'Tu m’as convaincu'. Référence académique : Page 4. Perlocution."
+            },
+            {
+                question: "La progression thématique est ?",
+                options: [
+                    "Développement cohérent du thème par activation successive de repères",
+                    "Élément présupposé ou déjà introduit",
+                    "Mise en relief d’un repère dans la structure",
+                    "Conclusion implicite tirée du contexte"
+                ],
+                correct: "Développement cohérent du thème par activation successive de repères",
+                explanation: "Ex. 'Marie est arrivée. Elle a posé ses affaires'. Référence académique : Page 4. Progression."
+            },
+            {
+                question: "Le topique est ?",
+                options: [
+                    "Élément présupposé ou déjà introduit dans le discours",
+                    "Mise en relief d’un repère",
+                    "Présence de plusieurs voix",
+                    "Intégration d’un point de vue externe"
+                ],
+                correct: "Élément présupposé ou déjà introduit dans le discours",
+                explanation: "Ex. 'Quant à Paul, il est absent'. Référence académique : Page 4. Thème."
+            },
+            {
+                question: "Le focus est ?",
+                options: [
+                    "Mise en relief d’un repère dans la structure énonciative",
+                    "Présence de plusieurs voix",
+                    "Intégration d’un point de vue externe",
+                    "Clarification d’un repère"
+                ],
+                correct: "Mise en relief d’un repère dans la structure énonciative",
+                explanation: "Ex. 'C’est Jean qui a gagné'. Référence académique : Page 4. Focus."
+            },
+            {
+                question: "La présupposition suppose que ?",
+                options: [
+                    "Le processus s’est déjà produit auparavant",
+                    "Conclusion implicite tirée du contexte",
+                    "Multiplicité de points de vue",
+                    "Changement de statut"
+                ],
+                correct: "Le processus s’est déjà produit auparavant",
+                explanation: "Ex. 'Il a encore raté son train'. Référence académique : Page 4. Présupposé."
+            },
+            {
+                question: "L'implication logique est ?",
+                options: [
+                    "Relation conditionnelle entre deux opérations",
+                    "Conclusion implicite",
+                    "Présence de plusieurs voix",
+                    "Remplacement d’un repère"
+                ],
+                correct: "Relation conditionnelle entre deux opérations",
+                explanation: "Ex. 'S’il pleut, nous resterons'. Référence académique : Page 4. Logique."
+            },
+            {
+                question: "L'inférence pragmatique est ?",
+                options: [
+                    "Conclusion implicite tirée du contexte",
+                    "Présence de plusieurs voix",
+                    "Intégration d’un point de vue externe",
+                    "Organisation globale"
+                ],
+                correct: "Conclusion implicite tirée du contexte",
+                explanation: "Ex. 'Il est parti tôt. Il devait être fatigué'. Référence académique : Page 4. Pragmatique."
+            },
+            {
+                question: "La polyphonie est ?",
+                options: [
+                    "Présence de plusieurs voix ou points de vue",
+                    "Intégration d’un point de vue externe",
+                    "Clarification ou reformulation",
+                    "Degré de certitude du locuteur"
+                ],
+                correct: "Présence de plusieurs voix ou points de vue",
+                explanation: "Ex. 'Il paraît qu’il est malade'. Référence académique : Page 4. Polyphonie."
+            },
+            {
+                question: "L'hétérogénéité énonciative est ?",
+                options: [
+                    "Intégration d’un point de vue externe dans l’énonciation",
+                    "Clarification ou reformulation",
+                    "Degré de certitude",
+                    "Regroupement sous une catégorie"
+                ],
+                correct: "Intégration d’un point de vue externe dans l’énonciation",
+                explanation: "Ex. 'Selon le rapport, il est coupable'. Référence académique : Page 4. Hétérogénéité."
+            },
+            {
+                question: "La reformulation explicative est ?",
+                options: [
+                    "Clarification ou reformulation d’un repère",
+                    "Degré de certitude du locuteur",
+                    "Insertion d’un énoncé dans un autre",
+                    "Organisation globale des opérations"
+                ],
+                correct: "Clarification ou reformulation d’un repère",
+                explanation: "Ex. 'Il a démissionné, c’est-à-dire qu’il a quitté son poste'. Référence académique : Page 4. Reformulation."
+            },
+            {
+                question: "La modalité épistémique (Me) est ?",
+                options: [
+                    "Degré de certitude du locuteur",
+                    "Regroupement de notions sous une catégorie",
+                    "Insertion d’un repère dans une classe",
+                    "Distinction entre deux repères proches"
+                ],
+                correct: "Degré de certitude du locuteur",
+                explanation: "Ex. 'Il se peut qu’il vienne'. Référence académique : Page 4. Épistémique."
+            },
+            {
+                question: "L'abstraction catégorielle est ?",
+                options: [
+                    "Regroupement de notions sous une catégorie",
+                    "Insertion d’un repère dans une classe générique",
+                    "Distinction entre deux repères",
+                    "Extraction d’un sous-ensemble"
+                ],
+                correct: "Regroupement de notions sous une catégorie",
+                explanation: "Ex. 'Rouge, vert, bleu sont des couleurs'. Référence académique : Page 5. Abstraction."
+            },
+            {
+                question: "L'opération de classement est ?",
+                options: [
+                    "Insertion d’un repère dans une classe générique",
+                    "Distinction entre deux repères proches",
+                    "Extension d’une propriété",
+                    "Application d’une propriété à un individu"
+                ],
+                correct: "Insertion d’un repère dans une classe générique",
+                explanation: "Ex. 'Un chat est un mammifère'. Référence académique : Page 5. Classement."
+            },
+            {
+                question: "L'opération de discrimination est ?",
+                options: [
+                    "Distinction entre deux repères proches",
+                    "Extension d’une propriété à un ensemble",
+                    "Application d’une propriété à un individu",
+                    "Organisation des repères selon niveaux"
+                ],
+                correct: "Distinction entre deux repères proches",
+                explanation: "Ex. 'Ce n’est pas un chien, c’est un loup'. Référence académique : Page 5. Discrimination."
+            },
+            {
+                question: "L'opération de sélection est ?",
+                options: [
+                    "Extraction d’un sous-ensemble d’un domaine",
+                    "Extension d’une propriété",
+                    "Application d’une propriété",
+                    "Lien entre deux repères"
+                ],
+                correct: "Extraction d’un sous-ensemble d’un domaine",
+                explanation: "Ex. 'Certains étudiants ont réussi'. Référence académique : Page 5. Sélection."
+            },
+            {
+                question: "L'opération de généralisation est ?",
+                options: [
+                    "Extension d’une propriété à un ensemble",
+                    "Application d’une propriété à un individu",
+                    "Organisation des repères",
+                    "Changement de statut"
+                ],
+                correct: "Extension d’une propriété à un ensemble",
+                explanation: "Ex. 'Tous les hommes sont mortels'. Référence académique : Page 5. Généralisation."
+            },
+            {
+                question: "L'opération de particularisation est ?",
+                options: [
+                    "Application d’une propriété à un individu",
+                    "Organisation des repères selon des niveaux",
+                    "Lien entre deux repères dans un domaine",
+                    "Changement de statut ou de propriété"
+                ],
+                correct: "Application d’une propriété à un individu",
+                explanation: "Ex. 'Ce médecin est compétent'. Référence académique : Page 5. Particularisation."
+            },
+            {
+                question: "L'opération de hiérarchisation est ?",
+                options: [
+                    "Organisation des repères selon des niveaux",
+                    "Lien entre deux repères",
+                    "Changement de statut",
+                    "Remplacement d’un repère"
+                ],
+                correct: "Organisation des repères selon des niveaux",
+                explanation: "Ex. 'Un moineau est un oiseau'. Référence académique : Page 5. Hiérarchie."
+            },
+            {
+                question: "L'opération de mise en relation est ?",
+                options: [
+                    "Lien entre deux repères dans un domaine",
+                    "Changement de statut ou de propriété",
+                    "Remplacement d’un repère par un autre",
+                    "Différentes réalisations d’un même invariant"
+                ],
+                correct: "Lien entre deux repères dans un domaine",
+                explanation: "Ex. 'Le professeur parle à l’élève'. Référence académique : Page 5. Relation."
+            },
+            {
+                question: "L'opération de transformation est ?",
+                options: [
+                    "Changement de statut ou de propriété",
+                    "Remplacement d’un repère par un autre",
+                    "Différentes réalisations",
+                    "Choix lexical selon registre"
+                ],
+                correct: "Changement de statut ou de propriété",
+                explanation: "Ex. 'Il est passé de médecin à écrivain'. Référence académique : Page 5. Transformation."
+            },
+            {
+                question: "L'opération de substitution est ?",
+                options: [
+                    "Remplacement d’un repère par un autre",
+                    "Différentes réalisations d’un même invariant",
+                    "Choix lexical selon registre ou intention",
+                    "Différentes modalités d’engagement"
+                ],
+                correct: "Remplacement d’un repère par un autre",
+                explanation: "Ex. 'Il a remplacé le sucre par du miel'. Référence académique : Page 5. Substitution."
+            },
+            {
+                question: "La variation linguistique est ?",
+                options: [
+                    "Différentes réalisations d’un même invariant",
+                    "Choix lexical selon registre ou intention",
+                    "Différentes modalités d’engagement",
+                    "Enchaînement de structures dans un texte"
+                ],
+                correct: "Différentes réalisations d’un même invariant",
+                explanation: "Ex. 'Il est parti / Il s’en est allé'. Référence académique : Page 6. Variation linguistique."
+            },
+            {
+                question: "La variation stylistique est ?",
+                options: [
+                    "Choix lexical selon registre ou intention",
+                    "Différentes modalités d’engagement",
+                    "Enchaînement de structures",
+                    "Différences de structuration entre langues"
+                ],
+                correct: "Choix lexical selon registre ou intention",
+                explanation: "Ex. 'Il est décédé / Il est mort'. Référence académique : Page 6. Style."
+            },
+            {
+                question: "La variation énonciative est ?",
+                options: [
+                    "Différentes modalités d’engagement du locuteur",
+                    "Enchaînement de structures dans un texte",
+                    "Différences de structuration entre langues",
+                    "Transposition d’une opération"
+                ],
+                correct: "Différentes modalités d’engagement du locuteur",
+                explanation: "Ex. 'Je pense / Il semble / Il paraît…'. Référence académique : Page 6. Énonciation."
+            },
+            {
+                question: "La variation textuelle est ?",
+                options: [
+                    "Enchaînement de structures dans un texte",
+                    "Différences de structuration entre langues",
+                    "Transposition d’une opération",
+                    "Ajout d’un jugement"
+                ],
+                correct: "Enchaînement de structures dans un texte",
+                explanation: "Ex. 'Il pleuvait. Les rues étaient vides'. Référence académique : Page 6. Textualité."
+            },
+            {
+                question: "La variation interlinguistique est ?",
+                options: [
+                    "Différences de structuration entre langues",
+                    "Transposition d’une opération",
+                    "Ajout d’un jugement ou d’une évaluation",
+                    "Insertion d’un énoncé dans un autre"
+                ],
+                correct: "Différences de structuration entre langues",
+                explanation: "Ex. 'Il fait chaud. | It is hot'. Référence académique : Page 6. Interlangues."
+            },
+            {
+                question: "L'opération de traduction est ?",
+                options: [
+                    "Transposition d’une opération dans une autre langue",
+                    "Ajout d’un jugement",
+                    "Insertion d’un énoncé dans un autre",
+                    "Organisation globale"
+                ],
+                correct: "Transposition d’une opération dans une autre langue",
+                explanation: "Ex. 'Il est en train de lire. | He is reading'. Référence académique : Page 6. Traduction."
+            },
+            {
+                question: "L'opération de paraphrase est ?",
+                options: [
+                    "Reformulation équivalente d’un contenu",
+                    "Ajout d’un jugement ou d’une évaluation",
+                    "Insertion d’un énoncé dans un autre",
+                    "Organisation globale des opérations dans un texte"
+                ],
+                correct: "Reformulation équivalente d’un contenu",
+                explanation: "Ex. 'Il a échoué → Il n’a pas réussi'. Référence académique : Page 6. Paraphrase."
+            },
+            {
+                question: "L'opération de commentaire est ?",
+                options: [
+                    "Ajout d’un jugement ou d’une évaluation",
+                    "Insertion d’un énoncé dans un autre",
+                    "Organisation globale des opérations",
+                    "Regroupement de notions"
+                ],
+                correct: "Ajout d’un jugement ou d’une évaluation",
+                explanation: "Ex. 'Il est parti, ce qui est surprenant'. Référence académique : Page 6. Commentaire."
+            },
+            {
+                question: "L'opération de mise en discours est ?",
+                options: [
+                    "Insertion d’un énoncé dans un autre",
+                    "Organisation globale des opérations",
+                    "Regroupement de notions sous une catégorie",
+                    "Insertion d’un repère dans une classe"
+                ],
+                correct: "Insertion d’un énoncé dans un autre",
+                explanation: "Ex. 'Il a dit : “Je pars.”'. Référence académique : Page 6. Mise en discours."
+            },
+            {
+                question: "L'opération de mise en texte est ?",
+                options: [
+                    "Organisation globale des opérations dans un texte",
+                    "Regroupement de notions sous une catégorie",
+                    "Insertion d’un repère",
+                    "Distinction entre deux repères"
+                ],
+                correct: "Organisation globale des opérations dans un texte",
+                explanation: "Ex. 'Le récit commence ainsi…'. Référence académique : Page 6. Mise en texte."
+            },
+            // Additional questions based on the content
+            {
+                question: "Selon Culioli dans la formalisation, la linguistique doit être ?",
+                options: [
+                    "Empirique seulement",
+                    "De l'empirique au formel",
+                    "Purement formelle",
+                    "Descriptive sans théorie"
+                ],
+                correct: "De l'empirique au formel",
+                explanation: "Transition de l'observation à la modélisation. Référence académique : Page 7-8. Approche méthodologique."
+            },
+            {
+                question: "Quel est le rôle de la formalisation selon le texte ?",
+                options: [
+                    "Abstraire les phénomènes",
+                    "Ignorer les observations",
+                    "Se limiter à une langue",
+                    "Éviter les modèles"
+                ],
+                correct: "Abstraire les phénomènes",
+                explanation: "Respecter les observations et découvrir de nouvelles relations. Référence académique : Page 8. Formalisation."
+            },
+            {
+                question: "Dans l'introduction, Culioli décrit son itinéraire comme ?",
+                options: [
+                    "Brèves d'un itinéraire",
+                    "Un plan linéaire",
+                    "Sans contradictions",
+                    "Mono-disciplinaire"
+                ],
+                correct: "Brèves d'un itinéraire",
+                explanation: "Parcours personnel avec influences multiples. Référence académique : Page 6. Itinéraire."
+            },
+            {
+                question: "La relation entre langage et langues est ?",
+                options: [
+                    "Le langage appréhendé à travers les langues",
+                    "Langues indépendantes",
+                    "Langage sans diversité",
+                    "Textes isolés"
+                ],
+                correct: "Le langage appréhendé à travers les langues",
+                explanation: "Diversité des langues et textes. Référence académique : Page 1. Objectif."
+            },
+            {
+                question: "Pourquoi conserver des articles péremptoires ?",
+                options: [
+                    "Pour montrer les difficultés de construction",
+                    "Pour répéter les idées",
+                    "Pour éviter les nouveautés",
+                    "Pour simplifier"
+                ],
+                correct: "Pour montrer les difficultés de construction",
+                explanation: "Procédures d'abstraction respectueuses. Référence académique : Page 1. Articles d'étape."
+            },
+            {
+                question: "La formalisation évite-t-elle les dogmes ?",
+                options: [
+                    "Oui, en étant flexible",
+                    "Non, elle les renforce",
+                    "Seulement en surface",
+                    "Ignorée"
+                ],
+                correct: "Oui, en étant flexible",
+                explanation: "Critique des formalismes rigides. Référence académique : Page 7. Critique."
+            },
+            {
+                question: "Quel est le risque de l'empirisme naïf ?",
+                options: [
+                    "Occlure les problèmes théoriques",
+                    "Faciliter la formalisation",
+                    "Rendre clair",
+                    "Éviter les ambiguïtés"
+                ],
+                correct: "Occlure les problèmes théoriques",
+                explanation: "Linguistique redécouvre le langage. Référence académique : Page 7. Empirisme."
+            },
+            {
+                question: "La métalangue est ?",
+                options: [
+                    "Langue d'usage pour parler sur la langue",
+                    "Indépendante",
+                    "Sans relation",
+                    "Purement syntaxique"
+                ],
+                correct: "Langue d'usage pour parler sur la langue",
+                explanation: "Risque de confusion. Référence académique : Page 9. Métalangue."
+            },
+            {
+                question: "Syntaxe et sémantique sont ?",
+                options: [
+                    "Inséparables à un niveau profond",
+                    "Toujours distinctes",
+                    "Seulement syntaxique",
+                    "Réductibles à la syntaxe"
+                ],
+                correct: "Inséparables à un niveau profond",
+                explanation: "Grammaire des relations primitives. Référence académique : Page 11. Syntaxe-sémantique."
+            },
+            {
+                question: "Les modèles doivent être ?",
+                options: [
+                    "Adaptés aux langues naturelles",
+                    "Rigides",
+                    "Importés sans adaptation",
+                    "Ignorés"
+                ],
+                correct: "Adaptés aux langues naturelles",
+                explanation: "Construire des types de logique inconnus. Référence académique : Page 13. Modèles."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = new Array(questions.length).fill(null);
+        let timer = 0;
+        let interval;
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        const shuffledQuestions = shuffle([...questions]);
+
+        function loadQuestion(index) {
+            if (index < 0 || index >= shuffledQuestions.length) return;
+            const q = shuffledQuestions[index];
+            document.getElementById('question-number').textContent = `Question ${index + 1}`;
+            document.getElementById('question-text').textContent = q.question || 'Question non disponible';
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            const shuffledOptions = shuffle([...q.options]);
+            shuffledOptions.forEach((opt) => {
+                const label = document.createElement('label');
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'option';
+                input.value = opt;
+                if (answers[index] === opt) input.checked = true;
+                const span = document.createElement('span');
+                span.textContent = opt;
+                label.appendChild(input);
+                label.appendChild(span);
+                optionsDiv.appendChild(label);
+            });
+            updateDashboard();
+            document.getElementById('prev').disabled = index === 0;
+            document.getElementById('next').disabled = index === shuffledQuestions.length - 1;
+        }
+
+        function updateDashboard() {
+            const answeredCount = answers.filter(a => a !== null).length;
+            document.getElementById('answered').textContent = answeredCount;
+            document.getElementById('progress-bar').style.width = (answeredCount / questions.length * 100) + '%';
+            const minutes = Math.floor(timer / 60);
+            const seconds = timer % 60;
+            document.getElementById('time').textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        function saveAnswer() {
+            const selected = document.querySelector('input[name="option"]:checked');
+            if (selected) {
+                answers[currentQuestion] = selected.value;
+            }
+        }
+
+        function showResults() {
+            clearInterval(interval);
+            document.querySelector('.question').style.display = 'none';
+            document.querySelector('.navigation').style.display = 'none';
+            document.querySelector('.dashboard').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            let score = 0;
+            const detailed = document.getElementById('detailed-results');
+            shuffledQuestions.forEach((q, i) => {
+                const userAnswer = answers[i];
+                const isCorrect = userAnswer === q.correct;
+                if (isCorrect) score++;
+                const div = document.createElement('div');
+                div.classList.add(isCorrect ? 'highlight-correct' : 'highlight-wrong');
+                div.innerHTML = `
+                    <h3>Question ${i + 1}: ${q.question}</h3>
+                    <p>Votre réponse : ${userAnswer || 'Non répondue'} ${isCorrect ? '(Correcte)' : '(Incorrecte)'}</p>
+                    <p>Réponse correcte : ${q.correct}</p>
+                    <p>Explication détaillée : ${q.explanation}</p>
+                `;
+                detailed.appendChild(div);
+            });
+            document.getElementById('score').textContent = score;
+        }
+
+        document.getElementById('prev').addEventListener('click', () => {
+            saveAnswer();
+            currentQuestion--;
+            loadQuestion(currentQuestion);
+        });
+
+        document.getElementById('next').addEventListener('click', () => {
+            saveAnswer();
+            currentQuestion++;
+            loadQuestion(currentQuestion);
+        });
+
+        document.getElementById('submit').addEventListener('click', () => {
+            saveAnswer();
+            showResults();
+        });
+
+        function startTimer() {
+            interval = setInterval(() => {
+                timer++;
+                updateDashboard();
+            }, 1000);
+        }
+
+        window.addEventListener('load', () => {
+            if (questions.length > 0) {
+                loadQuestion(currentQuestion);
+                startTimer();
+            } else {
+                document.getElementById('question-text').textContent = 'Aucune question disponible.';
+            }
+        });
+    </script>
+</body>
+</html>

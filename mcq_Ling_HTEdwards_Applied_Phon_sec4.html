@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Phonetics MCQ Quiz - Section 4: Fricatives and Vowels</title>
+<style>
+  body {
+    background: linear-gradient(135deg, #3b3f72, #6e85b7);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0; padding: 30px;
+    color: #f0f0f5;
+    display: flex; justify-content: center; align-items: flex-start;
+    min-height: 100vh;
+  }
+  .quiz-container {
+    background: rgba(28, 32, 56, 0.95);
+    border-radius: 20px;
+    max-width: 720px;
+    width: 100%;
+    padding: 34px 40px;
+    box-shadow: 0 18px 48px rgba(25,30,89,0.9);
+    user-select: none;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 28px;
+    font-weight: 700;
+    font-size: 2.1em;
+    color: #a8bddf;
+    text-shadow: 0 0 8px #e3eafc;
+  }
+  .question {
+    font-weight: 700;
+    font-size: 1.3em;
+    margin-bottom: 18px;
+    color: #c4d1f7;
+  }
+  .options label {
+    display: block;
+    background: linear-gradient(90deg, #5365b9 0%, #7993de 100%);
+    border-radius: 16px;
+    padding: 14px 26px;
+    margin-bottom: 14px;
+    cursor: pointer;
+    font-size: 1.12em;
+    color: #d6dffa;
+    box-shadow: inset 1px 1px 5px rgba(255,255,255,0.25);
+    transition: background 0.35s ease, color 0.35s ease;
+  }
+  .options label:hover {
+    background: linear-gradient(90deg, #728fdf 0%, #a6b8ff 100%);
+    color: #0c1743;
+  }
+  input[type=radio] {
+    display: none;
+  }
+  input[type=radio]:checked + span {
+    font-weight: 800;
+    color: #ffffea;
+    text-shadow: 0 0 8px #dce3ff;
+  }
+  #feedback {
+    margin-top: 20px;
+    border-radius: 16px;
+    padding: 16px 24px;
+    font-weight: 700;
+    font-size: 1.18em;
+    max-width: 680px;
+    user-select: text;
+  }
+  #feedback.correct {
+    background-color: #2e5636;
+    color: #cdeacc;
+    box-shadow: 0 0 20px #72b86f;
+  }
+  #feedback.incorrect {
+    background-color: #773737;
+    color: #f7bbb9;
+    box-shadow: 0 0 20px #ff7070;
+  }
+  #score {
+    font-size: 1.6em;
+    font-weight: 700;
+    margin-top: 38px;
+    text-align: center;
+    color: #b8c8e6;
+    user-select: text;
+  }
+  #restart {
+    cursor: pointer;
+    background: #4a61b5;
+    color: #f0f0f5;
+    width: 190px;
+    margin: 30px auto 0;
+    display: none;
+    border: none;
+    font-weight: 700;
+    font-size: 1.15em;
+    border-radius: 36px;
+    padding: 14px 0;
+    box-shadow: 0 7px 20px rgba(74,97,181,0.8);
+    user-select: none;
+    transition: background 0.3s ease;
+  }
+  #restart:hover {
+    background: #3550a8;
+    box-shadow: 0 9px 26px rgba(53,80,168,0.95);
+  }
+  #references {
+    margin-top: 40px;
+    background: rgba(49,58,109,0.9);
+    padding: 24px 28px;
+    border-left: 6px solid #95adef;
+    font-size: 0.92em;
+    max-height: 360px;
+    overflow-y: auto;
+    line-height: 1.44;
+    user-select: text;
+    color: #d1dbfb;
+    white-space: pre-wrap;
+  }
+  #references h2 {
+    margin-top: 0;
+    color: #aec4ff;
+    font-weight: 700;
+    border-bottom: 2px solid #627cbc;
+    padding-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="quiz-container" role="main" aria-label="Section 4 Phonetics Quiz">
+  <h1>Phonetics MCQ Quiz<br>Section 4: Fricative Consonants and Vowels</h1>
+  <div id="quiz"></div>
+  <div id="feedback" aria-live="polite" role="alert"></div>
+  <div id="score"></div>
+  <button id="restart" aria-label="Restart Quiz">Restart Quiz</button>
+  <div id="references" tabindex="0" aria-label="Detailed referenced answers"></div>
+</div>
+
+<script>
+  const questions = [
+    {
+      q: "The voiceless alveolar fricative /s/ is characterized acoustically by:",
+      options: [
+        "Low frequency energy mostly below 1000 Hz",
+        "High frequency energy with a prominent peak between 3500 and 7000 Hz",
+        "Primarily nasal resonance energy",
+        "No turbulence noise"
+      ],
+      answer: 1,
+      reference: "Edwards (Ch. 6): /s/ has a relatively flat spectrum with a prominent energy peak between 3500 and 7000 Hz, giving the characteristic 'hissing' sound."
+    },
+    {
+      q: "Which phoneme is the voiced alveolar fricative and often devoiced at word ends?",
+      options: ["/s/", "/z/", "/ʃ/", "/f/"],
+      answer: 1,
+      reference: "Edwards (Ch. 6): /z/ is voiced, can function grammatically, and is often devoiced in final position."
+    },
+    {
+      q: "The phoneme /ʃ/ (esh) differs from /s/ mainly by:",
+      options: [
+        "Voicing only",
+        "Lip rounding and tongue retraction lengthening the vocal tract",
+        "Being a stop consonant instead of a fricative",
+        "Only place of articulation"
+      ],
+      answer: 1,
+      reference: "Edwards (Ch. 6): /ʃ/ involves either slight lip rounding or tongue retraction lengthening the vocal tract compared to /s/."
+    },
+    {
+      q: "The voiced counterpart of /ʃ/ is which phoneme?",
+      options: ["/z/", "/ʒ/", "/v/", "/f/"],
+      answer: 1,
+      reference: "Edwards (Ch. 6): /ʒ/ is the voiced postalveolar fricative, counterpart to /ʃ/."
+    },
+    {
+      q: "The labiodental fricative /f/ is produced by air passing between:",
+      options: [
+        "Upper teeth and upper lip",
+        "Lower lip and upper teeth",
+        "Tongue and alveolar ridge",
+        "Both lips tightly closed"
+      ],
+      answer: 1,
+      reference: "Edwards (Ch. 6): /f/ is a voiceless labiodental fricative produced by air passing between the lower lip and upper teeth."
+    },
+    {
+      q: "Which phoneme is voiced and produced similarly to /f/ but with vocal fold vibration?",
+      options: ["/v/", "/ʒ/", "/z/", "/ʃ/"],
+      answer: 0,
+      reference: "Edwards (Ch. 6): /v/ is the voiced labiodental fricative, the voiced cognate of /f/."
+    },
+    {
+      q: "Which of the following phonemes is known as the 'theta' sound and is voiceless interdental fricative?",
+      options: ["/h/", "/θ/", "/ʃ/", "/f/"],
+      answer: 1,
+      reference: "Edwards (Ch. 6): /θ/ is the voiceless interdental fricative, often called 'theta'."
+    },
+    {
+      q: "What is the common spelling for the voiceless interdental fricative /θ/?",
+      options: ["th", "f", "s", "sh"],
+      answer: 0,
+      reference: "Edwards (Ch. 6): The 'th' letter combination always represents /θ/ or /ð/ sounds."
+    },
+    {
+      q: "The phoneme /e/ in American English is classified as a:",
+      options: [
+        "High front vowel",
+        "Mid front vowel",
+        "Low back vowel",
+        "High back vowel"
+      ],
+      answer: 1,
+      reference: "Edwards (Ch. 10): /e/ is a mid-front vowel, with the tongue positioned mid height forward in the oral cavity."
+    },
+    {
+      q: "Which vowel is described as a high back rounded tense vowel?",
+      options: ["/u/", "/e/", "/ɔ/", "/aɪ/"],
+      answer: 0,
+      reference: "Edwards (Ch. 11): /u/ is high back rounded tense vowel, e.g., 'food'."
+    },
+    {
+      q: "The diphthong /aɪ/ starts with a:",
+      options: [
+        "Low central vowel and glides to a high front vowel",
+        "High front vowel and glides to a low back vowel",
+        "Mid front vowel and glides to a high back vowel",
+        "High back vowel and glides to a mid front vowel"
+      ],
+      answer: 0,
+      reference: "Edwards (Ch. 11): /aɪ/ diphthong starts with low central vowel and glides upward to high front /i/."
+    },
+    {
+      q: "Which diphthong involves articulation moving from a mid back vowel to a high front glide, as in 'boy'?",
+      options: ["/aɪ/", "/ɔɪ/", "/ju/", "/e/"],
+      answer: 1,
+      reference: "Edwards (Ch. 11): /ɔɪ/ diphthong, e.g., 'boy', moves from mid back to high front glide."
+    },
+    {
+      q: "Which of the following is NOT a characteristic of fricatives?",
+      options: [
+        "Complete blockage of airflow",
+        "Partial obstruction creating turbulence",
+        "Includes /s/ and /f/ sounds",
+        "Voiced or voiceless"
+      ],
+      answer: 0,
+      reference: "Edwards (Ch. 6): Fricatives partially obstruct airflow causing turbulence; stops produce complete blockage."
+    },
+    {
+      q: "What manner of articulation is /z/?",
+      options: [
+        "Voiced alveolar fricative",
+        "Voiceless alveolar stop",
+        "Voiced bilabial stop",
+        "Voiceless velar fricative"
+      ],
+      answer: 0,
+      reference: "Edwards (Ch. 6): /z/ is a voiced alveolar fricative."
+    },
+    {
+      q: "Which pair represents cognates differing only in voicing?",
+      options: [
+        "/s/ and /ʃ/",
+        "/f/ and /v/",
+        "/θ/ and /ʒ/",
+        "/e/ and /u/"
+      ],
+      answer: 1,
+      reference: "Edwards (Ch. 6): /f/ is voiceless labiodental fricative, /v/ is its voiced cognate."
+    },
+    {
+      q: "Which vowel is described as a mid front lax vowel and is represented as /ɛ/?",
+      options: [
+        "The vowel in 'bet'",
+        "The vowel in 'beat'",
+        "The vowel in 'bat'",
+        "The vowel in 'but'"
+      ],
+      answer: 0,
+      reference: "Edwards (Ch. 10): /ɛ/ is the mid front lax vowel as in 'bet'."
+    },
+    {
+      q: "What is a common allophone of the /f/ phoneme in informal speech?",
+      options: [
+        "[θ] (voiceless interdental fricative)",
+        "[v] (voiced labiodental fricative)",
+        "[ɸ] (bilabial fricative)",
+        "[ʃ] (voiceless postalveolar fricative)"
+      ],
+      answer: 2,
+      reference: "Edwards (Ch. 6): /f/ may be weakened to bilabial fricative [ɸ] in informal speech."
+    },
+    {
+      q: "In American English, how is the voiced /v/ phoneme most commonly produced?",
+      options: [
+        "With vocal fold vibration and labiodental articulation",
+        "As a voiceless bilabial fricative",
+        "Without vocal fold vibration, at the alveolar ridge",
+        "With the tongue touching the teeth"
+      ],
+      answer: 0,
+      reference: "Edwards (Ch. 6): /v/ is voiced labiodental fricative made with vocal fold vibration."
+    },
+    {
+      q: "Which of the following issues does the /θ/ phoneme commonly pose?",
+      options: [
+        "Difficulty in children’s speech acquisition and non-native speakers’ pronunciation",
+        "Consistent spelling variations",
+        "Being the most frequent sound in English",
+        "Simple acoustic properties"
+      ],
+      answer: 0,
+      reference: "Edwards (Ch. 6): /θ/ is challenging for children acquiring speech and many non-native English speakers."
+    },
+    {
+      q: "What perceptual difficulty is associated with the /ʒ/ phoneme?",
+      options: [
+        "It is often misheard as /dʒ/ or /z/ and is relatively rare in English.",
+        "It is too loud and dominates speech.",
+        "It is confused with vowels often.",
+        "It occurs commonly word-initially which causes ambiguity."
+      ],
+      answer: 0,
+      reference: "Edwards (Ch. 6): /ʒ/ is a rare sound, often confused with related sibilants in perception."
+    }
+  ];
+
+  let currentIndex = 0;
+  let score = 0;
+
+  const quizDiv = document.getElementById('quiz');
+  const feedbackDiv = document.getElementById('feedback');
+  const scoreDiv = document.getElementById('score');
+  const restartBtn = document.getElementById('restart');
+  const referencesDiv = document.getElementById('references');
+
+  function renderQuestion() {
+    feedbackDiv.style.display = "none";
+    referencesDiv.style.display = "none";
+    restartBtn.style.display = "none";
+    scoreDiv.textContent = "";
+    const q = questions[currentIndex];
+    quizDiv.innerHTML = `
+      <div class="question">${currentIndex + 1}. ${q.q}</div>
+      <div class="options">
+        ${q.options.map((opt, i) => `
+          <label>
+            <input type="radio" name="choice" value="${i}" />
+            <span>${opt}</span>
+          </label>
+        `).join('')}
+      </div>
+    `;
+    const inputs = quizDiv.querySelectorAll("input[name=choice]");
+    inputs.forEach(input => {
+      input.addEventListener('change', () => {
+        checkAnswer(parseInt(input.value));
+      });
+    });
+  }
+
+  function checkAnswer(selected) {
+    const correct = questions[currentIndex].answer;
+    feedbackDiv.style.display = "block";
+    if (selected === correct) {
+      score++;
+      feedbackDiv.className = "correct";
+      feedbackDiv.textContent = "✅ Correct!";
+    } else {
+      feedbackDiv.className = "incorrect";
+      feedbackDiv.innerHTML = `❌ Incorrect! Correct answer: <strong>${questions[currentIndex].options[correct]}</strong>`;
+    }
+    disableOptions();
+    setTimeout(() => {
+      currentIndex++;
+      if (currentIndex < questions.length) {
+        renderQuestion();
+      } else {
+        endQuiz();
+      }
+    }, 1600);
+  }
+
+  function disableOptions() {
+    document.querySelectorAll("input[name=choice]").forEach(input => input.disabled = true);
+  }
+
+  function endQuiz() {
+    quizDiv.innerHTML = "";
+    feedbackDiv.style.display = "none";
+    scoreDiv.textContent = `You scored ${score} out of ${questions.length}.`;
+    restartBtn.style.display = "block";
+    showReferences();
+  }
+
+  function showReferences() {
+    let refsHtml = `<h2>Detailed Referenced Answers from Harold T. Edwards</h2>`;
+    refsHtml += questions.map((q,i) => `<b>Q${i+1}:</b> ${q.reference}`).join('<br><br>');
+    referencesDiv.innerHTML = refsHtml;
+    referencesDiv.style.display = "block";
+  }
+
+  restartBtn.addEventListener('click', () => {
+    currentIndex = 0;
+    score = 0;
+    renderQuestion();
+    scoreDiv.textContent = "";
+    feedbackDiv.style.display = "none";
+    referencesDiv.style.display = "none";
+    restartBtn.style.display = "none";
+  });
+
+  // Start quiz
+  renderQuestion();
+</script>
+
+</body>
+</html>

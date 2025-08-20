@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>QCM: CAPES Anglais Externe – Épreuve Écrite Disciplinaire (2024)</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 25px; }
+    .question { margin-top: 18px; }
+    .correct { color: green; }
+    .incorrect { color: red; }
+    .reference { font-size: 0.92em; color: #333; }
+    .answers { margin-left: 16px; }
+    button { margin-top: 24px; }
+    #results { margin-top: 32px; }
+  </style>
+</head>
+<body>
+  <h2>CAPES Anglais Externe – Épreuve Écrite Disciplinaire – 30-Question QCM</h2>
+  <form id="quiz"></form>
+  <button onclick="showResults();return false;">Submit QCM</button>
+  <div id="results"></div>
+<script>
+const questions = [
+  // 1–10 (sample provided previously; all questions referenced to jury report p.5–p.29)
+  {
+    q: "1. How much time does the jury report recommend for the 'Composition en Langue Étrangère' (CLÉ) part of the written test?",
+    options: [
+      "A) Whole 6 hours",
+      "B) 1 hour",
+      "C) About three and a half hours",
+      "D) Any duration desired"
+    ],
+    correct: 2,
+    ref: "p.5"
+  },
+  {
+    q: "2. What is strictly required in terms of written language for the CLÉ?",
+    options: [
+      "A) Use of contractions (didn't, shouldn't)",
+      "B) Informal style",
+      "C) Formal written English and correct grammar",
+      "D) Use mostly quotations"
+    ],
+    correct: 2,
+    ref: "p.5"
+  },
+  {
+    q: "3. What does the report state is a recurring mistake when handling the corpus?",
+    options: [
+      "A) Writing too briefly",
+      "B) Paraphrasing rather than analyzing",
+      "C) Mixing American/British spelling",
+      "D) Not referencing history"
+    ],
+    correct: 1,
+    ref: "p.8"
+  },
+  {
+    q: "4. For Document A (Stanton), what did the jury expect candidates to recognize?",
+    options: [
+      "A) A satirical text",
+      "B) The original 1848 Declaration",
+      "C) A rewriting of the US Declaration of Independence",
+      "D) A text unrelated to US history"
+    ],
+    correct: 2,
+    ref: "p.6"
+  },
+  {
+    q: "5. According to the report, what is the main function of the introduction in the composition?",
+    options: [
+      "A) Presenting personal opinions",
+      "B) Fully developing the argument",
+      "C) Contextualize, introduce documents, state problem, announce plan",
+      "D) Criticizing the corpus"
+    ],
+    correct: 2,
+    ref: "p.8"
+  },
+  {
+    q: "6. While analyzing the corpus, candidates must:",
+    options: [
+      "A) Quote only Document A",
+      "B) Give equal weight to all documents",
+      "C) Focus on iconographic documents",
+      "D) Write the essay in French"
+    ],
+    correct: 1,
+    ref: "p.9"
+  },
+  {
+    q: "7. How should candidates use context in their argumentation?",
+    options: [
+      "A) Make it the main argument",
+      "B) Only integrate facts from French history",
+      "C) Use it to illuminate, not dominate, the argument",
+      "D) Avoid using it altogether"
+    ],
+    correct: 2,
+    ref: "p.8"
+  },
+  {
+    q: "8. To avoid going off-topic (‘hors-sujet’), the report recommends:",
+    options: [
+      "A) Focusing on one document",
+      "B) Never linking to the theme/axis",
+      "C) Rooting the problem and argument in the stated axis",
+      "D) Describing documents only"
+    ],
+    correct: 2,
+    ref: "p.8"
+  },
+  {
+    q: "9. In translation, what is strongly penalized?",
+    options: [
+      "A) Literal translation of idioms",
+      "B) Use of American spelling",
+      "C) Short or incomplete translations",
+      "D) Using dictionaries"
+    ],
+    correct: 0,
+    ref: "p.15"
+  },
+  {
+    q: "10. Which skill is highlighted as crucial for translation exercises?",
+    options: [
+      "A) Memorizing long passages",
+      "B) Rigorous rendering of tense/aspect",
+      "C) Wild guessing",
+      "D) Overusing paraphrase"
+    ],
+    correct: 1,
+    ref: "p.14"
+  },
+  // 11–30 (examples below, continue as above)
+  {
+    q: "11. What is the main value of leveraging context for the CLE?",
+    options: [
+      "A) To replace document analysis completely",
+      "B) For chronological retelling",
+      "C) To enrich the argument but not to serve as argument",
+      "D) To ignore the given documents"
+    ],
+    correct: 2,
+    ref: "p.8"
+  },
+  {
+    q: "12. What does the report say about paraphrase?",
+    options: [
+      "A) It is fully acceptable",
+      "B) It is always required",
+      "C) It prevents true analysis",
+      "D) It is better than quoting"
+    ],
+    correct: 2,
+    ref: "p.8"
+  },
+  {
+    q: "13. When using quotations from documents, the report insists:",
+    options: [
+      "A) Quotations are arguments in themselves",
+      "B) They must always appear at the end of a section",
+      "C) They should support, not replace, analysis",
+      "D) They should never be re-used"
+    ],
+    correct: 2,
+    ref: "p.9"
+  },
+  {
+    q: "14. According to the report, what is the intended structure of a well-organized essay?",
+    options: [
+      "A) Introduction, factual statements only, list of references",
+      "B) Plan with documents in interaction, supported by microanalyses",
+      "C) Each document in a separate part",
+      "D) Only quotes and personal opinions"
+    ],
+    correct: 1,
+    ref: "p.9"
+  },
+  {
+    q: "15. The report advises that the essay's conclusion should:",
+    options: [
+      "A) Introduce new ideas",
+      "B) Synthesize main conclusions in light of the problem statement",
+      "C) Repeat the introduction verbatim",
+      "D) Be omitted if lacking time"
+    ],
+    correct: 1,
+    ref: "p.10"
+  },
+  {
+    q: "16. What does the report warn strongly against in academic style?",
+    options: [
+      "A) Avoiding 'I' in English",
+      "B) Using 'we', personal opinions, anti-Americanism or polemical statements",
+      "C) Quoting French texts",
+      "D) All of the above"
+    ],
+    correct: 1,
+    ref: "p.10"
+  },
+  {
+    q: "17. In the translation (thème), what error is most often penalized?",
+    options: [
+      "A) Not using enough synonyms",
+      "B) Barbarisms and calques like 'instore', 'instaure', 'progeniture'",
+      "C) Overly complex vocabulary",
+      "D) Writing in American English"
+    ],
+    correct: 1,
+    ref: "p.15"
+  },
+  {
+    q: "18. For the version (English to French), the report highlights the need to:",
+    options: [
+      "A) Convert every word verbatim",
+      "B) Accurately analyze time, registers, and cultural references",
+      "C) Prioritize literal syntax",
+      "D) Always use archaic terms"
+    ],
+    correct: 1,
+    ref: "p.24"
+  },
+  {
+    q: "19. According to the report, what is the recommended structure for the applied written exam?",
+    options: [
+      "A) List all document types with no analysis",
+      "B) Present and analyze each selected document, then synthesize interrelations",
+      "C) Only summarize D document",
+      "D) Focus exclusively on historical events"
+    ],
+    correct: 1,
+    ref: "p.31"
+  },
+  {
+    q: "20. For the applied written exam, the report insists that all answers must be written:",
+    options: [
+      "A) In English",
+      "B) In French",
+      "C) In both languages",
+      "D) Using bullet points only"
+    ],
+    correct: 1,
+    ref: "p.31"
+  },
+  {
+    q: "21. What does the report recommend for the linguistic/phonology analysis?",
+    options: [
+      "A) Include didactic discussion in every answer",
+      "B) Focus strictly on grammar and linguistics, not pedagogical issues",
+      "C) Only cite grammar books",
+      "D) Paraphrase the corpus"
+    ],
+    correct: 1,
+    ref: "p.41"
+  },
+  {
+    q: "22. How should candidates approach document D in the applied written exam?",
+    options: [
+      "A) As purely literary text",
+      "B) From a didactic (teaching) perspective",
+      "C) Ignore it",
+      "D) Only review the visuals"
+    ],
+    correct: 1,
+    ref: "p.38"
+  },
+  {
+    q: "23. What is required for the perspective pédagogique (didactic sequence)?",
+    options: [
+      "A) Only broad theory",
+      "B) Actionable, realistic, curriculum-based sequence tied to the problem statement and final task",
+      "C) Focus on the theory of learning only",
+      "D) Skip justification for chosen order"
+    ],
+    correct: 1,
+    ref: "p.47"
+  },
+  {
+    q: "24. The jury report recommends for phonology questions:",
+    options: [
+      "A) Long, list-only answers",
+      "B) Mastery of both British/American models and clear, concise explanations",
+      "C) Copying dictionaries verbatim",
+      "D) Only discuss vocabulary"
+    ],
+    correct: 1,
+    ref: "p.42"
+  },
+  {
+    q: "25. In the 'analyse linguistique' part, the best answers:",
+    options: [
+      "A) Translate only",
+      "B) Identify linguistic issues, analyze context, and provide relevant syntactical manipulations",
+      "C) Just copy the syntax",
+      "D) Use as many technical terms as possible, even if unclear"
+    ],
+    correct: 1,
+    ref: "p.43"
+  },
+  {
+    q: "26. For the didactic part, what must candidates clarify regarding their sequence?",
+    options: [
+      "A) Only list objectives",
+      "B) Specify objectives and justify document order relative to the problem and final task",
+      "C) Mention CECRL level only",
+      "D) Avoid linking to objectives"
+    ],
+    correct: 1,
+    ref: "p.48"
+  },
+  {
+    q: "27. In linguistic analysis, what is essential according to the report?",
+    options: [
+      "A) Use invented grammar terms",
+      "B) Focus on well-defined categories and syntactical function",
+      "C) Provide only prosodic commentary",
+      "D) Only paraphrase"
+    ],
+    correct: 1,
+    ref: "p.43"
+  },
+  {
+    q: "28. Which of the following is assessed in the final correction grid for the sequence?",
+    options: [
+      "A) Cultural, linguistic, sociolinguistic, and pragmatic content",
+      "B) Just text length",
+      "C) Factual errors only",
+      "D) Layout and design"
+    ],
+    correct: 0,
+    ref: "p.68"
+  },
+  {
+    q: "29. What is a strong recommendation for managing time in the written exams?",
+    options: [
+      "A) Spend as long as necessary on the introduction",
+      "B) Practice full-conditions beforehand, including realistic time management",
+      "C) Always finish the conclusion, even if other parts are skipped",
+      "D) Do not bother with a plan"
+    ],
+    correct: 1,
+    ref: "p.5"
+  },
+  {
+    q: "30. According to the report, what is essential in all parts of the written and oral exams?",
+    options: [
+      "A) Originality above all else",
+      "B) Stringent linguistic accuracy and conceptual rigor",
+      "C) Use of colloquial language",
+      "D) Length over clarity"
+    ],
+    correct: 1,
+    ref: "pp.5–48"
+  }
+];
+// Render questions dynamically
+for (let i = 0; i < questions.length; i++) {
+  const q = questions[i];
+  const form = document.getElementById('quiz');
+  const div = document.createElement('div');
+  div.className = "question";
+  div.innerHTML = `<strong>${q.q}</strong><div class="answers">` +
+    q.options.map((opt, optIdx) =>
+      `<label>
+        <input type="radio" name="q${i}" value="${optIdx}">${opt}
+      </label><br>`
+    ).join('') +
+    `</div>`;
+  form.appendChild(div);
+}
+function showResults() {
+  let correctCount = 0;
+  let explanations = [];
+  for (let i = 0; i < questions.length; i++) {
+    const radios = document.getElementsByName("q" + i);
+    let userAnswer = -1;
+    for (const radio of radios) if (radio.checked) userAnswer = parseInt(radio.value);
+    if (userAnswer === questions[i].correct) correctCount++;
+    explanations.push(
+      `<div>
+        <strong>Q${i+1}:</strong> <span class="${userAnswer === questions[i].correct ? 'correct':'incorrect'}">` +
+        (userAnswer === questions[i].correct ? 'Correct' : 'Incorrect') +
+        `</span><br>
+        Correct answer: <b>${questions[i].options[questions[i].correct].substring(3)}</b>
+        <div class="reference">Reference: ${questions[i].ref}</div>
+      </div>`
+    );
+  }
+  document.getElementById('results').innerHTML =
+    `<h3>Results</h3>
+    You scored <b>${correctCount}/30</b>.
+    <br><br><h4>Correction & References:</h4>
+    ${explanations.join("<hr>")}`;
+}
+</script>
+</body>
+</html>
