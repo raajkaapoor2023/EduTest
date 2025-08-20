@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pragmatics Quiz (TrevTutor)</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; background: #f9f9f9; max-width: 960px; margin: auto; }
+    h1 { color: #2c3e50; }
+    .question { background: #ffffff; padding: 1rem; margin-bottom: 1.5rem; border-left: 5px solid #8e44ad; border-radius: 8px; }
+    .question p { font-weight: bold; }
+    button { padding: 0.5rem 1rem; margin-top: 1rem; font-size: 1rem; cursor: pointer; }
+    .result { font-size: 1.2rem; color: green; margin-top: 2rem; }
+    .answers { background: #fcf3cf; border-left: 5px solid #f39c12; padding: 1rem; margin-top: 2rem; }
+  </style>
+</head>
+<body>
+  <h1>Pragmatics Quiz (TrevTutor: 05:23:44 – 05:50:00)</h1>
+  <form id="quizForm"></form>
+
+  <script>
+    const questions = [
+      { q: "What is pragmatics primarily concerned with?", opts: ["Word formation", "Sound patterns", "Meaning in context", "Syntactic structure"], a: 2 },
+      { q: "Which of the following best illustrates deixis?", opts: ["Cat", "Tomorrow", "Love", "Run"], a: 1 },
+      { q: "What does the term 'presupposition' refer to?", opts: ["Implied meaning", "Explicit negation", "Literal meaning", "Word order"], a: 0 },
+      { q: "Which of these is an example of a speech act?", opts: ["To swim", "I promise", "Book", "Quickly"], a: 1 },
+      { q: "Who introduced the concept of 'speech acts'?", opts: ["Saussure", "Noam Chomsky", "J.L. Austin", "Steven Pinker"], a: 2 },
+      { q: "What are the three types of speech acts, according to Austin?", opts: ["Locutionary, illocutionary, perlocutionary", "Syntactic, semantic, pragmatic", "Verbal, non-verbal, symbolic", "Descriptive, narrative, interrogative"], a: 0 },
+      { q: "What is Grice known for in pragmatics?", opts: ["Syllable structure", "Maxims of conversation", "Constituency tests", "Semantic roles"], a: 1 },
+      { q: "Which is NOT one of Grice's Maxims?", opts: ["Quality", "Relevance", "Syntax", "Quantity"], a: 2 },
+      { q: "Which maxim is violated in sarcasm?", opts: ["Quality", "Quantity", "Relevance", "Manner"], a: 0 },
+      { q: "What is implicature?", opts: ["Literal truth", "Implied meaning based on context", "Word derivation", "Phonological reduction"], a: 1 },
+      { q: "The sentence 'John stopped smoking' presupposes what?", opts: ["John never smoked", "John smokes now", "John smoked before", "John is a doctor"], a: 2 },
+      { q: "What is the focus of the cooperative principle?", opts: ["Communicating logically", "Being nice", "Making sound patterns", "Politeness"], a: 0 },
+      { q: "Which term refers to words whose meaning relies on the context of utterance?", opts: ["Syntax", "Deictic expressions", "Affixation", "Phonotactics"], a: 1 },
+      { q: "'Can you pass the salt?' is an example of which speech act?", opts: ["Perlocutionary", "Direct", "Indirect", "Interrogative"], a: 2 },
+      { q: "Which is a perlocutionary effect of 'I warn you'?", opts: ["Speaker utters a warning", "Hearer feels fear", "Form of the verb", "Syntactic shift"], a: 1 },
+      { q: "Which pragmatic function is violated when someone gives irrelevant information?", opts: ["Quantity", "Quality", "Relevance", "Manner"], a: 2 },
+      { q: "What kind of context does pragmatics emphasize?", opts: ["Phonetic context", "Grammatical context", "Situational context", "Historical context"], a: 2 },
+      { q: "Which of these best defines a performative utterance?", opts: ["Describes a fact", "Performs an action by saying it", "Negates a statement", "Is always false"], a: 1 },
+      { q: "The utterance 'I now pronounce you married' is what type of speech act?", opts: ["Illocutionary", "Perlocutionary", "Locutionary", "Inferential"], a: 0 },
+      { q: "What is the goal of pragmatic analysis?", opts: ["Describe grammar", "Map brain function", "Explain meaning in use", "Correct pronunciation"], a: 2 }
+    ];
+
+    function buildQuiz() {
+      const form = document.getElementById("quizForm");
+      questions.forEach((item, i) => {
+        const div = document.createElement("div");
+        div.className = "question";
+        div.innerHTML = `<p>${i + 1}. ${item.q}</p>` +
+          item.opts.map((opt, j) =>
+            `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label><br>`
+          ).join("");
+        form.appendChild(div);
+      });
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = "Submit Quiz";
+      btn.onclick = grade;
+      form.appendChild(btn);
+    }
+
+    function grade() {
+      let score = 0;
+      questions.forEach((item, i) => {
+        const sel = document.querySelector(`input[name=q${i}]:checked`);
+        if (sel && Number(sel.value) === item.a) score++;
+      });
+      const form = document.getElementById("quizForm");
+      form.insertAdjacentHTML('beforeend', `<div class="result">You scored ${score} out of 20.</div>`);
+      const btn2 = document.createElement("button");
+      btn2.type = "button";
+      btn2.textContent = "Show Correct Answers with References";
+      btn2.onclick = showAnswers;
+      form.appendChild(btn2);
+    }
+
+    function showAnswers() {
+      const div = document.createElement("div");
+      div.className = "answers";
+      let html = "<h2>Correct Answers & References</h2>";
+      questions.forEach((item, i) => {
+        html += `<p><strong>Q${i + 1}:</strong> ${item.q}<br>✅ <em>${item.opts[item.a]}</em><br>` +
+          `<small>Ref: TrevTutor (05:23:44–05:50:00); Yule (2020), *Pragmatics*; Levinson (1983), *Pragmatics*; Austin (1962), *How to Do Things with Words*; Grice (1975), *Logic and Conversation*</small></p>`;
+      });
+      div.innerHTML = html;
+      document.getElementById("quizForm").appendChild(div);
+    }
+
+    window.onload = buildQuiz;
+  </script>
+</body>
+</html>

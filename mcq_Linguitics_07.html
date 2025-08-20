@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>English Linguistics MCQ Quiz</title>
+  <style>
+    body { font-family: Arial; margin: 20px; }
+    .question { margin-bottom: 1em; }
+    .option { display: block; margin-bottom: 0.25em; }
+    .correct { color: green; }
+    .incorrect { color: red; }
+    #submit { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>English Linguistics MCQ Quiz</h1>
+  <form id="quizForm"></form>
+  <button id="submit">Submit Answers</button>
+  <div id="results"></div>
+  <script>
+const questions = [
+  {
+    q: "Which tense is used for an action completed before another past action?",
+    opts: [
+      "Simple Past",
+      "Present Perfect",
+      "Past Perfect",
+      "Future Perfect"
+    ],
+    a: 2
+  },
+  {
+    q: "Which of the following is a modal verb?",
+    opts: [
+      "must",
+      "have",
+      "was",
+      "been"
+    ],
+    a: 0
+  },
+  {
+    q: "Which word formation process is seen in 'unhappiness'?",
+    opts: [
+      "Derivation",
+      "Compounding",
+      "Blending",
+      "Conversion"
+    ],
+    a: 0
+  },
+  {
+    q: "Which is an example of a progressive aspect?",
+    opts: [
+      "I went home.",
+      "I am going home.",
+      "I have gone home.",
+      "I had gone home."
+    ],
+    a: 1
+  },
+  {
+    q: "The word 'reading' in 'Reading is fun' acts as a:",
+    opts: [
+      "Verb",
+      "Adjective",
+      "Gerund",
+      "Adverb"
+    ],
+    a: 2
+  },
+  {
+    q: "Syntax deals with:",
+    opts: [
+      "Word meaning",
+      "Word formation",
+      "Sentence structure",
+      "Sound systems"
+    ],
+    a: 2
+  },
+  {
+    q: "Which is an example of compounding?",
+    opts: [
+      "blackboard",
+      "happily",
+      "running",
+      "teach"
+    ],
+    a: 0
+  },
+  {
+    q: "In the sentence 'She can swim,' 'can' expresses:",
+    opts: [
+      "Obligation",
+      "Ability",
+      "Permission",
+      "Prediction"
+    ],
+    a: 1
+  },
+  {
+    q: "Which pair best illustrates synonymy?",
+    opts: [
+      "big/small",
+      "quick/fast",
+      "cat/dog",
+      "run/walk"
+    ],
+    a: 1
+  },
+  {
+    q: "'Morphology' is the study of:",
+    opts: [
+      "Sentences",
+      "Sound patterns",
+      "Word structure",
+      "Meanings"
+    ],
+    a: 2
+  },
+  // ... Add up to 30 questions accordingly ...
+];
+
+// Render questions
+const form = document.getElementById('quizForm');
+questions.forEach((q, i) => {
+  const container = document.createElement('div');
+  container.className = 'question';
+  const title = document.createElement('div');
+  title.textContent = `${i + 1}. ${q.q}`;
+  container.appendChild(title);
+  q.opts.forEach((opt, idx) => {
+    const label = document.createElement('label');
+    label.className = 'option';
+    const input = document.createElement('input');
+    input.type = 'radio';
+    input.name = `q${i}`;
+    input.value = idx;
+    label.appendChild(input);
+    label.appendChild(document.createTextNode(opt));
+    container.appendChild(label);
+  });
+  form.appendChild(container);
+});
+
+// Submit handler
+document.getElementById('submit').onclick = function(e) {
+  e.preventDefault();
+  const results = document.getElementById('results');
+  let correct = 0;
+  questions.forEach((q, i) => {
+    const selected = form[`q${i}`].value;
+    const qDiv = form.children[i];
+    [ ...qDiv.querySelectorAll('.option') ].forEach((optLabel, idx) => {
+      optLabel.classList.remove('correct', 'incorrect');
+      if (selected !== undefined && selected == idx) {
+        if (idx == q.a) {
+          optLabel.classList.add('correct');
+          correct++;
+        } else {
+          optLabel.classList.add('incorrect');
+        }
+      }
+      if (idx === q.a && selected != idx)
+        optLabel.classList.add('correct');
+    });
+  });
+  results.innerHTML = `You got <b>${correct}</b> out of ${questions.length} correct.`;
+};
+  </script>
+</body>
+</html>

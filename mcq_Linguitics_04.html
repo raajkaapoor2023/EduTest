@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Phonetics & Phonology Quiz - Chapter 1</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #2b1055, #7597de);
+      color: white;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+    .quiz-box {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 2rem;
+      width: 80%;
+      max-width: 700px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+      transition: all 0.4s ease;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .question {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+    }
+    .option {
+      background: #ffffff22;
+      margin: 0.5rem 0;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .option:hover {
+      background: #ffffff55;
+    }
+    .btn {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: #ff8c00;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .btn:hover {
+      background: #e67300;
+    }
+    .result {
+      margin-top: 1rem;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quiz-box">
+    <h1>Chapter 1: Phonetics & Phonology</h1>
+    <div id="quiz"></div>
+    <div class="result" id="result"></div>
+    <button class="btn" onclick="nextQuestion()">Next</button>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        q: "What is the primary purpose of the International Phonetic Alphabet (IPA)?",
+        options: [
+          "To teach reading skills",
+          "To represent speech sounds accurately",
+          "To explain grammar rules",
+          "To identify dialects"
+        ],
+        answer: 1
+      },
+      {
+        q: "Which dimension is NOT used to define vowels in IPA?",
+        options: ["Height", "Frontness", "Tension", "Rounding"],
+        answer: 2
+      },
+      {
+        q: "Which of the following is a 'voiced' sound?",
+        options: ["/p/", "/t/", "/g/", "/s/"],
+        answer: 2
+      },
+      {
+        q: "What is a minimal pair?",
+        options: [
+          "Two identical words",
+          "Two words with one phoneme difference",
+          "Words with opposite meanings",
+          "Two syllables"
+        ],
+        answer: 1
+      },
+      {
+        q: "What kind of symbol does the IPA use?",
+        options: [
+          "Alphabetic only",
+          "Phonemic only",
+          "Phonetic with diacritics",
+          "Numeric"
+        ],
+        answer: 2
+      },
+      {
+        q: "Which of the following is NOT a place of articulation?",
+        options: ["Alveolar", "Glottal", "Retroflex", "Velopharyngeal"],
+        answer: 3
+      },
+      {
+        q: "Which term refers to the smallest unit of sound?",
+        options: ["Phoneme", "Morpheme", "Allophone", "Lexeme"],
+        answer: 0
+      },
+      {
+        q: "The vowel /i/ is characterized as:",
+        options: [
+          "Close front unrounded",
+          "Open back rounded",
+          "Mid central rounded",
+          "Open-mid front rounded"
+        ],
+        answer: 0
+      },
+      {
+        q: "Allophones are:",
+        options: [
+          "Variants of a phoneme",
+          "Different morphemes",
+          "Identical sounds",
+          "Opposite words"
+        ],
+        answer: 0
+      },
+      {
+        q: "IPA was first introduced in:",
+        options: ["1845", "1886", "1922", "1996"],
+        answer: 1
+      },
+      {
+        q: "Which of the following is a suprasegmental feature?",
+        options: ["Stress", "Plosive", "Trill", "Affricate"],
+        answer: 0
+      },
+      {
+        q: "A 'cognate' pair of consonants differs in:",
+        options: ["Place", "Voicing", "Manner", "Tongue height"],
+        answer: 1
+      },
+      {
+        q: "Broad transcription uses:",
+        options: [
+          "Diacritics only",
+          "Phonemes only",
+          "Allophones only",
+          "Stress marks only"
+        ],
+        answer: 1
+      },
+      {
+        q: "Which of these is a front vowel?",
+        options: ["/i/", "/u/", "/ɑ/", "/ɒ/"],
+        answer: 0
+      },
+      {
+        q: "Which of the following is NOT a manner of articulation?",
+        options: ["Nasal", "Fricative", "Approximant", "Orthographic"],
+        answer: 3
+      },
+      {
+        q: "Which best describes a syllable?",
+        options: [
+          "A word unit with one or more vowels",
+          "A consonant-only cluster",
+          "A written unit",
+          "An affix or prefix"
+        ],
+        answer: 0
+      },
+      {
+        q: "Distinctive features are described as:",
+        options: [
+          "Quantitative",
+          "Binary (+/-)",
+          "Hierarchical",
+          "Rhythmic"
+        ],
+        answer: 1
+      },
+      {
+        q: "IPA transcription of speech is mostly:",
+        options: ["Orthographic", "Phonemic", "Alphabetical", "Prosodic"],
+        answer: 1
+      },
+      {
+        q: "General American Phonetics (GAP) represents:",
+        options: [
+          "A UK dialect",
+          "The full IPA chart",
+          "Standard U.S. pronunciation",
+          "Historical English"
+        ],
+        answer: 2
+      },
+      {
+        q: "The syllable structure of 'stop' is:",
+        options: ["CVC", "CV", "CCVC", "VC"],
+        answer: 2
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function showQuestion() {
+      const q = questions[current];
+      const quizDiv = document.getElementById('quiz');
+      quizDiv.innerHTML = `
+        <div class="question">${current + 1}/20: ${q.q}</div>
+        <div class="options">
+          ${q.options.map((opt, i) => `
+            <div class="option" onclick="checkAnswer(${i})">${String.fromCharCode(65+i)}. ${opt}</div>
+          `).join('')}
+        </div>
+      `;
+      document.getElementById('result').textContent = '';
+    }
+
+    function checkAnswer(selected) {
+      const correct = questions[current].answer;
+      const resultDiv = document.getElementById('result');
+      if (selected === correct) {
+        score++;
+        resultDiv.textContent = "✅ Correct!";
+        resultDiv.style.color = "lightgreen";
+      } else {
+        resultDiv.textContent = "❌ Incorrect.";
+        resultDiv.style.color = "#ff7070";
+      }
+    }
+
+    function nextQuestion() {
+      if (current < questions.length - 1) {
+        current++;
+        showQuestion();
+      } else {
+        document.getElementById('quiz').innerHTML = `<h2>Quiz Complete</h2><p>Your Score: ${score}/20</p>`;
+        document.getElementById('result').textContent = '';
+        document.querySelector('.btn').style.display = 'none';
+      }
+    }
+
+    // Initialize quiz
+    showQuestion();
+  </script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Phonology Part 1 MCQ Quiz – MIT OCW Lecture 8</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; max-width: 800px; line-height: 1.5; background: #f8f8fa; }
+    .question { margin-bottom: 1.5em; }
+    .correct { color: green; }
+    .incorrect { color: red; }
+    .skipped { color: orange; }
+    .btn { background: #0066cc; color: white; border: none; padding: 10px 20px; font-size: 1em; margin: 1em 0; cursor: pointer; }
+    .btn:hover { background: #004999; }
+    .answers { display: none; margin-top: 2em; background: #f0f0fc; padding: 2em; border-radius: 8px; }
+    .answer-explanation { font-size: 0.96em; margin-bottom: 1.2em; }
+    label { cursor: pointer; display: block; }
+  </style>
+</head>
+<body>
+  <h1>Phonology Part 1 (MIT 24.900 Lecture 8) – 20 MCQ Quiz</h1>
+  <form id="quizForm"></form>
+  <button class="btn" type="button" onclick="submitQuiz()">Submit Quiz</button>
+  <div id="score"></div>
+  <div class="answers" id="answers"></div>
+  <script>
+    const quiz = [
+      {
+        q: "1. What is the primary focus of phonology, as introduced in Lecture 8?",
+        o: [
+          "Physical properties of speech sounds",
+          "Rules governing sound patterns in language",
+          "Anatomy of the vocal tract",
+          "Acoustic analysis of speech"
+        ],
+        a: 1,
+        ref: "Phonology deals with the mental and systematic organization of sounds and the rules that govern their distribution and patterning in languages[1][2]."
+      },
+      {
+        q: "2. In linguistics, what is a minimal pair?",
+        o: [
+          "Two words with entirely different sounds",
+          "Two words that differ by only a single sound and have different meanings",
+          "Two words that rhyme",
+          "Synonyms with similar pronunciation"
+        ],
+        a: 1,
+        ref: "A minimal pair shows that two sounds contrast by showing meaning change due to just one segment, e.g., 'pat' vs 'bat'[1][2]."
+      },
+      {
+        q: "3. What is the difference between a phoneme and an allophone?",
+        o: [
+          "They are two words for the same thing",
+          "A phoneme is an abstract mental category; allophones are its concrete realizations in speech",
+          "A phoneme is written; allophones are spoken",
+          "Allophones and phonemes are both concrete sounds"
+        ],
+        a: 1,
+        ref: "Phonemes are abstract units; their realization as actual sounds are called allophones. Allophones of a phoneme do not change meaning[1][2]."
+      },
+      {
+        q: "4. Which of the following is an example of allophonic variation in English?",
+        o: [
+          "The difference between [b] and [p] in 'bat' vs 'pat'",
+          "The difference between [t] in 'top' vs 'stop' (aspirated vs unaspirated)",
+          "The difference between 'cat' and 'dog'",
+          "The difference between [f] and [v]"
+        ],
+        a: 1,
+        ref: "[tʰ] (aspirated) in 'top' and [t] (unaspirated) in 'stop' are allophones of the phoneme /t/, predictable by context[1]."
+      },
+      {
+        q: "5. What is complementary distribution?",
+        o: [
+          "When two sounds occur in the same environment",
+          "When two sounds never appear in the same phonological context",
+          "When two sounds are synonyms",
+          "When two sounds both change meaning"
+        ],
+        a: 1,
+        ref: "Allophones usually are in complementary distribution: each occurs in environments where the other does not, never overlapping[1][2]."
+      },
+      {
+        q: "6. Which pair illustrates a phonemic contrast in English?",
+        o: [
+          "'spin' vs 'pin'",
+          "'stop' vs 'top'",
+          "'cot' vs 'caught'",
+          "'cap' vs 'cab'"
+        ],
+        a: 3,
+        ref: "'cap' [kæp] and 'cab' [kæb] differ in final consonant, showing a /p/ vs /b/ phonemic contrast[2]."
+      },
+      {
+        q: "7. When is a sound described as 'underlying' in phonological analysis?",
+        o: [
+          "When it is only pronounced in careful speech",
+          "When it is assumed to be the mental representation from which surface forms derive",
+          "When it is rarely used in conversation",
+          "When it is borrowed from another language"
+        ],
+        a: 1,
+        ref: "The underlying (phonemic) form is the mental representation; surface forms are the results of phonological rules applied to it[1][2]."
+      },
+      {
+        q: "8. Which language was discussed in the lecture as an example for vowel harmony?",
+        o: [
+          "English",
+          "Finnish",
+          "French",
+          "Mandarin"
+        ],
+        a: 1,
+        ref: "Finnish is discussed for its vowel harmony, an example of feature spreading in phonology[1]."
+      },
+      {
+        q: "9. In phonological rule notation, what is the meaning of the symbol '/'?",
+        o: [
+          "Means 'becomes'",
+          "Means 'in the environment of'",
+          "Means 'is optional'",
+          "Means 'is deleted'"
+        ],
+        a: 1,
+        ref: "In rules such as A → B / X _ Y, '/' introduces the environment for the change[1][2]."
+      },
+      {
+        q: "10. What is an assimilation rule?",
+        o: [
+          "A rule that deletes a sound",
+          "A rule that inserts a new sound",
+          "A rule that makes a sound more similar to a neighboring sound",
+          "A rule that reverses a word"
+        ],
+        a: 2,
+        ref: "Assimilation is a major type of phonological process; a sound becomes more like an adjacent one[1][2]."
+      },
+      {
+        q: "11. The plural suffix in Turkish is cited as an example of what kind of phonological phenomenon?",
+        o: [
+          "Nasalization",
+          "Assimilation",
+          "Vowel harmony",
+          "Voicing dissimilation"
+        ],
+        a: 2,
+        ref: "Turkish plural suffix shows vowel harmony, changing vowel quality to match preceding vowels[1]."
+      },
+      {
+        q: "12. Which kind of evidence is crucial for determining if two sounds are contrastive in a language?",
+        o: [
+          "Aspiration",
+          "Minimal pairs",
+          "Syllable count",
+          "Word length"
+        ],
+        a: 1,
+        ref: "Minimal pairs provide evidence that two sounds are contrastive, i.e., phonemic[1][2]."
+      },
+      {
+        q: "13. What is meant by 'feature spreading' in phonology?",
+        o: [
+          "A single feature affects multiple segments in a word",
+          "A sound disappears from the word",
+          "Syllables become identical",
+          "Lengthening of a vowel"
+        ],
+        a: 0,
+        ref: "Feature spreading refers to one phonological feature (e.g., nasality, harmony) affecting several segments[1][2]."
+      },
+      {
+        q: "14. What is autosegmental phonology concerned with?",
+        o: [
+          "Aligning phonemes alphabetically",
+          "Representing features as autonomous from individual segments",
+          "Assigning primary stress",
+          "Counting morphemes"
+        ],
+        a: 1,
+        ref: "Autosegmental phonology models features like tone or harmony as their own tier, not bound to single segments[1]."
+      },
+      {
+        q: "15. In Navajo discussed in the lecture, which two features are involved in sibilant harmony?",
+        o: [
+          "Voicing and rounding",
+          "Sibilancy and nasality",
+          "Sibilancy and place of articulation",
+          "Length and tone"
+        ],
+        a: 2,
+        ref: "Navajo shows sibilant harmony in which certain morphemes’ sibilant sounds (s, z, sh, zh) must match in place of articulation to the root[1]."
+      },
+      {
+        q: "16. What is the underlying goal of many phonological rules, as discussed in the lecture?",
+        o: [
+          "To maximize contrast",
+          "To preserve meaning at any cost",
+          "To make sequences of sounds easier to pronounce",
+          "To make spelling consistent"
+        ],
+        a: 2,
+        ref: "Rules such as assimilation and harmony often serve to facilitate articulation—making speech easier, more fluid, or more regular[1][2]."
+      },
+      {
+        q: "17. In the context of constraint-based phonology (like Optimality Theory), what does 'ranking' refer to?",
+        o: [
+          "Listing rules alphabetically",
+          "The relative importance of competing constraints in determining the surface form",
+          "Counting occurrences of a rule",
+          "Determining rule order in history"
+        ],
+        a: 1,
+        ref: "Constraint-based approaches (e.g., Optimality Theory) use the idea of ranked constraints to explain surface forms[1]."
+      },
+      {
+        q: "18. Which phenomenon refers to deletion of a vowel in rapid or casual speech?",
+        o: [
+          "Epenthesis",
+          "Vowel reduction",
+          "Elision",
+          "Assimilation"
+        ],
+        a: 2,
+        ref: "Elision is the process where sounds, often vowels, are deleted in connected speech[1][2]."
+      },
+      {
+        q: "19. What does 'neutralization' mean in phonology?",
+        o: [
+          "When contrast between sounds is maintained in all environments",
+          "When two previously distinct sounds become indistinguishable in a particular context",
+          "When a sound is deleted",
+          "When a new contrast emerges"
+        ],
+        a: 1,
+        ref: "Neutralization means two phonemes lose their contrast in some context (e.g., the flapping of /t/ and /d/ in American English)[1][2]."
+      },
+      {
+        q: "20. What is meant by 'surface form'?",
+        o: [
+          "The underlying mental representation",
+          "The actual pronunciation after all phonological rules have applied",
+          "A random spelling variation",
+          "An unpronounced word"
+        ],
+        a: 1,
+        ref: "Surface form is the output of phonological rules, the actual sound produced in speech[1][2]."
+      }
+    ];
+    // Render quiz
+    const qForm = document.getElementById('quizForm');
+    quiz.forEach((item, idx) => {
+      let qDiv = document.createElement('div');
+      qDiv.classList.add('question');
+      let html = `<p><strong>${item.q}</strong></p>`;
+      item.o.forEach((opt, j) => {
+        html += `<label><input type="radio" name="q${idx}" value="${j}"> ${opt}</label>`;
+      });
+      qDiv.innerHTML = html;
+      qForm.appendChild(qDiv);
+    });
+    // Quiz submission and answer explanation
+    function submitQuiz() {
+      let score = 0, answered = 0, output = '';
+      for (let i = 0; i < quiz.length; i++) {
+        let options = document.getElementsByName(`q${i}`);
+        let selected = -1;
+        for (let j = 0; j < options.length; j++) {
+          if (options[j].checked) selected = parseInt(options[j].value);
+        }
+        let corr = quiz[i].a;
+        output += `<div class="answer-explanation"><strong>Q${i+1}:</strong> ${quiz[i].q}<br>`;
+        if (selected === -1) {
+          output += `<span class="skipped">No answer given.</span><br>`;
+          output += `<span class="correct">Correct answer: ${quiz[i].o[corr]}</span><br>`;
+        } else {
+          answered++;
+          if (selected === corr) { score++; }
+          output += `<span class="${selected === corr ? 'correct' : 'incorrect'}">Your answer: ${quiz[i].o[selected]}</span><br>`;
+          output += `<span class="correct">Correct answer: ${quiz[i].o[corr]}</span><br>`;
+        }
+        output += `<em>${quiz[i].ref}</em></div>`;
+      }
+      document.getElementById('score').innerHTML = `<h2>Score: ${score} / 20 (${answered} answered, ${quiz.length-answered} skipped)</h2>`;
+      document.getElementById('answers').innerHTML = output;
+      document.getElementById('answers').style.display = 'block';
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  </script>
+  <hr>
+  <p style="font-size:0.92em;color:#666;">
+    <strong>References:</strong><br>
+    [1] Norvin W. Richards, MIT OpenCourseWare 24.900 Introduction to Linguistics, Lecture 8: Phonology, Part 1, Jan 2023 (<a href="https://ocw.mit.edu/courses/24-900-introduction-to-linguistics-spring-2022/" target="_blank">OCW</a> / <a href="https://www.youtube.com/watch?v=SyM5j0SeDRQ" target="_blank">YouTube</a>).<br>
+    [2] Bruce Hayes, “Introductory Phonology”, Wiley-Blackwell, 2009; Peter Ladefoged & Keith Johnson, “A Course in Phonetics”, 7th Ed. Cengage, 2014.<br>
+    Licensed for educational use in accordance with MIT OCW’s <a href="https://ocw.mit.edu/terms/" target="_blank">CC BY-NC-SA</a>.
+  </p>
+</body>
+</html>

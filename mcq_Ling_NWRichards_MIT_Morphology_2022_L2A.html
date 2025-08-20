@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MIT OCW Morphology Lecture 2 Quiz</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px 10px;
+    background: #f9f9f9;
+    color: #222;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  h1, h2 {
+    text-align: center;
+    color: #005288;
+  }
+  form {
+    background: white;
+    padding: 20px 25px 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #aaa;
+  }
+  .question {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+  }
+  .question h3 {
+    margin-bottom: 8px;
+  }
+  label {
+    display: block;
+    margin-bottom: 6px;
+    cursor: pointer;
+  }
+  button {
+    display: block;
+    margin: 25px auto 10px;
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #005288;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #003f62;
+  }
+  .result {
+    background: #e6f7ff;
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #90cdf4;
+  }
+  .correct {
+    color: green;
+    font-weight: bold;
+  }
+  .wrong {
+    color: red;
+    font-weight: bold;
+  }
+  .answer-details {
+    font-size: 0.9em;
+    margin-top: 8px;
+    padding-left: 25px;
+    color: #444;
+    background: #f0f8ff;
+    border-left: 4px solid #005288;
+    border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+
+<h1>MIT OpenCourseWare Lecture 2: Morphology Quiz</h1>
+<h2>Test Your Knowledge – 20 Questions</h2>
+
+<form id="quizForm">
+
+<!-- Questions inserted via script for neatness -->
+
+<button type="button" onclick="submitQuiz()">Submit Answers</button>
+</form>
+
+<div id="results" class="result" style="display:none;"></div>
+
+<script>
+// Question data: question, choices, correct index, explanations with refs per question
+const questions = [
+  {
+    q: "1. What is a morpheme in linguistics?",
+    choices: [
+      "A syllable in a word",
+      "The smallest meaningful unit in a language",
+      "A prefix or suffix only",
+      "A type of phoneme"
+    ],
+    correct: 1,
+    explanation: "A morpheme is the smallest unit of meaning in a language, such as 'cat' or the suffix '-s' indicating plural. (Richards, MIT OCW Morphology Lecture 2, 2023)"
+  },
+  {
+    q: "2. What distinguishes a 'free morpheme' from a 'bound morpheme'?",
+    choices: [
+      "Free morphemes can stand alone as words; bound morphemes cannot",
+      "Free morphemes are affixes; bound morphemes are roots",
+      "Free morphemes do not carry meaning; bound morphemes do",
+      "Bound morphemes can stand alone; free morphemes cannot"
+    ],
+    correct: 0,
+    explanation: "Free morphemes can function independently as words ('cat'), while bound morphemes must attach to roots or stems ('-s'). (Richards, MIT OCW Morphology Lecture 2)"
+  },
+  {
+    q: "3. Which of the following is an example of a prefix?",
+    choices: [
+      "-ing",
+      "-ed",
+      "un-",
+      "-s"
+    ],
+    correct: 2,
+    explanation: "A prefix attaches before the root, such as 'un-' in 'unhappy'. Suffixes like '-ing' and '-ed' attach after. (MIT OCW Morphology Lecture 2)"
+  },
+  {
+    q: "4. What is an infix?",
+    choices: [
+      "A morpheme occurring at the beginning of a word",
+      "A morpheme occurring within a word",
+      "A morpheme occurring at the end of a word",
+      "A morpheme that does not change meaning"
+    ],
+    correct: 1,
+    explanation: "Infixes are morphemes inserted inside a word, common in languages like Tagalog (e.g., '-um-'). (MIT OCW Morphology Lecture 2)"
+  },
+  {
+    q: "5. What is the meaning of 'lexicon' in linguistics?",
+    choices: [
+      "The grammar of a language",
+      "The set of phonemes in a language",
+      "The mental dictionary of words and morphemes",
+      "The syntax rules of a language"
+    ],
+    correct: 2,
+    explanation: "A lexicon is the mental repository of words and morphemes that a speaker knows, including pronunciation and meaning. (Richards, Lecture 2)"
+  },
+  {
+    q: "6. What is the common effect of suffixes in English?",
+    choices: [
+      "They change the meaning or grammatical category of the word",
+      "They only adjust stress patterns",
+      "They typically shorten words",
+      "They only appear at the beginning of words"
+    ],
+    correct: 0,
+    explanation: "Suffixes like '-ness' or '-able' modify meaning or word class, e.g., 'happy' to 'happiness'. (MIT OCW Morphology Lecture 2)"
+  },
+  {
+    q: "7. According to the lecture, what is reduplication?",
+    choices: [
+      "Repeating a whole or part of a word to change meaning",
+      "Adding a prefix to a word",
+      "Removing suffixes from a root",
+      "Pronouncing a consonant twice"
+    ],
+    correct: 0,
+    explanation: "Reduplication repeats part or all of a morpheme to convey grammatical or semantic changes, common in Tagalog. (MIT OCW Lecture 2)"
+  },
+  {
+    q: "8. Which of the following is an example of a bound root?",
+    choices: [
+      "Cat",
+      "Un-",
+      "Culp- (as in 'culpable')",
+      "-s"
+    ],
+    correct: 2,
+    explanation: "Bound roots like 'culp-' cannot stand alone and need affixes (e.g., culpable). (MIT OCW Morphology Lecture 2)"
+  },
+  {
+    q: "9. What is the difference between open-class and closed-class morphemes?",
+    choices: [
+      "Open-class morphemes rarely change, closed-class are flexible",
+      "Open-class morphemes are closed sets (prepositions); closed-class are open sets (nouns)",
+      "Open-class morphemes can be expanded with new words; closed-class are fixed (like pronouns)",
+      "Open-class morphemes occur together; closed-class morphemes do not"
+    ],
+    correct: 2,
+    explanation: "Open-class morphemes include nouns and verbs, which expand with new words. Closed-class morphemes include pronouns and prepositions, which stay mostly constant. (Richards, MIT OCW Lecture 2)"
+  },
+  {
+    q: "10. What is 'templatic morphology' as explained in the lecture?",
+    choices: [
+      "A pattern where roots are made of consonants interspersed with vowels to form words",
+      "A method of syllable counting",
+      "Using prefixes exclusively",
+      "A repeating of morphemes"
+    ],
+    correct: 0,
+    explanation: "Templatic morphology (e.g., in Semitic languages) involves roots made of consonant patterns with vowels inserted to create verb forms. (MIT OCW Lecture 2)"
+  },
+  {
+    q: "11. What is a 'bound morpheme'?",
+    choices: [
+      "A morpheme that can stand alone",
+      "A morpheme that must attach to another morpheme",
+      "A morpheme that includes prepositions only",
+      "A morpheme representing a complete word"
+    ],
+    correct: 1,
+    explanation: "Bound morphemes cannot stand alone and must attach to free morphemes (e.g., '-s', 'un-'). (Lecture 2, MIT OCW)"
+  },
+  {
+    q: "12. The distinction between 'prefix', 'suffix' and 'infix' is based on:",
+    choices: [
+      "Where in the word the morpheme attaches",
+      "The meaning it adds to the word",
+      "Its grammatical function",
+      "Whether the morpheme is bound or free"
+    ],
+    correct: 0,
+    explanation: "'Prefix' attaches before, 'suffix' after, and 'infix' inside a root or stem. (MIT OCW Lecture 2)"
+  },
+  {
+    q: "13. Which of the following is NOT typically an open-class morpheme?",
+    choices: [
+      "Nouns",
+      "Verbs",
+      "Adjectives",
+      "Prepositions"
+    ],
+    correct: 3,
+    explanation: "Prepositions are closed-class morphemes, with a fixed inventory. Nouns, verbs, adjectives are open-class. (Lect. 2, MIT OCW)"
+  },
+  {
+    q: "14. In the example of Tagalog morphology, what is special about the past tense morpheme?",
+    choices: [
+      "It is a prefix",
+      "It is an infix",
+      "It is a suffix",
+      "It does not exist"
+    ],
+    correct: 1,
+    explanation: "In Tagalog, the past tense morpheme '-um-' is an infix inserted after the first consonant or before the first vowel. (MIT OCW Morphology Lecture 2)"
+  },
+  {
+    q: "15. What is the common phonological effect when adding the English plural suffix '-s'?",
+    choices: [
+      "It always sounds like 's'",
+      "It always sounds like 'z'",
+      "It can sound like 's', 'z', or 'iz' depending on the root word’s final sound",
+      "It is silent"
+    ],
+    correct: 2,
+    explanation: "The plural suffix -s varies phonologically as /s/, /z/, or /ɪz/ depending on phonetic environment (e.g., cats, dogs, horses). (Richards, MIT OCW Lecture 2)"
+  },
+  {
+    q: "16. How does the mental lexicon treat complex words like 'cats'?",
+    choices: [
+      "As one indivisible unit",
+      "As a root plus a meaningful suffix",
+      "Only as a sound pattern",
+      "It ignores plural suffixes"
+    ],
+    correct: 1,
+    explanation: "The lexicon treats 'cats' as composed of root 'cat' plus suffix '-s', supported by productive morphological rules. (Lecture 2, Richards)"
+  },
+  {
+    q: "17. What is morphological analysis?",
+    choices: [
+      "Parsing sentences into words",
+      "Determining phonemes in speech",
+      "Breaking down words into morphemes and analyzing their meaning/function",
+      "Studying semantics"
+    ],
+    correct: 2,
+    explanation: "Morphological analysis involves segmenting words into morphemes and understanding their meanings and grammatical roles. (MIT OCW Lecture 2)"
+  },
+  {
+    q: "18. What kind of morpheme is '-er' in English words like 'teacher' and 'beggar'?",
+    choices: [
+      "Prefix",
+      "Suffix denoting agent/person",
+      "Infix",
+      "Root"
+    ],
+    correct: 1,
+    explanation: "Suffix '-er' attached to verbs forms nouns indicating the agent performing the action: 'teach'-> 'teacher'. (MIT OCW Morphology Lecture 2)"
+  },
+  {
+    q: "19. According to the lecture, what is 'truncation' in morphology?",
+    choices: [
+      "Adding extra sounds to create words",
+      "Removing part of a word to create a new form",
+      "Repeating a morpheme",
+      "Pronouncing words softly"
+    ],
+    correct: 1,
+    explanation: "Truncation removes segments of a morpheme or word to form related words, such as some verb forms in O’odham language. (MIT OCW Morphology Lecture 2)"
+  },
+  {
+    q: "20. What is the typical behavior of tone in 'tonal languages' as morphological markers?",
+    choices: [
+      "They carry no meaning",
+      "Tone changes can distinguish word meaning or grammatical functions",
+      "Tone is only important in poetry",
+      "Tone replaces consonants"
+    ],
+    correct: 1,
+    explanation: "In tonal languages, tone variation signals differences in lexical or grammatical meanings. (MIT OCW Morphology Lecture 2)"
+  }
+];
+
+// Populate form dynamically
+const form = document.getElementById('quizForm');
+questions.forEach((item, idx) => {
+  const div = document.createElement('div');
+  div.className = 'question';
+  div.id = `q${idx+1}`;
+  div.innerHTML = `<h3>Q${idx+1}. ${item.q}</h3>`;
+  item.choices.forEach((choice, cidx) => {
+    div.innerHTML += `
+      <label>
+        <input type="radio" name="q${idx+1}" value="${cidx}" required>
+        ${choice}
+      </label>
+    `;
+  });
+  form.insertBefore(div, form.querySelector('button'));
+});
+
+function submitQuiz() {
+  let score = 0;
+  let output = '';
+  // Clear previous results
+  const resultsDiv = document.getElementById('results');
+  resultsDiv.style.display = 'block';
+  resultsDiv.innerHTML = '<h2>Results and Detailed Answers</h2>';
+
+  questions.forEach((q, idx) => {
+    const userAnswer = form[`q${idx+1}`].value;
+    const isCorrect = parseInt(userAnswer) === q.correct;
+    if (isCorrect) {
+      score++;
+    }
+    output += `<div><strong>Q${idx+1}.</strong> ${q.q}<br>`;
+    output += `<span class="${isCorrect ? 'correct' : 'wrong'}">Your answer: ${q.choices[userAnswer]} — ${isCorrect ? 'Correct' : 'Incorrect'}</span>`;
+    output += `<div class="answer-details"><em>Explanation:</em> ${q.explanation}</div></div><br>`;
+  });
+
+  output = `<h3>You scored ${score} out of ${questions.length}.</h3>` + output;
+  output += `<hr><p><strong>Reference:</strong> Norvin W. Richards, <em>MIT OpenCourseWare: Linguistics 24.900 Introduction to Linguistics, Spring 2022, Lecture 2: Morphology, Part 1</em>. Available at <a href="https://ocw.mit.edu/courses/24-900-introduction-to-linguistics-spring-2022/">ocw.mit.edu</a> and the accompanying lecture video (YouTube).</p>`;
+  
+  resultsDiv.innerHTML = output;
+
+  // Scroll user to results
+  resultsDiv.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>

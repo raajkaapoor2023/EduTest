@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Phonetics Quiz - TrevTutor Crash Course</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem auto; max-width: 900px; }
+    h1 { color: #2a4d69; }
+    .question { margin-bottom: 1.5rem; }
+    .question p { font-weight: bold; }
+    .result { font-weight: bold; font-size: 1.2rem; margin-top: 2rem; }
+    .answers { background: #eef2f5; padding: 1rem; margin-top: 2rem; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>Phonetics Quiz (TrevTutor: 0:09:27 - 1:21:34)</h1>
+  <form id="quizForm"></form>
+
+  <script>
+    const questions = [
+      { q: "What is the primary focus of phonetics?", opts: ["Word formation", "Sound systems", "Meaning in context", "Syntactic structure"], a: 1 },
+      { q: "Which branch of phonetics studies how speech sounds are produced?", opts: ["Acoustic", "Auditory", "Articulatory", "Cognitive"], a: 2 },
+      { q: "Which of the following is a voiced bilabial stop?", opts: ["/b/", "/p/", "/m/", "/v/"], a: 0 },
+      { q: "Which IPA symbol represents a voiceless dental fricative?", opts: ["/f/", "/\u03b8/", "/s/", "/\u0283/"], a: 1 },
+      { q: "What does the term 'manner of articulation' refer to?", opts: ["Position of the tongue", "Airflow modification", "Voice box vibration", "Lip rounding"], a: 1 },
+      { q: "Which sound is a nasal consonant?", opts: ["/t/", "/g/", "/n/", "/z/"], a: 2 },
+      { q: "Which of the following is NOT a place of articulation?", opts: ["Velar", "Labiodental", "Nasal", "Alveolar"], a: 2 },
+      { q: "Which vowel is high and front?", opts: ["/i/", "/u/", "/a/", "/o/"], a: 0 },
+      { q: "Which describes a diphthong?", opts: ["A sound involving two tongue positions", "A consonant cluster", "A nasalized vowel", "A glottal stop"], a: 0 },
+      { q: "Which of these is an example of a glottal sound?", opts: ["/h/", "/d/", "/r/", "/s/"], a: 0 },
+      { q: "What feature distinguishes /s/ from /z/?", opts: ["Manner", "Place", "Voicing", "Nasality"], a: 2 },
+      { q: "Which of these is a mid central vowel?", opts: ["/\u0259/ (schwa)", "/i/", "/u/", "/\u0254/"], a: 0 },
+      { q: "What is the main concern of acoustic phonetics?", opts: ["Physical properties of sounds", "Speech production", "Language acquisition", "Laryngeal vibration"], a: 0 },
+      { q: "Which is true about IPA?", opts: ["Same symbols for all languages", "Only used in English", "Each symbol = multiple sounds", "A dialect-specific system"], a: 0 },
+      { q: "Which of these is an affricate?", opts: ["/t\u0283/", "/f/", "/m/", "/n/"], a: 0 },
+      { q: "Which feature is shared by /m/, /n/, and /\u014b/?", opts: ["Voiceless", "Stop", "Nasal", "Glottal"], a: 2 },
+      { q: "Which articulator is crucial for velar sounds?", opts: ["Lips", "Tongue tip", "Glottis", "Tongue back"], a: 3 },
+      { q: "Which sound is a high back rounded vowel?", opts: ["/i/", "/u/", "/e/", "/\u025b/"], a: 1 },
+      { q: "What is the defining feature of stops?", opts: ["Continuous airflow", "Nasal airflow", "Complete closure", "Tongue vibration"], a: 2 },
+      { q: "Which domain does auditory phonetics focus on?", opts: ["Speech perception", "Sound articulation", "Grammar", "Transcription"], a: 0 }
+    ];
+
+    function buildQuiz() {
+      const form = document.getElementById("quizForm");
+      questions.forEach((item, i) => {
+        const div = document.createElement("div");
+        div.className = "question";
+        div.innerHTML = `<p>${i + 1}. ${item.q}</p>` +
+          item.opts.map((opt, j) =>
+            `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label><br>`
+          ).join("");
+        form.appendChild(div);
+      });
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = "Submit";
+      btn.onclick = grade;
+      form.appendChild(btn);
+    }
+
+    function grade() {
+      let score = 0;
+      questions.forEach((item, i) => {
+        const sel = document.querySelector(`input[name=q${i}]:checked`);
+        if (sel && Number(sel.value) === item.a) score++;
+      });
+      const form = document.getElementById("quizForm");
+      form.insertAdjacentHTML('beforeend', `<div class="result">Your score: ${score}/20</div>`);
+      const btn2 = document.createElement("button");
+      btn2.type = "button";
+      btn2.textContent = "Show Answers & References";
+      btn2.onclick = showAnswers;
+      form.appendChild(btn2);
+    }
+
+    function showAnswers() {
+      const div = document.createElement("div");
+      div.className = "answers";
+      let html = "<h2>Correct Answers & References</h2>";
+      questions.forEach((item, i) => {
+        html += `<p><strong>Q${i + 1}</strong>: ${item.q}<br>✅ <em>${item.opts[item.a]}</em><br>` +
+          `<small>Ref: TrevTutor “Introduction to Linguistics: Complete Crash Course” (0:09:27–1:21:34); See also: Ladefoged & Johnson, *A Course in Phonetics*, 8th ed.; Ashby & Maidment, *Introducing Phonetic Science* (2005)</small></p>`;
+      });
+      div.innerHTML = html;
+      document.getElementById("quizForm").appendChild(div);
+    }
+
+    window.onload = buildQuiz;
+  </script>
+</body>
+</html>

@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QCM (60) — HAVE + -EN — Sandrine Oriez (Université Rennes 2)</title>
+  <style>
+    :root{
+      --bg:#0f172a;          /* slate-900 */
+      --panel:#111827;       /* gray-900 */
+      --subpanel:#1f2937;    /* gray-800 */
+      --text:#e5e7eb;        /* gray-200 */
+      --muted:#9ca3af;       /* gray-400 */
+      --accent:#38bdf8;      /* sky-400 */
+      --accent-2:#22c55e;    /* green-500 */
+      --accent-3:#f59e0b;    /* amber-500 */
+      --danger:#ef4444;      /* red-500 */
+      --ok:#10b981;          /* emerald-500 */
+      --warning:#f59e0b;     /* amber-500 */
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; background:linear-gradient(180deg, #0b1220, var(--bg));
+      color:var(--text); font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial; 
+    }
+    header{
+      position:sticky; top:0; z-index:10; backdrop-filter:blur(8px);
+      background:rgba(15,23,42,.7); border-bottom:1px solid rgba(148,163,184,.12);
+    }
+    .wrap{max-width:1100px; margin:0 auto; padding:20px;}
+    h1{margin:.2rem 0 0; font-size:clamp(1.4rem,2.2vw,2.2rem); letter-spacing:.2px}
+    .byline{color:var(--muted); font-size:.95rem}
+    .panel{
+      background:linear-gradient(180deg,rgba(31,41,55,.9), rgba(17,24,39,.95));
+      border:1px solid rgba(148,163,184,.12); border-radius:var(--radius); box-shadow:var(--shadow);
+      padding:18px; margin:18px 0;
+    }
+    .controls{display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(220px,1fr));}
+    label{display:block; font-weight:600; color:#cbd5e1; margin-bottom:6px}
+    select,button,input[type="number"],input[type="text"]{
+      width:100%; padding:12px 14px; border-radius:14px; border:1px solid rgba(148,163,184,.2);
+      background:var(--panel); color:var(--text); outline:none; transition:.2s border, .2s transform;
+    }
+    select:focus, input:focus{border-color:var(--accent)}
+    button{cursor:pointer; font-weight:700; letter-spacing:.3px}
+    .primary{background:linear-gradient(180deg, #0ea5e9, #0284c7); border:none;}
+    .secondary{background:linear-gradient(180deg,#22c55e,#16a34a); border:none}
+    .ghost{background:transparent; border:1px dashed rgba(148,163,184,.35)}
+    .bar{height:10px; background:#0b1220; border-radius:999px; overflow:hidden; border:1px solid rgba(148,163,184,.18)}
+    .bar>span{display:block; height:100%; width:0%; background:linear-gradient(90deg, var(--accent), #60a5fa);}    
+    .q{
+      background:linear-gradient(180deg, rgba(2,6,23,.6), rgba(15,23,42,.7));
+      border:1px solid rgba(148,163,184,.15); border-radius:16px; padding:16px; margin:16px 0;
+    }
+    .q h3{margin:0 0 10px; font-size:1.05rem}
+    .choices{display:grid; gap:10px}
+    .choice{
+      border:1px solid rgba(148,163,184,.18); border-radius:14px; padding:12px 14px; cursor:pointer;
+      background:var(--subpanel); transition:.15s transform, .2s border, .2s background;
+    }
+    .choice:hover{transform:translateY(-1px); border-color:var(--accent)}
+    .choice.selected{outline:2px solid var(--accent)}
+    .choice.correct{border-color:rgba(16,185,129,.9); background:linear-gradient(180deg, rgba(16,185,129,.12), rgba(15,23,42,.6));}
+    .choice.wrong{border-color:rgba(239,68,68,.85); background:linear-gradient(180deg, rgba(239,68,68,.10), rgba(15,23,42,.6));}
+    .meta{display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap; color:var(--muted)}
+    .pill{padding:6px 10px; border-radius:999px; border:1px solid rgba(148,163,184,.25); font-size:.8rem}
+    .grid2{display:grid; gap:16px; grid-template-columns: 1.3fr .7fr}
+    .sticky-footer{position:sticky; bottom:0; background:rgba(2,6,23,.8); border-top:1px solid rgba(148,163,184,.12); padding:12px; border-bottom-left-radius:16px; border-bottom-right-radius:16px}
+    .muted{color:var(--muted)}
+    .kbd{border:1px solid rgba(148,163,184,.3); padding:2px 6px; border-radius:6px; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size:.85em; color:#cbd5e1}
+    .explain{white-space:pre-wrap; background:rgba(148,163,184,.08); border:1px solid rgba(148,163,184,.15); padding:12px; border-radius:12px}
+    .hidden{display:none}
+    .tag{font-size:.75rem; color:#cbd5e1}
+    .score{font-size:1.2rem; font-weight:800}
+    .legend{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+    .legend span{display:inline-flex; align-items:center; gap:6px}
+    .dot{width:10px; height:10px; border-radius:999px; display:inline-block}
+    .dot.ok{background:var(--ok)}
+    .dot.bad{background:var(--danger)}
+    .dot.skip{background:var(--warning)}
+    .footer-note{font-size:.85rem; color:var(--muted)}
+    .inline-ref{color:#a5b4fc}
+    .srch{display:flex; gap:8px; align-items:center}
+    .srch input{flex:1}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="meta">
+        <div>
+          <h1>QCM (60) — HAVE + -EN : Aspect perfect en anglais</h1>
+          <div class="byline">Basé sur <strong>Sandrine Oriez</strong>, «<em>HAVE + -EN</em>», Université Rennes 2 (2022). Références théoriques : A. Culioli, H. Adamczewski, P. Larreya.</div>
+        </div>
+        <div class="legend">
+          <span><span class="dot ok"></span>Correct</span>
+          <span><span class="dot bad"></span>Faux</span>
+          <span><span class="dot skip"></span>Sauté</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel">
+      <h2 style="margin-top:0">Paramétrage</h2>
+      <div class="controls">
+        <div>
+          <label>Mode d'ordre</label>
+          <select id="orderMode">
+            <option value="random">Aléatoire (mélange total)</option>
+            <option value="by-seq">Par séquences (1→5)</option>
+            <option value="shuffle-seq">Séquences aléatoires (ordre des blocs mélangé)</option>
+          </select>
+        </div>
+        <div>
+          <label>Nombre de questions (max 60)</label>
+          <input id="count" type="number" min="1" max="60" value="60" />
+        </div>
+        <div>
+          <label>Inclure quelles séquences ?</label>
+          <select id="seqFilter" multiple size="5" title="Ctrl/Cmd+clic pour (dé)sélectionner">
+            <option value="1" selected>1) Théorie & Invariant</option>
+            <option value="2" selected>2) Valeur d’accompli</option>
+            <option value="3" selected>3) Valeur explicative (reprise de commentaire)</option>
+            <option value="4" selected>4) Bilan : intervalle (for/since)</option>
+            <option value="5" selected>5) Bilan : expérience (ever/never, already)</option>
+          </select>
+        </div>
+        <div>
+          <label>Filtrer par recherche (optionnel)</label>
+          <div class="srch">
+            <input id="search" type="text" placeholder="ex.: past perfect, T1, since, experience…" />
+            <button class="ghost" id="applySearch">Filtrer</button>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; gap:10px; margin-top:14px">
+        <button class="primary" id="startBtn">Démarrer le test</button>
+        <button class="ghost" id="resetBtn">Remise à zéro</button>
+      </div>
+      <p class="footer-note">Fonctionnalités : tirage aléatoire, possibilité de <span class="kbd">Sauter</span> une question, reprise à la fin, sauvegarde locale (auto), explications détaillées après validation.</p>
+    </section>
+
+    <section class="panel" id="quizPanel" style="display:none">
+      <div class="grid2">
+        <div>
+          <div class="meta"><span class="pill" id="qMeta">Question 1/60</span><span class="pill" id="qTag">Séquence 1</span></div>
+          <div class="q">
+            <h3 id="qText">—</h3>
+            <div class="choices" id="choices"></div>
+            <div class="sticky-footer">
+              <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap">
+                <button class="ghost" id="skipBtn">Sauter</button>
+                <button class="primary" id="nextBtn">Valider & suivant</button>
+                <span class="muted">Raccourcis : <span class="kbd">1-4</span> pour répondre • <span class="kbd">S</span> sauter • <span class="kbd">Enter</span> valider</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="pill" style="display:inline-block; margin-bottom:8px">Progression</div>
+          <div class="bar"><span id="bar"></span></div>
+          <div style="margin-top:10px" class="muted">Bonnes : <span id="good">0</span> • Fautes : <span id="bad">0</span> • Sautées : <span id="skipped">0</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="resultPanel" style="display:none">
+      <h2>Résultats & corrigé détaillé</h2>
+      <p class="score" id="score"></p>
+      <p class="muted">Corrigé fondé sur <span class="inline-ref">S. Oriez, « HAVE + -EN » (Univ. Rennes 2, 2022)</span> et sur des cadres théoriques (Culioli ; Adamczewski ; Larreya).</p>
+      <div id="review"></div>
+      <div style="display:flex; gap:10px; margin-top:14px">
+        <button class="secondary" id="retryBtn">Rejouer (même paramètres)</button>
+        <button class="ghost" id="toTop">Retour au paramétrage</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // ========================== Données — 60 questions ==========================
+    // Chaque question : { id, seq, prompt, choices:[...], answer:idx, explanation }
+
+    const QUESTIONS = [
+      // === Séquence 1 — Théorie & invariant (1–12)
+      {id:1, seq:1, prompt:"Dans HAVE + -EN, quel est l'invariant sémantique de -EN ?",
+        choices:[
+          "La simultanéité entre T0 et T1",
+          "L’antériorité du procès par rapport au repère T1",
+          "La progression interne du procès (en cours)",
+          "L'habituation (itératif)"
+        ], answer:1,
+        explanation:"Dans l'analyse énonciative, -EN code l'antériorité du procès relativement au moment-repère T1. HAVE établit ensuite un lien entre cet antérieur et T1 (localisation sans identification). Cf. Oriez (2022) ; Adamczewski (marqueurs)."},
+      {id:2, seq:1, prompt:"Dans HAVE + -EN, que code HAVE ?",
+        choices:[
+          "Une identification sujet–prédicat (comme BE)",
+          "Une rupture modale",
+          "Un opérateur de localisation : lien entre l’antérieur et T1",
+          "Un simple auxiliaire vide de sens"
+        ], answer:2,
+        explanation:"HAVE est un opérateur de repérage : il établit un lien entre le procès antérieur (marqué par -EN) et le moment-repère T1. Ce n’est pas une identification (contrairement à BE). Cf. Oriez ; Adamczewski."},
+      {id:3, seq:1, prompt:"Combien de temps grammaticaux possède l’anglais dans ce cadre théorique ?",
+        choices:["Un seul","Deux : présent et prétérit","Trois : présent, prétérit, futur","Quatre, selon l’aspect"], answer:1,
+        explanation:"Dans ce paradigme, il n’y a que deux temps grammaticaux (présent, prétérit). Les autres distinctions viennent des aspects (zéro, BE+-ING, HAVE+-EN). Cf. Oriez."},
+      {id:4, seq:1, prompt:"Quel marqueur signale une rupture (temporelle ou modale) entre T0 et T1 ?",
+        choices:["-S (présent)","-ED (prétérit)","-ING","Ø (aspect zéro)"], answer:1,
+        explanation:"-ED code la rupture : T1 est distinct de T0 (passé ou plan fictif). Cf. Oriez."},
+      {id:5, seq:1, prompt:"Dans \"has worked\", où se trouve le marqueur de TEMPS ?",
+        choices:["Sur worked","Sur has","Sur le sujet","Il n’y a pas de marqueur temporel"], answer:1,
+        explanation:"Le temps (présent) est porté par HAVE (has). L’aspect perfectif est porté par worked (-EN). Cf. Oriez."},
+      {id:6, seq:1, prompt:"Le présent perfect implique typiquement :",
+        choices:["T1 = T0 (identification)","T1 < T0 (rupture)","T1 > T0 (prospectif)","Absence de repère"], answer:0,
+        explanation:"Au présent, T1 (moment-repère) coïncide avec T0 (moment d’énonciation). Cf. Oriez."},
+      {id:7, seq:1, prompt:"Le past perfect implique typiquement :",
+        choices:["T1 = T0","T1 < T0 (repère passé)","T1 > T0","Un repère modalisé futur"], answer:1,
+        explanation:"Avec had, le repère T1 est situé dans le passé par rapport à T0 (rupture). Cf. Oriez."},
+      {id:8, seq:1, prompt:"Quel énoncé illustre un point de vue subjectif (présence de S1/T1) ?",
+        choices:["Prétérit simple sans repère","Forme simple sans aspect","HAVE + -EN","Impératif"], answer:2,
+        explanation:"L'emploi d'une forme aspectuelle (ici HAVE + -EN) signale la présence d’un point de vue subjectif (S1) positionné à T1. Cf. Oriez."},
+      {id:9, seq:1, prompt:"Quel double aspect est possible en anglais ?",
+        choices:["HAVE + BEEN + -ING","BE + HAVE + -ING","-ING + -ED simultanés sur le verbe lexical","Aucun"], answer:0,
+        explanation:"Le perfect progressif combine HAVE + BEEN + V-ING. Cf. Oriez."},
+      {id:10, seq:1, prompt:"Le perfect est-il un \"temps composé\" au sens scolaire ?",
+        choices:["Oui, purement morphologique","Non : c’est un aspect avec invariant sémantique","Oui, identique au passé composé français","Ni l’un ni l’autre"], answer:1,
+        explanation:"Dans l'approche énonciative, HAVE + -EN est un aspect (antériorité + lien), non un simple temps composé. Cf. Oriez ; Larreya."},
+      {id:11, seq:1, prompt:"Que signifie T2 chez Oriez ?",
+        choices:["Un futur hypothétique","Le moment où le procès est validé (intervalle du procès)","Le sujet expérientiel","La borne de fin de T1"], answer:1,
+        explanation:"T2 renvoie au moment de l’énoncé/validation du procès : segment couvrant le déroulement validé. Cf. Oriez."},
+      {id:12, seq:1, prompt:"Quel énoncé illustre le rôle de HAVE comme localisation (non-identification) ?",
+        choices:["I am a teacher.","I have a red car.","I am my car.","I will be a driver."], answer:1,
+        explanation:"HAVE établit un lien de possession/localisation entre le sujet et l’objet (sans identification). Cf. Oriez."},
+
+      // === Séquence 2 — Valeur d’accompli (13–25)
+      {id:13, seq:2, prompt:"Choisir l’énoncé qui exprime le mieux l’accompli au présent :",
+        choices:["I finish my work.","I have finished my work.","I had finished my work.","I am finishing my work."], answer:1,
+        explanation:"La valeur d'accompli (but atteint, borne de fin fermée avant T1) est codée par le présent perfect ici. Cf. Oriez."},
+      {id:14, seq:2, prompt:"Dans \"I have marked the papers\", que signifie l'accompli ?",
+        choices:["L’action est en cours à T1","L’action est terminée avant T1 mais liée à T1","L’action est prévue après T1","Aucune conséquence"], answer:1,
+        explanation:"L’action (corriger) est achevée avant T1, avec pertinence actuelle (copies prêtes, soulagement). Cf. Oriez."},
+      {id:15, seq:2, prompt:"Quel repère temporel rend typiquement l’accompli explicite en past perfect ?",
+        choices:["Une subordonnée when + prétérit","Une subordonnée if + présent","Un adverbe de fréquence","Un verbe modal"], answer:0,
+        explanation:"\"When Rachel arrived\" place T1 au passé ; had + -EN marque l’antériorité accomplie à ce repère. Cf. Oriez."},
+      {id:16, seq:2, prompt:"Quel énoncé N'exprime PAS l'accompli ?",
+        choices:["He has broken the vase.","They have arrived.","She has been knowing him.","We have completed the task."], answer:2,
+        explanation:"Les verbes d’état (know) ne prennent pas le perfect progressif pour exprimer un accompli ; *has been knowing est agrammatical. Cf. distribution aspectuelle."},
+      {id:17, seq:2, prompt:"Identifier la meilleure paraphrase de l’accompli : \"I have finished\".",
+        choices:["Je finis (maintenant)","J’avais fini (plus tôt dans le récit)","C’est fait / mission accomplie (et c’est pertinent maintenant)","Je finissais (habitude)"], answer:2,
+        explanation:"L’accomplissement est antérieur à T1 mais pertinent à T1 : \"c’est fait\". Cf. Oriez."},
+      {id:18, seq:2, prompt:"Dans un récit au passé, quel choix maintient l’antériorité par rapport à un repère passé explicite ?",
+        choices:["He finished when she arrived.","He had finished when she arrived.","He finishes when she arrived.","He has finished when she arrived."], answer:1,
+        explanation:"Past perfect + when PAST maintient l'antériorité du procès par rapport au repère passé. Cf. Oriez."},
+      {id:19, seq:2, prompt:"Quel adverbe renforce souvent l’idée d’accompli au présent ?",
+        choices:["already","ever","since","usually"], answer:0,
+        explanation:"\"Already\" suggère qu’une borne attendue est atteinte avant T1 (accompli)."},
+      {id:20, seq:2, prompt:"Choisir la suite logique : \"By the time the meeting started, ...\"",
+        choices:["we have prepared everything","we prepared everything","we had prepared everything","we were preparing everything"], answer:2,
+        explanation:"\"By the time + past\" appellerait typiquement le past perfect pour marquer l'antériorité accomplie. Cf. Larreya."},
+      {id:21, seq:2, prompt:"Quel test diagnostique l’accompli ?",
+        choices:["Possibilité d’ajouter \"for two hours\"","Compatibilité avec \"by now / already\"","Obligation d’un verbe d’état","Présence d’un modal"], answer:1,
+        explanation:"Les adverbiaux comme \"already, by now\" sont typiques de l’accompli (borne atteinte)."},
+      {id:22, seq:2, prompt:"Choisir l’énoncé qui ne viole pas la sélection aspectuelle :",
+        choices:["*I have been knowing her.","I have known her since 2020.","*He has been owning the house.","*They have been being tall."], answer:1,
+        explanation:"\"Know\" est un verbe d’état compatible avec le perfect (bilan), pas avec le progressif continuatifs agrammaticaux ici."},
+      {id:23, seq:2, prompt:"Quel contraste est exact ?",
+        choices:["I finished = I have finished (mêmes valeurs)","I had finished situe l’accompli par rapport à un repère passé","I was finished = I had finished","I have finish = correct"], answer:1,
+        explanation:"Le past perfect ancre l’antériorité par rapport à un T1 passé (souvent explicité)."},
+      {id:24, seq:2, prompt:"Quel énoncé exprime \"mission accomplie\" avec pertinence actuelle ?",
+        choices:["We have submitted the article.","We submitted the article (general fact).","We were submitting the article.","We had submit the article."], answer:0,
+        explanation:"Présent perfect avec verbe télique exprime la fin atteinte et sa relevance à T1 (article envoyé)."},
+      {id:25, seq:2, prompt:"Quel couple correspond à (A) accomplissement antérieur, (B) repère passé ?",
+        choices:["(A) had + -EN ; (B) when + present","(A) -EN ; (B) had","(A) -EN ; (B) when + preterit","(A) -ING ; (B) -ED"], answer:2,
+        explanation:"(A) -EN marque l’antériorité ; (B) when + prétérit fournit souvent T1 passé."},
+
+      // === Séquence 3 — Valeur explicative (26–36)
+      {id:26, seq:3, prompt:"Quelle lecture est prototypique de \"I’ve downloaded a new series, so we can watch one\" ?",
+        choices:["Progression en cours","Bilan d’expérience","Explication d’un état présent par un accomplissement antérieur","Prospection"], answer:2,
+        explanation:"La cause antérieure (téléchargement accompli) explique la possibilité présente : valeur explicative/reprise de commentaire. Cf. Oriez."},
+      {id:27, seq:3, prompt:"Quel marqueur lexical co-apparaît fréquemment avec la valeur explicative ?",
+        choices:["so/therefore","ever","since","while"], answer:0,
+        explanation:"Les connecteurs causatifs rendent explicite la relation cause→conséquence."},
+      {id:28, seq:3, prompt:"Choisir l’option qui illustre une reprise de commentaire :",
+        choices:["You’ve parked in my spot; that’s why I’m annoyed.","You were parking in my spot.","You park in my spot.","You had park in my spot."], answer:0,
+        explanation:"Perfect + \"that’s why\" relie un fait antérieur à une réaction présente (commentaire)."},
+      {id:29, seq:3, prompt:"Quel énoncé est le plus naturel pour justifier un retard ?",
+        choices:["I miss the bus.","I missed the bus.","I’ve missed the bus.","I had missed the bus."], answer:2,
+        explanation:"Présent perfect pour expliquer une situation présente (retard)."},
+      {id:30, seq:3, prompt:"Dans la valeur explicative, quel élément est saillant ?",
+        choices:["La borne de début","La durée exacte","Le lien causal vers T1","Le lieu de l’action"], answer:2,
+        explanation:"Ce qui compte est l’effet sur T1 (conséquence/justification)."},
+      {id:31, seq:3, prompt:"Quel énoncé N’est PAS une explication naturelle au présent ?",
+        choices:["The floor is wet because I’ve mopped it.","The door is locked because I’ve lost the key.","I mop the floor because it’s wet.","He can’t enter; he’s forgotten his badge."], answer:2,
+        explanation:"I mop… because it’s wet inverse la causalité attendue ici ; les autres sont perfect explicatifs."},
+      {id:32, seq:3, prompt:"Quel contraste est exact ?",
+        choices:["I broke the vase = I’ve broken the vase (même effet)","I’ve broken the vase met l’accent sur l’effet présent (le vase est cassé)","I had broken the vase est futur","I’ve breaked est correct"], answer:1,
+        explanation:"Présent perfect lie l’action à un état/effet actuel. \"Breaked\" est incorrect (broken)."},
+      {id:33, seq:3, prompt:"Choisir la meilleure suite : \"Why’s the printer not working? — ...\"",
+        choices:["It jammed.","It had jammed.","It’s jammed because I’ve loaded the wrong tray.","It jams."], answer:2,
+        explanation:"Justification actuelle typique : perfect explicatif (erreur antérieure → panne présente)."},
+      {id:34, seq:3, prompt:"Quel test N’est PAS déterminant pour la valeur explicative ?",
+        choices:["Compatibilité avec because/that’s why","Présence d’un résultat actuel","Récence obligatoire (< 5 min)","Lien causal vers T1"], answer:2,
+        explanation:"La récence n’est pas nécessaire ; seule la pertinence actuelle compte (lien causal)."},
+      {id:35, seq:3, prompt:"Parmi ces paraphrases, laquelle correspond à la valeur explicative ?",
+        choices:["Résultat présent dû à un fait antérieur","Action habituelle","Progression sans fin","Contre-factualité"], answer:0,
+        explanation:"La valeur explicative justifie un état présent par un accomplissement antérieur."},
+      {id:36, seq:3, prompt:"Choisir l’énoncé qui combine accomplissement et commentaire :",
+        choices:["We’ve updated the paper, so the reviewers can proceed.","We update the paper.","We had update the paper.","We are updating the paper now, so it’s done."], answer:0,
+        explanation:"Perfect + conséquence présente : accompli servant d’explication/justification."},
+
+      // === Séquence 4 — Bilan : intervalle (37–48)
+      {id:37, seq:4, prompt:"Quel énoncé exprime un bilan sur intervalle (for/since) avec verbe d’état ?",
+        choices:["I know her for years.","I have known her for years.","I was knowing her for years.","I had know her for years."], answer:1,
+        explanation:"Le présent perfect est requis pour un état étalé sur un intervalle (for/since). *I know her for… est incorrect. Cf. Oriez."},
+      {id:38, seq:4, prompt:"\"Since 2010\" appelle le plus naturellement :",
+        choices:["Present perfect (état qui dure jusqu’à T1)","Prétérit simple","BE + -ING systématique","Futur"], answer:0,
+        explanation:"\"Since\" + date initiale → état/validité depuis un repère antérieur jusqu’à T1 (present perfect)."},
+      {id:39, seq:4, prompt:"Quel énoncé est acceptable ?",
+        choices:["*I live here since 2010.","I have lived here since 2010.","I had lived here since 2010 (au présent).","I am living here since 2010."], answer:1,
+        explanation:"Le présent perfect est requis. Les autres sont agrammaticaux dans cet emploi."},
+      {id:40, seq:4, prompt:"Pour un récit passé : \"By 1999, ... in Paris since 1995\"",
+        choices:["we have lived","we lived","we had lived","we are living"], answer:2,
+        explanation:"Repère passé (1999) → bilan passé (had lived … since 1995)."},
+      {id:41, seq:4, prompt:"Quel test distingue état vs accomplissement ?",
+        choices:["Compatibilité avec for/since (états)","Compatibilité avec already (états)","Compatibilité avec will","Compatibilité avec impératif"], answer:0,
+        explanation:"Les états se combinent naturellement avec for/since en bilan d’intervalle."},
+      {id:42, seq:4, prompt:"Choisir l’option correcte :",
+        choices:["She has been knowing French since childhood.","She has known French since childhood.","She knows French since childhood.","She had know French since childhood."], answer:1,
+        explanation:"Verbe d’état \"know\" → present perfect pour bilan (non-progressif)."},
+      {id:43, seq:4, prompt:"Quel adverbe s’associe le MIEUX à un bilan d’intervalle ?",
+        choices:["ever","for three years","by now","already"], answer:1,
+        explanation:"\"For three years\" mesure la durée d’un état. \"Ever/already/by now\" sont d’autres valeurs."},
+      {id:44, seq:4, prompt:"Compléter : \"She ... in Oxford for a decade by the time she moved.\"",
+        choices:["has lived","lived","had lived","was living"], answer:2,
+        explanation:"Repère passé (moved) → bilan passé (had lived … for a decade)."},
+      {id:45, seq:4, prompt:"Quel énoncé est le MEILLEUR pour un état toujours vrai à T1 ?",
+        choices:["He has been tall since 2012.","He has been tall for years.","He was tall since 2012.","He is tall since 2012."], answer:1,
+        explanation:"Adjectifs de propriété permanente ne prennent pas en général le progressif ; bilan: has been tall for years (meilleur)."},
+      {id:46, seq:4, prompt:"Choisir l’option qui respecte la distribution aspectuelle :",
+        choices:["*I have been owning this car since 2018.","I have owned this car since 2018.","I own this car since 2018.","I had own this car since 2018."], answer:1,
+        explanation:"\"Own\" (état) → present perfect simple avec for/since."},
+      {id:47, seq:4, prompt:"Quel contraste est exact ?",
+        choices:["I have lived here (état actuel) vs I lived here (fait passé sans lien)","I lived here = I have lived here","I have lived = futur","I had lived = présent"], answer:0,
+        explanation:"Present perfect relie à T1 ; prétérit simple pose une rupture (fait clôturé sans lien)."},
+      {id:48, seq:4, prompt:"Compléter : \"They ... friends since school.\"",
+        choices:["are","were","have been","had been (au présent)"], answer:2,
+        explanation:"Bilan d’intervalle au présent : have been."},
+
+      // === Séquence 5 — Bilan : expérience (49–60)
+      {id:49, seq:5, prompt:"Le perfect d’expérience interroge :",
+        choices:["la date précise","la quantité/durée exacte","l’existence d’au moins une occurrence antérieure pertinente","la cause nécessaire"], answer:2,
+        explanation:"Valeur \"ever/never\" : on s’intéresse au fait d’avoir l’expérience (≥ 1 occurrence), non à \"quand\"."},
+      {id:50, seq:5, prompt:"Choisir la question d’expérience la plus naturelle :",
+        choices:["Did you ever go to Japan? (au sens d’expérience générale)","Have you ever been to Japan?","Were you ever going to Japan?","Do you ever be to Japan?"], answer:1,
+        explanation:"Présent perfect + ever pour l’expérience de vie globale."},
+      {id:51, seq:5, prompt:"Quel énoncé exprime un bilan d’expériences (liste non close) ?",
+        choices:["I have visited Paris, London, and Rome.","I visited Paris, London, and Rome (dans ma jeunesse).","I had visited Paris (avant 2010).","I am visiting Paris, London, and Rome."], answer:0,
+        explanation:"Present perfect cumule des occurrences antérieures liées à T1 (expérience actuelle)."},
+      {id:52, seq:5, prompt:"Quel adverbe polarise l’expérience négative ?",
+        choices:["never","already","just","since"], answer:0,
+        explanation:"\"Never\" (jamais) encode l’absence d’expérience jusqu’à T1."},
+      {id:53, seq:5, prompt:"Choisir l’énoncé le plus naturel :",
+        choices:["I have gone to the museum (sens \"y être allé\").","I have been to the museum.","I had been to the museum (présent).","I go to the museum ever."], answer:1,
+        explanation:"En anglais standard, pour l’expérience de visite, on emploie have been to (et non have gone to)."},
+      {id:54, seq:5, prompt:"Compléter : \"It’s the third time he ... that mistake.\"",
+        choices:["made","has made","had made","is making"], answer:1,
+        explanation:"It’s the Nth time + present perfect pour compter les occurrences jusqu’à T1."},
+      {id:55, seq:5, prompt:"Quel énoncé N’est PAS une lecture \"expérience\" ?",
+        choices:["I’ve read this book three times.","I’ve never tried sushi.","I have finished my thesis.","Have you ever seen the aurora?"], answer:2,
+        explanation:"\"I have finished my thesis\" relève plutôt de l’accompli (mission)."},
+      {id:56, seq:5, prompt:"Choisir la meilleure traduction : \"J’ai déjà visité Kyoto.\"",
+        choices:["I have already visited Kyoto.","I already visited Kyoto. (général, variétal US possible, mais moins \"expérience de vie\")","I am already visiting Kyoto.","I had already visited Kyoto. (au présent)"], answer:0,
+        explanation:"Présent perfect + already pour une expérience antérieure pertinente au présent standard."},
+      {id:57, seq:5, prompt:"Quel contraste est exact pour \"been\" vs \"gone\" ?",
+        choices:["have gone to = expérience (retour inclus)","have been to = expérience (sous-entend retour)","have been to = être parti et toujours absent","aucune différence"], answer:1,
+        explanation:"Have been to signale typiquement l’expérience (le sujet n’est plus sur place). \"Have gone to\" implique souvent qu’il y est allé et peut y être encore/absent."},
+      {id:58, seq:5, prompt:"Dans \"Have you ever…?\", que mesure \"ever\" ?",
+        choices:["Une borne finale fermée","La continuité ininterrompue","Le domaine de quantification (toute la vie jusqu’à T1)","La cause nécessaire"], answer:2,
+        explanation:"\"Ever\" étend le domaine de quantification à l’intervalle maximal (de l’origine à T1)."},
+      {id:59, seq:5, prompt:"Compléter : \"This is the first time I ... him speak.\"",
+        choices:["hear","heard","have heard","had heard (au présent)"], answer:2,
+        explanation:"Construction figée : This is the first/second time + present perfect."},
+      {id:60, seq:5, prompt:"Quel énoncé synthétise le mieux l’invariant du perfect ?",
+        choices:["Lien causal sans antériorité","Antériorité (-EN) + lien vers T1 (HAVE)","Rupture T1/T0 sans lien","Progression interne pure"], answer:1,
+        explanation:"Résumé du cours : -EN antériorise, HAVE relie au repère T1 (présent ou passé). Cf. Oriez; Culioli; Adamczewski; Larreya."}
+    ];
+
+    // ========================== Moteur ==========================
+
+    const el = id => document.getElementById(id);
+    const state = {
+      pool: [], order: [], index: 0, answers: {}, skipped: new Set(),
+      good:0, bad:0, started:false, params:null
+    };
+
+    function getSelectedSequences(){
+      const opts = Array.from(el('seqFilter').options); return opts.filter(o=>o.selected).map(o=>Number(o.value));
+    }
+
+    function filterBySearch(qs, term){
+      if(!term) return qs; const t = term.toLowerCase();
+      return qs.filter(q=> q.prompt.toLowerCase().includes(t) || q.choices.some(c=>c.toLowerCase().includes(t)));
+    }
+
+    function buildPool(){
+      const count = Math.min(Math.max(Number(el('count').value)||60,1),60);
+      const mode = el('orderMode').value;
+      const seqs = new Set(getSelectedSequences());
+      const term = el('search').value.trim();
+      let pool = QUESTIONS.filter(q=>seqs.has(q.seq));
+      pool = filterBySearch(pool, term);
+
+      // order by sequences or random
+      let order = [];
+      if(mode === 'by-seq'){ order = pool.slice().sort((a,b)=>a.seq-b.seq); }
+      else if(mode === 'shuffle-seq'){
+        const groups = {};
+        for(const q of pool){ (groups[q.seq] ??= []).push(q); }
+        const seqKeys = Object.keys(groups).sort(()=>Math.random()-0.5);
+        for(const k of seqKeys){ groups[k].sort(()=>Math.random()-0.5); order.push(...groups[k]); }
+      } else { // random
+        order = pool.slice().sort(()=>Math.random()-0.5);
+      }
+      order = order.slice(0, count);
+
+      state.pool = order;
+      state.order = order.map((_,i)=>i);
+      state.index = 0; state.answers = {}; state.skipped = new Set();
+      state.good=0; state.bad=0; state.started=true;
+      state.params = {mode, count, seqs:[...seqs], term};
+      saveProgress('init');
+      renderQuestion();
+      el('quizPanel').style.display='block';
+      el('resultPanel').style.display='none';
+    }
+
+    function renderQuestion(){
+      const i = state.index; const q = state.pool[i]; if(!q){ return showResults(); }
+      el('qMeta').textContent = `Question ${i+1}/${state.pool.length}`;
+      el('qTag').textContent = `Séquence ${q.seq}`;
+      el('qText').textContent = q.prompt;
+      const wrap = el('choices'); wrap.innerHTML='';
+      q.choices.forEach((c,idx)=>{
+        const div = document.createElement('div'); div.className='choice'; div.tabIndex=0; div.setAttribute('data-idx', idx);
+        div.innerHTML = `<strong>${String.fromCharCode(65+idx)}.</strong> ${c}`;
+        div.addEventListener('click',()=>selectChoice(idx));
+        div.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ selectChoice(idx);} });
+        if(state.answers[i]?.choice===idx){ div.classList.add('selected'); }
+        wrap.appendChild(div);
+      });
+      const pct = Math.round(100*(i)/Math.max(1,state.pool.length));
+      el('bar').style.width = pct+'%';
+      el('good').textContent = state.good; el('bad').textContent = state.bad; el('skipped').textContent = state.skipped.size;
+      saveProgress('render');
+    }
+
+    function selectChoice(idx){
+      const i = state.index; const prev = state.answers[i];
+      state.answers[i] = {choice: idx, correct: null};
+      const nodes = el('choices').querySelectorAll('.choice'); nodes.forEach(n=>n.classList.remove('selected'));
+      const node = el('choices').querySelector(`[data-idx="${idx}"]`); if(node){ node.classList.add('selected'); }
+      saveProgress('choice');
+    }
+
+    function gradeCurrent(){
+      const i = state.index; const q = state.pool[i]; if(!q) return;
+      const ans = state.answers[i]; if(!ans || typeof ans.choice!== 'number'){ return; }
+      const correct = ans.choice === q.answer; ans.correct = correct;
+      if(correct) state.good++; else state.bad++;
+      // Visual feedback
+      const nodes = el('choices').querySelectorAll('.choice');
+      nodes.forEach((n,idx)=>{
+        if(idx===q.answer) n.classList.add('correct');
+        else if(idx===ans.choice) n.classList.add('wrong');
+      });
+    }
+
+    function next(){
+      // If no choice and not skipped, do nothing
+      const ans = state.answers[state.index];
+      if(!ans || typeof ans.choice!== 'number'){ return; }
+      gradeCurrent();
+      // move forward
+      state.index++;
+      // place skipped later at the end
+      renderQuestion();
+      if(state.index>=state.pool.length){ showResults(); }
+    }
+
+    function skip(){
+      state.skipped.add(state.index);
+      state.index++;
+      renderQuestion();
+      if(state.index>=state.pool.length){ showResults(); }
+    }
+
+    function showResults(){
+      el('quizPanel').style.display='none';
+      el('resultPanel').style.display='block';
+      const total = state.pool.length; const score = Math.round(100*state.good/Math.max(1,total));
+      el('score').textContent = `Score : ${state.good}/${total} — ${score}%`;
+
+      // Build detailed review
+      const rev = el('review'); rev.innerHTML='';
+      state.pool.forEach((q,idx)=>{
+        const a = state.answers[idx];
+        const wrapper = document.createElement('div'); wrapper.className='q';
+        const skipped = state.skipped.has(idx);
+        const status = skipped ? '<span class="dot skip"></span> Sauté' : (a?.correct ? '<span class="dot ok"></span> Correct' : '<span class="dot bad"></span> Faux');
+        const your = (typeof a?.choice==='number') ? `${String.fromCharCode(65+a.choice)}. ${q.choices[a.choice]}` : '—';
+        const corr = `${String.fromCharCode(65+q.answer)}. ${q.choices[q.answer]}`;
+        wrapper.innerHTML = `
+          <div class="meta"><span class="pill">Séquence ${q.seq}</span><span>${status}</span></div>
+          <h3>${idx+1}. ${q.prompt}</h3>
+          <div class="muted">Votre réponse : ${your}</div>
+          <div class="muted">Bonne réponse : <strong>${corr}</strong></div>
+          <div class="explain" style="margin-top:8px">${q.explanation}</div>
+        `;
+        rev.appendChild(wrapper);
+      });
+
+      // Persist last run
+      saveProgress('result');
+    }
+
+    // ========================== Persistence ==========================
+    const KEY = 'qcm_have_en_oriez_v1';
+    function saveProgress(why){
+      const data = {state:{
+        pool: state.pool, index: state.index, answers: state.answers,
+        skipped: [...state.skipped], good: state.good, bad: state.bad, started: state.started
+      }, params: state.params, why, t: Date.now()};
+      try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+    }
+    function loadProgress(){
+      try{ const raw = localStorage.getItem(KEY); if(!raw) return;
+        const data = JSON.parse(raw); if(!data?.state?.pool?.length) return;
+        state.pool = data.state.pool; state.index = data.state.index; state.answers = data.state.answers||{};
+        state.skipped = new Set(data.state.skipped||[]); state.good = data.state.good||0; state.bad=data.state.bad||0; state.started = !!data.state.started; state.params = data.params||null;
+        el('quizPanel').style.display = state.started ? 'block' : 'none';
+        el('resultPanel').style.display='none';
+        renderQuestion();
+      }catch(e){}
+    }
+
+    // ========================== Events & Shortcuts ==========================
+    el('startBtn').addEventListener('click', buildPool);
+    el('resetBtn').addEventListener('click', ()=>{ localStorage.removeItem(KEY); location.reload(); });
+    el('applySearch').addEventListener('click', ()=>{ /* no-op: filter at start */ });
+    el('nextBtn').addEventListener('click', next);
+    el('skipBtn').addEventListener('click', skip);
+    el('retryBtn').addEventListener('click', ()=>{ if(state.params){ buildPool(); }});
+    el('toTop').addEventListener('click', ()=>{ el('quizPanel').style.display='none'; el('resultPanel').style.display='none'; window.scrollTo({top:0,behavior:'smooth'}); });
+
+    window.addEventListener('keydown', (e)=>{
+      if(!state.started || el('resultPanel').style.display==='block') return;
+      if(['1','2','3','4'].includes(e.key)){
+        selectChoice(Number(e.key)-1);
+      } else if(e.key.toLowerCase()==='s'){
+        skip();
+      } else if(e.key==='Enter'){
+        next();
+      }
+    });
+
+    // Load from localStorage if exists
+    loadProgress();
+  </script>
+</body>
+</html>

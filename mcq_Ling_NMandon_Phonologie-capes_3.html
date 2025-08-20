@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Test Phonologie anglaise CAPES - N. Mandon - 40 questions complète</title>
+<style>
+  body {
+    font-family: "Georgia", serif;
+    max-width: 900px;
+    margin: 2rem auto;
+    background: #f9fafc;
+    color: #222;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #203e5f;
+  }
+  header h1 {
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 0.4rem;
+    letter-spacing: 1px;
+  }
+  header p {
+    font-size: 1.05rem;
+    color: #405770;
+    font-style: italic;
+  }
+  .question-container {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.8rem;
+    box-shadow: 0 4px 10px rgb(32 62 95 / 0.15);
+  }
+  .question-container.hidden {
+    display: none;
+  }
+  .question-number {
+    font-weight: 700;
+    color: #02457a;
+    margin-bottom: 0.6rem;
+    font-size: 1.15rem;
+  }
+  .question-text {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+  .options label {
+    display: block;
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 0.5rem 0.5rem 1.2rem;
+    border-radius: 6px;
+    transition: background-color 0.25s ease;
+    position: relative;
+  }
+  .options input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .options label:hover {
+    background-color: #e2f0ff;
+  }
+  .options input[type="radio"]:checked + label {
+    background-color: #bdd7f9;
+    border-left: 4px solid #02457a;
+    font-weight: 700;
+  }
+  .navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.4rem;
+  }
+  button {
+    background-color: #02457a;
+    border: none;
+    color: white;
+    padding: 0.6rem 1.3rem;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgb(2 69 122 / 0.3);
+    transition: background-color 0.3s ease;
+  }
+  button:disabled {
+    background-color: #7b9acb;
+    cursor: default;
+    box-shadow: none;
+  }
+  button:hover:not(:disabled) {
+    background-color: #036;
+  }
+  #results {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 12px rgb(32 62 95 / 0.3);
+    margin-top: 2rem;
+  }
+  #results h2 {
+    color: #02457a;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  .result-item {
+    margin-bottom: 1.5rem;
+  }
+  .result-question {
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 0.3rem;
+    color: #405770;
+  }
+  .user-answer {
+    color: #b62929;
+    font-weight: 600;
+  }
+  .correct-answer {
+    color: #227a1b;
+    font-weight: 700;
+  }
+  .answer-explanation {
+    margin-top: 0.3rem;
+    line-height: 1.4;
+    font-size: 0.95rem;
+    color: #333;
+    background: #eef6fc;
+    border-left: 5px solid #02457a;
+    padding: 0.7rem 1rem;
+    border-radius: 4px;
+  }
+  #score {
+    font-weight: 900;
+    font-size: 1.7rem;
+    margin-bottom: 1.5rem;
+    color: #02457a;
+  }
+
+
+
+
+  Test Final - Phonologie Anglaise CAPES
+  Natalie Mandon - Niveau Ivy League/Oxbridge - 40 questions complètes
+
+
+
+
+
+  Précédent
+  Passer
+  Suivant
+  Terminer et Voir Résultats
+
+
+
+  Résultats détaillés
+  
+  
+
+
+
+  const questions = [
+    {id:1,text:"Quelle est la principale différence entre un phonème et un allophone en phonologie anglaise ?",options:[
+      {key:'a',text:"Un phonème est une unité sonore distinctive alors qu’un allophone est une variante contextuelle de ce phonème."},
+      {key:'b',text:"Un phonème est une variante sonore alors qu’un allophone est une unité distinctive."},
+      {key:'c',text:"Les phonèmes sont toujours écrits tandis que les allophones sont oraux uniquement."},
+      {key:'d',text:"Les allophones déterminent le sens des mots alors que les phonèmes ne le font pas."}],correct:'a',
+      explanation:"Le phonème est l’unité distinctive minimale qui peut différencier des mots (par exemple /p/ et /b/ dans pat versus bat), tandis que les allophones sont les variantes non distinctives d’un phonème selon le contexte (Jobert & Mandon, 2012)."
+    },
+    {id:2,text:"En anglais, quel type de langue rythmique est le 'stress-timed language' selon la phonologie anglaise ?",options:[
+      {key:'a',text:"Une langue où les syllabes accentuées sont produites à intervalles réguliers."},
+      {key:'b',text:"Une langue où toutes les syllabes ont la même durée."},
+      {key:'c',text:"Une langue dont le rythme est basé sur la longueur des voyelles uniquement."},
+      {key:'d',text:"Une langue où les syllabes non accentuées sont aussi longues que les syllabes accentuées."}],correct:'a',
+      explanation:"L’anglais est une langue à rythme 'stress-timed' où les syllabes accentuées interviennent à intervalles de temps à peu près égaux, contrairement au français 'syllable-timed' (Mandon, 2012, Phénomènes accentuels et rythmiques)."
+    },
+    {id:3,text:"Quel est le symbole phonétique International (IPA) pour la voyelle longue antérieure fermée, comme dans \"sheep\" ?",options:[
+      {key:'a',text:"/iː/"},
+      {key:'b',text:"/ɪ/"},
+      {key:'c',text:"/e/"},
+      {key:'d',text:"/æ/"}],correct:'a',
+      explanation:"La voyelle /iː/ est une voyelle longue antérieure fermée, prononcée comme dans 'sheep' (Mandon, Monophtongues)."
+    },
+    {id:4,text:"Comment appelle-t-on la voyelle brève, antérieure et mi-ouverte, comme dans 'pet', représentée en IPA ?",options:[
+      {key:'a',text:"/æ/"},
+      {key:'b',text:"/e/"},
+      {key:'c',text:"/ɪ/"},
+      {key:'d',text:"/ʌ/"}],correct:'b',
+      explanation:"/e/ est une voyelle brève, antérieure et mi-ouverte comme dans 'pet' (Mandon, Monophtongues)."
+    },
+    {id:5,text:"Quelle est la règle de prononciation du suffixe -ed en anglais lorsque le verbe finit par une consonne sourde, par exemple dans 'hoped' ?",options:[
+      {key:'a',text:"Le suffixe se prononce /t/."},
+      {key:'b',text:"Le suffixe se prononce /d/."},
+      {key:'c',text:"Le suffixe se prononce /ɪd/."},
+      {key:'d',text:"Le suffixe est silencieux."}],correct:'a',
+      explanation:"Selon la règle d’assimilation, -ed se prononce /t/ après une consonne sourde comme /p/ dans 'hoped' (Jobert, La prononciation de -ed)."
+    },
+    {id:6,text:"Quelle caractéristique physiologique influence la diphtongaison des voyelles en anglais ?",options:[
+      {key:'a',text:"La tension musculaire de la langue."},
+      {key:'b',text:"Le régime alimentaire."},
+      {key:'c',text:"Le nombre de consonnes finales."},
+      {key:'d',text:"La place du verbe dans la phrase."}],correct:'a',
+      explanation:"La tension de la langue est un facteur physiologique important influençant la diphtongaison des voyelles en anglais (Mandon, Monophtongues)."
+    },
+    {id:7,text:"Quelle est la différence fondamentale entre le couple de voyelles /ɪ/ et /iː/ en anglais ?",options:[
+      {key:'a',text:"Une différence de longueur et de hauteur de la langue."},
+      {key:'b',text:"Une différence uniquement de hauteur des lèvres."},
+      {key:'c',text:"Une différence de nasalisation."},
+      {key:'d',text:"Aucune différence phonétique."}],correct:'a',
+      explanation:"/ɪ/ est plus court et plus centralisé que /iː/, qui est plus long et plus antérieur avec une plus grande tension musculaire (Mandon, Monophtongues)."
+    },
+    {id:8,text:"Les voyelles /ɒ/ et /ɔː/ sont toutes deux postérieures, mais quelle différence principale les distingue ?",options:[
+      {key:'a',text:"La longueur et le degré d’ouverture."},
+      {key:'b',text:"Le taux d’aspiration."},
+      {key:'c',text:"La nasalisation."},
+      {key:'d',text:"La présence ou non d’une consonne suivante."}],correct:'a',
+      explanation:"/ɔː/ est plus longue et moins ouverte que /ɒ/, avec une plus grande labialisation (Mandon, Monophtongues)."
+    },
+    {id:9,text:"Quelles sont les quatre grandes rubriques synthétisées dans l'enseignement de la phonologie anglaise selon le Précis ?",options:[
+      {key:'a',text:"Phonèmes, accentuation, orthographe-prononciation, intonation."},
+      {key:'b',text:"Syntaxe, lexique, intonation, morphologie."},
+      {key:'c',text:"Culture, historique, sociologie, pragmatique."},
+      {key:'d',text:"Phonétique articulatoire, lexique, grammaire, discours."}],correct:'a',
+      explanation:"Le Précis synthétise quatre rubriques : phonèmes et alphabet phonétique international, règles d'accentuation, correspondances orthographe-prononciation et intonation (Jobert & Mandon, 2012)."
+    },
+    {id:10,text:"Dans la classification des accents cibles par Alan Cruttenden, lequel des accents suivants est destiné à la lingua franca en interaction avec les non-anglophones ?",options:[
+      {key:'a',text:"Amalgam English."},
+      {key:'b',text:"Received Pronunciation."},
+      {key:'c',text:"General American."},
+      {key:'d',text:"Cockney."}],correct:'a',
+      explanation:"L’Amalgam English est un hybride des accents britannique et américain, souvent utilisé comme lingua franca avec des traces de transfert phonétique (Cruttenden, 2008)."
+    },
+    {id:11,text:"Comment s'appelle la voyelle la plus fréquente en anglais, qui est aussi une voyelle réduite intervenant dans les syllabes inaccentuées ?",options:[
+      {key:'a',text:"Le schwa /ə/."},
+      {key:'b',text:"La voyelle nasale /ã/."},
+      {key:'c',text:"La voyelle diphtonguée /aɪ/."},
+      {key:'d',text:"La voyelle longue /iː/."}],correct:'a',
+      explanation:"Le schwa /ə/ est le son le plus fréquent en anglais souvent employé dans les syllabes non accentuées (Mandon, Monophtongues)."
+    },
+    {id:12,text:"Quelle terminaison contraignante entraîne généralement un accent sur la dernière syllabe en anglais ?",options:[
+      {key:'a',text:"Les mots terminés par -ee ou -oo."},
+      {key:'b',text:"Les verbes terminés par -ing."},
+      {key:'c',text:"Les noms terminés par -tion."},
+      {key:'d',text:"Les adjectifs terminés par -ic."}],correct:'a',
+      explanation:"Les mots terminés par -ee et -oo portent généralement l'accent sur la dernière syllabe (Jobert, Terminaisons contraignantes)."
+    },
+    {id:13,text:"Dans les mots composés anglais, où se situe l'accent principal selon la règle générale ?",options:[
+      {key:'a',text:"Sur le premier élément (early stress) pour la majorité des composés."},
+      {key:'b',text:"Toujours sur le dernier élément."},
+      {key:'c',text:"Sur l'élément le plus long."},
+      {key:'d',text:"L'accent est toujours partagé également."}],correct:'a',
+      explanation:"La règle générale veut que l'accent principal porte sur le premier élément dans la majorité des mots composés (Jobert, La composition)."
+    },
+    {id:14,text:"Que signifie la règle du \"magic e\" dans la prononciation des voyelles monographiques en anglais ?",options:[
+      {key:'a',text:"La présence d'un 'e' final allonge normalement la voyelle précédente."},
+      {key:'b',text:"Le 'e' final est toujours muet et ne change rien à la voyelle."},
+      {key:'c',text:"Le 'e' final raccourcit la voyelle précédente."},
+      {key:'d',text:"Le 'e' final rend la voyelle nasale."}],correct:'a',
+      explanation:"La présence d'un 'e' final a tendance à allonger et modifier la qualité de la voyelle qui la précède, ce phénomène est appelé \"magic e\" (Jobert, Les voyelles monographiques)."
+    },
+    {id:15,text:"Quelle est la prononciation correcte de la désinence -s dans le mot 'cats' ?",options:[
+      {key:'a',text:"/s/ car précédée d'une consonne sourde."},
+      {key:'b',text:"/z/ car précédée d'une voyelle."},
+      {key:'c',text:"/ɪz/ car ajout vocalique obligatoire."},
+      {key:'d',text:"Silencieuse dans tous les cas."}],correct:'a',
+      explanation:"La désinence -s se prononce /s/ après une consonne sourde comme /t/ dans 'cats' (Jobert, La prononciation du -s)."
+    },
+    {id:16,text:"Comment se prononce généralement la terminaison -ed dans le mot 'wanted' ?",options:[
+      {key:'a',text:"/ɪd/ à cause de la présence d'une consonne /t/ finale."},
+      {key:'b',text:"/d/ car précédée d'une consonne sonore."},
+      {key:'c',text:"/t/ car précédée d'une consonne sourde."},
+      {key:'d',text:"Elle est toujours muette."}],correct:'a',
+      explanation:"Après /t/ ou /d/, la désinence -ed se prononce généralement /ɪd/ (Dissimilation), rendant la prononciation plus aisée (Jobert, La prononciation de -ed)."
+    },
+    {id:17,text:"Quelle est la règle générale pour l’accentuation des verbes en -ate de deux syllabes en anglais ?",options:[
+      {key:'a',text:"Accent sur la dernière syllabe."},
+      {key:'b',text:"Accent sur l'avant-dernière syllabe."},
+      {key:'c',text:"L'accent varie selon l'origine du mot."},
+      {key:'d',text:"Pas d'accent."}],correct:'a',
+      explanation:"Les verbes de deux syllabes en -ate comme 'debate' portent l'accent sur la dernière syllabe (Jobert, Terminaisons complexes)."
+    },
+    {id:18,text:"Pour la prononciation du digraphe , quel son est le plus fréquent dans 'though' ?",options:[
+      {key:'a',text:"/əʊ/"},
+      {key:'b',text:"/ʌf/"},
+      {key:'c',text:"/uː/"},
+      {key:'d',text:"/ɒf/"}],correct:'a',
+      explanation:"Dans 'though', 'ough' se prononce /əʊ/, un des cas d'irrégularité fréquents à apprendre (Mandon, Les digraphes vocaliques)."
+    },
+    {id:19,text:"Quelles sont les contraintes syntaxiques affectant l’accentuation des prépositions en anglais ? ",options:[
+      {key:'a',text:"Accentuation possible entre deux pronoms ou dans une phrase sans verbe accentué."},
+      {key:'b',text:"Les prépositions ne sont jamais accentuées."},
+      {key:'c',text:"Accentuation systématique de toutes les prépositions."},
+      {key:'d',text:"L’accentuation dépend uniquement du nombre de syllabes."}],correct:'a',
+      explanation:"Les prépositions peuvent être accentuées notamment entre deux pronoms ou dans des énoncés sans verbe accentué (Mandon, Phénomènes accentuels et rythmiques)."
+    },
+    {id:20,text:"Comment différencier l'accent sur un nom et sur un verbe homographe en anglais, par exemple 'record' ?",options:[
+      {key:'a',text:"Le nom est accentué sur la première syllabe, le verbe sur la deuxième."},
+      {key:'b',text:"Les deux sont accentués sur la première syllabe."},
+      {key:'c',text:"Les deux sont accentués sur la dernière syllabe."},
+      {key:'d',text:"Cela dépend de la région géographique."}],correct:'a',
+      explanation:"Les mots comme 'record' ont un accent initial en tant que nom et un accent sur la deuxième syllabe en tant que verbe (Jobert, Schéma accentuel et nature)."
+    },
+    {id:21,text:"Quel est le rôle principal du noyau tonique ('nucleus') dans une phrase intonative anglaise ?",options:[
+      {key:'a',text:"Porter la syllabe la plus proéminente intonativement donnant la mélodie et le sens focalisé."},
+      {key:'b',text:"Indiquer la fin de la phrase uniquement."},
+      {key:'c',text:"Augmenter le volume global de la phrase."},
+      {key:'d',text:"Marquer la première syllabe du premier mot."}],correct:'a',
+      explanation:"Le noyau tonique est la syllabe la plus importante intonativement d’une phrase et détermine souvent le sens focalisé (Mandon, Principes fondamentaux de l’intonation)."
+    },
+    {id:22,text:"Quelle intonation est généralement associée aux affirmations simples en anglais ?",options:[
+      {key:'a',text:"Intonation descendante."},
+      {key:'b',text:"Intonation montante."},
+      {key:'c',text:"Intonation plate."},
+      {key:'d',text:"Double intonation montante et descendante."}],correct:'a',
+      explanation:"L’intonation descendante est utilisée pour les affirmations et assertions simples avec un ton assertif et neutre (Mandon, Principes fondamentaux de l’intonation)."
+    },
+    {id:23,text:"Quel est le phénomène accentuel principal qui distingue l’anglais d’une langue à rythme syllabique comme le français ?",options:[
+      {key:'a',text:"L’anglais est une langue à rythme accentuel avec l’alternance de syllabes accentuées et inaccentuées."},
+      {key:'b',text:"L’anglais est une langue à rythme syllabique avec syllabes de même durée."},
+      {key:'c',text:"Le français a un rythme accentuel, l’anglais non."},
+      {key:'d',text:"Les deux ont un rythme identique."}],correct:'a',
+      explanation:"L’anglais a un rythme stress-timed avec alternance de syllabes accentuées longues et syllabes inaccentuées courtes, contrairement au français qui est syllable-timed (Mandon, Phénomènes accentuels et rythmiques)."
+    },
+    {id:24,text:"Quelle est la particularité phonologique des /θ/ et /ð/ en anglais selon Jenkins (2000) ?",options:[
+      {key:'a',text:"Leur distinction est essentielle à préserver pour l'intelligibilité dans l'English as a Lingua Franca."},
+      {key:'b',text:"Ils sont souvent confondus sans impact en ELF."},
+      {key:'c',text:"Ils ne se trouvent que dans le vocabulaire britannique."},
+      {key:'d',text:"Ils sont interchangeables."}],correct:'a',
+      explanation:"Jenkins souligne que la distinction entre /θ/ et /ð/ est essentielle dans l’English as a Lingua Franca, bien que moins marquée parfois dans certains accents (Jenkins, 2000)."
+    },
+    {id:25,text:"Dans la prononciation du suffixe -s, quand se produit une insertion vocalique entraînant la prononciation /ɪz/ ?",options:[
+      {key:'a',text:"Après les sons sibilants /s/, /z/, /ʃ/, /ʒ/, /tʃ/, /dʒ/."},
+      {key:'b',text:"Après une voyelle seulement."},
+      {key:'c',text:"Toujours après une consonne sourde."},
+      {key:'d',text:"Jamais."}],correct:'a',
+      explanation:"Après les sons sibilants, une syllabe additionnelle /ɪz/ est prononcée pour faciliter l'audibilité (Jobert, La prononciation du -s)."
+    },
+    {id:26,text:"Quel est le son de la diphtongue /aʊ/ en anglais, comme dans 'how' ?",options:[
+      {key:'a',text:"Un glissement du son /a/ vers le son /ʊ/."},
+      {key:'b',text:"Un glissement du son /eɪ/ vers /ɪ/."},
+      {key:'c',text:"Un son nasal."},
+      {key:'d',text:"Un son long stable."}],correct:'a',
+      explanation:"La diphtongue /aʊ/ est un glissement progressif de /a/ vers /ʊ/, comme dans 'how' - caractéristique en anglais (Mandon, Diphtongues)."
+    },
+    {id:27,text:"Selon les règles d’accentuation anglaise, où se situe généralement l’accent sur les mots terminés par -ic ?",options:[
+      {key:'a',text:"Sur l’avant-dernière syllabe."},
+      {key:'b',text:"Sur la dernière syllabe."},
+      {key:'c',text:"Sur la première syllabe."},
+      {key:'d',text:"Aucune règle précise."}],correct:'a',
+      explanation:"Les mots terminés par -ic sont généralement accentués sur l’avant-dernière syllabe (Jobert, Terminaisons contraignantes)."
+    },
+    {id:28,text:"Quelle est la différence d'accentuation entre un nom et un adjectif ou verbe avec la terminaison -ate, par exemple 'debate' ?",options:[
+      {key:'a',text:"Les noms et adjectifs sont accentués sur l’avant-dernière syllabe, les verbes sur la dernière."},
+      {key:'b',text:"Les noms sont accentués sur la dernière et les verbes sur l’avant-dernière syllabe."},
+      {key:'c',text:"Ils sont tous accentués de la même façon."},
+      {key:'d',text:"Cela dépend du contexte uniquement."}],correct:'a',
+      explanation:"Les noms et adjectifs en -ate sont généralement accentués sur l’avant-dernière syllabe, tandis que les verbes sur la dernière (Jobert, Terminaisons complexes)."
+    },
+    {id:29,text:"Quelle remarque fait-on au sujet de la prononciation des mots finissant en -ain selon qu'ils sont verbes ou noms ?",options:[
+      {key:'a',text:"Les verbes sont accentués sur la dernière syllabe et prononcés /eɪn/, les noms ont un accent et une prononciation différente (/ən/)."},
+      {key:'b',text:"Les verbes ne portent pas d'accent alors que les noms oui."},
+      {key:'c',text:"Il n’y a aucune différence entre verbes et noms."},
+      {key:'d',text:"Les noms sont accentués sur la dernière syllabe, les verbes sur la première."}],correct:'a',
+      explanation:"Les verbes en -ain sont accentués sur la dernière syllabe et prononcés /eɪn/, contrairement aux noms et adjectifs qui sont prononcés /ən/ (Jobert, Terminaisons contraignantes)."
+    },
+    {id:30,text:"Quels sont les deux schémas intonatifs principaux en anglais et leurs valeurs associées ?",options:[
+      {key:'a',text:"Schéma montant (incomplet, encouragement) et schéma descendant (complet, assertif)."},
+      {key:'b',text:"Schéma nasal et schéma guttural."},
+      {key:'c',text:"Schéma court et schéma long."},
+      {key:'d',text:"Schéma voisé et non voisé."}],correct:'a',
+      explanation:"Les deux schémas intonatifs principaux sont le schéma montant (valeurs : incomplet, inachevé, encouragement, dubitatif) et le schéma descendant (valeurs : complet, achevé, neutre, assertif) (Mandon, Introduction au précis)."
+    }
+  ];
+
+  let currentQuestion = 0;
+  let userAnswers = {};
+
+  const quizArea = document.getElementById('quiz-area');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const skipBtn = document.getElementById('skip-btn');
+  const submitBtn = document.getElementById('submit-btn');
+  const resultsDiv = document.getElementById('results');
+  const scoreDiv = document.getElementById('score');
+  const detailedResultsDiv = document.getElementById('detailed-results');
+
+  function renderQuestion(index) {
+    const q = questions[index];
+    let html = `
+      Question ${index + 1} sur ${questions.length}
+      ${q.text}
+      `;
+    q.options.forEach(opt => {
+      const checked = userAnswers[q.id] === opt.key ? 'checked' : '';
+      html += `
+      
+      ${opt.key}. ${opt.text}
+      `;
+    });
+    html += ``;
+    quizArea.innerHTML = html;
+
+    // Update navigation buttons
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = userAnswers[q.id] ? false : true;
+    submitBtn.style.display = index === questions.length - 1 ? 'inline-block' : 'none';
+  }
+
+  quizArea.addEventListener('change', e => {
+    if(e.target.name === "answer"){
+      userAnswers[questions[currentQuestion].id] = e.target.value;
+      nextBtn.disabled = false;
+    }
+  });
+
+  prevBtn.onclick = () => {
+    if(currentQuestion > 0) {
+      currentQuestion--;
+      renderQuestion(currentQuestion);
+    }
+  };
+
+  nextBtn.onclick = () => {
+    if(currentQuestion  {
+    if(currentQuestion  {
+    let score = 0;
+    detailedResultsDiv.innerHTML = '';
+    questions.forEach((q, i) => {
+      const userAns = userAnswers[q.id];
+      const correct = userAns === q.correct;
+      if(correct) score++;
+
+      const itemDiv = document.createElement('div');
+      itemDiv.classList.add('result-item');
+
+      itemDiv.innerHTML = `
+        Q${i+1}: ${q.text}
+        
+        Votre réponse : ${userAns ? userAns.toUpperCase() + '. ' + q.options.find(o => o.key === userAns).text : 'Pas de réponse'}
+        
+        ${correct ? '' : `Bonne réponse : ${q.correct.toUpperCase()}. ${q.options.find(o => o.key === q.correct).text}`}
+        ${q.explanation}
+      `;
+      detailedResultsDiv.appendChild(itemDiv);
+    });
+    scoreDiv.textContent = `Score : ${score} / ${questions.length} (${((score/questions.length)*100).toFixed(1)}%)`;
+    quizArea.style.display = 'none';
+    prevBtn.style.display = 'none';
+    nextBtn.style.display = 'none';
+    skipBtn.style.display = 'none';
+    submitBtn.style.display = 'none';
+    resultsDiv.style.display = 'block';
+  };
+
+  renderQuestion(currentQuestion);
+
+
+</script>
+</body>
+</html>

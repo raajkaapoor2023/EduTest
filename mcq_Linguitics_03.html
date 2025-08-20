@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Academic Linguistic Theory Quiz</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #e0f7fa, #80deea);
+    margin: 0; padding: 0;
+    display: flex; justify-content: center; align-items: center;
+    min-height: 100vh;
+  }
+  #quiz-container {
+    background: #ffffffcc;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.15);
+    width: 95vw;
+    max-width: 700px;
+    padding: 30px 40px;
+    color: #004d40;
+  }
+  h1 {
+    text-align: center;
+    color: #00796b;
+    margin-bottom: 25px;
+    font-weight: 700;
+  }
+  #question-number {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #00695c;
+    margin-bottom: 12px;
+  }
+  #question-text {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+  .options {
+    list-style: none;
+    padding-left: 0;
+  }
+  .option {
+    background: #b2dfdb;
+    margin-bottom: 14px;
+    padding: 14px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    user-select: none;
+    font-size: 1.1rem;
+    color: #004d40;
+  }
+  .option:hover {
+    background-color: #004d40;
+    color: #b2dfdb;
+  }
+  .option.selected {
+    background-color: #00796b;
+    color: white;
+    border-color: #004d40;
+  }
+  #next-btn {
+    background-color: #00796b;
+    color: white;
+    font-weight: 700;
+    border: none;
+    padding: 16px;
+    font-size: 1.25rem;
+    border-radius: 14px;
+    cursor: pointer;
+    margin-top: 30px;
+    width: 100%;
+    box-shadow: 0 5px 15px rgba(0,121,107,0.3);
+    transition: background-color 0.3s;
+  }
+  #next-btn:disabled {
+    background-color: #80cbc4;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  #result-container {
+    display: none;
+    margin-top: 20px;
+    max-height: 450px;
+    overflow-y: auto;
+    padding-right: 8px;
+  }
+  #score {
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  #feedback-text {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+  }
+  #detailed-answers section {
+    margin-bottom: 25px;
+    border-top: 2px solid #004d40;
+    padding-top: 16px;
+  }
+  #detailed-answers h3 {
+    font-weight: 700;
+    color: #004d40;
+    margin-bottom: 6px;
+    font-size: 1.05rem;
+  }
+  #detailed-answers p {
+    color: #263238;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+  #play-again-btn {
+    background-color: #004d40;
+    color: white;
+    font-weight: 700;
+    border: none;
+    padding: 16px;
+    font-size: 1.2rem;
+    border-radius: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,77,64,0.4);
+    width: 100%;
+  }
+  /* Scrollbar style */
+  #result-container::-webkit-scrollbar {
+    width: 10px;
+  }
+  #result-container::-webkit-scrollbar-track {
+    background: #e0f2f1;
+  }
+  #result-container::-webkit-scrollbar-thumb {
+    background-color: #00796b;
+    border-radius: 20px;
+    border: 3px solid #e0f2f1;
+  }
+  /* Responsive */
+  @media (max-width: 480px) {
+    #quiz-container {
+      padding: 20px 20px;
+      width: 95vw;
+    }
+    #question-text {
+      font-size: 1.1rem;
+    }
+    #next-btn, #play-again-btn {
+      font-size: 1.1rem;
+      padding: 14px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div id="quiz-container">
+    <h1>Academic Linguistics Theory Quiz</h1>
+
+    <div id="quiz-content">
+      <div id="question-number"></div>
+      <div id="question-text"></div>
+      <ul class="options" id="options-list"></ul>
+      <button disabled id="next-btn">Next</button>
+    </div>
+
+    <div id="result-container">
+      <div id="score"></div>
+      <div id="feedback-text"></div>
+      <div id="detailed-answers"></div>
+      <button id="play-again-btn">Retake Quiz</button>
+    </div>
+  </div>
+
+<script>
+  // 20 detailed questions on linguistic theory keyed to major scholars
+  const questions = [
+    {
+      question: "Which concept is central to Noam Chomsky's linguistic theory?",
+      options: [
+        "Linguistic Relativity",
+        "Universal Grammar",
+        "Markedness",
+        "Enunciative Semantics"
+      ],
+      answer: 1,
+      explanation: `Chomsky's theory of <strong>Universal Grammar</strong> proposes an innate, biologically-based set of grammatical principles shared across languages, enabling language acquisition. This concept revolutionized linguistics by emphasizing an inherent mental faculty. 
+      <br><strong>Reference:</strong> Chomsky, N. (1965). <em>Aspects of the Theory of Syntax</em>. MIT Press.`
+    },
+    {
+      question: "Roman Jakobson is best known for which linguistic concept?",
+      options: [
+        "Distinctive Features in Phonology",
+        "Speech Acts Theory",
+        "Functional Sentence Perspective",
+        "Cognitive Grammar"
+      ],
+      answer: 0,
+      explanation: `Jakobson introduced the concept of <strong>Distinctive Features</strong> to describe phonemes using binary oppositions (e.g., voiced vs voiceless). This approach is foundational in phonological analysis.
+      <br><strong>Reference:</strong> Jakobson, R. (1962). <em>Selected Writings</em>. Mouton.`
+    },
+    {
+      question: "Edward Sapir's work is primarily associated with which linguistic hypothesis?",
+      options: [
+        "Language Innateness Hypothesis",
+        "Linguistic Relativity Hypothesis (Sapir-Whorf)",
+        "Optimality Theory",
+        "Structural Functionalism"
+      ],
+      answer: 1,
+      explanation: `Sapir, together with Whorf, formulated the <strong>Linguistic Relativity Hypothesis</strong>, which suggests that language influences cognitive processes and worldview.
+      <br><strong>Reference:</strong> Sapir, E. (1929). The Status of Linguistics as a Science.`
+    },
+    {
+      question: "Which area does Morris Halle notably contribute to within linguistics?",
+      options: [
+        "Generative Phonology",
+        "Sociolinguistics",
+        "Pragmatics",
+        "Morphological Typology"
+      ],
+      answer: 0,
+      explanation: `Morris Halle co-developed <strong>Generative Phonology</strong> with Chomsky, a framework formalizing phonological rules and representations within generative grammar.
+      <br><strong>Reference:</strong> Halle, M., & Chomsky, N. (1968). <em>The Sound Pattern of English</em>. Harper & Row.`
+    },
+    {
+      question: "Émile Benveniste emphasized the importance of which linguistic concept?",
+      options: [
+        "The Arbitrary Nature of the Sign",
+        "Subjectivity and Personal Deixis",
+        "Syntax-Semantics Interface",
+        "Semiotics of Language"
+      ],
+      answer: 1,
+      explanation: `Benveniste's work focused on <strong>subjectivity</strong> in language, emphasizing how personal deixis (pronouns etc.) encodes the speaker’s perspective and identity.
+      <br><strong>Reference:</strong> Benveniste, É. (1966). <em>Problèmes de linguistique générale</em>. Gallimard.`
+    },
+    {
+      question: "Antoine Culioli developed a theory known as:",
+      options: [
+        "Discourse Analysis",
+        "Operative Grammar",
+        "Generative Semantics",
+        "Cognitive Linguistics"
+      ],
+      answer: 1,
+      explanation: `<strong>Operative Grammar</strong> is Culioli's approach focusing on the enunciative dimension of language, analyzing dynamic processes in utterance production.
+      <br><strong>Reference:</strong> Culioli, A. (1990). <em>La phrase et le sujet</em>. Seuil.`
+    },
+    {
+      question: "André Martinet is most associated with which principle?",
+      options: [
+        "Economy Principle in Language",
+        "Speech Act Theory",
+        "Cognitive Grammar Concepts",
+        "Language Social Power"
+      ],
+      answer: 0,
+      explanation: `Martinet proposed the <strong>Economy Principle</strong> in linguistics, emphasizing balance between economy of effort and clarity/functionality in language systems.
+      <br><strong>Reference:</strong> Martinet, A. (1955). <em>Économie des changements phonétiques</em>. Berne.`
+    },
+    {
+      question: "Ferdinand de Saussure introduced the concept of:",
+      options: [
+        "Language Acquisition Device",
+        "Langue and Parole",
+        "Innateness of Syntax",
+        "Transformational Grammar"
+      ],
+      answer: 1,
+      explanation: `Saussure distinguished <strong>langue</strong> (language system) from <strong>parole</strong> (speech acts), foundational to structural linguistics.
+      <br><strong>Reference:</strong> Saussure, F. de (1916). <em>Course in General Linguistics</em>.`
+    },
+    {
+      question: "Steven Pinker is well known for popularizing which concept?",
+      options: [
+        "Language as a Learned Behavior",
+        "The Language Instinct",
+        "Functional Grammar",
+        "Enunciative Semantics"
+      ],
+      answer: 1,
+      explanation: `Pinker argues that language is an innate biological faculty, presenting this in <strong>The Language Instinct</strong>, emphasizing evolutionary psychology.
+      <br><strong>Reference:</strong> Pinker, S. (1994). <em>The Language Instinct</em>.`
+    },
+    {
+      question: "Claude Hagège is recognized for his work in:",
+      options: [
+        "Phonological Theory",
+        "Language Universals and Diversity",
+        "Cognitive Linguistics",
+        "Historical Linguistics"
+      ],
+      answer: 1,
+      explanation: `Hagège has contributed extensively to documenting language diversity and universals, emphasizing the importance of linguistic preservation.
+      <br><strong>Reference:</strong> Hagège, C. (2009). <em>On Language</em>. University of Chicago Press.`
+    },
+    {
+      question: "Zellig Harris pioneered which linguistic approach?",
+      options: [
+        "Distributionalism",
+        "Transformational Generative Grammar",
+        "Functional Linguistics",
+        "Cognitive Grammar"
+      ],
+      answer: 0,
+      explanation: `<strong>Distributionalism</strong> analyzes linguistic units by their distributional patterns in contexts, foundational to modern syntactic theory development.
+      <br><strong>Reference:</strong> Harris, Z. (1951). Methods in Structural Linguistics. University of Chicago Press.`
+    },
+    {
+      question: "Victoria Fromkin is known for her contributions to:",
+      options: [
+        "Sociolinguistics and Dialectology",
+        "Phonetics and Acoustic Analysis",
+        "Psycholinguistics and Language Disorders",
+        "Generative Syntax"
+      ],
+      answer: 2,
+      explanation: `Fromkin’s work focused on language acquisition, errors in speech, and the psychology of language processing.
+      <br><strong>Reference:</strong> Fromkin, V., Rodman, R., & Hyams, N. (2017). <em>An Introduction to Language</em>. Cengage Learning.`
+    },
+    {
+      question: "Peter Ladefoged specialized in which linguistic subfield?",
+      options: [
+        "Syntax",
+        "Phonetics and Phonology",
+        "Semantics",
+        "Pragmatics"
+      ],
+      answer: 1,
+      explanation: `Ladefoged was a leading figure in <strong>articulatory and acoustic phonetics</strong>, developing and popularizing practical phonetics and the IPA.
+      <br><strong>Reference:</strong> Ladefoged, P. (2001). <em>A Course in Phonetics</em>. Wiley-Blackwell.`
+    },
+    {
+      question: "Chomsky’s concept of 'deep structure' contrasts with:",
+      options: [
+        "Phonological Representation",
+        "Surface Structure",
+        "Universal Grammar",
+        "Semantic Roles"
+      ],
+      answer: 1,
+      explanation: `Deep structure represents the underlying syntactic relations; surface structure is the actual sentence form after syntactic transformations.
+      <br><strong>Reference:</strong> Chomsky, N. (1965). <em>Aspects of the Theory of Syntax</em>.`
+    },
+    {
+      question: "Jakobson’s functions of language do NOT include:",
+      options: [
+        "Emotive",
+        "Referential",
+        "Contextual",
+        "Poetic"
+      ],
+      answer: 2,
+      explanation: `Jakobson’s six functions are Emotive, Conative, Referential, Phatic, Metalingual, and Poetic; <em>Contextual</em> is not a separate named function.
+      <br><strong>Reference:</strong> Jakobson, R. (1960). Closing statement: Linguistics and poetics.`
+    },
+    {
+      question: "Sapir's linguistic research is classified mainly under:",
+      options: [
+        "Formal Syntax",
+        "Ethnolinguistics",
+        "Phonetics",
+        "Generative Grammar"
+      ],
+      answer: 1,
+      explanation: `Sapir is a pioneer in <strong>ethnolinguistics</strong>, studying language in relation to culture and thought.
+      <br><strong>Reference:</strong> Sapir, E. (1921). Language: An Introduction to the Study of Speech.`
+    },
+    {
+      question: "Martinet’s 'double articulation' refers to:",
+      options: [
+        "Language's social function",
+        "Two levels of meaningful units: phonemes and morphemes",
+        "The split between langue and parole",
+        "The use of metaphor in language"
+      ],
+      answer: 1,
+      explanation: `"Double articulation" is the division of language into meaningless phonemes combined into meaningful morphemes, a fundamental linguistic principle.
+      <br><strong>Reference:</strong> Martinet, A. (1960). <em>Elements of General Linguistics</em>.`
+    },
+    {
+      question: "Fromkin’s work on speech errors primarily informs which field?",
+      options: [
+        "Sociolinguistics",
+        "Psycholinguistics",
+        "Historical Linguistics",
+        "Pragmatics"
+      ],
+      answer: 1,
+      explanation: `Study of speech errors reveals the cognitive processes underlying language production, a key concern of psycholinguistics.
+      <br><strong>Reference:</strong> Fromkin, V. (1973). Speech errors as linguistic evidence.`
+    },
+    {
+      question: "Ladefoged’s work significantly enhanced the understanding of:",
+      options: [
+        "Language Acquisition",
+        "Articulatory Phonetics and IPA",
+        "Syntax and Semantics",
+        "Language Variation in Sociolinguistics"
+      ],
+      answer: 1,
+      explanation: `He extensively documented speech sounds worldwide, refining the International Phonetic Alphabet for accurate transcription.
+      <br><strong>Reference:</strong> Ladefoged, P. (1993). <em>A Course in Phonetics</em>.`
+    }
+  ];
+
+  function shuffle(array) {
+    let currentIndex = array.length, randomIndex;
+    while(currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+    return array;
+  }
+
+  let shuffledQuestions = [];
+  let currentQuestionIndex = 0;
+  let score = 0;
+  let selectedOptionIndex = null;
+  let userAnswers = [];
+
+  const questionNumberEl = document.getElementById('question-number');
+  const questionTextEl = document.getElementById('question-text');
+  const optionsListEl = document.getElementById('options-list');
+  const nextBtn = document.getElementById('next-btn');
+  const quizContent = document.getElementById('quiz-content');
+  const resultContainer = document.getElementById('result-container');
+  const scoreEl = document.getElementById('score');
+  const feedbackText = document.getElementById('feedback-text');
+  const detailedAnswers = document.getElementById('detailed-answers');
+  const playAgainBtn = document.getElementById('play-again-btn');
+
+  function startQuiz() {
+    score = 0;
+    currentQuestionIndex = 0;
+    selectedOptionIndex = null;
+    userAnswers = [];
+
+    shuffledQuestions = shuffle([...questions]);
+
+    quizContent.style.display = 'block';
+    resultContainer.style.display = 'none';
+
+    showQuestion();
+  }
+
+  function showQuestion() {
+    selectedOptionIndex = null;
+    nextBtn.disabled = true;
+
+    const currentQ = shuffledQuestions[currentQuestionIndex];
+
+    questionNumberEl.textContent = `Question ${currentQuestionIndex + 1} of ${shuffledQuestions.length}`;
+    questionTextEl.textContent = currentQ.question;
+
+    optionsListEl.innerHTML = '';
+
+    let optionsShuffled = shuffle(currentQ.options.map((opt, i) => ({ text: opt, index: i })));
+
+    optionsShuffled.forEach(({text, index}) => {
+      const li = document.createElement('li');
+      li.classList.add('option');
+      li.textContent = text;
+      li.dataset.originalIndex = index;
+
+      li.addEventListener('click', () => {
+        [...optionsListEl.children].forEach(el => el.classList.remove('selected'));
+        li.classList.add('selected');
+        selectedOptionIndex = parseInt(li.dataset.originalIndex);
+        nextBtn.disabled = false;
+      });
+
+      optionsListEl.appendChild(li);
+    });
+
+    nextBtn.textContent = (currentQuestionIndex === shuffledQuestions.length -1) ? 'Finish' : 'Next';
+  }
+
+  nextBtn.addEventListener('click', () => {
+    userAnswers.push(selectedOptionIndex);
+
+    if(selectedOptionIndex === shuffledQuestions[currentQuestionIndex].answer){
+      score++;
+    }
+
+    currentQuestionIndex++;
+
+    if(currentQuestionIndex < shuffledQuestions.length){
+      showQuestion();
+    } else {
+      showResults();
+    }
+  });
+
+  function showResults() {
+    quizContent.style.display = 'none';
+    resultContainer.style.display = 'block';
+
+    scoreEl.textContent = `Your Score: ${score} / ${shuffledQuestions.length}`;
+
+    let percentage = (score / shuffledQuestions.length) * 100;
+    if(percentage >= 85) {
+      feedbackText.textContent = "Excellent! You demonstrate strong grasp of key linguistic theories.";
+      feedbackText.style.color = '#2e7d32'; // green
+    } else if (percentage >= 60){
+      feedbackText.textContent = "Good performance! Review explanations to solidify your understanding.";
+      feedbackText.style.color = '#f9a825'; // amber
+    } else {
+      feedbackText.textContent = "Consider studying the detailed explanations carefully to improve.";
+      feedbackText.style.color = '#c62828'; // red
+    }
+
+    detailedAnswers.innerHTML = '';
+    shuffledQuestions.forEach((q, idx) => {
+      const userAnswer = userAnswers[idx];
+      const correctAnswer = q.answer;
+      const correctText = q.options[correctAnswer];
+      const userText = typeof userAnswer === "number" && q.options[userAnswer] ? q.options[userAnswer] : "No answer";
+
+      const section = document.createElement('section');
+
+      const h3 = document.createElement('h3');
+      h3.textContent = `Q${idx+1}: ${q.question}`;
+      section.appendChild(h3);
+
+      const pUser = document.createElement('p');
+      pUser.innerHTML = `Your answer: <strong>${userText}</strong> ${userAnswer === correctAnswer ? '✅' : '❌'}`;
+      section.appendChild(pUser);
+
+      if(userAnswer !== correctAnswer){
+        const pCorrect = document.createElement('p');
+        pCorrect.innerHTML = `Correct answer: <strong>${correctText}</strong>`;
+        section.appendChild(pCorrect);
+      }
+
+      const pExpl = document.createElement('p');
+      pExpl.innerHTML = `<em>Explanation:</em> ${q.explanation}`;
+      section.appendChild(pExpl);
+
+      detailedAnswers.appendChild(section);
+    });
+  }
+
+  playAgainBtn.addEventListener('click', startQuiz);
+
+  window.onload = startQuiz;
+</script>
+</body>
+</html>

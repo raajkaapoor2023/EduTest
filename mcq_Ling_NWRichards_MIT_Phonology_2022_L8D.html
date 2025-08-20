@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Phonology Part 1 Quiz</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .question { margin-bottom: 20px; }
+    .correct { color: green; }
+    .incorrect { color: red; }
+  </style>
+</head>
+<body>
+  <h1>Phonology Part 1 – Lecture 8 Quiz</h1>
+  <form id="quizForm">
+    <div id="quizContainer"></div>
+    <button type="submit">Submit Answers</button>
+  </form>
+  <div id="results"></div>
+
+  <script>
+    const questions = [
+      {
+        q: "What determines the pronunciation of English plural suffixes?",
+        options: ["Spelling", "Stress pattern", "Final sound of the noun", "Word length"],
+        answer: 2,
+        ref: "English Plurals – Lecture 8 at 00:00:14"
+      },
+      {
+        q: "Which suffix is used for devoiced plural endings?",
+        options: ["-s", "-z", "-es", "-iz"],
+        answer: 0,
+        ref: "Devoiced Plural Suffixes – Lecture 8 at 00:07:00"
+      },
+      {
+        q: "Why do languages have phonological structure?",
+        options: ["To make words longer", "To confuse learners", "To facilitate pronunciation and perception", "To preserve etymology"],
+        answer: 2,
+        ref: "Reasons for Phonological Structure – Lecture 8 at 00:13:39"
+      },
+      {
+        q: "How do English speakers apply plural rules to foreign words?",
+        options: ["They ignore them", "They apply native rules unconsciously", "They translate them", "They use singular forms only"],
+        answer: 1,
+        ref: "Applying English Plural Formation to Foreign Words – Lecture 8 at 00:19:08"
+      },
+      {
+        q: "Which form is used to create gerunds in English?",
+        options: ["Infinitive", "Past tense", "Present participle", "Base form"],
+        answer: 2,
+        ref: "Forming the Gerund – Lecture 8 at 00:31:35"
+      },
+      {
+        q: "What role do word boundaries play in phonology?",
+        options: ["They are irrelevant", "They affect stress and pronunciation", "They only matter in writing", "They determine meaning"],
+        answer: 1,
+        ref: "Word Boundaries – Lecture 8 at 00:39:48"
+      },
+      {
+        q: "Pitch accents are primarily used to indicate:",
+        options: ["Volume", "Emotion", "Syntactic boundaries", "Focus and contrast"],
+        answer: 3,
+        ref: "Pitch Accents – Lecture 8 at 00:45:26"
+      },
+      {
+        q: "Which example demonstrates pitch accent usage?",
+        options: ["'I didn’t say YOU stole the money.'", "'I didn’t say you STOLE the money.'", "Both", "Neither"],
+        answer: 2,
+        ref: "Examples of Accents – Lecture 8 at 00:51:32"
+      },
+      {
+        q: "Languages prioritize phonological rules to:",
+        options: ["Maintain tradition", "Ensure clarity", "Avoid ambiguity", "All of the above"],
+        answer: 3,
+        ref: "Language Priorities – Lecture 8 at 00:58:31"
+      },
+      {
+        q: "Why do some languages avoid accenting the last syllable?",
+        options: ["To reduce emphasis", "To follow rhythmic constraints", "To preserve morphology", "To avoid confusion with other forms"],
+        answer: 1,
+        ref: "Avoiding Accent on Last Syllable – Lecture 8 at 01:08:48"
+      },
+      {
+        q: "Which of the following is a voiced sound?",
+        options: ["/s/", "/z/", "/t/", "/k/"],
+        answer: 1,
+        ref: "Devoiced Plural Suffixes – Lecture 8 at 00:07:00"
+      },
+      {
+        q: "What is the plural of 'bus' in English?",
+        options: ["buses", "busz", "buss", "bus"],
+        answer: 0,
+        ref: "English Plurals – Lecture 8 at 00:00:14"
+      },
+      {
+        q: "Which suffix is used after a voiced consonant?",
+        options: ["-s", "-z", "-es", "-iz"],
+        answer: 1,
+        ref: "Devoiced Plural Suffixes – Lecture 8 at 00:07:00"
+      },
+      {
+        q: "Phonological rules help speakers:",
+        options: ["Speak faster", "Avoid errors", "Maintain rhythm", "All of the above"],
+        answer: 3,
+        ref: "Reasons for Phonological Structure – Lecture 8 at 00:13:39"
+      },
+      {
+        q: "Gerunds are formed by adding:",
+        options: ["-ing", "-ed", "-s", "-en"],
+        answer: 0,
+        ref: "Forming the Gerund – Lecture 8 at 00:31:35"
+      },
+      {
+        q: "Pitch accent can change:",
+        options: ["The meaning of a sentence", "The spelling", "The syntax", "The tense"],
+        answer: 0,
+        ref: "Pitch Accents – Lecture 8 at 00:45:26"
+      },
+      {
+        q: "Which word has a final syllable accent in Spanish?",
+        options: ["café", "libro", "mesa", "amigo"],
+        answer: 0,
+        ref: "Avoiding Accent on Last Syllable – Lecture 8 at 01:08:48"
+      },
+      {
+        q: "Which is NOT a reason for phonological structure?",
+        options: ["Ease of articulation", "Perceptual clarity", "Historical preservation", "Rhythmic balance"],
+        answer: 2,
+        ref: "Reasons for Phonological Structure – Lecture 8 at 00:13:39"
+      },
+      {
+        q: "Accent placement in Japanese compounds is discussed in which lecture?",
+        options: ["Lecture 8", "Lecture 9", "Lecture 10", "Lecture 5"],
+        answer: 1,
+        ref: "[Lecture 9: Phonology, Part 2](https://www.youtube.com/watch?v=-Pg11JHzUTo)"
+      },
+      {
+        q: "Which lecture introduces phonetic articulation points?",
+        options: ["Lecture 8", "Lecture 5", "Lecture 22", "Lecture 17"],
+        answer: 1,
+        ref: "[Lecture 5: Phonetics, Part 1](https://www.youtube.com/watch?v=xZ8mnJPu95Q&pp=0gcJCfwAo7VqN5tD)"
+      }
+    ];
+
+    const quizContainer = document.getElementById("quizContainer");
+    questions.forEach((q, i) => {
+      const div = document.createElement("div");
+      div.className = "question";
+      div.innerHTML = `<strong>Q${i + 1}: ${q.q}</strong><br>` +
+        q.options.map((opt, j) =>
+          `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label><br>`
+        ).join("");
+      quizContainer.appendChild(div);
+    });
+
+    document.getElementById("quizForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const results = document.getElementById("results");
+      results.innerHTML = "<h2>Results:</h2>";
+      let score = 0;
+      questions.forEach((q, i) => {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        const userAnswer = selected ? parseInt(selected.value) : null;
+        const correct = userAnswer === q.answer;
+        if (correct) score++;
+        results.innerHTML += `<p class="${correct ? 'correct' : 'incorrect'}">
+          Q${i + 1}: ${correct ? 'Correct ✅' : 'Incorrect ❌'}<br>
+          <em>Correct Answer:</em> ${q.options[q.answer]}<br>
+          <strong>Reference:</strong> ${q.ref}
+        </p>`;
+      });
+      results.innerHTML += `<h3>Your Score: ${score} / ${questions.length}</h3>`;
+    });
+  </script>
+</body>
+</html>

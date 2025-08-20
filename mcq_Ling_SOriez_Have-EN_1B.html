@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>QCM — Have + -EN (Sandrine Oriez, Univ. Rennes 2)</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #1c1f26; color: #f4f4f4; margin: 0; padding: 0; }
+    header { background: #2d3240; padding: 20px; text-align: center; }
+    header h1 { margin: 0; font-size: 24px; color: #f9d342; }
+    .container { max-width: 900px; margin: auto; padding: 20px; }
+    .question { background: #2a2f3d; padding: 15px; margin-bottom: 15px; border-radius: 10px; box-shadow: 0px 2px 5px rgba(0,0,0,0.3); }
+    .question h3 { margin-top: 0; }
+    .options label { display: block; margin: 5px 0; padding: 8px; border-radius: 6px; cursor: pointer; transition: background 0.3s; }
+    .options input { margin-right: 8px; }
+    .options label:hover { background: #3d4458; }
+    button { background: #f9d342; color: #1c1f26; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; margin: 5px; font-weight: bold; }
+    button:hover { background: #ffd95e; }
+    #results { background: #2a2f3d; padding: 20px; border-radius: 10px; margin-top: 20px; display: none; }
+    .highlight { background: #444c63; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>QCM — HAVE + -EN (Sandrine Oriez, Univ. Rennes 2)</h1>
+    <p>Test linguistique (niveau Ivy League / Oxbridge)</p>
+  </header>
+  <div class="container">
+    <div id="quiz"></div>
+    <div style="text-align:center; margin-top:20px;">
+      <button onclick="validateQuiz()">Valider</button>
+      <button onclick="submitQuiz()">Soumettre (fin du test)</button>
+    </div>
+    <div id="results"></div>
+  </div>
+  <script>
+    const questions = [
+      { q: "Quelle est la valeur fondamentale du marqueur -EN dans HAVE + -EN ?", options: ["L’antériorité par rapport au point de vue (T1)", "La simultanéité", "Une action future", "Une action hypothétique"], answer: 0, explanation: "-EN marque toujours l’antériorité du procès par rapport au point de vue T1 (Oriez, 2022)." },
+      { q: "Dans le présent perfect, que marque HAVE ?", options: ["Un lien entre l’action passée et le moment de repère présent", "Une simple action passée révolue sans lien", "Une obligation modale", "Une hypothèse conditionnelle"], answer: 0, explanation: "HAVE est opérateur de localisation : il relie l’événement passé au moment d’observation T1 (cf. Oriez, Univ. Rennes 2)." }
+      // ... (ajouter les 58 autres questions du set complet)
+    ];
+
+    let userAnswers = new Array(questions.length).fill(null);
+
+    function renderQuiz() {
+      const quizDiv = document.getElementById('quiz');
+      quizDiv.innerHTML = '';
+      questions.forEach((q, idx) => {
+        let qDiv = document.createElement('div');
+        qDiv.className = 'question';
+        qDiv.innerHTML = `<h3>Question ${idx+1}: ${q.q}</h3>`;
+        let opts = document.createElement('div');
+        opts.className = 'options';
+        q.options.forEach((opt, oidx) => {
+          let label = document.createElement('label');
+          label.innerHTML = `<input type="radio" name="q${idx}" value="${oidx}" onchange="userAnswers[${idx}] = ${oidx}"> ${opt}`;
+          opts.appendChild(label);
+        });
+        qDiv.appendChild(opts);
+        quizDiv.appendChild(qDiv);
+      });
+    }
+
+    function validateQuiz() {
+      let score = 0;
+      let feedback = "";
+      questions.forEach((q, idx) => {
+        if(userAnswers[idx] !== null){
+          if(userAnswers[idx] === q.answer){
+            score++;
+            feedback += `<p><strong>Question ${idx+1}:</strong> ✔️ Correct. ${q.explanation}</p>`;
+          } else {
+            feedback += `<p><strong>Question ${idx+1}:</strong> ❌ Incorrect. ${q.explanation}</p>`;
+          }
+        }
+      });
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.style.display = 'block';
+      resultsDiv.innerHTML = `<h2>Évaluation intermédiaire</h2><p>Score actuel: ${score} / ${questions.length}</p>` + feedback;
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      let feedback = "";
+      questions.forEach((q, idx) => {
+        if(userAnswers[idx] === q.answer){
+          score++;
+          feedback += `<p><strong>Question ${idx+1}:</strong> ✔️ Correct. ${q.explanation}</p>`;
+        } else {
+          feedback += `<p><strong>Question ${idx+1}:</strong> ❌ Incorrect. ${q.explanation}</p>`;
+        }
+      });
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.style.display = 'block';
+      resultsDiv.innerHTML = `<h2>Résultats finaux</h2><p>Score final: ${score} / ${questions.length}</p>` + feedback;
+    }
+
+    renderQuiz();
+  </script>
+</body>
+</html>

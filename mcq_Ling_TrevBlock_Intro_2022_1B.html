@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Intro to Linguistics TrevTutor (0:00–0:09:26) Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 900px; margin: 2rem auto; }
+    h1 { color: #2a4d69; }
+    .question { margin-bottom: 1.2rem; }
+    .question p { font-weight: bold; }
+    .result { font-size: 1.2rem; font-weight: bold; margin-top: 1.5rem; }
+    .answers { margin-top: 2rem; padding: 1rem; background: #eef3f6; border: 1px solid #ccc;}
+  </style>
+</head>
+<body>
+  <h1>Quiz: TrevTutor “Introduction to Linguistics” (0:00–0:09:26)</h1>
+  <form id="quizForm"></form>
+
+  <script>
+  const questions = [
+    { q: "What is linguistics primarily concerned with?", opts: ["Studying ancient languages", "The scientific study of language", "Learning to speak multiple languages", "Language policy"], a: 1 },
+    { q: "Which property of language refers to using language with others?", opts: ["Creativity", "Arbitrariness", "Communicative function", "Displacement"], a: 2 },
+    { q: "What does 'displacement' in language mean?", opts: ["Creative word formation", "Talking about things not present", "Repeating sounds", "Changing pronunciation"], a: 1 },
+    { q: "Which feature means language is rule‑governed yet allows novel sentences?", opts: ["Universality", "Duality", "Creativity", "Cultural transmission"], a: 2 },
+    { q: "Language is 'arbitrary' – what does that mean?", opts: ["No grammar", "Sound only conveys meaning by convention", "Everyone uses same words", "Pronunciation is random"], a: 1 },
+    { q: "Which is NOT one of the typical properties of human language?", opts: ["Creativity", "Flexible reference", "Displacement", "Fixed meaning"], a: 3 },
+    { q: "'Duality' in language refers to:", opts: ["Two languages at once", "Meaning-level structure plus sound-level structure", "Writing and speaking", "Grammar and vocabulary"], a: 1 },
+    { q: "What term describes the passing of language through learning?", opts: ["Duality", "Displacement", "Cultural transmission", "Productivity"], a: 2 },
+    { q: "What is the level of individual speech sounds in study called?", opts: ["Morphology", "Phonetics", "Syntax", "Semantics"], a: 1 },
+    { q: "Which level deals with the meaning of words and sentences?", opts: ["Semantics", "Phonetics", "Phonology", "Syntax"], a: 0 },
+    { q: "Syntax primarily concerns:", opts: ["Sound patterns", "Word structure", "Sentence structure", "Meaning relations"], a: 2 },
+    { q: "Morphology is the study of:", opts: ["Sentence order", "Word-formation units", "Sound contrasts", "Contextual meaning"], a: 1 },
+    { q: "Which illustrates productivity in language?", opts: ["Repeating learned sentences", "Creating new sentences never heard before", "Pronouncing same words identically", "Using gestures"], a: 1 },
+    { q: "Which is an example of displacement property?", opts: ["Saying 'tree' always", "Discussing tomorrow's weather", "Repeating a phrase", "Mimicking speech"], a: 1 },
+    { q: "What does arbitrariness imply about sign–sound relations?", opts: ["Meaning tied directly to shape", "Speaker invents meaning", "No natural link between form and meaning", "Sounds always symbolic"], a: 2 },
+    { q: "Communicative function implies language is used to:", opts: ["Comply with grammar", "Convey information/social bonding", "Produce novel words", "Change sound patterns"], a: 1 },
+    { q: "Which discipline studies meaning relations in language?", opts: ["Syntax", "Semantics", "Phonology", "Phonetics"], a: 1 },
+    { q: "Which term refers to structured sound differences like phonemes?", opts: ["Morphology", "Syntax", "Phonology", "Semantics"], a: 2 },
+    { q: "Which illustrates cultural transmission?", opts: ["Innate knowledge of grammar", "Children learning language from others", "Arbitrary word forms", "Novel sentence creation"], a: 1 },
+    { q: "Which feature allows children to say new sentences never heard before?", opts: ["Duality", "Creativity (productivity)", "Cultural transmission", "Displacement"], a: 1 }
+  ];
+
+  function buildQuiz(){
+    const form = document.getElementById("quizForm");
+    questions.forEach((item,i)=>{
+      const div = document.createElement("div");
+      div.className = "question";
+      div.innerHTML = `<p>${i+1}. ${item.q}</p>` +
+        item.opts.map((opt,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label><br>`).join("");
+      form.appendChild(div);
+    });
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = "Submit";
+    btn.onclick = grade;
+    form.appendChild(btn);
+  }
+
+  function grade(){
+    let score = 0;
+    questions.forEach((item,i)=>{
+      const sel = document.querySelector(`input[name=q${i}]:checked`);
+      if(sel && Number(sel.value) === item.a) score++;
+    });
+    const form = document.getElementById("quizForm");
+    form.insertAdjacentHTML('beforeend', `<div class="result">Your score: ${score}/20</div>`);
+    const btn2 = document.createElement("button");
+    btn2.type = "button";
+    btn2.textContent = "Show Answers & References";
+    btn2.onclick = showAnswers;
+    form.appendChild(btn2);
+  }
+
+  function showAnswers(){
+    const div = document.createElement("div");
+    div.className = "answers";
+    let html = "<h2>Correct Answers & References</h2>";
+    questions.forEach((item,i)=>{
+      html += `<p><strong>Q${i+1}</strong>: ${item.q}<br>✅ <em>${item.opts[item.a]}</em><br><small>Ref: TrevTutor “Introduction to Linguistics” 0:00–0:09:26; See standard sources (e.g. Fromkin & Rodman 2018, Hurford et al. 2007 on language properties)</small></p>`;
+    });
+    div.innerHTML = html;
+    document.getElementById("quizForm").appendChild(div);
+  }
+
+  window.onload = buildQuiz;
+  </script>
+</body>
+</html>

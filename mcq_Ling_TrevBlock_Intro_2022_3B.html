@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Syntax – TrevTutor Lecture 1:22:30-2:50:25 MCQ Quiz</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 2rem;
+    max-width: 900px;
+    line-height: 1.5;
+    background: #f8f8fa;
+  }
+  h1 {
+    max-width: 900px;
+  }
+  .question {
+    margin-bottom: 1.5em;
+  }
+  .correct {
+    color: green;
+  }
+  .incorrect {
+    color: red;
+  }
+  .skipped {
+    color: orange;
+  }
+  .btn {
+    background: #0066cc;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    font-size: 1.1em;
+    margin: 1em 0;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .btn:hover {
+    background: #004999;
+  }
+  .answers {
+    display: none;
+    margin-top: 2em;
+    background: #f0f0fc;
+    padding: 2em;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    max-width: 900px;
+  }
+  .answer-explanation {
+    font-size: 0.95em;
+    margin-bottom: 1.4em;
+  }
+  label {
+    cursor: pointer;
+    display: block;
+    padding: 0.2em 0;
+  }
+  a {
+    color: #0066cc;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+  <h1>Syntax – TrevTutor Lecture (Timestamp 1:22:30–2:50:25) MCQ Quiz</h1>
+  <form id="quizForm"></form>
+  <button type="button" class="btn" onclick="submitQuiz()">Submit Quiz</button>
+  <div id="score"></div>
+  <div class="answers" id="answers"></div>
+
+<script>
+  const quiz = [
+    {
+      q: "1. What does constituency mean in syntax, as explained in the lecture?",
+      o: [
+        "A group of words that function together as a unit within a sentence",
+        "The melody and intonation of speech",
+        "The origin of words",
+        "The meaning of verbs"
+      ],
+      a: 0,
+      ref: "Constituency refers to a group of words that act together as a unit or constituent in sentence structure[1]."
+    },
+    {
+      q: "2. Which test is commonly used to identify constituents in a sentence?",
+      o: [
+        "Substitution test",
+        "Spelling test",
+        "Pronunciation test",
+        "Tense test"
+      ],
+      a: 0,
+      ref: "The substitution test replaces phrases with pronouns or single words to test constituency[1]."
+    },
+    {
+      q: "3. What does the label 'XP' refer to in phrase structure rules?",
+      o: [
+        "Any syntactic phrase with head X",
+        "An unknown word",
+        "A specific verb",
+        "A type of morpheme"
+      ],
+      a: 0,
+      ref: "'XP' is a general notation for any phrase headed by X, such as NP or VP[1]."
+    },
+    {
+      q: "4. According to X-Bar Theory, what does the 'head' of a phrase represent?",
+      o: [
+        "The central word that determines the phrase's category",
+        "An optional modifier",
+        "The last word in a sentence",
+        "A clause boundary"
+      ],
+      a: 0,
+      ref: "The head is the core element of the phrase that determines its syntactic category, e.g., noun in NP, verb in VP[1]."
+    },
+    {
+      q: "5. What is a maximal projection in X-Bar theory?",
+      o: [
+        "A phrase (XP) that is the largest projection of a head",
+        "The root of a word",
+        "A minor phrase",
+        "A prefix"
+      ],
+      a: 0,
+      ref: "The maximal projection (XP) is the phrase representing the largest projection containing the head[1]."
+    },
+    {
+      q: "6. Which phrase structure rule correctly represents a noun phrase (NP) in traditional syntax?",
+      o: [
+        "NP → (Det) N (PP)",
+        "NP → V N",
+        "NP → Adv P",
+        "NP → Adj VP"
+      ],
+      a: 0,
+      ref: "NP usually consists of an optional determiner, a noun, and zero or more complements like prepositional phrases[1]."
+    },
+    {
+      q: "7. What role do functional categories like T(ense) serve in syntax?",
+      o: [
+        "Carry grammatical information such as tense or agreement without lexical meaning",
+        "Denote nouns",
+        "Function only in semantics",
+        "Replace verbs"
+      ],
+      a: 0,
+      ref: "Functional categories carry grammatical features like tense, aspect, or agreement, without lexical meaning[1]."
+    },
+    {
+      q: "8. What is theta theory concerned with?",
+      o: [
+        "Assignment of semantic roles (theta roles) to verb arguments",
+        "Sound changes in phonology",
+        "Word formation processes",
+        "Spelling of words"
+      ],
+      a: 0,
+      ref: "Theta theory assigns semantic roles such as agent, theme, and goal to verb arguments[1][2]."
+    },
+    {
+      q: "9. Which of the following is an example of a theta role?",
+      o: [
+        "Agent",
+        "Adjective",
+        "Determiner",
+        "Conjunction"
+      ],
+      a: 0,
+      ref: "Agent is a semantic role describing the initiator of the action in a sentence[1]."
+    },
+    {
+      q: "10. What does DP movement involve?",
+      o: [
+        "Moving determiner phrases to different syntactic positions",
+        "Deleting determiner phrases",
+        "Adding inflection to verbs",
+        "Changing pronouns to nouns"
+      ],
+      a: 0,
+      ref: "DP movement moves determiner phrases within sentences for case checking or focus[1]."
+    },
+    {
+      q: "11. What is 'wh-movement' in syntax?",
+      o: [
+        "Moving interrogative words to the front of a clause",
+        "Adding 'wh' as a prefix to verbs",
+        "Deleting question words",
+        "Changing verbs to adjectives"
+      ],
+      a: 0,
+      ref: "Wh-movement displaces question words like 'who' or 'what' to the clause-initial position[1][2]."
+    },
+    {
+      q: "12. What distinguishes complements from adjuncts in phrase structure?",
+      o: [
+        "Complements are required by the head; adjuncts are optional modifiers",
+        "Adjuncts are required; complements are optional",
+        "Complements are adverbs; adjuncts are nouns",
+        "There is no difference"
+      ],
+      a: 0,
+      ref: "Complements are necessary to complete the meaning of the head; adjuncts add optional information[1]."
+    },
+    {
+      q: "13. What is meant by 'head-to-head movement'?",
+      o: [
+        "Movement of one syntactic head to a higher head position",
+        "Replacement of heads with phrases",
+        "Deletion of heads",
+        "Movement of adjuncts"
+      ],
+      a: 0,
+      ref: "Head-to-head movement involves moving one head to another position in the syntactic tree to fulfill syntactic requirements[1]."
+    },
+    {
+      q: "14. Which example illustrates raising as discussed in the lecture?",
+      o: [
+        "'It seems that she is happy.'",
+        "'The dog barked loudly.'",
+        "'She ate an apple.'",
+        "'They sang a song.'"
+      ],
+      a: 0,
+      ref: "Raising involves the subject of an embedded clause moving to the main clause subject position, e.g., 'It seems that she is happy'[1][2]."
+    },
+    {
+      q: "15. What are control verbs?",
+      o: [
+        "Verbs that determine who controls the subject of an embedded clause",
+        "Verbs used only in commands",
+        "Verbs with irregular past tense",
+        "Verbs used in passive voice"
+      ],
+      a: 0,
+      ref: "Control verbs determine the reference of the subject of an embedded clause they select[1][2]."
+    },
+    {
+      q: "16. Which test differentiates complements from adjuncts?",
+      o: [
+        "Omission test (adjuncts can be omitted; complements cannot)",
+        "Pronunciation test",
+        "Tense test",
+        "Semantic test"
+      ],
+      a: 0,
+      ref: "Omitting a complement typically makes a sentence ungrammatical; adjuncts can be left out without issue[1]."
+    },
+    {
+      q: "17. What are structural relations in syntax?",
+      o: [
+        "Grammatical relationships like subject and object within a sentence",
+        "Origins of words",
+        "Sound properties",
+        "Only semantic relations"
+      ],
+      a: 0,
+      ref: "Structural relations define grammatical functions such as subject, object, and adjunct within sentence structure[1]."
+    },
+    {
+      q: "18. What is the relationship between heads and phrases?",
+      o: [
+        "Heads determine the syntactic category of their phrases",
+        "Heads are optional in phrases",
+        "Phrases lack heads",
+        "Heads only appear in verbs"
+      ],
+      a: 0,
+      ref: "Heads are required elements that determine the category of a phrase, e.g., noun head for NP[1]."
+    },
+    {
+      q: "19. What is the role of specifiers in syntax?",
+      o: [
+        "They appear at phrase edges modifying or specifying the head",
+        "They replace the head entirely",
+        "They are always verbs",
+        "They are part of phonology"
+      ],
+      a: 0,
+      ref: "Specifiers provide additional syntactic or semantic info at phrase boundaries, e.g., determiners in NPs[1]."
+    },
+    {
+      q: "20. What is the purpose of the exercises in the Syntax lecture?",
+      o: [
+        "To practice applying syntax theories to sentence structure",
+        "To memorize word lists",
+        "To practice pronunciation",
+        "To test spelling skills"
+      ],
+      a: 0,
+      ref: "Exercises encourage students to analyze sentence structure, constituent identification, movement, and theta roles[1]."
+    }
+  ];
+
+  const qForm = document.getElementById('quizForm');
+  quiz.forEach((item, idx) => {
+    const qDiv = document.createElement('div');
+    qDiv.classList.add('question');
+    let html = `<p><strong>${item.q}</strong></p>`;
+    item.o.forEach((opt, i) => {
+      html += `<label><input type="radio" name="q${idx}" value="${i}"> ${opt}</label>`;
+    });
+    qDiv.innerHTML = html;
+    qForm.appendChild(qDiv);
+  });
+
+  function submitQuiz() {
+    let score = 0;
+    let answered = 0;
+    let output = '';
+    for (let i = 0; i < quiz.length; i++) {
+      const options = document.getElementsByName(`q${i}`);
+      let selected = -1;
+      for (const option of options) {
+        if (option.checked) selected = parseInt(option.value);
+      }
+      const corr = quiz[i].a;
+      output += `<div class="answer-explanation"><strong>Q${i+1}:</strong> ${quiz[i].q}<br>`;
+      if (selected === -1) {
+        output += `<span class="skipped">No answer given.</span><br>`;
+        output += `<span class="correct">Correct answer: ${quiz[i].o[corr]}</span><br>`;
+      } else {
+        answered++;
+        const isCorrect = selected === corr;
+        if (isCorrect) score++;
+        output += `<span class="${isCorrect ? 'correct' : 'incorrect'}">Your answer: ${quiz[i].o[selected]}</span><br>`;
+        output += `<span class="correct">Correct answer: ${quiz[i].o[corr]}</span><br>`;
+      }
+      output += `<em>${quiz[i].ref}</em></div>`;
+    }
+    document.getElementById('score').innerHTML = `<h2>Score: ${score} / 20 (${answered} answered, ${quiz.length - answered} skipped)</h2>`;
+    const answersDiv = document.getElementById('answers');
+    answersDiv.innerHTML = output;
+    answersDiv.style.display = 'block';
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+</script>
+
+<hr />
+<p style="font-size:0.9em; max-width: 900px; color:#666;">
+  <strong>References:</strong><br/>
+  [1] TrevTutor, Syntax: The Complete Crash Course, Lecture segment 1:22:30–2:50:25, YouTube: <a href="https://www.youtube.com/watch?v=0nBzlNFwgs4&ab_channel=TrevTutor" target="_blank" rel="noopener">https://www.youtube.com/watch?v=0nBzlNFwgs4</a>.<br/>
+  [2] Andrew Carnie, <em>Syntax: A Generative Introduction</em> (4th Ed.), Wiley-Blackwell, 2021.<br/>
+  [3] Radford, M., <em>Analyzing English Sentences: A Minimalist Approach</em>, Cambridge University Press, 2009.<br/>
+  These references provide the foundational syntax theory presented and expanded in the lecture.<br/>
+  This quiz is intended for educational and academic review purposes following fair use and licensing principles.
+</p>
+</body>
+</html>

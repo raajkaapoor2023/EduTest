@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lectures 1–6: Advanced Linguistics MCQ Test</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #e0d7c6;
+      font-family: 'Georgia', serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #ffcc00;
+      margin-bottom: 1em;
+    }
+    #quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .question-card {
+      background-color: #1e1e2f;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 1em;
+      box-shadow: 0 0 10px #000;
+    }
+    .question-card h2 {
+      margin-top: 0;
+      color: #ffcc00;
+      font-size: 1.2em;
+    }
+    .options label {
+      display: block;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+    .options input[type="radio"] {
+      margin-right: 8px;
+    }
+    #navigation {
+      text-align: center;
+      margin-top: 1em;
+    }
+    .btn {
+      background-color: #ffcc00;
+      color: #121212;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 5px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+    .btn:hover:not(:disabled) {
+      background-color: #ffd633;
+    }
+    #results {
+      max-width: 800px;
+      margin: 2em auto;
+      background-color: #1e1e2f;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #000;
+    }
+    #results h2 {
+      color: #ffcc00;
+    }
+    .answer-explanation {
+      margin: 0.5em 0 1.5em;
+      color: #ccc;
+      font-size: 0.95em;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #333;
+      margin: 1.5em 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lectures 1–6: Advanced Linguistics MCQ Test</h1>
+  <div id="quiz-container">
+    <div class="question-card" id="question-card"></div>
+    <div id="navigation">
+      <button class="btn" id="prevBtn">Previous</button>
+      <button class="btn" id="skipBtn">Skip</button>
+      <button class="btn" id="nextBtn">Next</button>
+      <button class="btn" id="submitBtn">Submit</button>
+    </div>
+  </div>
+  <div id="results"></div>
+
+  <script>
+    const questions = [
+      // Lecture 1: Introduction (1–6)
+      {
+        question: "What is the smallest contrastive unit in a language’s sound system?",
+        options: ["Morpheme","Allophone","Syllable","Phoneme"],
+        answer: 3,
+        explanation: "A phoneme is the minimal sound unit that distinguishes meaning."
+      },
+      {
+        question: "In Kracht’s model, a linguistic sign consists of:",
+        options: ["Exponent and meaning","Signifier and signified","Form and function","Shape and sense"],
+        answer: 0,
+        explanation: "The course adopts 'exponent' (the physical form) plus 'meaning' as the sign."
+      },
+      {
+        question: "Which subfield of linguistics studies sentence structure?",
+        options: ["Semantics","Phonology","Syntax","Morphology"],
+        answer: 2,
+        explanation: "Syntax analyzes how words combine into phrases and sentences."
+      },
+      {
+        question: "“Infinite use of finite means” refers to which property of language?",
+        options: ["Arbitrariness","Displacement","Productivity","Duality"],
+        answer: 2,
+        explanation: "Productivity describes generating unlimited expressions from limited elements."
+      },
+      {
+        question: "Chomsky’s distinction between competence and performance highlights:",
+        options: ["Knowledge vs. use of language","Speaking vs. writing","Phonology vs. morphology","Prescriptive vs. descriptive rules"],
+        answer: 0,
+        explanation: "Competence is the internalized knowledge of language; performance is its actual use."
+      },
+      {
+        question: "Which of these is NOT one of the three traditional branches of phonetics?",
+        options: ["Auditory phonetics","Articulatory phonetics","Acoustic phonetics","Semantic phonetics"],
+        answer: 3,
+        explanation: "Semantic phonetics does not exist; the recognized branches are articulatory, acoustic, and auditory."
+      },
+
+      // Lecture 2: Phonetics I (7–13)
+      {
+        question: "Which branch of phonetics studies how speech sounds are produced by the vocal tract?",
+        options: ["Acoustic phonetics","Auditory phonetics","Articulatory phonetics","Phonology"],
+        answer: 2,
+        explanation: "Articulatory phonetics examines the physiological mechanisms of sound production."
+      },
+      {
+        question: "The IPA symbol [θ] represents which sound?",
+        options: ["Voiced dental fricative","Voiceless alveolar stop","Voiceless dental fricative","Voiced alveolar fricative"],
+        answer: 2,
+        explanation: "[θ] is the voiceless dental fricative as in English 'thin.'"
+      },
+      {
+        question: "Which feature distinguishes [t] from [k]?",
+        options: ["Manner of articulation","Voicing","Place of articulation","Nasality"],
+        answer: 2,
+        explanation: "[t] is alveolar, [k] is velar—so they differ in place of articulation."
+      },
+      {
+        question: "Acoustic phonetics primarily concerns itself with:",
+        options: ["Internal representation of sounds","Waveforms and frequency spectra","Articulator positions","Listener perception"],
+        answer: 1,
+        explanation: "It analyzes the physical properties of sound waves."
+      },
+      {
+        question: "Voicing refers to whether the vocal folds are:",
+        options: ["Open or closed","Vibrating or not vibrating","Raised or lowered","Spread or approximated"],
+        answer: 1,
+        explanation: "Voiced sounds involve vocal‐fold vibration; voiceless do not."
+      },
+      {
+        question: "Which term describes a complete blockage of airflow in the vocal tract?",
+        options: ["Fricative","Affricate","Stop","Glide"],
+        answer: 2,
+        explanation: "Stops (plosives) involve total closure followed by release."
+      },
+      {
+        question: "Sibilants are characterized by a high‐pitched hissing quality. Which of these is a sibilant?",
+        options: ["[f]","[s]","[h]","[m]"],
+        answer: 1,
+        explanation: "[s] is a sibilant fricative."
+      },
+
+      // Lecture 3: Phonetics II & Phonology I (14–20)
+      {
+        question: "What is the purpose of a minimal‐pair test?",
+        options: ["To identify allophones","To determine stress patterns","To establish phonemic contrasts","To measure vowel length"],
+        answer: 2,
+        explanation: "Minimal pairs show which sounds are separate phonemes."
+      },
+      {
+        question: "Which pair exemplifies allophonic variation in English?",
+        options: ["[pʰæt] vs. [pæt]","[pat] vs. [bat]","[si] vs. [ʃi]","[tæp] vs. [tæb]"],
+        answer: 0,
+        explanation: "[pʰ] and [p] are allophones of /p/ in different positions."
+      },
+      {
+        question: "The primary stress mark in IPA is written as:",
+        options: ["ˌ","ˈ","ː","̃"],
+        answer: 1,
+        explanation: "ˈ placed before the stressed syllable indicates primary stress."
+      },
+      {
+        question: "A colon‐like diacritic [ː] in IPA indicates:",
+        options: ["Secondary stress","Vowel retraction","Lengthening","Nasalization"],
+        answer: 2,
+        explanation: "[ː] marks a long vowel or consonant."
+      },
+      {
+        question: "The diacritic tilde [̃] above a vowel indicates:",
+        options: ["Retroflexion","Nasalization","Aspiration","Labialization"],
+        answer: 1,
+        explanation: "A tilde marks nasal airflow during articulation."
+      },
+      {
+        question: "Which best defines an allophone?",
+        options: ["A variant sound that doesn’t change meaning","The smallest meaningful sound unit","A written symbol in the IPA","A prosodic feature of tone languages"],
+        answer: 0,
+        explanation: "Allophones are context‐dependent variants of a phoneme."
+      },
+      {
+        question: "In English, the aspirated [pʰ] and unaspirated [p] occur in predictable environments; this illustrates:",
+        options: ["Free variation","Phonemic contrast","Complementary distribution","Neutralization"],
+        answer: 2,
+        explanation: "They never occur in the same environment, so they’re in complementary distribution."
+      },
+
+      // Lecture 4: Phonology II (21–27)
+      {
+        question: "Which feature binary pair distinguishes voiced vs. voiceless consonants?",
+        options: ["[+sonorant]/[–sonorant]","[+voice]/[–voice]","[+continuant]/[–continuant]","[+labial]/[–labial]"],
+        answer: 1,
+        explanation: "Voice contrasts whether vocal folds vibrate ([+voice]) or not."
+      },
+      {
+        question: "A natural class is defined by:",
+        options: ["Shared phonetic and phonological features","Similar orthographic shapes","Belonging to the same word family","Occurring in minimal pairs"],
+        answer: 0,
+        explanation: "Natural classes share distinctive features."
+      },
+      {
+        question: "Which of the following is the natural class of voiceless stops in English?",
+        options: ["[b, d, g]","[p, t, k]","[f, θ, s]","[m, n, ŋ]"],
+        answer: 1,
+        explanation: "[p, t, k] share [–voice] and [–continuant]: the voiceless stops."
+      },
+      {
+        question: "Which feature distinguishes fricatives from stops?",
+        options: ["[+continuant]","[+voice]","[+nasal]","[+sonorant]"],
+        answer: 0,
+        explanation: "Fricatives are [+continuant] because airflow is not fully blocked."
+      },
+      {
+        question: "Which grouping is NOT a valid natural class?",
+        options: ["[s, z]","[p, t, k]","[b, m, n]","[t, s, k]"],
+        answer: 3,
+        explanation: "[t, s, k] share no single set of features that excludes all others."
+      },
+      {
+        question: "A feature matrix typically lists:",
+        options: ["Phonotactic constraints","Distinctive features and their values","Orthographic representations","Semantic roles"],
+        answer: 1,
+        explanation: "Matrix notation organizes features like [+nasal], [–voice], etc."
+      },
+      {
+        question: "Sonorants differ from obstruents by being:",
+        options: ["[+continuant] only","[+sonorant], allowing resonance","[+strident]","[–voice]"],
+        answer: 1,
+        explanation: "Sonorants allow continuous resonance in the vocal tract."
+      },
+
+      // Lecture 5: Phonology III (28–33)
+      {
+        question: "The two major constituents of a syllable are:",
+        options: ["Onset and coda","Peak and margin","Rime and onset","Nucleus and rime"],
+        answer: 2,
+        explanation: "A syllable divides into onset + rime; the rime contains nucleus + coda."
+      },
+      {
+        question: "Inside the rime, the central element is called the:",
+        options: ["Onset","Coda","Nucleus","Peak"],
+        answer: 2,
+        explanation: "The nucleus (usually a vowel) is the syllable’s most sonorous part."
+      },
+      {
+        question: "The word “plant” /plænt/ has which onset and coda?",
+        options: ["Onset [p], Coda [lænt]","Onset [pl], Coda [nt]","Onset [plæ], Coda [t]","Onset [pl], Coda [t]"],
+        answer: 1,
+        explanation: "Onset is the cluster [pl]; coda is [nt]."
+      },
+      {
+        question: "A closed syllable ends in:",
+        options: ["A consonant","A vowel","A diphthong","Two consonants"],
+        answer: 0,
+        explanation: "Closed syllables have a coda consonant."
+      },
+      {
+        question: "When two consonants appear in the onset position, it’s called a:",
+        options: ["Cluster","Coda","Diphthong","Complex onset"],
+        answer: 3,
+        explanation: "A complex onset contains more than one consonant."
+      },
+      {
+        question: "Which is an English disallowed onset cluster?",
+        options: ["/sp/","/fl/","/ŋr/","/kl/"],
+        answer: 2,
+        explanation: "/ŋr/ violates English phonotactics; /ŋ/ cannot start an onset."
+      },
+
+      // Lecture 6: Phonology IV (34–40)
+      {
+        question: "In rule notation A → B / C _ D, the slash means:",
+        options: ["A becomes B if followed by D","A wholly replaces B","In the environment between C and D","Simultaneous application"],
+        answer: 2,
+        explanation: "The slash introduces the conditioning environment C _ D."
+      },
+      {
+        question: "Which ordering is feeding? Rule 1 creates environment for Rule 2.",
+        options: ["Rule 2 applies first","Rule 1 applies, then Rule 2 can apply","Both apply independently","Rule 1 bleeds Rule 2"],
+        answer: 1,
+        explanation: "Feeding: the output of the first rule provides input for the second."
+      },
+      {
+        question: "Nasal assimilation in many languages is an example of which rule type?",
+        options: ["Deletion","Insertion","Assimilation","Dissimilation"],
+        answer: 2,
+        explanation: "Assimilation changes a sound to become more like a neighbor."
+      },
+      {
+        question: "In fast English speech, /t/ may be deleted in “next please.” This illustrates:",
+        options: ["Insertion","Deletion","Movement","Strengthening"],
+        answer: 1,
+        explanation: "Deletion removes the /t/ in rapid speech environments."
+      },
+      {
+        question: "The arrow “→” in phonological rules indicates:",
+        options: ["That A is replaced by B","Optional application","Underlying form","Feature geometry"],
+        answer: 0,
+        explanation: "It shows the transformation from A to B."
+      },
+      {
+        question: "The underscore in rule notation shows:",
+        options: ["Where deletion occurs","Where A is placed relative to conditioning segments","Where optional rules apply","Where stress falls"],
+        answer: 1,
+        explanation: "The underscore marks A’s position between C and D."
+      },
+      {
+        question: "A bleeding order between two rules means:",
+        options: ["First rule creates the environment for second","First rule removes the environment for second","Both rules apply in parallel","Second rule always applies first"],
+        answer: 1,
+        explanation: "Bleeding: the first rule destroys the context needed for the second."
+      }
+    ];
+
+    // Shuffle questions and options
+    let quizQuestions = questions
+      .map(q => {
+        const copy = JSON.parse(JSON.stringify(q));
+        const opts = copy.options.map((opt, i) => ({ opt, i }))
+          .sort(() => Math.random() - 0.5);
+        const newAnswer = opts.findIndex(o => o.i === copy.answer);
+        return {
+          question: copy.question,
+          options: opts.map(o => o.opt),
+          answer: newAnswer,
+          explanation: copy.explanation
+        };
+      })
+      .sort(() => Math.random() - 0.5);
+
+    let currentQ = 0;
+    const userAnswers = Array(quizQuestions.length).fill(null);
+
+    function renderQuestion() {
+      const card = document.getElementById("question-card");
+      const q = quizQuestions[currentQ];
+      let html = `<h2>Question ${currentQ + 1} of ${quizQuestions.length}</h2>`;
+      html += `<p>${q.question}</p><div class="options">`;
+      q.options.forEach((opt, i) => {
+        const checked = userAnswers[currentQ] === i ? "checked" : "";
+        html += `
+          <label>
+            <input type="radio" name="answer" value="${i}" ${checked}> ${opt}
+          </label>`;
+      });
+      html += `</div>`;
+      card.innerHTML = html;
+      document.getElementById("prevBtn").disabled = currentQ === 0;
+      document.getElementById("nextBtn").disabled = currentQ === quizQuestions.length - 1;
+    }
+
+    document.getElementById("prevBtn").onclick = () => {
+      storeAnswer();
+      if (currentQ > 0) currentQ--;
+      renderQuestion();
+    };
+    document.getElementById("nextBtn").onclick = () => {
+      storeAnswer();
+      if (currentQ < quizQuestions.length - 1) currentQ++;
+      renderQuestion();
+    };
+    document.getElementById("skipBtn").onclick = () => {
+      userAnswers[currentQ] = null;
+      if (currentQ < quizQuestions.length - 1) {
+        currentQ++;
+        renderQuestion();
+      }
+    };
+    document.getElementById("submitBtn").onclick = submitQuiz;
+
+    function storeAnswer() {
+      const sel = document.querySelector('input[name="answer"]:checked');
+      userAnswers[currentQ] = sel ? parseInt(sel.value) : null;
+    }
+
+    function submitQuiz() {
+      storeAnswer();
+      let score = 0;
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = `<h2>Your Score: 0 / ${quizQuestions.length}</h2>`;
+      quizQuestions.forEach((q, idx) => {
+        const ua = userAnswers[idx];
+        const correct = ua === q.answer;
+        if (correct) score++;
+        resultsDiv.innerHTML += `
+          <div>
+            <strong>Q${idx + 1}:</strong> ${q.question}<br>
+            <span style="color:${correct ? 'lightgreen' : 'tomato'}">
+              ${correct ? 'Correct' : 'Incorrect'}
+            </span>
+            <div class="answer-explanation">${q.explanation}</div>
+          </div><hr>`;
+      });
+      resultsDiv.querySelector("h2").textContent = 
+        `Your Score: ${score} / ${quizQuestions.length}`;
+      document.getElementById("quiz-container").style.display = "none";
+      resultsDiv.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Initialize
+    renderQuestion();
+  </script>
+</body>
+</html>

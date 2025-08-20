@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>English Grammar & Linguistics Quiz</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    margin: 0; padding: 0;
+    display: flex; justify-content: center; align-items: center;
+    min-height: 100vh;
+  }
+
+  #quiz-container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    width: 90vw;
+    max-width: 720px;
+    padding: 30px 40px;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2a2a72;
+  }
+
+  #question-number {
+    font-size: 1.2rem;
+    color: #6c63ff;
+    font-weight: 600;
+  }
+
+  #question-text {
+    font-size: 1.3rem;
+    margin: 20px 0 20px 0;
+    color: #404040;
+  }
+
+  .options {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .option {
+    background: #ebf0ff;
+    margin: 10px 0;
+    padding: 15px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+    border: 2px solid transparent;
+    user-select: none;
+  }
+
+  .option:hover {
+    background: #6c63ff;
+    color: white;
+  }
+
+  .option.selected {
+    background: #6c63ff;
+    color: white;
+    border-color: #3f3cff;
+  }
+
+  #next-btn {
+    background: #6c63ff;
+    border: none;
+    color: white;
+    font-weight: 700;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 25px;
+    display: block;
+    width: 100%;
+  }
+
+  #next-btn:disabled {
+    background: #a9a7f9;
+    cursor: not-allowed;
+  }
+
+  #result-container {
+    text-align: center;
+  }
+
+  #score {
+    font-size: 2.2rem;
+    color: #2a2a72;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  #play-again-btn {
+    background: #ff595e;
+    border: none;
+    color: white;
+    font-weight: 700;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  /* Confetti or colored backgrounds for 'result container' */
+  @keyframes confetti {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+  }
+
+  #result-container {
+    background: linear-gradient(270deg, #ff595e, #6c63ff, #39b54a, #ffb547);
+    background-size: 800% 800%;
+    animation: confetti 15s ease infinite;
+    padding: 40px;
+    border-radius: 15px;
+  }
+
+  /* Responsive */
+  @media (max-width: 500px){
+    #quiz-container{
+      padding: 20px;
+    }
+    #question-text {
+      font-size: 1.1rem;
+    }
+    #next-btn, #play-again-btn {
+      font-size: 1rem;
+      padding: 12px 20px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div id="quiz-container">
+    <h1>English Grammar & Linguistics Quiz</h1>
+    <div id="quiz-content">
+      <div id="question-number"></div>
+      <div id="question-text"></div>
+      <ul class="options" id="options-list"></ul>
+      <button disabled id="next-btn">Next</button>
+    </div>
+
+    <div id="result-container" style="display:none;">
+      <div id="score"></div>
+      <button id="play-again-btn">Play Again</button>
+    </div>
+  </div>
+
+<script>
+  // Question bank: 20 questions inspired by Oxford-Cambridge B.A. English tests style
+  const questions = [
+    {
+      question: "Which sentence contains an example of the subjunctive mood?",
+      options: [
+        "If I were you, I would study harder.",
+        "She has studied all night.",
+        "They will arrive tomorrow.",
+        "He is reading a book."
+      ],
+      answer: 0
+    },
+    {
+      question: "Identify the morpheme structure of the word 'unbelievable'.",
+      options: [
+        "un + believe + able",
+        "believe + able + un",
+        "unbelie + vable",
+        "unbel + ievable"
+      ],
+      answer: 0
+    },
+    {
+      question: "Which type of clause is found in the sentence: 'I know that he is coming'?",
+      options: [
+        "Relative clause",
+        "Noun clause",
+        "Adjective clause",
+        "Adverbial clause"
+      ],
+      answer: 1
+    },
+    {
+      question: "In phonetics, what is the place of articulation for the sound /θ/?",
+      options: [
+        "Bilabial",
+        "Alveolar",
+        "Dental",
+        "Velar"
+      ],
+      answer: 2
+    },
+    {
+      question: "Choose the correct form: 'Neither of the students ___ completed the assignment.'",
+      options: [
+        "have",
+        "has",
+        "are",
+        "were"
+      ],
+      answer: 1
+    },
+    {
+      question: "What is the primary function of a determiner in English grammar?",
+      options: [
+        "To modify verbs",
+        "To specify nouns",
+        "To link clauses",
+        "To describe adjectives"
+      ],
+      answer: 1
+    },
+    {
+      question: "Which sentence demonstrates correct subject-verb agreement?",
+      options: [
+        "The data is consistent with the theory.",
+        "Each of the players are ready.",
+        "The committee have made their decision.",
+        "The flock of birds is flying south."
+      ],
+      answer: 3
+    },
+    {
+      question: "What is the meaning of 'lexicology'?",
+      options: [
+        "Study of sentence structure",
+        "Study of word meanings",
+        "Study of sounds",
+        "Study of language change"
+      ],
+      answer: 1
+    },
+    {
+      question: "Which sentence contains a gerund?",
+      options: [
+        "Swimming is a good exercise.",
+        "She swims every day.",
+        "They will swim tomorrow.",
+        "Swim faster!"
+      ],
+      answer: 0
+    },
+    {
+      question: "In semantics, what is a 'hyponym'?",
+      options: [
+        "A word whose meaning is included within that of another",
+        "A word with multiple meanings",
+        "An antonym of a word",
+        "A prefix added to a word"
+      ],
+      answer: 0
+    },
+    {
+      question: "Which of the following is an example of an irregular verb?",
+      options: [
+        "Walk",
+        "Talk",
+        "Went",
+        "Jump"
+      ],
+      answer: 2
+    },
+    {
+      question: "Choose the correctly punctuated sentence:",
+      options: [
+        "Its time to start the test.",
+        "It's time to start the test.",
+        "Its' time to start the test.",
+        "It is' time to start the test."
+      ],
+      answer: 1
+    },
+    {
+      question: "In transformational grammar, which is the deep structure of the sentence?",
+      options: [
+        "The literal surface meaning",
+        "Underlying meaning from which surface forms derive",
+        "The grammatical tense",
+        "The spoken form"
+      ],
+      answer: 1
+    },
+    {
+      question: "Identify the part of speech for the word 'quickly' in the sentence: 'She ran quickly.'",
+      options: [
+        "Adjective",
+        "Noun",
+        "Adverb",
+        "Preposition"
+      ],
+      answer: 2
+    },
+    {
+      question: "Which of the following is NOT a part of phonology?",
+      options: [
+        "Study of intonation",
+        "Study of phonemes",
+        "Study of syntax",
+        "Study of stress patterns"
+      ],
+      answer: 2
+    },
+    {
+      question: "Select the sentence containing a dangling modifier:",
+      options: [
+        "Walking to school, the rain started to fall.",
+        "To finish on time, you need to hurry.",
+        "Eager to help, she volunteered immediately.",
+        "After eating, he went for a run."
+      ],
+      answer: 0
+    },
+    {
+      question: "What does 'syntax' study?",
+      options: [
+        "Word meanings",
+        "Sentence structure",
+        "Sound patterns",
+        "Language history"
+      ],
+      answer: 1
+    },
+    {
+      question: "Which sentence exhibits passive voice?",
+      options: [
+        "The cat chased the mouse.",
+        "The mouse was chased by the cat.",
+        "The cat is chasing the mouse.",
+        "The mouse runs fast."
+      ],
+      answer: 1
+    },
+    {
+      question: "In morphology, what is 'inflection'?",
+      options: [
+        "Adding prefixes",
+        "Changing word forms to express grammatical functions",
+        "Combining words to form new words",
+        "Removing morphemes"
+      ],
+      answer: 1
+    },
+    {
+      question: "Which of the following is the standard order of sentence elements in English?",
+      options: [
+        "Subject-Verb-Object",
+        "Verb-Subject-Object",
+        "Object-Subject-Verb",
+        "Subject-Object-Verb"
+      ],
+      answer: 0
+    }
+  ];
+
+  // Fisher-Yates shuffle for arrays
+  function shuffle(array) {
+    let currentIndex = array.length, randomIndex;
+    while(currentIndex !== 0){
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+    return array;
+  }
+
+  // Quiz state variables
+  let shuffledQuestions = [];
+  let currentQuestionIndex = 0;
+  let score = 0;
+  let selectedOptionIndex = null;
+
+  // DOM elements
+  const questionNumberEl = document.getElementById('question-number');
+  const questionTextEl = document.getElementById('question-text');
+  const optionsListEl = document.getElementById('options-list');
+  const nextBtn = document.getElementById('next-btn');
+  const quizContent = document.getElementById('quiz-content');
+  const resultContainer = document.getElementById('result-container');
+  const scoreEl = document.getElementById('score');
+  const playAgainBtn = document.getElementById('play-again-btn');
+
+  // Start or restart quiz
+  function startQuiz(){
+    score = 0;
+    currentQuestionIndex = 0;
+    selectedOptionIndex = null;
+
+    // Pick a randomized subset of 20 questions (or fewer if fewer exist)
+    shuffledQuestions = shuffle([...questions]).slice(0, 20);
+
+    quizContent.style.display = 'block';
+    resultContainer.style.display = 'none';
+
+    showQuestion();
+  }
+
+  // Show current question and options
+  function showQuestion(){
+    selectedOptionIndex = null;
+    nextBtn.disabled = true;
+
+    const currentQ = shuffledQuestions[currentQuestionIndex];
+    questionNumberEl.textContent = `Question ${currentQuestionIndex + 1} of ${shuffledQuestions.length}`;
+    questionTextEl.textContent = currentQ.question;
+
+    optionsListEl.innerHTML = '';
+
+    // Shuffle the options per question
+    let optionObjects = currentQ.options.map((opt, i) => ({ text: opt, index: i }));
+    shuffle(optionObjects);
+
+    optionObjects.forEach(({ text, index }) => {
+      const li = document.createElement('li');
+      li.classList.add('option');
+      li.textContent = text;
+      li.dataset.originalIndex = index;
+
+      li.addEventListener('click', () => {
+        // Deselect all
+        [...optionsListEl.children].forEach(optEl => optEl.classList.remove('selected'));
+        // Select current
+        li.classList.add('selected');
+        selectedOptionIndex = parseInt(li.dataset.originalIndex);
+        nextBtn.disabled = false;
+      });
+
+      optionsListEl.appendChild(li);
+    });
+
+    nextBtn.textContent = (currentQuestionIndex === shuffledQuestions.length - 1) ? 'Finish' : 'Next';
+  }
+
+  // On clicking next or finish
+  nextBtn.addEventListener('click', () => {
+    if (selectedOptionIndex === shuffledQuestions[currentQuestionIndex].answer){
+      score++;
+    }
+
+    currentQuestionIndex++;
+    if(currentQuestionIndex < shuffledQuestions.length){
+      showQuestion();
+    } else {
+      showResults();
+    }
+  });
+
+  // Show final score with color feedback
+  function showResults(){
+    quizContent.style.display = 'none';
+    resultContainer.style.display = 'block';
+
+    scoreEl.textContent = `Your score: ${score} / ${shuffledQuestions.length}`;
+
+    const percent = (score / shuffledQuestions.length) * 100;
+    if (percent >= 80){
+      scoreEl.style.color = '#39b54a'; // green
+    } else if (percent >= 50){
+      scoreEl.style.color = '#ffb547'; // orange
+    } else {
+      scoreEl.style.color = '#ff595e'; // red
+    }
+  }
+
+  playAgainBtn.addEventListener('click', startQuiz);
+
+  // Initialize quiz on page load
+  startQuiz();
+</script>
+
+</body>
+</html>

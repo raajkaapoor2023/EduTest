@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linguistics Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            margin: 20px 0;
+        }
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+        .options li {
+            margin: 10px 0;
+        }
+        button {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #3498db;
+        }
+        .results {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #2980b9;
+            border-radius: 8px;
+            background-color: #eaf6f7;
+        }
+        .highlight {
+            background-color: #dff0d8;
+            padding: 5px;
+            border-left: 5px solid #5cb85c;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>Linguistics B.A. Final Year Test</h1>
+    <div id="quiz"></div>
+    <button id="submit">Submit Answers</button>
+    <div class="results" id="results"></div>
+</div>
+
+<script>
+    const questions = [
+        {
+            question: "1. What is the primary purpose of grammar?",
+            options: [
+                "To provide rules for combining words",
+                "To create new words",
+                "To analyze phonetics",
+                "To translate languages"
+            ],
+            answer: 0,
+            explanation: "Grammar provides a set of rules that allows us to combine words into larger units."
+        },
+        {
+            question: "2. What distinguishes descriptive rules from prescriptive rules?",
+            options: [
+                "Descriptive rules describe how language is used",
+                "Prescriptive rules describe how language should be used",
+                "Both describe language use",
+                "Neither describes language use"
+            ],
+            answer: 0,
+            explanation: "Descriptive rules explain actual language use, while prescriptive rules set standards for correctness."
+        },
+        {
+            question: "3. Which of the following best defines syntactic variation?",
+            options: [
+                "Differences in word meaning",
+                "Differences in sentence structure",
+                "Differences in phonetic pronunciation",
+                "Differences in language register"
+            ],
+            answer: 1,
+            explanation: "Syntactic variation refers to differences in the structure of sentences across dialects."
+        },
+        {
+            question: "4. Why is Standard English considered prestigious?",
+            options: [
+                "It is the oldest form of English",
+                "It is associated with education and higher-income groups",
+                "It is spoken by the majority",
+                "It has the most complex grammar"
+            ],
+            answer: 1,
+            explanation: "Standard English is linked to education and social status, thus considered prestigious."
+        },
+        {
+            question: "5. What does the term 'dialect' refer to?",
+            options: [
+                "A regional form of a language",
+                "The grammatical rules of a language",
+                "A style of writing",
+                "A type of slang"
+            ],
+            answer: 0,
+            explanation: "A dialect is a regional or social variety of a language, characterized by its unique features."
+        },
+        {
+            question: "6. What is a common feature of non-standard English?",
+            options: [
+                "It follows strict grammatical rules",
+                "It is used in formal writing",
+                "It varies based on regional dialects",
+                "It is universally accepted"
+            ],
+            answer: 2,
+            explanation: "Non-standard English varies significantly based on regional dialects."
+        },
+        {
+            question: "7. Which of the following is an example of a prescriptive rule?",
+            options: [
+                "Using who instead of whom",
+                "Ending a sentence with a preposition",
+                "Using less for uncountable nouns",
+                "Using double negatives"
+            ],
+            answer: 0,
+            explanation: "Prescriptive rules dictate not using who in the objective case."
+        },
+        {
+            question: "8. Which of the following sentences uses Standard English?",
+            options: [
+                "Ain't nobody got time for that.",
+                "He don't know nothing.",
+                "I don't think anyone knows.",
+                "We ain't going nowhere."
+            ],
+            answer: 2,
+            explanation: "The sentence 'I don't think anyone knows' adheres to Standard English grammatical rules."
+        },
+        {
+            question: "9. What is the primary function of grammar in language?",
+            options: [
+                "To create sentences",
+                "To convey meaning",
+                "To structure thoughts",
+                "To combine words"
+            ],
+            answer: 3,
+            explanation: "Grammar's primary function is to provide rules for combining words into sentences."
+        },
+        {
+            question: "10. Why might someone study grammar?",
+            options: [
+                "To increase vocabulary",
+                "To improve writing skills",
+                "To understand phonetics",
+                "To memorize sentences"
+            ],
+            answer: 1,
+            explanation: "Studying grammar helps enhance writing skills by providing necessary rules."
+        },
+        {
+            question: "11. What is the significance of dialects in language?",
+            options: [
+                "They create confusion",
+                "They enrich the language",
+                "They should be eliminated",
+                "They are always incorrect"
+            ],
+            answer: 1,
+            explanation: "Dialects enhance the richness and diversity of a language."
+        },
+        {
+            question: "12. How does language variation occur?",
+            options: [
+                "Through globalization",
+                "Through technological advancement",
+                "Through regional and social influences",
+                "Through education"
+            ],
+            answer: 2,
+            explanation: "Language variation occurs due to regional and social influences affecting language use."
+        },
+        {
+            question: "13. Which term refers to the rules governing the structure of sentences?",
+            options: [
+                "Morphology",
+                "Syntax",
+                "Phonetics",
+                "Semantics"
+            ],
+            answer: 1,
+            explanation: "Syntax refers to the rules that govern how sentences are structured."
+        },
+        {
+            question: "14. What is an example of a descriptive rule?",
+            options: [
+                "Do not end sentences with prepositions.",
+                "Use whom in formal contexts.",
+                "People often say 'ain't' in casual conversation.",
+                "Avoid using double negatives."
+            ],
+            answer: 2,
+            explanation: "Descriptive rules reflect how language is used, such as the casual use of 'ain't'."
+        },
+        {
+            question: "15. What aspect of language does pragmatics study?",
+            options: [
+                "Sounds of speech",
+                "Meaning of words",
+                "Use of language in context",
+                "Structure of sentences"
+            ],
+            answer: 2,
+            explanation: "Pragmatics examines language use in context and its impact on communication."
+        },
+        {
+            question: "16. How does one identify a subject in a sentence?",
+            options: [
+                "By its position at the end",
+                "By turning the sentence into a question",
+                "By looking for an auxiliary verb",
+                "By identifying the direct object"
+            ],
+            answer: 1,
+            explanation: "You can identify the subject by converting the sentence into a yes-no question."
+        },
+        {
+            question: "17. What is the role of modals in a sentence?",
+            options: [
+                "To express tense",
+                "To indicate necessity or possibility",
+                "To define nouns",
+                "To modify verbs"
+            ],
+            answer: 1,
+            explanation: "Modals express necessity, possibility, permission, or ability."
+        },
+        {
+            question: "18. Why is the study of grammar important for language learners?",
+            options: [
+                "It helps in memorizing vocabulary.",
+                "It allows learners to communicate effectively.",
+                "It provides historical context.",
+                "It focuses solely on writing."
+            ],
+            answer: 1,
+            explanation: "Understanding grammar is crucial for effective communication in both spoken and written forms."
+        },
+        {
+            question: "19. Which of the following is NOT a characteristic of Standard English?",
+            options: [
+                "Used in formal settings",
+                "Widely accepted in writing",
+                "Includes regional dialects",
+                "Taught in schools"
+            ],
+            answer: 2,
+            explanation: "Standard English is characterized by its uniformity and typically lacks regional dialect features."
+        },
+        {
+            question: "20. What is the function of a noun phrase?",
+            options: [
+                "To modify a verb",
+                "To serve as a subject or object",
+                "To express an action",
+                "To indicate time"
+            ],
+            answer: 1,
+            explanation: "Noun phrases function as subjects or objects in sentences."
+        },
+        {
+            question: "21. Which of the following best describes the relationship between grammar and meaning?",
+            options: [
+                "Grammar has no effect on meaning.",
+                "Grammar determines the meaning of every word.",
+                "Grammar provides structure to convey meaning.",
+                "Meaning is independent of grammatical rules."
+            ],
+            answer: 2,
+            explanation: "Grammar provides the necessary structure for effectively conveying meaning in language."
+        },
+        {
+            question: "22. What does the term 'register' refer to in linguistics?",
+            options: [
+                "The formality of language use",
+                "The number of speakers of a language",
+                "The historical development of a language",
+                "The geographical distribution of a language"
+            ],
+            answer: 0,
+            explanation: "In linguistics, 'register' refers to the variation in language use depending on context and audience."
+        },
+        {
+            question: "23. Which sentence best illustrates a prescriptive rule of grammar?",
+            options: [
+                "People say 'ain't' in casual settings.",
+                "You should avoid double negatives.",
+                "He could care less.",
+                "Everyone has their own opinion."
+            ],
+            answer: 1,
+            explanation: "Prescriptive rules dictate what is considered correct or appropriate in language use."
+        },
+        {
+            question: "24. What is the effect of dialects on communication?",
+            options: [
+                "They always confuse the speaker.",
+                "They enrich the language.",
+                "They should be avoided in formal contexts.",
+                "They eliminate misunderstandings."
+            ],
+            answer: 1,
+            explanation: "Dialects contribute to the richness and diversity of language."
+        },
+        {
+            question: "25. Which of the following is a feature of non-standard English?",
+            options: [
+                "Use of formal vocabulary",
+                "Complex sentence structures",
+                "Frequent use of fillers",
+                "Strict adherence to grammar rules"
+            ],
+            answer: 2,
+            explanation: "Non-standard English often includes fillers and relaxed grammatical features."
+        },
+        {
+            question: "26. What is a characteristic of a compound sentence?",
+            options: [
+                "Contains only one clause",
+                "Contains two or more independent clauses",
+                "Contains a dependent clause",
+                "Is always short"
+            ],
+            answer: 1,
+            explanation: "A compound sentence contains two or more independent clauses typically joined by coordinating conjunctions."
+        },
+        {
+            question: "27. How does a complex sentence differ from a compound sentence?",
+            options: [
+                "It contains only independent clauses.",
+                "It contains at least one subordinate clause.",
+                "It cannot stand alone.",
+                "It is always longer."
+            ],
+            answer: 1,
+            explanation: "A complex sentence includes at least one subordinate clause, whereas a compound sentence consists of independent clauses."
+        },
+        {
+            question: "28. Why is it important to study language variation?",
+            options: [
+                "To eliminate different dialects",
+                "To understand the evolution of language",
+                "To appreciate cultural diversity",
+                "To simplify communication"
+            ],
+            answer: 2,
+            explanation: "Studying language variation helps us appreciate cultural diversity and different language uses."
+        },
+        {
+            question: "29. Which of the following is a feature of informal speech?",
+            options: [
+                "Use of formal vocabulary",
+                "Complex sentence structures",
+                "Frequent use of fillers",
+                "Strict adherence to grammar rules"
+            ],
+            answer: 2,
+            explanation: "Informal speech often includes fillers and other relaxed grammatical features."
+        },
+        {
+            question: "30. What is a common function of adverbial clauses?",
+            options: [
+                "To serve as subjects",
+                "To modify verbs",
+                "To link sentences",
+                "To provide definitions"
+            ],
+            answer: 1,
+            explanation: "Adverbial clauses typically modify verbs by providing information about time, reason, condition, etc."
+        },
+        {
+            question: "31. In what context is the subjunctive mood used?",
+            options: [
+                "In making statements",
+                "In expressing wishes or hypotheses",
+                "In giving commands",
+                "In asking questions"
+            ],
+            answer: 1,
+            explanation: "The subjunctive mood is often used to express wishes, hypotheticals, or conditions contrary to fact."
+        },
+        {
+            question: "32. What does the term 'morphology' refer to?",
+            options: [
+                "The study of word forms",
+                "The study of sentence structure",
+                "The study of sounds",
+                "The study of meaning"
+            ],
+            answer: 0,
+            explanation: "Morphology is the branch of linguistics that explores the structure and formation of words."
+        },
+        {
+            question: "33. Which of the following is an example of a nominal clause?",
+            options: [
+                "That you are late is troubling.",
+                "She went home.",
+                "They are playing outside.",
+                "The dog barked loudly."
+            ],
+            answer: 0,
+            explanation: "The clause 'That you are late is troubling' functions as a subject in the sentence."
+        },
+        {
+            question: "34. What distinguishes a direct object from an indirect object?",
+            options: [
+                "Direct objects answer 'who?'",
+                "Indirect objects answer 'to whom?'",
+                "Direct objects are always nouns.",
+                "Indirect objects follow the verb."
+            ],
+            answer: 1,
+            explanation: "Indirect objects indicate to whom or for whom the action of the verb is performed."
+        },
+        {
+            question: "35. Which of the following sentences contains a relative clause?",
+            options: [
+                "The cat slept.",
+                "The dog that barked is mine.",
+                "She runs fast.",
+                "He is happy."
+            ],
+            answer: 1,
+            explanation: "The sentence 'The dog that barked is mine' includes a relative clause 'that barked'."
+        },
+        {
+            question: "36. What is the function of a subject complement?",
+            options: [
+                "To modify the subject",
+                "To complete the meaning of a verb",
+                "To introduce a clause",
+                "To provide an object"
+            ],
+            answer: 1,
+            explanation: "A subject complement renames or describes the subject, completing the meaning of the verb."
+        },
+        {
+            question: "37. What is the basic structure of a simple sentence?",
+            options: [
+                "Subject + Verb + Object",
+                "Subject + Object + Verb",
+                "Verb + Subject + Object",
+                "Object + Subject + Verb"
+            ],
+            answer: 0,
+            explanation: "The basic structure of a simple sentence is Subject + Verb + Object."
+        },
+        {
+            question: "38. Which of the following is a characteristic of formal writing?",
+            options: [
+                "Use of contractions",
+                "Use of slang",
+                "Complex sentence structures",
+                "Use of colloquial language"
+            ],
+            answer: 2,
+            explanation: "Formal writing typically employs complex sentence structures and avoids slang or colloquial language."
+        },
+        {
+            question: "39. What is the role of a determiner in a noun phrase?",
+            options: [
+                "To modify the noun",
+                "To indicate quantity",
+                "To specify definiteness",
+                "To express action"
+            ],
+            answer: 2,
+            explanation: "Determiners specify definiteness and quantity in noun phrases."
+        },
+        {
+            question: "40. What is the significance of the passive voice?",
+            options: [
+                "It emphasizes the subject",
+                "It allows for sentence variety",
+                "It removes the doer from focus",
+                "It simplifies the sentence structure"
+            ],
+            answer: 2,
+            explanation: "The passive voice allows the focus to shift away from the doer of the action, which can be useful in various contexts."
+        }
+    ];
+
+    // Fisher-Yates shuffle function
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // Shuffle questions and options
+    shuffledQuestions = shuffleArray([...questions]);
+    shuffledQuestions.forEach(q => shuffleArray(q.options));
+
+    // Generate quiz
+    const quizContainer = document.getElementById('quiz');
+    shuffledQuestions.forEach((q, index) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.className = "question";
+        questionDiv.innerHTML = `<p>${q.question}</p>`;
+        const optionsList = document.createElement('ul');
+        optionsList.className = "options";
+        q.options.forEach((option, i) => {
+            const li = document.createElement('li');
+            li.innerHTML = `<input type="radio" name="question${index}" value="${i}"> ${option}`;
+            optionsList.appendChild(li);
+        });
+        questionDiv.appendChild(optionsList);
+        quizContainer.appendChild(questionDiv);
+    });
+
+    // Handle submission
+    document

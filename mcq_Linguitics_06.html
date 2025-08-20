@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Linguistics MCQ Quiz</title>
+  <style>
+    body { font-family: Arial; margin: 20px; background-color: #f9f9f9; }
+    .quiz-container { max-width: 800px; margin: auto; }
+    .question { margin-bottom: 10px; }
+    .options { margin-bottom: 20px; }
+    button { padding: 10px 15px; }
+    #result { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h2>English Linguistics MCQ Quiz</h2>
+    <form id="quizForm">
+      <!-- Questions will be injected here -->
+    </form>
+    <button onclick="submitQuiz()">Submit Quiz</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        q: "1. Which of the following is a progressive aspect?",
+        o: ["She sings", "She is singing", "She has sung", "She will sing"],
+        a: 1
+      },
+      {
+        q: "2. The word 'unbelievable' is an example of:",
+        o: ["Inflection", "Derivation", "Compounding", "Clipping"],
+        a: 1
+      },
+      {
+        q: "3. Which modal verb expresses ability?",
+        o: ["Must", "Should", "Can", "Might"],
+        a: 2
+      },
+      {
+        q: "4. What tense is used in: 'She had been sleeping'?",
+        o: ["Past Perfect Continuous", "Present Perfect", "Future Perfect", "Past Simple"],
+        a: 0
+      },
+      {
+        q: "5. Syntax deals with:",
+        o: ["Word meaning", "Sentence structure", "Sound patterns", "Word formation"],
+        a: 1
+      },
+      {
+        q: "6. Semantics is the study of:",
+        o: ["Sounds", "Sentence order", "Meaning", "Spelling"],
+        a: 2
+      },
+      // Add up to 30 questions...
+    ];
+
+    function loadQuiz() {
+      const form = document.getElementById("quizForm");
+      quizData.forEach((item, index) => {
+        const qDiv = document.createElement("div");
+        qDiv.classList.add("question");
+        qDiv.innerHTML = `<p>${item.q}</p>`;
+
+        const opts = document.createElement("div");
+        opts.classList.add("options");
+
+        item.o.forEach((option, i) => {
+          opts.innerHTML += `
+            <label>
+              <input type="radio" name="q${index}" value="${i}" required />
+              ${option}
+            </label><br/>
+          `;
+        });
+
+        qDiv.appendChild(opts);
+        form.appendChild(qDiv);
+      });
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      quizData.forEach((item, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        if (selected && parseInt(selected.value) === item.a) {
+          score++;
+        }
+      });
+
+      document.getElementById("result").innerText = `You scored ${score} out of ${quizData.length}`;
+    }
+
+    loadQuiz();
+  </script>
+</body>
+</html>

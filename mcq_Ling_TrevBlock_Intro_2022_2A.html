@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Intro to Linguistics (TrevTutor 0:00–0:09) – 20 MCQ Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; max-width: 800px; line-height: 1.5; background: #f8f8fa; }
+    .question { margin-bottom: 1.5em; }
+    .correct { color: green; }
+    .incorrect { color: red; }
+    .skipped { color: orange; }
+    .btn { background: #0066cc; color: white; border: none; padding: 10px 20px; font-size: 1em; margin: 1em 0; cursor: pointer; }
+    .btn:hover { background: #004999; }
+    .answers { display: none; margin-top: 2em; background: #f0f0fc; padding: 2em; border-radius: 8px; }
+    .answer-explanation { font-size: 0.96em; margin-bottom: 1.2em; }
+    label { cursor: pointer; display: block; }
+  </style>
+</head>
+<body>
+  <h1>Intro to Linguistics – TrevTutor (0:00–0:09) MCQ Quiz</h1>
+  <form id="quizForm"></form>
+  <button class="btn" type="button" onclick="submitQuiz()">Submit Quiz</button>
+  <div id="score"></div>
+  <div class="answers" id="answers"></div>
+  <script>
+    const quiz = [
+      {
+        q: "1. What is the main focus of the academic discipline of linguistics?",
+        o: [
+          "Learning how to speak new languages",
+          "Understanding how language works as a system",
+          "Studying the history of specific languages",
+          "Writing grammar textbooks"
+        ],
+        a: 1,
+        ref: "Linguistics is the scientific study of language structure, use, and knowledge—not just speaking or translating languages[1][2]."
+      },
+      {
+        q: "2. Which of the following is NOT one of the core subfields of linguistics introduced in the first 9 minutes?",
+        o: [
+          "Syntax",
+          "Sociolinguistics",
+          "Morphology",
+          "Phonetics"
+        ],
+        a: 1,
+        ref: "The core covered are phonetics, phonology, syntax, morphology, semantics, and pragmatics; sociolinguistics is not included until later/advanced lectures[1][2]."
+      },
+      {
+        q: "3. According to TrevTutor, which property of language allows us to create and understand sentences we've never encountered before?",
+        o: [
+          "Parity",
+          "Creativity",
+          "Universality",
+          "Mutability"
+        ],
+        a: 1,
+        ref: "Creativity refers to the infinite generativity of language: we can produce and understand new combinations never heard before[1]."
+      },
+      {
+        q: "4. Which example best demonstrates the property of creativity in language?",
+        o: [
+          "Repeating a common phrase",
+          "Inventing a sentence that has never been uttered before",
+          "Following strict grammar rules",
+          "Using correct spelling"
+        ],
+        a: 1,
+        ref: "Creativity is exemplified by forming novel sentences that are still understandable—see TrevTutor's 'dog that snorted my girlfriend's blouse' example[1]."
+      },
+      {
+        q: "5. What is meant by 'parity' in the context of language properties?",
+        o: [
+          "All languages are equally complex overall",
+          "Pronunciations must be exact",
+          "There is a universal grammar book",
+          "Some languages are better for poetry"
+        ],
+        a: 0,
+        ref: "Parity means all grammars are fundamentally equal in linguistic complexity; no natural language is 'simpler' overall[1][2]."
+      },
+      {
+        q: "6. Which property is associated with the fact that language constantly changes over time?",
+        o: [
+          "Parity",
+          "Creativity",
+          "Mutability",
+          "Universality"
+        ],
+        a: 2,
+        ref: "'Mutability' refers to the property that languages inevitably change—see the comparison of current and older English[1]."
+      },
+      {
+        q: "7. 'Universality' refers to which linguistic fact?",
+        o: [
+          "All languages share certain features and categories",
+          "No two languages are alike in any respect",
+          "Each language is uniquely unstructured",
+          "Children cannot acquire language universally"
+        ],
+        a: 0,
+        ref: "Universality: All languages show some common structural features, e.g., all have vowels, consonants, nouns, and verbs[1][2]."
+      },
+      {
+        q: "8. In the lecture, the minimum number of vowels that any known spoken language must have is:",
+        o: [
+          "2",
+          "3",
+          "4",
+          "7"
+        ],
+        a: 1,
+        ref: "Every spoken language has at least three vowel phonemes, according to linguistic surveys[1][2]."
+      },
+      {
+        q: "9. Which is an example of 'mutability' as discussed by TrevTutor?",
+        o: [
+          "Every language has adjectives",
+          "The word 'lit' overtaking 'cool' in frequency among youth",
+          "The existence of consonant clusters",
+          "Speaking multiple languages"
+        ],
+        a: 1,
+        ref: "'Lit' vs 'cool' as used by youth in 2022 exemplifies change (mutability) in vocabulary and usage[1]."
+      },
+      {
+        q: "10. The scientific, objective approach to studying language, focusing on description over judgment, is known as:",
+        o: [
+          "Prescriptivism",
+          "Descriptivism",
+          "Universalism",
+          "Parity"
+        ],
+        a: 1,
+        ref: "Descriptivism means documenting how language is actually used, not prescribing rules for 'proper' use[1][2]."
+      },
+      {
+        q: "11. Which statement would a DESCRIPTIVIST linguist likely make?",
+        o: [
+          "\"You shouldn't say 'ain't' because it's incorrect.\"",
+          "\"Some speakers regularly use 'ain't' for 'is not.'\"",
+          "\"It is wrong to end a sentence with a preposition.\"",
+          "\"Never split an infinitive in English.\""
+        ],
+        a: 1,
+        ref: "Descriptivists describe actual language practices without prescribing correctness; see example in lecture[1]."
+      },
+      {
+        q: "12. The term for the scientific study of speech sounds in language is:",
+        o: [
+          "Phonetics",
+          "Sociolinguistics",
+          "Morphology",
+          "Pragmatics"
+        ],
+        a: 0,
+        ref: "Phonetics is the study of speech sounds—their articulation, acoustics, and auditory perception[1][2]."
+      },
+      {
+        q: "13. What is the best description of 'generalization' (generality) as a property of language?",
+        o: [
+          "Each language has a grammar for sounds, words, and sentences",
+          "Some languages have no grammar",
+          "Grammar only means sentence structure",
+          "Only ancient languages are grammatical"
+        ],
+        a: 0,
+        ref: "Generality: All languages have grammar at some level (sound, word, sentence); not just syntax[1]."
+      },
+      {
+        q: "14. Which one of the following CANNOT be concluded from TrevTutor's overview of language properties?",
+        o: [
+          "No language is more primitive than another",
+          "Grammar only applies to standard written English",
+          "Spoken grammars can differ without loss of complexity",
+          "Change is inevitable in all languages"
+        ],
+        a: 1,
+        ref: "Grammar is not restricted to standard language or writing; non-standard and spoken grammars are equally systematic[1]."
+      },
+      {
+        q: "15. In TrevTutor's outline, which pair of terms best distinguishes the 'literal meaning' of sentences from 'use in context'?",
+        o: [
+          "Syntax and Phonology",
+          "Semantics and Pragmatics",
+          "Morphology and Syntax",
+          "Phonology and Pragmatics"
+        ],
+        a: 1,
+        ref: "Semantics is literal meaning; pragmatics considers use and implied/indirect meaning in context[1][2]."
+      },
+      {
+        q: "16. The sentence \"Colorless green ideas sleep furiously\" is used to illustrate what concept?",
+        o: [
+          "Creativity",
+          "Syntax vs. Semantics",
+          "Parity",
+          "Universality"
+        ],
+        a: 1,
+        ref: "Chomsky's sentence is grammatical (syntactic) but semantically odd, showing the distinction between syntax and semantics[1][2]."
+      },
+      {
+        q: "17. What role does 'grammar' play according to the introduction?",
+        o: [
+          "It only refers to writing conventions",
+          "It organizes sounds, words, and sentences in every language",
+          "It applies only to English",
+          "It's enforced by linguists"
+        ],
+        a: 1,
+        ref: "Grammar is the system organizing sounds, words, and sentences in any language, not just writing[1]."
+      },
+      {
+        q: "18. Why is English spelling not a good predictor of actual pronunciation?",
+        o: [
+          "Letters always represent unique sounds",
+          "English spells similar sounds differently and may use silent letters",
+          "All dialects are phonetically identical",
+          "Spoken language is illogical"
+        ],
+        a: 1,
+        ref: "TrevTutor discusses 'silent letters' and variable spellings for the same sounds as motivation for using IPA[1]."
+      },
+      {
+        q: "19. In linguistics, which category includes the study of 'how sounds group into syllables and change across contexts'?",
+        o: [
+          "Phonology",
+          "Syntax",
+          "Morphology",
+          "Pragmatics"
+        ],
+        a: 0,
+        ref: "Phonology is the study of systematic sound patterning, including syllables and contextual alternations[1]."
+      },
+      {
+        q: "20. Which statement is characteristic of a prescriptivist approach to language?",
+        o: [
+          "\"We record how speakers actually talk in natural settings.\"",
+          "\"Regional dialects are valuable for understanding grammar.\"",
+          "\"Do not use double negatives—they are always wrong.\"",
+          "\"Sociolinguistics is not part of real linguistics.\""
+        ],
+        a: 2,
+        ref: "Prescriptivism imposes value-laden, 'correctness' judgments—see lecture examples[1]."
+      }
+    ];
+    // Render quiz
+    const qForm = document.getElementById('quizForm');
+    quiz.forEach((item, idx) => {
+      let qDiv = document.createElement('div');
+      qDiv.classList.add('question');
+      let html = `<p><strong>${item.q}</strong></p>`;
+      item.o.forEach((opt, j) => {
+        html += `<label><input type="radio" name="q${idx}" value="${j}"> ${opt}</label>`;
+      });
+      qDiv.innerHTML = html;
+      qForm.appendChild(qDiv);
+    });
+    function submitQuiz() {
+      let score = 0, answered = 0, output = '';
+      for (let i = 0; i < quiz.length; i++) {
+        let options = document.getElementsByName(`q${i}`);
+        let selected = -1;
+        for (let j = 0; j < options.length; j++) {
+          if (options[j].checked) selected = parseInt(options[j].value);
+        }
+        let corr = quiz[i].a;
+        output += `<div class="answer-explanation"><strong>Q${i+1}:</strong> ${quiz[i].q}<br>`;
+        if (selected === -1) {
+          output += `<span class="skipped">No answer given.</span><br>`;
+          output += `<span class="correct">Correct answer: ${quiz[i].o[corr]}</span><br>`;
+        } else {
+          answered++;
+          if (selected === corr) { score++; }
+          output += `<span class="${selected === corr ? 'correct' : 'incorrect'}">Your answer: ${quiz[i].o[selected]}</span><br>`;
+          output += `<span class="correct">Correct answer: ${quiz[i].o[corr]}</span><br>`;
+        }
+        output += `<em>${quiz[i].ref}</em></div>`;
+      }
+      document.getElementById('score').innerHTML = `<h2>Score: ${score} / 20 (${answered} answered, ${quiz.length-answered} skipped)</h2>`;
+      document.getElementById('answers').innerHTML = output;
+      document.getElementById('answers').style.display = 'block';
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  </script>
+  <hr>
+  <p style="font-size:0.92em;color:#666;">
+    <strong>References:</strong><br>
+    [1] TrevTutor, Introduction to Linguistics: The Complete Crash Course, 0:00–0:09, YouTube, 2024. <a href="https://www.youtube.com/watch?v=0nBzlNFwgs4" target="_blank">Video Link</a>.<br>
+    [2] O’Grady, W., Aronoff, M., Archibald, J., & Rees-Miller, J. (2020). Contemporary Linguistics: An Introduction (7th Ed.), Macmillan.<br>
+    This quiz is for educational use only, following Fair Use principles and YouTube content guidelines.
+  </p>
+</body>
+</html>

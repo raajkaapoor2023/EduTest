@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Advanced English Grammar & Linguistics Exam</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #ece9e6, #ffffff);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding-top: 30px;
+  }
+
+  #quiz-container {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    width: 95vw;
+    max-width: 720px;
+    padding: 35px 45px;
+  }
+
+  h1 {
+    text-align: center;
+    color: #1e2a38;
+    margin-bottom: 25px;
+    font-weight: 700;
+    font-size: 2rem;
+  }
+
+  #question-number {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 10px;
+  }
+
+  #question-text {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #222831;
+    margin-bottom: 22px;
+  }
+
+  .options {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .option {
+    background: #f4f7fb;
+    margin-bottom: 12px;
+    padding: 15px 22px;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: background-color 0.3s, border-color 0.3s;
+    user-select: none;
+    font-size: 1.1rem;
+    color: #2d3436;
+  }
+
+  .option:hover {
+    background-color: #4a90e2;
+    color: #fff;
+  }
+
+  .option.selected {
+    background-color: #0077cc;
+    color: white;
+    border-color: #005fa3;
+  }
+
+  #next-btn {
+    background-color: #0077cc;
+    color: white;
+    font-weight: 700;
+    border: none;
+    padding: 17px;
+    font-size: 1.3rem;
+    border-radius: 14px;
+    cursor: pointer;
+    margin-top: 28px;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0,119,204,0.3);
+    transition: background-color 0.3s;
+  }
+
+  #next-btn:disabled {
+    background-color: #b3d1f2;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  #result-container {
+    display: none;
+    margin-top: 20px;
+  }
+
+  #score {
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-align: center;
+    color: #1b5e20;
+    margin-bottom: 20px;
+  }
+
+  #feedback-text {
+    font-size: 1.1rem;
+    margin-bottom: 35px;
+    text-align: center;
+  }
+
+  #detailed-answers {
+    font-size: 1rem;
+    line-height: 1.45;
+    color: #343a40;
+    max-height: 350px;
+    overflow-y: auto;
+    border-top: 2px solid #0077cc;
+    padding-top: 18px;
+  }
+
+  #detailed-answers h3 {
+    margin: 14px 0 10px;
+    font-weight: 700;
+    color: #01579b;
+  }
+
+  #detailed-answers p {
+    margin-bottom: 18px;
+  }
+
+  #play-again-btn {
+    background-color: #d32f2f;
+    color: white;
+    font-weight: 700;
+    border: none;
+    padding: 16px;
+    font-size: 1.15rem;
+    border-radius: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(211,47,47,0.35);
+    width: 100%;
+    margin-top: 18px;
+  }
+
+  /* Scroll bar for answer box*/
+  #detailed-answers::-webkit-scrollbar {
+    width: 9px;
+  }
+  #detailed-answers::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  #detailed-answers::-webkit-scrollbar-thumb {
+    background-color: #0077cc;
+    border-radius: 20px;
+    border: 3px solid #f1f1f1;
+  }
+
+  /* Responsive for smaller devices */
+  @media (max-width: 480px) {
+    #quiz-container {
+      padding: 25px 25px 35px 25px;
+      width: 95vw;
+    }
+
+    h1 {
+      font-size: 1.7rem;
+    }
+
+    #question-text {
+      font-size: 1.1rem;
+    }
+
+    #next-btn, #play-again-btn {
+      font-size: 1.1rem;
+      padding: 14px;
+    }
+  }
+
+</style>
+</head>
+<body>
+  <div id="quiz-container">
+    <h1>Advanced English Grammar & Linguistics Exam</h1>
+
+    <div id="quiz-content">
+      <div id="question-number"></div>
+      <div id="question-text"></div>
+      <ul class="options" id="options-list"></ul>
+      <button disabled id="next-btn">Next</button>
+    </div>
+
+    <div id="result-container">
+      <div id="score"></div>
+      <div id="feedback-text"></div>
+      <div id="detailed-answers"></div>
+      <button id="play-again-btn">Retake Exam</button>
+    </div>
+  </div>
+
+<script>
+  // Advanced, challenging questions tailored toward elite B.A. and M.A. prep
+  const questions = [
+    {
+      question: "Which sentence demonstrates the correct use of the subjunctive mood in a counterfactual conditional?",
+      options: [
+        "If he was taller, he would be a basketball player.",
+        "If he were taller, he would be a basketball player.",
+        "If he is taller, he will be a basketball player.",
+        "If he had been taller, he would be a basketball player."
+      ],
+      answer: 1,
+      explanation: `The subjunctive mood is correctly employed in the second sentence ("were" instead of "was") to express a hypothetical, counterfactual condition. 
+      This follows prescriptive rules found in authoritative grammar guides such as Huddleston & Pullum (2002). 
+      Reference: Huddleston, R., & Pullum, G. K. (2002). The Cambridge Grammar of the English Language. Cambridge University Press.`
+    },
+    {
+      question: "What morphological process is illustrated in the formation of the word 'nationalization'?",
+      options: [
+        "Compounding and derivation",
+        "Inflection",
+        "Derivation with affixation",
+        "Conversion"
+      ],
+      answer: 2,
+      explanation: `'Nationalization' is formed by derivation through affixation: the root 'nation' is combined with suffixes '-al', '-ize', and '-ation'. 
+      This is a classic example of morphological derivation described in Bauer (2003).
+      Reference: Bauer, L. (2003). Introducing Linguistic Morphology. Edinburgh University Press.`
+    },
+    {
+      question: "Identify the pragmatic principle violated in the utterance: 'Is John coming to the party?' — 'I have to work late.'",
+      options: [
+        "Maxim of Quantity",
+        "Maxim of Quality",
+        "Maxim of Relation",
+        "Maxim of Manner"
+      ],
+      answer: 2,
+      explanation: `The answer violates the Maxim of Relation (Relevance) as the reply doesn't directly address the question. 
+      Grice’s (1975) Cooperative Principle outlines these conversational maxims. 
+      Reference: Grice, H. P. (1975). Logic and conversation. In P. Cole & J. Morgan (Eds.), Syntax and Semantics, vol. 3: Speech Acts. Academic Press.`
+    },
+    {
+      question: "In the sentence, 'Visiting relatives can be annoying,' the phrase 'visiting relatives' is an example of:",
+      options: [
+        "A gerund phrase functioning as a noun phrase",
+        "A participial phrase functioning as an adjective",
+        "An infinitive phrase",
+        "A verbless clause"
+      ],
+      answer: 0,
+      explanation: `'Visiting' here acts as a gerund (verbal noun) and the phrase as a whole functions as a noun phrase, the subject of the sentence.
+      This ambiguity between gerund and participial uses is explained in Quirk et al. (1985).
+      Reference: Quirk, R., Greenbaum, S., Leech, G., & Svartvik, J. (1985). A Comprehensive Grammar of the English Language. Longman.`
+    },
+    {
+      question: "Which of the following sentences contains an example of a non-finite clause?",
+      options: [
+        "She said that she would come.",
+        "Trying to pass the exam, he studied all night.",
+        "When he arrived, we left.",
+        "I wonder if it will rain."
+      ],
+      answer: 1,
+      explanation: `The phrase "Trying to pass the exam" is a non-finite clause (gerund phrase) used adverbially.
+      Non-finite clauses lack tense and are covered extensively by Huddleston & Pullum (2002).
+      Reference: Huddleston, R., & Pullum, G. K. (2002). The Cambridge Grammar of the English Language. Cambridge University Press.`
+    },
+    {
+      question: "In phonology, what process explains the alternation of the plural morpheme in 'cats' /s/ and 'dogs' /z/?",
+      options: [
+        "Assimilation",
+        "Dissimilation",
+        "Elision",
+        "Epenthesis"
+      ],
+      answer: 0,
+      explanation: `Assimilation is the phonological process where a sound becomes similar to a neighboring sound. 
+      The plural suffix /s/ surfaces as /s/ after voiceless consonants (cats) and as /z/ after voiced consonants (dogs).
+      Reference: Odden, D. A. (2005). Introducing Phonology. Cambridge University Press.`
+    },
+    {
+      question: "Which syntactic construction represents a cleft sentence?",
+      options: [
+        "She wrote the article quickly.",
+        "It was the cat that chased the mouse.",
+        "The man who called left a message.",
+        "Although she is tired, she studies."
+      ],
+      answer: 1,
+      explanation: `A cleft sentence divides a single main clause into two clauses to emphasize a particular part. 
+      Here, "It was the cat that chased the mouse" is a canonical cleft structure.
+      Reference: Carnie, A. (2013). Syntax: A Generative Introduction. Wiley-Blackwell.`
+    },
+    {
+      question: "Choose the sentence that correctly demonstrates subject-verb agreement with collective nouns:",
+      options: [
+        "The team are winning their match.",
+        "The team has won its match.",
+        "The team have won its match.",
+        "The team are winning its match."
+      ],
+      answer: 1,
+      explanation: `In British English, collective nouns may take singular or plural verbs depending on context, but when referring to the group as a unit, singular agreement is preferred.
+      Here, singular "has" and singular possessive "its" are consistent.
+      Reference: Biber, D., Conrad, S., & Leech, G. (2002). Longman Grammar of Spoken and Written English. Pearson Education.`
+    },
+    {
+      question: "Which of the following best defines 'markedness' in linguistics?",
+      options: [
+        "The default or unmarked form in a language",
+        "The more complex, less natural or less frequent form relative to another",
+        "Semantic ambiguity of a word",
+        "Phonetic variation due to speech context"
+      ],
+      answer: 1,
+      explanation: `Markedness describes how certain linguistic units are considered more "marked" (i.e., complex, less usual) as opposed to their "unmarked" counterparts.
+      This concept is key in Jakobson’s structuralist linguistics.
+      Reference: Jakobson, R. (1962). Selected Writings. Mouton.`
+    },
+    {
+      question: "In semantics, the term 'polysemy' refers to:",
+      options: [
+        "Words that sound alike but have different meanings",
+        "A word with multiple related meanings",
+        "Words that have opposite meanings",
+        "Use of figurative language"
+      ],
+      answer: 1,
+      explanation: `Polysemy is when a single word has multiple related meanings, e.g., 'head' as part of the body and as a leader.
+      This semantic phenomenon is discussed extensively by Cruse (1986).
+      Reference: Cruse, D. A. (1986). Lexical Semantics. Cambridge University Press.`
+    },
+    {
+      question: "Which feature distinguishes 'Broad A' from 'Long A' in Received Pronunciation?",
+      options: [
+        "Length of vowel only",
+        "Quality and length of vowel",
+        "Tone and intonation",
+        "Stress placement"
+      ],
+      answer: 1,
+      explanation: `Broad A has a distinct vowel quality (lowered tongue position) and longer duration compared to Long A.
+      The phonetic and phonological distinctions are analyzed in Roach (2009).
+      Reference: Roach, P. (2009). English Phonetics and Phonology: A Practical Course (4th Edition). Cambridge University Press.`
+    },
+    {
+      question: "In transformational grammar, the distinction between 'deep structure' and 'surface structure' is:",
+      options: [
+        "No longer considered valid in modern linguistics",
+        "The difference between semantic meaning and syntactic form",
+        "Underlying syntactic relations vs. realized spoken output",
+        "The distinction between phonemes and allophones"
+      ],
+      answer: 2,
+      explanation: `In Chomsky's framework, deep structure encodes underlying syntactic relations and semantic meaning; surface structure refers to the actual form expressed.
+      Reference: Chomsky, N. (1965). Aspects of the Theory of Syntax. MIT Press.`
+    },
+    {
+      question: "Which sentence correctly uses 'whom' according to prescriptive grammar rules?",
+      options: [
+        "Whom is coming to the lecture?",
+        "To whom should I address the letter?",
+        "Whom did call you last night?",
+        "Whom won the competition?"
+      ],
+      answer: 1,
+      explanation: `'Whom' is the objective form used after prepositions or as object of verbs.
+      "To whom should I address the letter?" demonstrates correct usage.
+      Source: Swan (2005).
+      Reference: Swan, M. (2005). Practical English Usage (3rd Ed.). Oxford University Press.`
+    },
+    {
+      question: "Which analysis best describes the sentence: 'Colorless green ideas sleep furiously.'?",
+      options: [
+        "Semantic anomaly but syntactically well-formed",
+        "Semantically and syntactically ill-formed",
+        "A metaphorical sentence",
+        "A typical pragmatically felicitous sentence"
+      ],
+      answer: 0,
+      explanation: `Noam Chomsky introduced this sentence to show that syntactically valid sentences can lack semantic meaning.
+      Reference: Chomsky, N. (1957). Syntactic Structures. Mouton.`
+    },
+    {
+      question: "In dialectology, the concept of 'isogloss' refers to:",
+      options: [
+        "A phonetic feature unique to a dialect",
+        "Geographical boundary line separating linguistic features",
+        "A typical sentence pattern in a dialect area",
+        "The sociolect of a community"
+      ],
+      answer: 1,
+      explanation: `An isogloss is a geographic boundary mapping distinct linguistic features, foundational in dialect studies.
+      Reference: Chambers, J. K., & Trudgill, P. (1998). Dialectology. Cambridge University Press.`
+    },
+    {
+      question: "Which of these is the correct interpretation of ‘clefting’ in syntax?",
+      options: [
+        "Splitting a sentence for emphasis into two clauses",
+        "Using multiple negatives for a single negation",
+        "Adding redundant words for clarity",
+        "Changing word order solely for style"
+      ],
+      answer: 0,
+      explanation: `Clefting divides a sentence to highlight a constituent; e.g., 'It was John who forgot' emphasizes 'John.'
+      Reference: Carnie, A. (2013). Syntax: A Generative Introduction. Wiley-Blackwell.`
+    },
+    {
+      question: "Identify the part of speech of 'up' in the sentence: 'She looked up the information.'",
+      options: [
+        "Preposition",
+        "Adjective",
+        "Particle",
+        "Adverb"
+      ],
+      answer: 2,
+      explanation: `Here, 'up' is a particle, part of the phrasal verb 'look up,' modifying the verb and not a preposition.
+      This distinction is part of phrasal verbs analysis by Huddleston & Pullum (2002).
+      Reference: Huddleston, R., & Pullum, G.K. (2002). The Cambridge Grammar of the English Language. Cambridge University Press.`
+    },
+    {
+      question: "Which of these best describes the semantic role of the noun phrase 'the ball' in 'John threw the ball'?",
+      options: [
+        "Agent",
+        "Theme",
+        "Experiencer",
+        "Goal"
+      ],
+      answer: 1,
+      explanation: `The noun phrase 'the ball' is the Theme (entity affected or moved by the action).
+      Terminology from Fillmore’s case grammar.
+      Reference: Fillmore, C.J. (1968). The Case for Case. Universals in Linguistic Theory. Holt.`
+    },
+    {
+      question: "What is the primary function of a 'determiner' in English syntax?",
+      options: [
+        "To modify verbs",
+        "To express tense",
+        "To specify or quantify nouns",
+        "To link clauses"
+      ],
+      answer: 2,
+      explanation: `Determiners introduce noun phrases and express definiteness, quantity, etc.
+      This is basic syntax taught in Quirk et al. (1985).
+      Reference: Quirk et al. (1985). A Comprehensive Grammar of the English Language. Longman.`
+    },
+    {
+      question: "In generative grammar, what is an 'empty category'?",
+      options: [
+        "A phoneme not pronounced but implied",
+        "A theoretical syntactic element with no phonetic content",
+        "A sentence with a missing subject",
+        "Grammar rules not applied"
+      ],
+      answer: 1,
+      explanation: `'Empty categories' like traces or PRO are syntactic positions that have no overt phonetic realization but are relevant for theory.
+      Extensive treatment in Chomsky (1986).
+      Reference: Chomsky, N. (1986). Knowledge of Language: Its Nature, Origin, and Use. Praeger.`
+    }
+  ];
+
+  // Shuffle helper – Fisher-Yates
+  function shuffle(array) {
+    let t = array.length, i;
+    while (t > 0) {
+      i = Math.floor(Math.random() * t);
+      t--;
+      [array[t], array[i]] = [array[i], array[t]];
+    }
+    return array;
+  }
+
+  // Quiz State variables
+  let shuffledQuestions = [];
+  let currentQuestionIndex = 0;
+  let score = 0;
+  let selectedOptionIndex = null;
+  let userAnswers = [];
+
+  // DOM Elements
+  const questionNumberEl = document.getElementById('question-number');
+  const questionTextEl = document.getElementById('question-text');
+  const optionsListEl = document.getElementById('options-list');
+  const nextBtn = document.getElementById('next-btn');
+  const quizContent = document.getElementById('quiz-content');
+  const resultContainer = document.getElementById('result-container');
+  const scoreEl = document.getElementById('score');
+  const feedbackText = document.getElementById('feedback-text');
+  const detailedAnswers = document.getElementById('detailed-answers');
+  const playAgainBtn = document.getElementById('play-again-btn');
+
+  function startQuiz() {
+    score = 0;
+    currentQuestionIndex = 0;
+    selectedOptionIndex = null;
+    userAnswers = [];
+
+    shuffledQuestions = shuffle([...questions]).slice(0, 20);
+
+    quizContent.style.display = 'block';
+    resultContainer.style.display = 'none';
+
+    showQuestion();
+  }
+
+  function showQuestion() {
+    selectedOptionIndex = null;
+    nextBtn.disabled = true;
+
+    const currentQ = shuffledQuestions[currentQuestionIndex];
+    questionNumberEl.textContent = `Question ${currentQuestionIndex + 1} of ${shuffledQuestions.length}`;
+    questionTextEl.textContent = currentQ.question;
+
+    optionsListEl.innerHTML = '';
+
+    // Shuffle options for question
+    let optionObjects = currentQ.options.map((opt, i) => ({ text: opt, index: i }));
+    shuffle(optionObjects);
+
+    optionObjects.forEach(({ text, index }) => {
+      const li = document.createElement('li');
+      li.classList.add('option');
+      li.textContent = text;
+      li.dataset.originalIndex = index;
+
+      li.addEventListener('click', () => {
+        // deselect all options
+        [...optionsListEl.children].forEach(optEl => optEl.classList.remove('selected'));
+        li.classList.add('selected');
+        selectedOptionIndex = parseInt(li.dataset.originalIndex);
+        nextBtn.disabled = false;
+      });
+
+      optionsListEl.appendChild(li);
+    });
+
+    nextBtn.textContent = (currentQuestionIndex === shuffledQuestions.length - 1) ? 'Finish' : 'Next';
+  }
+
+  nextBtn.addEventListener('click', () => {
+    userAnswers.push(selectedOptionIndex);
+
+    if (selectedOptionIndex === shuffledQuestions[currentQuestionIndex].answer) {
+      score++;
+    }
+
+    currentQuestionIndex++;
+    if (currentQuestionIndex < shuffledQuestions.length) {
+      showQuestion();
+    } else {
+      showResults();
+    }
+  });
+
+  function showResults() {
+    quizContent.style.display = 'none';
+    resultContainer.style.display = 'block';
+
+    scoreEl.textContent = `Final Score: ${score} / ${shuffledQuestions.length}`;
+
+    const percent = (score / shuffledQuestions.length) * 100;
+
+    if (percent >= 85) {
+      feedbackText.textContent = "Excellent work! You're well-prepared for advanced linguistics study.";
+      feedbackText.style.color = '#2e7d32'; // strong green
+    } else if (percent >= 60) {
+      feedbackText.textContent = "Good effort! Review the detailed explanations to strengthen your understanding.";
+      feedbackText.style.color = '#f9a825'; // amber
+    } else {
+      feedbackText.textContent = "Consider revisiting the materials and studying the explanations carefully.";
+      feedbackText.style.color = '#c62828'; // red
+    }
+
+    // Show detailed answers with explanations, referencing scholarly sources
+    detailedAnswers.innerHTML = '';
+    shuffledQuestions.forEach((q, idx) => {
+      const userAnswer = userAnswers[idx];
+      const userCorrect = userAnswer === q.answer;
+      const userAnswerText = q.options[userAnswer] !== undefined ? q.options[userAnswer] : "No answer selected";
+      const correctAnswerText = q.options[q.answer];
+
+      // Container
+      let section = document.createElement('section');
+
+      // Title
+      let h3 = document.createElement('h3');
+      h3.textContent = `Q${idx + 1}: ${q.question}`;
+      section.appendChild(h3);
+
+      // User answer status
+      let p1 = document.createElement('p');
+      p1.innerHTML = `Your answer: <strong>${userAnswerText}</strong> ${userCorrect ? '✅' : '❌'}`;
+      section.appendChild(p1);
+
+      // Correct answer
+      if (!userCorrect) {
+        let p2 = document.createElement('p');
+        p2.innerHTML = `Correct answer: <strong>${correctAnswerText}</strong>`;
+        section.appendChild(p2);
+      }
+
+      // Explanation
+      let p3 = document.createElement('p');
+      p3.innerHTML = `<em>Explanation:</em> ${q.explanation}`;
+      section.appendChild(p3);
+
+      detailedAnswers.appendChild(section);
+    });
+  }
+
+  playAgainBtn.addEventListener('click', startQuiz);
+
+  window.onload = startQuiz;
+</script>
+</body>
+</html>

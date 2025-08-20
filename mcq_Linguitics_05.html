@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Graduate Phonetics MCQ Quiz: Chapter 1</title>
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #0066cc, #a2ffcb, #6d83f2 80%);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: #222;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 0;
+    }
+    .quiz-container {
+      background: rgba(255,255,255,0.9);
+      border-radius: 30px;
+      box-shadow: 0 0 24px rgba(0,0,0,0.25);
+      max-width: 700px;
+      width: 100%;
+      padding: 32px 40px;
+      animation: fadeIn 1.5s;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .question { margin: 32px 0 12px 0; font-weight: bold; font-size: 1.15em; }
+    .options label {
+      display: block;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, #c6e6fb 40%, #e0ffd6 100%);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.4s;
+    }
+    .options input[type="radio"]:checked + span {
+      font-weight: bold;
+      color: #057418;
+      text-shadow: 0 1px 4px #b4f3a1;
+    }
+    .feedback {
+      padding: 6px 12px; 
+      margin-top: 8px; 
+      border-radius: 10px; 
+      font-size: 1em;
+      font-weight: bold; 
+    }
+    .correct { background: #d8ffdd; color: #207440; animation: highlight 0.7s; }
+    .incorrect { background: #ffd8d8; color: #932020; animation: highlight 0.7s; }
+    @keyframes highlight { from { opacity: 0.4; } to { opacity: 1; }}
+    #score { font-size: 1.2em; font-weight: bold; margin: 24px 0; }
+    #restart { background: #95ccf8; color: #205688; border: none;
+      border-radius: 8px; padding: 8px 30px; font-size: 1em; margin-top: 16px;
+      cursor: pointer; box-shadow: 0 2px 8px rgba(0,100,200,0.15);
+      transition: background 0.4s;
+    }
+    #restart:hover { background: #65a6ea; }
+  </style>
+</head>
+<body>
+  <div class="quiz-container" id="quiz-container">
+    <h2>Phonetics: The Study of Speech Sounds (Chapter 1 MCQ Quiz)</h2>
+    <div id="quiz"></div>
+    <div id="score"></div>
+    <button id="restart" style="display:none;" onclick="restartQuiz()">Restart Quiz</button>
+  </div>
+  <script>
+    const questions = [
+      {
+        q: "What is the most comprehensive definition of phonetics?",
+        options: [
+          "The study of sound in poetry",
+          "The scientific study of speech sounds, their form, substance, and perception, and the application of this study",
+          "The practice of good pronunciation",
+          "The study of animal vocalizations"
+        ],
+        answer: 1
+      },
+      {
+        q: "Which branch of phonetics investigates research methods and laboratory techniques?",
+        options: [
+          "Articulatory phonetics",
+          "Perceptual phonetics",
+          "Experimental phonetics",
+          "Clinical phonetics"
+        ],
+        answer: 2
+      },
+      {
+        q: "Articulatory phonetics is primarily concerned with:",
+        options: [
+          "Speech sound perception by listeners",
+          "Laboratory research on speech",
+          "The physiological production of speech sounds",
+          "The historical development of language"
+        ],
+        answer: 2
+      },
+      {
+        q: "The study of the acoustic properties of speech waves is called:",
+        options: [
+          "Acoustic phonetics",
+          "Applied phonetics",
+          "Normative phonetics",
+          "Perceptual phonetics"
+        ],
+        answer: 0
+      },
+      {
+        q: "Which of the following focuses on practical uses of phonetic science?",
+        options: [
+          "Experimental phonetics",
+          "Articulatory phonetics",
+          "Perceptual phonetics",
+          "Applied phonetics"
+        ],
+        answer: 3
+      },
+      {
+        q: "Which sub-branch of applied phonetics is primarily concerned with setting 'good speech' standards?",
+        options: [
+          "Normative phonetics",
+          "Clinical phonetics",
+          "Descriptive phonetics",
+          "Comparative phonetics"
+        ],
+        answer: 0
+      },
+      {
+        q: "Clinical phonetics is concerned with:",
+        options: [
+          "The analysis of language sound systems",
+          "Remediation of speech disorders",
+          "Synthesizing speech in computers",
+          "Establishing spelling norms"
+        ],
+        answer: 1
+      },
+      {
+        q: "What is the main focus of linguistic phonetics (phonology)?",
+        options: [
+          "Acoustic properties of speech waves",
+          "Remediation of speech disorders",
+          "Analysis and classification of language sound systems and rules",
+          "Norm setting for speech standards"
+        ],
+        answer: 2
+      },
+      {
+        q: "The difference between phones, phonemes, and allophones is that:",
+        options: [
+          "They are all the same",
+          "Phones are realizations of speech sounds, phonemes signal meaning differences, and allophones are variants of phonemes",
+          "Phonemes are the alphabet letters, phones are written symbols, allophones are stress patterns",
+          "None are relevant in phonetics"
+        ],
+        answer: 1
+      },
+      {
+        q: "A minimal pair helps to:",
+        options: [
+          "Establish dialect boundaries",
+          "Demonstrate meaning contrast based on one sound change",
+          "Indicate allophonic variation",
+          "Show the historical development of a sound"
+        ],
+        answer: 1
+      },
+      {
+        q: "Which is NOT one of the five major branches of phonetic inquiry?",
+        options: [
+          "Experimental phonetics",
+          "Articulatory phonetics",
+          "Sociolinguistic phonetics",
+          "Perceptual phonetics"
+        ],
+        answer: 2
+      },
+      {
+        q: "Which term describes the dynamic and variable nature of speech?",
+        options: [
+          "Speech is always predictable in all contexts",
+          "Speech is dynamic due to context, environment, and individual variation",
+          "Speech is static and unchanging",
+          "Speech cannot be scientifically studied"
+        ],
+        answer: 1
+      },
+      {
+        q: "The study of the sounds of a language at one point in time is termed:",
+        options: [
+          "Comparative phonetics",
+          "Historical (diachronic) phonetics",
+          "Descriptive (synchronic) phonetics",
+          "Normative phonetics"
+        ],
+        answer: 2
+      },
+      {
+        q: "Which area is NOT a subcomponent of linguistic phonetics (phonology)?",
+        options: [
+          "Dialectology",
+          "Transcriptional phonetics",
+          "Historical phonetics",
+          "Normative phonetics"
+        ],
+        answer: 3
+      },
+      {
+        q: "Which of the following is a branch concerned with comparison of sound systems across languages?",
+        options: [
+          "Comparative (contrastive) phonetics",
+          "Descriptive phonetics",
+          "Clinical phonetics",
+          "Allophonic analysis"
+        ],
+        answer: 0
+      },
+      {
+        q: "The term 'phone' refers to:",
+        options: [
+          "A letter of the alphabet",
+          "Any sound produced by the human vocal tract",
+          "A variant of a phoneme in a language",
+          "The minimal unit of meaning"
+        ],
+        answer: 1
+      },
+      {
+        q: "Which is the correct match of study area to its topic?",
+        options: [
+          "Graphemics – study of sounds",
+          "Orthography – study of morphemes",
+          "Morphology – study of units of meaning",
+          "Phonemics – study of letters"
+        ],
+        answer: 2
+      },
+      {
+        q: "What is the importance of baseline (average) information on speech sounds?",
+        options: [
+          "To account for individual idiolects only",
+          "To provide a psychological reality for sounds and enable analysis of natural variation",
+          "It is not important in phonetics",
+          "It replaces the need for dynamic study"
+        ],
+        answer: 1
+      },
+      {
+        q: "When speech sounds in connected speech change features but are still perceived as 'the same,' these are called:",
+        options: [
+          "Phonemes",
+          "Phones",
+          "Allophones",
+          "Morphemes"
+        ],
+        answer: 2
+      },
+      {
+        q: "Phonetics is often described as a 'tool subject' because:",
+        options: [
+          "It is never studied in its own right",
+          "It is a stepping stone to goals in linguistics, speech pathology, language teaching, and other applications",
+          "It only studies animal sounds",
+          "It is the oldest branch of science"
+        ],
+        answer: 1
+      }
+    ];
+
+    let currentQuestion = 0, score = 0;
+    function showQuestion() {
+      const quizDiv = document.getElementById('quiz');
+      quizDiv.innerHTML = `
+        <div class="question">${currentQuestion + 1}. ${questions[currentQuestion].q}</div>
+        <div class="options">
+          ${questions[currentQuestion].options.map((opt, i) => `
+            <label>
+              <input type="radio" name="opt" value="${i}" onchange="checkAnswer(${i})">
+              <span>${opt}</span>
+            </label>
+          `).join('')}
+        </div>
+        <div id="feedback"></div>
+      `;
+    }
+
+    function checkAnswer(selected) {
+      const correct = questions[currentQuestion].answer;
+      const feedback = document.getElementById("feedback");
+      if (selected === correct) {
+        score++;
+        feedback.innerHTML = '<div class="feedback correct">✅ Correct!</div>';
+      } else {
+        feedback.innerHTML = `<div class="feedback incorrect">❌ Incorrect! The correct answer is: <b>${questions[currentQuestion].options[correct]}</b></div>`;
+      }
+      setTimeout(() => {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+          showQuestion();
+        } else {
+          endQuiz();
+        }
+      }, 1100);
+    }
+
+    function endQuiz() {
+      document.getElementById('quiz').innerHTML = "";
+      document.getElementById('score').innerHTML = `<span>You scored <b>${score} out of 20</b>.</span>`;
+      document.getElementById('restart').style.display = 'inline-block';
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      document.getElementById('score').innerHTML = '';
+      document.getElementById('restart').style.display = 'none';
+      showQuestion();
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>

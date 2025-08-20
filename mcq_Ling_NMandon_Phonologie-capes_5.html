@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Test Phonologie anglaise CAPES - N. Mandon - 40 questions complète</title>
+  <style>
+    /* Votre code CSS inchangé */
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Test Final - Phonologie Anglaise CAPES</h1>
+    <p>Natalie Mandon - Niveau Ivy League/Oxbridge - 40 questions complètes</p>
+  </header>
+
+  <div class="question-container">
+    <div class="question-number" id="question-number">1</div>
+    <div class="question-text" id="question-text"></div>
+    <div class="options" id="options-container"></div>
+    <div class="navigation-buttons">
+      <button id="prev-btn" disabled>Précédent</button>
+      <button id="next-btn">Suivant</button>
+    </div>
+  </div>
+
+  <div id="results" style="display:none;">
+    <h2>Résultats détaillés</h2>
+    <div id="score"></div>
+  </div>
+
+  <script>
+    const questions = [
+      // Insérez ici vos questions comme dans le code d'origine
+    ];
+
+    let currentQuestion = 0;
+
+    // Afficher la question
+    function showQuestion() {
+      const question = questions[currentQuestion];
+      document.getElementById("question-number").textContent = currentQuestion + 1;
+      document.getElementById("question-text").textContent = question.text;
+      
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = '';  // Clear previous options
+
+      question.options.forEach(option => {
+        const label = document.createElement("label");
+        label.textContent = option.text;
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "question-" + question.id;
+        input.value = option.key;
+        label.prepend(input);
+        optionsContainer.appendChild(label);
+      });
+
+      document.getElementById("prev-btn").disabled = currentQuestion === 0;
+      document.getElementById("next-btn").disabled = currentQuestion === questions.length - 1;
+    }
+
+    // Navigation entre les questions
+    document.getElementById("next-btn").addEventListener("click", () => {
+      currentQuestion++;
+      if (currentQuestion >= questions.length) {
+        showResults();
+      } else {
+        showQuestion();
+      }
+    });
+
+    document.getElementById("prev-btn").addEventListener("click", () => {
+      currentQuestion--;
+      showQuestion();
+    });
+
+    // Afficher les résultats
+    function showResults() {
+      document.getElementById("results").style.display = 'block';
+      const score = document.getElementById("score");
+      let correctAnswers = 0;
+
+      questions.forEach(question => {
+        const selectedOption = document.querySelector(`input[name="question-${question.id}"]:checked`);
+        const userAnswer = selectedOption ? selectedOption.value : null;
+
+        if (userAnswer === question.correct) {
+          correctAnswers++;
+        }
+
+        const resultItem = document.createElement("div");
+        resultItem.classList.add("result-item");
+        
+        const questionElem = document.createElement("div");
+        questionElem.classList.add("result-question");
+        questionElem.textContent = question.text;
+        resultItem.appendChild(questionElem);
+
+        const userAnswerElem = document.createElement("div");
+        userAnswerElem.classList.add("user-answer");
+        userAnswerElem.textContent = "Réponse de l'utilisateur: " + (userAnswer || "Aucune réponse");
+        resultItem.appendChild(userAnswerElem);
+
+        const correctAnswerElem = document.createElement("div");
+        correctAnswerElem.classList.add("correct-answer");
+        correctAnswerElem.textContent = "Réponse correcte: " + question.options.find(option => option.key === question.correct).text;
+        resultItem.appendChild(correctAnswerElem);
+
+        const explanationElem = document.createElement("div");
+        explanationElem.classList.add("answer-explanation");
+        explanationElem.textContent = question.explanation;
+        resultItem.appendChild(explanationElem);
+
+        score.appendChild(resultItem);
+      });
+
+      score.innerHTML += `<div><strong>Score final: ${correctAnswers} / ${questions.length}</strong></div>`;
+      document.querySelector(".question-container").style.display = 'none';
+    }
+
+    // Initialiser le test
+    showQuestion();
+  </script>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Morphology – TrevTutor Lecture 04:37:52-05:23:44 MCQ Quiz</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 2rem;
+    max-width: 900px;
+    line-height: 1.5;
+    background: #f8f8fa;
+  }
+  h1 {
+    max-width: 900px;
+  }
+  .question {
+    margin-bottom: 1.5em;
+  }
+  .correct {
+    color: green;
+  }
+  .incorrect {
+    color: red;
+  }
+  .skipped {
+    color: orange;
+  }
+  .btn {
+    background: #0066cc;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    font-size: 1.1em;
+    margin: 1em 0;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .btn:hover {
+    background: #004999;
+  }
+  .answers {
+    display: none;
+    margin-top: 2em;
+    background: #f0f0fc;
+    padding: 2em;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  .answer-explanation {
+    font-size: 0.95em;
+    margin-bottom: 1.4em;
+  }
+  label {
+    cursor: pointer;
+    display: block;
+    padding: 0.25em 0;
+  }
+  a {
+    color: #0066cc;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+  <h1>Morphology – TrevTutor Lecture (Timestamp 04:37:52–05:23:44) MCQ Quiz</h1>
+  <form id="quizForm"></form>
+  <button type="button" class="btn" onclick="submitQuiz()">Submit Quiz</button>
+  <div id="score"></div>
+  <div class="answers" id="answers"></div>
+
+<script>
+  const quiz = [
+    {
+      q: "1. What is a morpheme?",
+      o: [
+        "The smallest unit of meaning or grammatical function in a language",
+        "A type of sentence",
+        "A phonetic sound",
+        "An unrelated word"
+      ],
+      a: 0,
+      ref: "Morphemes are the minimal meaningful units in language and can be a root or an affix, as explained by TrevTutor[1]."
+    },
+    {
+      q: "2. What is the distinction between free and bound morphemes?",
+      o: [
+        "Free morphemes can stand alone as words; bound morphemes must attach to other morphemes",
+        "Free morphemes are verbs; bound morphemes are nouns",
+        "Bound morphemes can stand alone; free morphemes cannot",
+        "There is no difference"
+      ],
+      a: 0,
+      ref: "Free morphemes function independently as words; bound morphemes like prefixes and suffixes cannot stand alone[1]."
+    },
+    {
+      q: "3. Which of the following is an example of a bound morpheme?",
+      o: [
+        "-ing in 'running'",
+        "dog",
+        "table",
+        "cat"
+      ],
+      a: 0,
+      ref: "The suffix '-ing' is a bound morpheme marking progressive aspect and must attach to a root[1]."
+    },
+    {
+      q: "4. What is an inflectional morpheme?",
+      o: [
+        "A morpheme that modifies a word's tense, number, gender, or case without changing its class",
+        "A morpheme that creates a new word",
+        "A type of free morpheme",
+        "A morpheme that changes pronunciation only"
+      ],
+      a: 0,
+      ref: "Inflectional morphemes add grammatical information but do not produce new words or change lexical categories[1][2]."
+    },
+    {
+      q: "5. What differentiates derivational morphemes from inflectional morphemes?",
+      o: [
+        "Derivational morphemes create new words or change word class; inflectional morphemes only mark grammatical features",
+        "Derivational morphemes mark tense; inflectional morphemes mark gender",
+        "Inflectional morphemes create new words; derivational ones do not",
+        "They are the same"
+      ],
+      a: 0,
+      ref: "Derivational affixes often change the lexical category or meaning of a word, unlike inflectional affixes which mark grammatical functions[1][2]."
+    },
+    {
+      q: "6. Which of the following is an example of a derivational morpheme?",
+      o: [
+        "-ness in 'happiness'",
+        "-s (plural)",
+        "-ed (past tense)",
+        "-ing (progressive)"
+      ],
+      a: 0,
+      ref: "The suffix '-ness' turns adjectives into nouns, exemplifying derivational morphology[1]."
+    },
+    {
+      q: "7. What is a minimal pair in morphology?",
+      o: [
+        "Two words differing in exactly one morpheme that results in a change in meaning",
+        "Two words with identical morphemes",
+        "Two words differing only in pronunciation",
+        "Unrelated words"
+      ],
+      a: 0,
+      ref: "Minimal pairs in morphology differ by one morpheme and show differences in meaning or grammatical function[1]."
+    },
+    {
+      q: "8. What does morphophonemics study?",
+      o: [
+        "How phonological changes affect morphemes and their alternations",
+        "The history of words",
+        "Sentence structure",
+        "Sound waves"
+      ],
+      a: 0,
+      ref: "Morphophonemics examines how morphemes alter their phonological form in different contexts to maintain morphological identity[1][3]."
+    },
+    {
+      q: "9. What is a root in morphology?",
+      o: [
+        "The primary morpheme carrying the core lexical meaning of a word",
+        "An affix",
+        "A type of sentence",
+        "A phoneme"
+      ],
+      a: 0,
+      ref: "The root is the base morpheme that provides a word’s main meaning, to which affixes attach[1]."
+    },
+    {
+      q: "10. What are affixes?",
+      o: [
+        "Bound morphemes attached to roots to modify meaning or function",
+        "Free morphemes that stand alone",
+        "Complete sentences",
+        "Phonetic variants"
+      ],
+      a: 0,
+      ref: "Affixes are bound morphemes like prefixes, suffixes, infixes, and circumfixes that attach to roots or stems[1][2]."
+    },
+    {
+      q: "11. Which of the following is NOT a type of affix?",
+      o: [
+        "Circumfix",
+        "Prefix",
+        "Suffix",
+        "Phoneme"
+      ],
+      a: 3,
+      ref: "Phonemes are sounds in speech, not affixes that modify words[1]."
+    },
+    {
+      q: "12. What is an allomorph?",
+      o: [
+        "Variant forms of a morpheme that have the same meaning but differ in pronunciation or spelling",
+        "Different morphemes with unrelated meanings",
+        "Only free morphemes",
+        "Words that rhyme"
+      ],
+      a: 0,
+      ref: "Allomorphs are contextually conditioned phonological or morphological variants of the same morpheme[1][3]."
+    },
+    {
+      q: "13. What is the difference between a stem and a root?",
+      o: [
+        "A stem is a root plus any derivational affixes, a root is the core morpheme",
+        "They are the same",
+        "A root is any affix",
+        "A stem is a sentence"
+      ],
+      a: 0,
+      ref: "The stem includes the root plus any derivational affixes; it is the part to which inflectional affixes attach[1]."
+    },
+    {
+      q: "14. Which of the following is a correct pairing of morpheme type and function?",
+      o: [
+        "Suffix - changes word class (e.g., -ly turns adjective into adverb)",
+        "Prefix - plural marker",
+        "Infix - tense marker",
+        "Root - modifies grammar"
+      ],
+      a: 0,
+      ref: "Suffixes like -ly change adjectives to adverbs, a classic example of derivational morphology[1][2]."
+    },
+    {
+      q: "15. What does the process of compounding involve?",
+      o: [
+        "Combining two or more free morphemes to form a new word",
+        "Adding prefixes",
+        "Rearranging phonemes",
+        "Deleting affixes"
+      ],
+      a: 0,
+      ref: "Compounding creates new words from multiple free morphemes, e.g., 'toothbrush,' 'classroom'[1]."
+    },
+    {
+      q: "16. In morphology, what is meant by 'productivity'?",
+      o: [
+        "The degree to which a morphological process can be used to create new words",
+        "The frequency of words spoken",
+        "The length of words",
+        "The number of phones in a language"
+      ],
+      a: 0,
+      ref: "Productivity refers to how freely a morphological rule or affix can be applied to form new words[1]."
+    },
+    {
+      q: "17. Which of the following is an example illustrating morphological ambiguity?",
+      o: [
+        "'unlockable' – can mean 'unable to be locked' or 'able to be unlocked'",
+        "'dog' – a domesticated animal",
+        "'run' – to move quickly",
+        "'cat' – a feline"
+      ],
+      a: 0,
+      ref: "The word 'unlockable' demonstrates morphological ambiguity due to different possible structural parses[1]."
+    },
+    {
+      q: "18. What is a bound root or root morpheme?",
+      o: [
+        "A root that cannot stand alone as a word and must attach to affixes",
+        "A free morpheme",
+        "An inflectional suffix",
+        "A sound segment"
+      ],
+      a: 0,
+      ref: "Bound roots do not occur independently and require affixation to form words, e.g., 'ceive' in 'receive'[1]."
+    },
+    {
+      q: "19. Why is the study of morphology important in linguistics?",
+      o: [
+        "It helps understand word formation, structure, and meaning as a part of language system",
+        "It explains sentence intonation",
+        "It classifies phonemes",
+        "It studies sign language only"
+      ],
+      a: 0,
+      ref: "Morphology provides insights into language structure at the word level, explaining word formation and meaning[1][2]."
+    },
+    {
+      q: "20. Which textbook is recommended for further study of morphology as per the lecture references?",
+      o: [
+        "\"Contemporary Linguistics\" by William O'Grady et al.",
+        "\"A Course in Phonetics\" by Ladefoged",
+        "\"Syntax: A Generative Introduction\" by Carnie",
+        "\"Semantics\" by Saeed"
+      ],
+      a: 0,
+      ref: "William O'Grady et al.'s \"Contemporary Linguistics\" is a standard reference for morphology and linguistic structure[1]."
+    }
+  ];
+
+  const qForm = document.getElementById('quizForm');
+  quiz.forEach((item, idx) => {
+    const qDiv = document.createElement('div');
+    qDiv.classList.add('question');
+    let html = `<p><strong>${item.q}</strong></p>`;
+    item.o.forEach((opt, i) => {
+      html += `<label><input type="radio" name="q${idx}" value="${i}"> ${opt}</label>`;
+    });
+    qDiv.innerHTML = html;
+    qForm.appendChild(qDiv);
+  });
+
+  function submitQuiz() {
+    let score = 0;
+    let answered = 0;
+    let output = '';
+    for (let i = 0; i < quiz.length; i++) {
+      const options = document.getElementsByName(`q${i}`);
+      let selected = -1;
+      for (const option of options) {
+        if (option.checked) selected = parseInt(option.value);
+      }
+      const corr = quiz[i].a;
+      output += `<div class="answer-explanation"><strong>Q${i + 1}:</strong> ${quiz[i].q}<br>`;
+      if (selected === -1) {
+        output += `<span class="skipped">No answer given.</span><br>`;
+        output += `<span class="correct">Correct answer: ${quiz[i].o[corr]}</span><br>`;
+      } else {
+        answered++;
+        const isCorrect = selected === corr;
+        if (isCorrect) score++;
+        output += `<span class="${isCorrect ? 'correct' : 'incorrect'}">Your answer: ${quiz[i].o[selected]}</span><br>`;
+        output += `<span class="correct">Correct answer: ${quiz[i].o[corr]}</span><br>`;
+      }
+      output += `<em>${quiz[i].ref}</em></div>`;
+    }
+    document.getElementById('score').innerHTML = `<h2>Score: ${score} / 20 (${answered} answered, ${quiz.length - answered} skipped)</h2>`;
+    const answersDiv = document.getElementById('answers');
+    answersDiv.innerHTML = output;
+    answersDiv.style.display = 'block';
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+</script>
+
+<hr />
+<p style="font-size:0.9em; max-width: 900px; color:#666;">
+  <strong>References:</strong><br/>
+  [1] TrevTutor, <em>Introduction to Linguistics: The Complete Crash Course</em>, Morphology segment (04:37:52–05:23:44), YouTube, 2024, <a href="https://www.youtube.com/watch?v=0nBzlNFwgs4&ab_channel=TrevTutor" target="_blank" rel="noopener">Video link</a>.<br/>
+  [2] William O'Grady, John Archibald, Mark Aronoff, Janie Rees-Miller, <em>Contemporary Linguistics: An Introduction</em>, 7th Edition, Macmillan, 2020.<br/>
+  [3] Rochelle Lieber, <em>Morphology</em>, Cambridge University Press, 2009.<br/>
+  This quiz is designed for academic review and educational use following fair use principles.
+</p>
+</body>
+</html>

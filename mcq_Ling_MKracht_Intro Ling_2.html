@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Lectures 7–12: Advanced Linguistics MCQ Test</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #e0d7c6;
+      font-family: 'Georgia', serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #ffcc00;
+      margin-bottom: 1em;
+    }
+    #quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .question-card {
+      background-color: #1e1e2f;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 1em;
+      box-shadow: 0 0 10px #000;
+    }
+    .question-card h2 {
+      margin-top: 0;
+      color: #ffcc00;
+      font-size: 1.2em;
+    }
+    .options label {
+      display: block;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+    .options input[type="radio"] {
+      margin-right: 8px;
+    }
+    #navigation {
+      text-align: center;
+      margin-top: 1em;
+    }
+    .btn {
+      background-color: #ffcc00;
+      color: #121212;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 5px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+    .btn:hover:not(:disabled) {
+      background-color: #ffd633;
+    }
+    #results {
+      max-width: 800px;
+      margin: 2em auto;
+      background-color: #1e1e2f;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #000;
+    }
+    #results h2 {
+      color: #ffcc00;
+    }
+    .answer-explanation {
+      margin: 0.5em 0 1.5em;
+      color: #ccc;
+      font-size: 0.95em;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #333;
+      margin: 1.5em 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lectures 7–12: Advanced Linguistics MCQ Test</h1>
+  <div id="quiz-container">
+    <div class="question-card" id="question-card"></div>
+    <div id="navigation">
+      <button class="btn" id="prevBtn">Previous</button>
+      <button class="btn" id="skipBtn">Skip</button>
+      <button class="btn" id="nextBtn">Next</button>
+      <button class="btn" id="submitBtn">Submit</button>
+    </div>
+  </div>
+  <div id="results"></div>
+
+  <script>
+    const questions = [
+      // Lecture 7: Morphology I (1–7)
+      {
+        question: "What is the smallest meaningful unit in a language?",
+        options: ["Phoneme","Morpheme","Word","Syllable"],
+        answer: 1,
+        explanation: "A morpheme is the smallest unit of meaning or grammatical function."
+      },
+      {
+        question: "Which morpheme can stand alone as a word?",
+        options: ["Bound morpheme","Free morpheme","Infix","Null morpheme"],
+        answer: 1,
+        explanation: "A free morpheme can occur independently as a word."
+      },
+      {
+        question: "What type of affix attaches at the beginning of a root?",
+        options: ["Suffix","Prefix","Infix","Circumfix"],
+        answer: 1,
+        explanation: "A prefix is an affix that appears before the root."
+      },
+      {
+        question: "Which of these is a derivational affix?",
+        options: ["-s (plural)","-ed (past)","-ness","-ing (progressive)"],
+        answer: 2,
+        explanation: "Derivational affixes change word class or meaning; '-ness' turns adjectives into nouns."
+      },
+      {
+        question: "A compound like 'blackboard' is called:",
+        options: ["Endocentric","Exocentric","Copulative","Appositive"],
+        answer: 0,
+        explanation: "An endocentric compound names a subtype of the head (board)."
+      },
+      {
+        question: "Allomorphy refers to:",
+        options: ["Multiple morphemes with identical shape","Different forms of the same morpheme","Homophones","Reduplication"],
+        answer: 1,
+        explanation: "Allomorphs are variant pronunciations/forms of a single morpheme."
+      },
+      {
+        question: "Which is NOT a morphological process in English?",
+        options: ["Reduplication","Compounding","Affixation","Suppletion"],
+        answer: 0,
+        explanation: "Reduplication is not productive in English morphology."
+      },
+
+      // Lecture 8: Syntax I (8–14)
+      {
+        question: "In X-bar theory, the head of a phrase is:",
+        options: ["The semantic core","A sister to the specifier","The obligatory central element","An adjunct"],
+        answer: 2,
+        explanation: "The head projects category and combines with complements and specifiers."
+      },
+      {
+        question: "Which of these is a syntactic complement?",
+        options: ["Adjunct PP","Specifier DP","Object NP","Modifier AdjP"],
+        answer: 2,
+        explanation: "Complements are required by the head to complete its argument structure."
+      },
+      {
+        question: "A phrase formed by 'the quick fox' is a:",
+        options: ["VP","NP","PP","CP"],
+        answer: 1,
+        explanation: "‘The quick fox’ is a noun phrase (NP) with Det + Adj + N."
+      },
+      {
+        question: "Which test helps identify constituents?",
+        options: ["Deletion test","Affixation test","Stress shift","Alliteration"],
+        answer: 0,
+        explanation: "Deletion or substitution tests can confirm whether words form a unit."
+      },
+      {
+        question: "The specifier of a VP is typically:",
+        options: ["Subject","Object","Adverbial","Preposition"],
+        answer: 0,
+        explanation: "In some theories, the subject occupies the specifier of VP (or TP)."
+      },
+      {
+        question: "A determiner phrase (DP) hypothesis treats D as:",
+        options: ["An adjunct","A head","A complement","A phrase marker"],
+        answer: 1,
+        explanation: "Under DP hypothesis, D is the head projecting the DP."
+      },
+      {
+        question: "Which structure shows head-complement order in English VPs?",
+        options: ["V → C","XP → Y Z","VP → V NP","NP → N Det"],
+        answer: 2,
+        explanation: "VP → V NP indicates the verb (head) precedes its NP complement."
+      },
+
+      // Lecture 9: Syntax II (15–21)
+      {
+        question: "Wh-movement in questions moves a wh-word to the:",
+        options: ["Object position","Specifier of CP","Complement of VP","Adjunct position"],
+        answer: 1,
+        explanation: "In English, wh-words move to Spec-CP at the front of the clause."
+      },
+      {
+        question: "What is the silent position left by a moved element called?",
+        options: ["Trace","Gap","Empty category","All of the above"],
+        answer: 3,
+        explanation: "Trace or gap refers to the empty position after movement."
+      },
+      {
+        question: "Which is a constraint on wh-movement?",
+        options: ["Theta-Criterion","Head Movement Constraint","C-Command","Extended Projection"],
+        answer: 1,
+        explanation: "The Head Movement Constraint restricts the movement of heads to adjacent heads."
+      },
+      {
+        question: "Deep structure vs. surface structure distinction comes from:",
+        options: ["Minimalism","Government-Binding","Optimality Theory","Functionalism"],
+        answer: 1,
+        explanation: "GB introduced D-structure and S-structure to account for transformations."
+      },
+      {
+        question: "A transformation that moves an element within a sentence is called:",
+        options: ["Merge","Copy","Move-α","Agree"],
+        answer: 2,
+        explanation: "Move-α is a general operation moving any element anywhere."
+      },
+      {
+        question: "An island violation blocks:",
+        options: ["Merge","Wh-movement","Spell-out","Do-support"],
+        answer: 1,
+        explanation: "Extraction from certain domains (islands) is prohibited."
+      },
+      {
+        question: "The 'do-support' rule applies when:",
+        options: ["No auxiliary is present in questions or negation","An auxiliary is present","In wh-movement","Underpassivization"],
+        answer: 0,
+        explanation: "Do-support inserts 'do' when no other auxiliary is available."
+      },
+
+      // Lecture 10: Syntax III (22–28)
+      {
+        question: "Universal Grammar refers to:",
+        options: ["All known languages","Language-specific rules","Innate principles of human language","Descriptive grammars"],
+        answer: 2,
+        explanation: "UG posits a set of innate constraints shared by all languages."
+      },
+      {
+        question: "A parameter like head-directionality can be:",
+        options: ["Binary","Gradient","Semantic","Lexical"],
+        answer: 0,
+        explanation: "Parameters are binary choices within UG (e.g., VO vs. OV)."
+      },
+      {
+        question: "Theta-roles are assigned by:",
+        options: ["Adjuncts","Functional heads","Lexical heads","Specifiers"],
+        answer: 2,
+        explanation: "Lexical heads like verbs assign thematic (θ) roles to their arguments."
+      },
+      {
+        question: "The EPP (Extended Projection Principle) requires:",
+        options: ["All verbs take an object","CP to be overt","A subject in Spec-TP","No empty categories"],
+        answer: 2,
+        explanation: "EPP demands that clauses have a specifier position filled (often by the subject)."
+      },
+      {
+        question: "Binding Principle A states:",
+        options: ["Pronouns cannot bind into domains","Anaphors must be bound in their local domain","R-expressions must be free","Trace must be bound"],
+        answer: 1,
+        explanation: "Anaphors like 'himself' must have an antecedent in their binding domain."
+      },
+      {
+        question: "Which is NOT a universal principle?",
+        options: ["Structure Dependency","F-morphemes","C-Command","X-Bar schema"],
+        answer: 1,
+        explanation: "F-morphemes is not standardly listed among UG principles."
+      },
+      {
+        question: "Government in syntax refers to:",
+        options: ["Semantic roles assignment","Head-dependent relations","Word formation","Prosodic structure"],
+        answer: 1,
+        explanation: "Government constrains which heads can license which complements."
+      },
+
+      // Lecture 11: Syntax IV (29–34)
+      {
+        question: "A phrase structure rule example is:",
+        options: ["NP → Det N","Merge","Move","Agree"],
+        answer: 0,
+        explanation: "PSR like NP → Det N specifies how constituents combine."
+      },
+      {
+        question: "Recursion in syntax allows:",
+        options: ["Infinite feature checking","Unbounded embedding of phrases","Fixed sentence length","No movement"],
+        answer: 1,
+        explanation: "Recursive rules permit phrases to contain phrases of the same type."
+      },
+      {
+        question: "Adjunction adjoins an adjunct to a:",
+        options: ["Terminal node","Non-terminal node","Head only","Specifier"],
+        answer: 1,
+        explanation: "Adjunction attaches modifiers to non-terminal nodes."
+      },
+      {
+        question: "An empty category [PRO] appears in:",
+        options: ["Control constructions","Passive clauses","Questions","Negation"],
+        answer: 0,
+        explanation: "[PRO] occupies subject position of non-finite clauses in control."
+      },
+      {
+        question: "Cross-linguistic variation in phrase structure is captured by:",
+        options: ["UG principles only","Parameters","Performance constraints","Orthographic rules"],
+        answer: 1,
+        explanation: "Parameters allow languages to differ while respecting UG."
+      },
+      {
+        question: "The X-Bar schema includes which levels?",
+        options: ["Head, Specifier, Complement","Root, Stem, Word","Phrase, Clause, Sentence","Topic, Focus, Comment"],
+        answer: 0,
+        explanation: "X-Bar defines Head (X⁰), Xʹ (intermediate), and XP (maximal)."
+      },
+
+      // Lecture 12: Syntax V (35–40)
+      {
+        question: "Feature-checking in Minimalism occurs via:",
+        options: ["Merge","Agree","Spell-out","Substitution"],
+        answer: 1,
+        explanation: "Agree matches features between probes and goals."
+      },
+      {
+        question: "D-structure is replaced by which level in Minimalist theory?",
+        options: ["VP-structure","Numeration","Logical Form","None—eliminated"],
+        answer: 3,
+        explanation: "Minimalism does away with D-structure/S-structure, using a single derivational component."
+      },
+      {
+        question: "The basic operation Merge forms:",
+        options: ["Two features","A new syntactic object from two objects","A phonetic output","Semantic roles"],
+        answer: 1,
+        explanation: "Merge combines two syntactic objects into a hierarchical structure."
+      },
+      {
+        question: "Move-α in GB corresponds to which Minimalist operation?",
+        options: ["Internal Merge","External Merge","Copy","Agree"],
+        answer: 0,
+        explanation: "Internal Merge moves an existing element to a new position."
+      },
+      {
+        question: "Labeling in Minimalism determines:",
+        options: ["Which feature checks first","Category of the merged object","Phonological shape","Semantic role"],
+        answer: 1,
+        explanation: "The Label determines the head category of a new syntactic object."
+      },
+      {
+        question: "Overt vs. covert movement is distinguished by:",
+        options: ["Whether it leaves a trace","Timing relative to Spell-out","Feature strength","All are correct"],
+        answer: 3,
+        explanation: "Overt moves before Spell-out; covert moves at LF, and both involve traces."
+      }
+    ];
+
+    // Shuffle questions and options
+    let quizQuestions = questions
+      .map(q => {
+        const copy = JSON.parse(JSON.stringify(q));
+        const opts = copy.options
+          .map((opt, i) => ({ opt, i }))
+          .sort(() => Math.random() - 0.5);
+        const newAnswer = opts.findIndex(o => o.i === copy.answer);
+        return {
+          question: copy.question,
+          options: opts.map(o => o.opt),
+          answer: newAnswer,
+          explanation: copy.explanation
+        };
+      })
+      .sort(() => Math.random() - 0.5);
+
+    let currentQ = 0;
+    const userAnswers = Array(quizQuestions.length).fill(null);
+
+    function renderQuestion() {
+      const card = document.getElementById("question-card");
+      const q = quizQuestions[currentQ];
+      let html = `<h2>Question ${currentQ + 1} of ${quizQuestions.length}</h2>`;
+      html += `<p>${q.question}</p><div class="options">`;
+      q.options.forEach((opt, i) => {
+        const checked = userAnswers[currentQ] === i ? "checked" : "";
+        html += `
+          <label>
+            <input type="radio" name="answer" value="${i}" ${checked}>
+            ${opt}
+          </label>`;
+      });
+      html += `</div>`;
+      card.innerHTML = html;
+      document.getElementById("prevBtn").disabled = currentQ === 0;
+      document.getElementById("nextBtn").disabled = currentQ === quizQuestions.length - 1;
+    }
+
+    document.getElementById("prevBtn").onclick = () => {
+      storeAnswer();
+      if (currentQ > 0) currentQ--;
+      renderQuestion();
+    };
+
+    document.getElementById("nextBtn").onclick = () => {
+      storeAnswer();
+      if (currentQ < quizQuestions.length - 1) currentQ++;
+      renderQuestion();
+    };
+
+    document.getElementById("skipBtn").onclick = () => {
+      userAnswers[currentQ] = null;
+      if (currentQ < quizQuestions.length - 1) {
+        currentQ++;
+        renderQuestion();
+      }
+    };
+
+    document.getElementById("submitBtn").onclick = submitQuiz;
+
+    function storeAnswer() {
+      const sel = document.querySelector('input[name="answer"]:checked');
+      userAnswers[currentQ] = sel ? parseInt(sel.value) : null;
+    }
+
+    function submitQuiz() {
+      storeAnswer();
+      let score = 0;
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = `<h2>Your Score: 0 / ${quizQuestions.length}</h2>`;
+      quizQuestions.forEach((q, idx) => {
+        const ua = userAnswers[idx];
+        const correct = ua === q.answer;
+        if (correct) score++;
+        resultsDiv.innerHTML += `
+          <div>
+            <strong>Q${idx + 1}:</strong> ${q.question}<br>
+            <span style="color:${correct ? 'lightgreen' : 'tomato'}">
+              ${correct ? 'Correct' : 'Incorrect'}
+            </span>
+            <div class="answer-explanation">${q.explanation}</div>
+          </div>
+          <hr/>`;
+      });
+      resultsDiv.querySelector("h2").textContent =
+        `Your Score: ${score} / ${quizQuestions.length}`;
+      document.getElementById("quiz-container").style.display = "none";
+      resultsDiv.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Initialize
+    renderQuestion();
+  </script>
+</body>
+</html>

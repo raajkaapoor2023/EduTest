@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>QCM Phonétique & Phonologie Anglais - 30 Questions</title>
+<style>
+  body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 20px; 
+    background: #f9fbfc;
+    color: #222;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  form {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 1.6rem;
+    border-radius: 6px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  }
+  .question {
+    margin-bottom: 1.6rem;
+  }
+  .question h3 {
+    margin-bottom: 0.5rem;
+  }
+  .options label {
+    display: block;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-bottom: 0.3rem;
+  }
+  .options input[type="radio"] {
+    margin-right: 10px;
+  }
+  button {
+    display: block;
+    margin: 2rem auto;
+    padding: 0.7rem 1.8rem;
+    font-size: 1.1rem;
+    background-color: #0074d9;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button:hover:not(:disabled) {
+    background-color: #005fa3;
+  }
+  button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+  #results {
+    max-width: 900px;
+    margin: 2rem auto 3rem auto;
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 6px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  }
+  .correct {
+    color: green;
+    font-weight: 700;
+  }
+  .incorrect {
+    color: #d90000;
+    font-weight: 700;
+  }
+  .explanation {
+    margin-top: 0.4rem;
+    font-size: 0.9rem;
+    color: #444;
+    background-color: #e6f0ff;
+    border-left: 4px solid #0074d9;
+    padding: 7px 12px;
+    border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+
+<h1>QCM Phonétique & Phonologie Anglais - 30 Questions</h1>
+
+<form id="quizForm"></form>
+
+<button id="submitBtn">Soumettre les réponses</button>
+
+<div id="results" style="display:none;"></div>
+
+<script>
+  const quizData = [
+    {
+      question: "Quel symbole phonétique correspond à la voyelle longue antérieure fermée de 'sheep' ?",
+      options: {
+        a: "/ɪ/",
+        b: "/iː/",
+        c: "/eɪ/",
+        d: "/æ/"
+      },
+      correct: "b",
+      explanation: "La voyelle longue antérieure fermée comme dans 'sheep' est transcrite /iː/."
+    },
+    {
+      question: "Comment est prononcée la voyelle courte dans le mot 'ship' ?",
+      options: {
+        a: "/ɪ/",
+        b: "/iː/",
+        c: "/e/",
+        d: "/ʌ/"
+      },
+      correct: "a",
+      explanation: "La voyelle courte de 'ship' est le son /ɪ/, plus relâché et moins fermé que /iː/."
+    },
+    {
+      question: "Qu’est-ce que le schwa /ə/ en anglais ?",
+      options: {
+        a: "Une voyelle longue marquée",
+        b: "Une voyelle centrale réduite et brève",
+        c: "Une consonne sonore",
+        d: "Un diphtongue"
+      },
+      correct: "b",
+      explanation: "Le schwa /ə/ est la voyelle centrale brève et relâchée qui apparaît dans de nombreuses syllabes inaccentuées."
+    },
+    {
+      question: "Dans quel cas la terminaison -ed se prononce-t-elle /ɪd/ ou /əd/?",
+      options: {
+        a: "Après une consonne sourde autre que /t/",
+        b: "Après une consonne sonore autre que /d/",
+        c: "Après les consonnes /t/ ou /d/",
+        d: "Toujours"
+      },
+      correct: "c",
+      explanation: "La terminaison -ed est prononcée /ɪd/ ou /əd/ après les consonnes /t/ ou /d/ pour faciliter la prononciation."
+    },
+    {
+      question: "Quelle est la caractéristique principale du rythme de l’anglais ?",
+      options: {
+        a: "Langue syllabe-timée",
+        b: "Langue tonale",
+        c: "Langue stress-timée",
+        d: "Langue à intonation monotone"
+      },
+      correct: "c",
+      explanation: "L’anglais est une langue à rythme stress-timé, où les syllabes accentuées ont un intervalle de temps approximativement régulier."
+    },
+    {
+      question: "Dans la phrase 'He didn’t go', quel type de syllabe aura un son réduit ?",
+      options: {
+        a: "Syllabe accentuée",
+        b: "Syllabe inaccentuée",
+        c: "Toutes les syllabes seront longues",
+        d: "La première syllabe seulement"
+      },
+      correct: "b",
+      explanation: "En anglais, les syllabes inaccentuées subissent souvent une réduction vers le schwa /ə/."
+    },
+    {
+      question: "La diphtongue /əʊ/ correspond à la prononciation de quel mot parmi ceux-ci ?",
+      options: {
+        a: "go",
+        b: "got",
+        c: "goo",
+        d: "game"
+      },
+      correct: "a",
+      explanation: "La diphtongue /əʊ/ correspond à la voyelle dans le mot 'go'."
+    },
+    {
+      question: "Quel est le principal effet de la voyelle marquée par un accent lexical ?",
+      options: {
+        a: "Elle est prononcée plus doucement",
+        b: "Elle est prononcée avec un volume et une hauteur plus élevés",
+        c: "Elle disparaît à l’oral",
+        d: "Elle devient nasale"
+      },
+      correct: "b",
+      explanation: "La syllabe accentuée est mise en relief par une augmentation du volume, de la hauteur et souvent de la durée."
+    },
+    {
+      question: "Lequel de ces mots est un exemple fréquent de 'worry word' avec une prononciation irrégulière de la voyelle ?",
+      options: {
+        a: "money",
+        b: "cot",
+        c: "dog",
+        d: "sun"
+      },
+      correct: "a",
+      explanation: "Le mot 'money' est un 'worry word' où la voyelle ne suit pas la règle générale de prononciation."
+    },
+    {
+      question: "La différence entre /ɪ/ et /iː/ repose principalement sur :",
+      options: {
+        a: "la longueur et la qualité du son",
+        b: "l’intonation seulement",
+        c: "la consonne suivante",
+        d: "la présence d’une diphtongue"
+      },
+      correct: "a",
+      explanation: "La différence qualitative et quantitative entre /ɪ/ (courte, lâche) et /iː/ (longue, tendue) est essentielle."
+    },
+    {
+      question: "Quelle voyelle anglaise est souvent prononcée comme un /a/ français ouvert ?",
+      options: {
+        a: "/ʌ/ comme dans 'cup'",
+        b: "/uː/ comme dans 'pool'",
+        c: "/ɒ/ comme dans 'pot'",
+        d: "/eɪ/ comme dans 'day'"
+      },
+      correct: "a",
+      explanation: "Le son /ʌ/ (ex: 'cup') est souvent confondu avec des voyelles françaises mais il est plus ouvert et central."
+    },
+    {
+      question: "En anglais, quel est le placement d’accent lexical typique dans le mot 'politics' (nom) ?",
+      options: {
+        a: "Sur la première syllabe",
+        b: "Sur la deuxième syllabe",
+        c: "Sur la dernière syllabe",
+        d: "Sans accent lexical"
+      },
+      correct: "a",
+      explanation: "Le nom 'politics' a l’accent lexical placé sur la première syllabe, contrairement au verbe 'political'."
+    },
+    {
+      question: "Que signifie le terme 'stress-timed language' ?",
+      options: {
+        a: "Chaque syllabe prend le même temps",
+        b: "Le temps entre syllabes accentuées est régulier",
+        c: "Chaque mot a le même nombre de syllabes",
+        d: "La langue est cantonnée à un seul accent"
+      },
+      correct: "b",
+      explanation: "En anglais, les syllabes accentuées sont prononcées à intervalles réguliers, les syllabes inaccentuées sont plus rapides."
+    },
+    {
+      question: "Dans quel type de groupe syntaxique la particule d’un verbe à particule est-elle généralement accentuée ?",
+      options: {
+        a: "Verbes sans complément",
+        b: "Verbes pronominaux avec pronom complément",
+        c: "Verbes avec complément nominal",
+        d: "Tous les verbes sans exception"
+      },
+      correct: "b",
+      explanation: "Dans les verbes à particule avec pronom complément, la particule est accentuée : 'She took it off'."
+    },
+    {
+      question: "Quelle est la réalisation phonétique correcte de la terminaison -s dans le mot 'cats' ?",
+      options: {
+        a: "/z/",
+        b: "/s/",
+        c: "/ɪz/",
+        d: "/d/"
+      },
+      correct: "b",
+      explanation: "Après une consonne sourde comme /t/, le -s se prononce /s/, donc 'cats' se prononce /kæts/."
+    },
+    {
+      question: "Quelle intonation est associée à une question fermée en anglais ?",
+      options: {
+        a: "Intonation descendante",
+        b: "Intonation montante",
+        c: "Intonation plate",
+        d: "Intonation nasalisée"
+      },
+      correct: "b",
+      explanation: "Les questions fermées sont souvent marquées par une intonation montante en fin d’énoncé."
+    },
+    {
+      question: "Dans le mot 'referee', quelle est la syllabe accentuée ?",
+      options: {
+        a: "Première syllabe",
+        b: "Deuxième syllabe",
+        c: "Troisième syllabe",
+        d: "Pas d’accent"
+      },
+      correct: "c",
+      explanation: "Les mots se terminant par -ee sont accentués sur la dernière syllabe : 'referee' /ˌrefəˈriː/."
+    },
+    {
+      question: "Quel est le son vocalique dans le mot 'door' ?",
+      options: {
+        a: "/ɒ/",
+        b: "/ɔː/",
+        c: "/ʌ/",
+        d: "/əʊ/"
+      },
+      correct: "b",
+      explanation: "'Door' contient la voyelle longue postérieure arrondie /ɔː/."
+    },
+    {
+      question: "Quel est le schéma intonatif prédominant dans une affirmation anglaise ?",
+      options: {
+        a: "Intonation montante",
+        b: "Intonation descendante",
+        c: "Intonation plate",
+        d: "Intonation croissante puis décroissante"
+      },
+      correct: "b",
+      explanation: "Les affirmations sont généralement prononcées avec une intonation descendante."
+    },
+    {
+      question: "Quel est le phonème vocalique du mot 'but' en anglais standard ?",
+      options: {
+        a: "/ʌ/",
+        b: "/uː/",
+        c: "/ɒ/",
+        d: "/ɑː/"
+      },
+      correct: "a",
+      explanation: "Dans le mot 'but', la voyelle est /ʌ/, une voyelle centrale mi-ouverte."
+    },
+    {
+      question: "Quel suffixe provoque généralement l’accent sur l’avant-dernière syllabe ?",
+      options: {
+        a: "-ic",
+        b: "-ee",
+        c: "-ion",
+        d: "-able"
+      },
+      correct: "a",
+      explanation: "Les mots terminant en -ic ont généralement l’accent sur l’avant-dernière syllabe."
+    },
+    {
+      question: "Parmi ces mots, lequel est un composé grammatical accentué sur le premier élément ?",
+      options: {
+        a: "English teacher",
+        b: "Blackbird",
+        c: "Bookstore",
+        d: "Old man"
+      },
+      correct: "b",
+      explanation: "Les composés grammaticaux tels que 'blackbird' conservent l’accent sur le premier élément."
+    },
+    {
+      question: "Quelle est la prononciation régulière du digraphe 'ea' dans le mot 'bread' ?",
+      options: {
+        a: "/iː/",
+        b: "/e/",
+        c: "/æ/",
+        d: "/ɛ/"
+      },
+      correct: "b",
+      explanation: "'Bread' se prononce avec un son /e/, diphtongue courte proche de 'é' fermé."
+    },
+    {
+      question: "Que signifie le terme phonologique 'assimilation' dans la prononciation anglaise ?",
+      options: {
+        a: "Suppression d’un son",
+        b: "Modification d’un son en fonction d’un autre adjacent",
+        c: "Ajout d’un son entre deux mots",
+        d: "Accentuation d’une syllabe"
+      },
+      correct: "b",
+      explanation: "L’assimilation désigne l’adaptation d’un son au voisinage d’un autre, souvent pour faciliter la prononciation."
+    },
+    {
+      question: "Quelle intonation est utilisée dans une 'question tag' pour demander confirmation ?",
+      options: {
+        a: "Intonation descendante",
+        b: "Intonation montante",
+        c: "Intonation neutre",
+        d: "Intonation irrégulière"
+      },
+      correct: "b",
+      explanation: "Pour demander confirmation, la 'question tag' emploie une intonation montante."
+    },
+    {
+      question: "Dans la transcription phonétique [ˌmenɪnˈdʒaɪtɪs], où porte l’accent lexical ?",
+      options: {
+        a: "Sur la première syllabe",
+        b: "Sur la troisième syllabe",
+        c: "Sur la quatrième syllabe",
+        d: "Pas d’accent"
+      },
+      correct: "c",
+      explanation: "L’accent primaire dans 'meningitis' est sur la quatrième syllabe /ˈdʒaɪ/."
+    },
+    {
+      question: "Quel type de voyelle est le /ɜː/ en anglais RP (received pronunciation) ?",
+      options: {
+        a: "Voyelle brève centrale",
+        b: "Voyelle longue centrale non arrondie",
+        c: "Voyelle antérieure arrondie",
+        d: "Voyelle postérieure brève"
+      },
+      correct: "b",
+      explanation: "/ɜː/ est une voyelle longue centrale non arrondie, comme dans le mot 'girl'."
+    },
+    {
+      question: "Quelle est la prononciation finale en /s/, /z/, ou /ɪz/ du pluriel anglais déterminée par ?",
+      options: {
+        a: "Le nombre de syllabes du mot",
+        b: "La consonne finale du mot",
+        c: "Le temps verbal du verbe",
+        d: "L’origine du mot"
+      },
+      correct: "b",
+      explanation: "La prononciation de -s dépend du son final du mot : sourd -> /s/, sonore -> /z/, ou ch/j -> /ɪz/."
+    },
+    {
+      question: "Le mot 'comfortable' se prononce souvent :",
+      options: {
+        a: "/ˈkʌmf.tə.bəl/",
+        b: "/kəmˈfɔːr.tə.bəl/",
+        c: "/kʌm.fɒrˈtə.bəl/",
+        d: "/kʊmˈfæ.tə.bəl/"
+      },
+      correct: "a",
+      explanation: "En anglais courant, 'comfortable' se réduit souvent à /ˈkʌmf.tə.bəl/, avec syllabe centrale réduite."
+    },
+    {
+      question: "Quelle règle gouverne en général la place de l’accent dans les verbes de deux syllabes ?",
+      options: {
+        a: "Sur la première syllabe",
+        b: "Sur la seconde syllabe",
+        c: "Sans accent fixe",
+        d: "Tantôt sur la première, tantôt sur la dernière"
+      },
+      correct: "b",
+      explanation: "Les verbes à deux syllabes ont généralement l’accent sur la seconde syllabe (ex: to reˈport)."
+    },
+    {
+      question: "Quelle terminaison est typiquement accentuée sur la dernière syllabe ?",
+      options: {
+        a: "-ee",
+        b: "-ic",
+        c: "-ion",
+        d: "-able"
+      },
+      correct: "a",
+      explanation: "Les mots finissant en -ee ont l’accent sur la dernière syllabe, comme 'referee' et 'trainee'."
+    }
+  ];
+
+  const quizForm = document.getElementById("quizForm");
+  const submitBtn = document.getElementById("submitBtn");
+  const resultsDiv = document.getElementById("results");
+
+  // Génération dynamique du QCM
+  function buildQuiz() {
+    let output = "";
+    quizData.forEach((item, index) => {
+      output += `
+      <div class="question" id="q${index + 1}">
+        <h3>${index + 1}. ${item.question}</h3>
+        <div class="options">
+          ${Object.entries(item.options).map(([key, val]) => `
+            <label>
+              <input type="radio" name="q${index + 1}" value="${key}" />
+              ${key}) ${val}
+            </label>
+          `).join("")}
+        </div>
+      </div>`;
+    });
+    quizForm.innerHTML = output;
+  }
+
+  // Affichage des résultats corrigés
+  function showResults() {
+    let score = 0;
+    let output = "";
+    quizData.forEach((item, index) => {
+      const selector = `input[name=q${index + 1}]:checked`;
+      const userAnswer = (document.querySelector(selector) || {}).value;
+      const isCorrect = userAnswer === item.correct;
+      if (isCorrect) score++;
+
+      output += `
+      <div class="question-result">
+        <h3>Q${index + 1}: ${item.question}</h3>
+        <p>Votre réponse : <strong>${userAnswer ? `${userAnswer}) ${item.options[userAnswer]}` : "Aucune réponse"}</strong> — 
+        <span class="${isCorrect ? "correct" : "incorrect"}">${isCorrect ? "Correct" : "Incorrect"}</span></p>
+        <div class="explanation"><strong>Explication :</strong> ${item.explanation}</div>
+        <hr />
+      </div>`;
+    });
+
+    resultsDiv.innerHTML = `<h2>Votre score : ${score} / ${quizData.length}</h2>${output}`;
+    resultsDiv.style.display = "block";
+
+    // Désactiver le formulaire et le bouton après soumission
+    submitBtn.disabled = true;
+    const inputs = quizForm.querySelectorAll("input[type=radio]");
+    inputs.forEach(input => input.disabled = true);
+  }
+
+  // Chargement initial du QCM
+  buildQuiz();
+
+  submitBtn.addEventListener("click", () => {
+    showResults();
+    resultsDiv.scrollIntoView({ behavior: "smooth" });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Phonology Part 1 – Lecture 8 MCQ Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 900px; margin: 2rem auto; }
+    h1 { color: #333; }
+    .question { margin-bottom: 1.5rem; }
+    .question p { font-weight: bold; }
+    .result { font-size: 1.2rem; font-weight: bold; margin-top: 1.5rem; }
+    .answers { margin-top: 2rem; padding: 1rem; background: #f9f9f9; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>Lecture 8 – Phonology Part 1 (MIT 24.900) Quiz</h1>
+  <form id="quizForm"></form>
+
+  <script>
+  const questions = [
+    { q: "Phonology studies rules governing how morphemes are pronounced in context. Which concept is central?", opts: ["Phonetic aspiration", "Phonemic contrasts", "Morphological affixation", "Syntactic agreement"], a: 1 },
+    { q: "What is an allophone?", opts: ["A distinct phoneme", "A predictable variant of a phoneme", "A morpheme", "A syllable"], a: 1 },
+    { q: "Which pair are minimal pairs illustrating phonemic distinction?", opts: ["spin vs pin", "spin vs wins", "plan vs pan", "ban vs pan"], a: 3 },
+    { q: "What process changes /s/ to [z] between vowels?", opts: ["Nasalization", "Voicing assimilation", "Deletion", "Epenthesis"], a: 1 },
+    { q: "Phonological rule: voiceless stops become aspirated at word‑initial position before stressed vowel. This is an example of:", opts: ["Phonemic merger", "Complementary distribution", "Free variation", "Underlying representation"], a: 1 },
+    { q: "Which term refers to the stored abstract form of a morpheme?", opts: ["Surface form", "Underlying representation", "Allophone", "Phonetic detail"], a: 1 },
+    { q: "What describes complementary distribution?", opts: ["Sounds alternate without predictability", "Variants occur in exclusive contexts", "Two phonemes differ by meaning", "Sounds never appear in same word"], a: 1 },
+    { q: "Why are [pʰ] and [p] not different phonemes in English initial position?", opts: ["They are free variants", "They are in complementary distribution", "They never occur", "They contrast meaning"], a: 1 },
+    { q: "Which is a phonological rule type?", opts: ["Aspiration", "Allophony", "Voicing", "Assimilation"], a: 3 },
+    { q: "Which environment best triggers voicing assimilation of /s/ in English plural?", opts: ["[s] after voiceless", "[z] after voiced", "[z] after voiceless", "[s] after vowel"], a: 1 },
+    { q: "Phonology Part 1 emphasizes the idea that surface forms are derived from:", opts: ["Articulators", "Allophones", "Underlying forms + rules", "Morpheme roots"], a: 2 },
+    { q: "Which is an example of a phoneme in English?", opts: ["/ɹ/", "/l̥/", "/ɬ/", "/tʷ/"], a: 0 },
+    { q: "What is assimilation in phonology?", opts: ["Deletion of one segment", "Substitution of different phoneme", "Feature spreading in context", "Insertion of vowel"], a: 2 },
+    { q: "Which type of rule is vowel reduction in unstressed syllables?", opts: ["Assimilation", "Deletion", "Reduction", "Epenthesis"], a: 2 },
+    { q: "What is neutralization?", opts: ["Contrast enhanced", "Distinctive features lost in context", "Addition of segment", "Free variation"], a: 1 },
+    { q: "Which pair shows neutralization in English?", opts: ["/t/ vs /tʰ/ word‑initial", "/t/ vs /d/ before /s/", "/s/ vs /z/ in plural", "/p/ vs /b/ word‑initial"], a: 1 },
+    { q: "Underlying representation captures:", opts: ["All surface variation", "Abstract phonological identity", "Phonetic detail", "Morphological segments"], a: 1 },
+    { q: "Phonological generalizations are often language‑specific. Example lecture emphasises rules in:", opts: ["Mandarin tones", "English voicing", "Spanish stress", "Japanese pitch"], a: 1 },
+    { q: "Why do phonologists posit rules rather than list all forms?", opts: ["For memorization", "Because productivity and patterns", "Because exceptions dominate", "To ignore variation"], a: 1 },
+    { q: "The lecture mentions that phonology bridges phonetics and morphology. That link is via:", opts: ["Articulatory gestures", "Phonological rules", "Orthography", "Syntax"], a: 1 }
+  ];
+
+  function buildQuiz() {
+    const form = document.getElementById("quizForm");
+    questions.forEach((item, i) => {
+      const div = document.createElement("div");
+      div.className = "question";
+      div.innerHTML = `<p>${i+1}. ${item.q}</p>` +
+        item.opts.map((o,j) => `<label><input type="radio" name="q${i}" value="${j}"> ${o}</label><br>`).join("");
+      form.appendChild(div);
+    });
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = "Submit Quiz";
+    btn.onclick = grade;
+    form.appendChild(btn);
+  }
+
+  function grade() {
+    let score = 0;
+    questions.forEach((item, i) => {
+      const sel = document.querySelector(`input[name=q${i}]:checked`);
+      if (sel && Number(sel.value) === item.a) score++;
+    });
+    const form = document.getElementById("quizForm");
+    form.insertAdjacentHTML("beforeend", `<div class="result">Your score: ${score}/20</div>`);
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = "Show Answers & References";
+    btn.onclick = showAnswers;
+    form.appendChild(btn);
+  }
+
+  function showAnswers() {
+    const div = document.createElement("div");
+    div.className = "answers";
+    let html = "<h2>Correct Answers & References</h2>";
+    questions.forEach((item,i) => {
+      html += `<p><strong>Q${i+1}</strong>: ${item.q}<br>✅ <em>${item.opts[item.a]}</em><br><small>Ref: N.W. Richards, Lecture 8 Phonology Part 1; Phonological theory (e.g. Kenstowicz & Kisseberth, 1979; Kager, 1999)</small></p>`;
+    });
+    document.getElementById("quizForm").appendChild(div);
+    div.innerHTML = html;
+  }
+
+  window.onload = buildQuiz;
+  </script>
+</body>
+</html>

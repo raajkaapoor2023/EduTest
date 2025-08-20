@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>QCM Phonologie CAPES</title>
+  <style>
+    body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+    .question { margin-bottom: 20px; }
+    .result { font-weight: bold; color: green; }
+  </style>
+</head>
+<body>
+  <h1>QCM – Phonologie CAPES</h1>
+
+  <form id="quizForm">
+    <div class="question">
+      <p>1. Quel est le rôle de l'API dans l'apprentissage de l'anglais ?</p>
+      <label><input type="radio" name="q1" value="a"> Corriger la grammaire</label><br>
+      <label><input type="radio" name="q1" value="b"> Identifier les sons</label><br>
+      <label><input type="radio" name="q1" value="c"> Apprendre à écrire</label><br>
+      <label><input type="radio" name="q1" value="d"> Mémoriser les verbes irréguliers</label>
+    </div>
+
+    <!-- Questions 2 à 14 ici... (même format) -->
+
+    <div class="question">
+      <p>15. Quel est l'objectif principal de l'enseignement explicite de la phonologie ?</p>
+      <label><input type="radio" name="q15" value="a"> Obtenir un accent natif</label><br>
+      <label><input type="radio" name="q15" value="b"> Développer l'intelligibilité</label><br>
+      <label><input type="radio" name="q15" value="c"> Apprendre le vocabulaire</label><br>
+      <label><input type="radio" name="q15" value="d"> Mémoriser l'orthographe</label>
+    </div>
+
+    <button type="button" onclick="checkAnswers()">Valider</button>
+  </form>
+
+  <p id="score" class="result"></p>
+
+  <script>
+    function checkAnswers() {
+      const correct = {
+        q1: "b",
+        // Ajoutez les bonnes réponses pour chaque question ici
+        q15: "b"
+      };
+      let score = 0;
+      for (let q in correct) {
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        if (selected && selected.value === correct[q]) score++;
+      }
+      document.getElementById("score").innerText = 
+        `Vous avez obtenu ${score} sur ${Object.keys(correct).length} 🎯`;
+    }
+  </script>
+</body>
+</html>

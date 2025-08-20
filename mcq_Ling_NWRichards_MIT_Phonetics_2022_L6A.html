@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Phonetics Part 2 MCQ Quiz – MIT OCW Lecture 6</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; max-width: 800px; line-height: 1.5; background: #f8f8fa; }
+    .question { margin-bottom: 1.5em; }
+    .correct { color: green; }
+    .incorrect { color: red; }
+    .skipped { color: orange; }
+    .btn { background: #0066cc; color: white; border: none; padding: 10px 20px; font-size: 1em; margin: 1em 0; cursor: pointer; }
+    .btn:hover { background: #004999; }
+    .answers { display: none; margin-top: 2em; background: #f0f0fc; padding: 2em; border-radius: 8px; }
+    .answer-explanation { font-size: 0.96em; margin-bottom: 1.2em; }
+    label { cursor: pointer; display: block; }
+  </style>
+</head>
+<body>
+  <h1>Phonetics Part 2 (MIT 24.900, Lecture 6) – 20 MCQ Quiz</h1>
+  <form id="quizForm">
+    <!-- BEGIN QUESTIONS -->
+  </form>
+  <button class="btn" type="button" onclick="submitQuiz()">Submit Quiz</button>
+  <div id="score"></div>
+  <div class="answers" id="answers"></div>
+  <script>
+    const quiz = [
+      {
+        q: "1. Which of the following is NOT a parameter used to classify vowels?",
+        o: [
+          "Tongue height (High, Mid, Low)",
+          "Tongue backness (Front, Central, Back)",
+          "Voicing",
+          "Lip rounding"
+        ],
+        a: 2,
+        ref: "Voicing is a parameter for classifying consonants, not vowels, as all vowels are typically voiced[1][2]. See: Ladefoged, 'A Course in Phonetics'; MIT OCW Lecture 6 (Richards)."
+      },
+      {
+        q: "2. In the International Phonetic Alphabet (IPA), which of the following symbols represents a high front unrounded vowel?",
+        o: [
+          "[i]",
+          "[u]",
+          "[ɑ]",
+          "[æ]"
+        ],
+        a: 0,
+        ref: "[i] is the high front unrounded vowel, as in English 'see'[1][2]."
+      },
+      {
+        q: "3. What is the term for non-contrastive variations of the same phoneme?",
+        o: [
+          "Allomorphs",
+          "Allophones",
+          "Morphemes",
+          "Minimal pairs"
+        ],
+        a: 1,
+        ref: "Allophones are non-contrastive, predictable variants of a phoneme[1][2]."
+      },
+      {
+        q: "4. Which articulatory feature distinguishes [i] and [u]?",
+        o: [
+          "Tongue height",
+          "Place of articulation",
+          "Lip rounding",
+          "Voicing"
+        ],
+        a: 2,
+        ref: "[i] is unrounded, [u] is rounded; tongue height is the same (both high), but lip rounding is the contrastive feature[1][2]."
+      },
+      {
+        q: "5. What is a diphthong?",
+        o: [
+          "A type of consonant produced with two closures",
+          "A single vowel sound in one place",
+          "A vowel sound that glides from one quality to another within a syllable",
+          "A nasalized vowel"
+        ],
+        a: 2,
+        ref: "Diphthongs are complex vowels that move from one tongue position to another within one syllable (e.g., English 'my' [aɪ])[1]."
+      },
+      {
+        q: "6. Which of these is a minimal pair?",
+        o: [
+          "bit – bet",
+          "sing – sang",
+          "sat – sit – set",
+          "tree – three"
+        ],
+        a: 0,
+        ref: "Minimal pairs differ in only one phonological element (e.g., vowel sound in 'bit' vs 'bet')[1][2]."
+      },
+      {
+        q: "7. The vowel in the English word 'but' ([bʌt]) is classified as:",
+        o: [
+          "High front unrounded",
+          "Mid central unrounded",
+          "Low back rounded",
+          "High back rounded"
+        ],
+        a: 1,
+        ref: "[ʌ] is mid central unrounded, as in 'but'[1][2]."
+      },
+      {
+        q: "8. Which description matches [æ] in English as in 'cat'?",
+        o: [
+          "Low front unrounded vowel",
+          "Mid back rounded vowel",
+          "High central rounded vowel",
+          "Mid front rounded vowel"
+        ],
+        a: 0,
+        ref: "[æ] is the low front unrounded vowel[1]."
+      },
+      {
+        q: "9. What is the schwa symbol and what does it represent?",
+        o: [
+          "[ɛ]; a mid front vowel",
+          "[ʊ]; a high back lax vowel",
+          "[ə]; a mid central, typically unstressed vowel",
+          "[ɪ]; a high front lax vowel"
+        ],
+        a: 2,
+        ref: "The schwa [ə] is a mid central vowel, commonly unstressed[1][2]."
+      },
+      {
+        q: "10. In vowel classification, 'tense' vowels are typically:",
+        o: [
+          "Longer and produced with greater muscular effort",
+          "Shorter and relaxed",
+          "Always rounded",
+          "Always unrounded"
+        ],
+        a: 0,
+        ref: "Tense vowels are longer, often involve more muscular tension; 'beat' [i] vs 'bit' [ɪ][1][2]."
+      },
+      {
+        q: "11. Which of the following is a feature of cardinal vowels?",
+        o: [
+          "They are language-specific vowels",
+          "They serve as reference points for describing other vowels",
+          "They are nasalized vowels",
+          "They represent only diphthongs"
+        ],
+        a: 1,
+        ref: "Cardinal vowels are a set of reference vowels for describing the vowels of any language[1][2]."
+      },
+      {
+        q: "12. Which IPA symbol represents the high back rounded vowel?",
+        o: [
+          "[ʊ]",
+          "[o]",
+          "[u]",
+          "[ɑ]"
+        ],
+        a: 2,
+        ref: "[u] is the high back rounded vowel, as in English 'food'[1]."
+      },
+      {
+        q: "13. Which articulatory gesture distinguishes [e] from [ɛ]?",
+        o: [
+          "Lip rounding",
+          "Tongue height",
+          "Nasality",
+          "Voicing"
+        ],
+        a: 1,
+        ref: "[e] is higher than [ɛ]; tongue height is the contrast[1]."
+      },
+      {
+        q: "14. Allophonic variation is most commonly conditioned by:",
+        o: [
+          "Phonological environment",
+          "Language origin",
+          "Meaning",
+          "Lexical frequency"
+        ],
+        a: 0,
+        ref: "Allophonic variants depend on phonological environment (where in the word, what comes before/after, etc.)[1][2]."
+      },
+      {
+        q: "15. Which is true about English vowels?",
+        o: [
+          "Every English vowel can occur in any possible position",
+          "Not all vowels can appear in unstressed syllables",
+          "There is only one central vowel",
+          "Length is not contrastive in English"
+        ],
+        a: 1,
+        ref: "Schwa ([ə]) for example only occurs in unstressed syllables; not all vowels appear everywhere[1]."
+      },
+      {
+        q: "16. What is the primary difference between oral and nasal vowels?",
+        o: [
+          "Length of the vowel",
+          "The tongue height",
+          "In nasal vowels, the velum is lowered, allowing air to pass through the nose",
+          "In oral vowels, the lips are always rounded"
+        ],
+        a: 2,
+        ref: "Nasal vowels require the velum to be lowered during articulation, allowing nasal airflow[1]."
+      },
+      {
+        q: "17. Which pair demonstrates 'vowel reduction' in English?",
+        o: [
+          "'Photograph' vs 'photography'",
+          "'Sing' vs 'sang'",
+          "'Cot' vs 'caught'",
+          "'Sit' vs 'seat'"
+        ],
+        a: 0,
+        ref: "Unstressed vowels often reduce to schwa in derived forms, e.g., photograph [ˈfoʊtəgræf] vs photography [fəˈtɑgrəfi][1][2]."
+      },
+      {
+        q: "18. Which is a possible minimal pair for illustrating the feature of rounding in English vowels?",
+        o: [
+          "'Beet' – 'boot'",
+          "'Pit' – 'bet'",
+          "'Sun' – 'sin'",
+          "'Cot' – 'cat'"
+        ],
+        a: 0,
+        ref: "'Beet' [i] (unrounded), 'boot' [u] (rounded) contrast in rounding and tongue position[1][2]."
+      },
+      {
+        q: "19. Which of the following is an example of a central vowel?",
+        o: [
+          "[i]",
+          "[u]",
+          "[ə]",
+          "[æ]"
+        ],
+        a: 2,
+        ref: "[ə] (schwa) is a central vowel[1][2]."
+      },
+      {
+        q: "20. Which pair best represents a front–back contrast in English vowels?",
+        o: [
+          "'Beat' – 'boot'",
+          "'Beat' – 'bit'",
+          "'Cot' – 'cat'",
+          "'Sit' – 'set'"
+        ],
+        a: 0,
+        ref: "'Beat' [i] is high front, 'boot' [u] is high back; this displays front-back tongue movement[1]."
+      }
+    ];
+
+    // Render quiz
+    const qForm = document.getElementById('quizForm');
+    quiz.forEach((item, idx) => {
+      let qDiv = document.createElement('div');
+      qDiv.classList.add('question');
+      let html = `<p><strong>${item.q}</strong></p>`;
+      item.o.forEach((opt, j) => {
+        html += `<label><input type="radio" name="q${idx}" value="${j}"> ${opt}</label>`;
+      });
+      qDiv.innerHTML = html;
+      qForm.appendChild(qDiv);
+    });
+
+    // Quiz submission and answer explanation
+    function submitQuiz() {
+      let score = 0;
+      let answered = 0;
+      let output = '';
+      for (let i = 0; i < quiz.length; i++) {
+        let options = document.getElementsByName(`q${i}`);
+        let selected = -1;
+        for (let j = 0; j < options.length; j++) {
+          if (options[j].checked) selected = parseInt(options[j].value);
+        }
+        let corr = quiz[i].a;
+        output += `<div class="answer-explanation"><strong>Q${i+1}:</strong> ${quiz[i].q}<br>`;
+        if (selected === -1) {
+          output += `<span class="skipped">No answer given.</span><br>`;
+          output += `<span class="correct">Correct answer: ${quiz[i].o[corr]}</span><br>`;
+        } else {
+          answered++;
+          if (selected === corr) { score++; }
+          output += `<span class="${selected === corr ? 'correct' : 'incorrect'}">Your answer: ${quiz[i].o[selected]}</span><br>`;
+          output += `<span class="correct">Correct answer: ${quiz[i].o[corr]}</span><br>`;
+        }
+        output += `<em>${quiz[i].ref}</em></div>`;
+      }
+      document.getElementById('score').innerHTML = `<h2>Score: ${score} / 20 (${answered} answered, ${quiz.length-answered} skipped)</h2>`;
+      document.getElementById('answers').innerHTML = output;
+      document.getElementById('answers').style.display = 'block';
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  </script>
+  <hr>
+  <p style="font-size:0.92em;color:#666;">
+    <strong>References:</strong><br>
+    [1] Norvin W. Richards, MIT OpenCourseWare 24.900 Introduction to Linguistics, Lecture 6: Phonetics, Part 2, Jan 2023.<br>
+    [2] Peter Ladefoged & Keith Johnson, A Course in Phonetics, 7th Edition, Cengage Learning, 2014.<br>
+    Designed for educational use in accordance with MIT OCW's license (CC BY-NC-SA).
+  </p>
+</body>
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MIT OCW Morphology Lecture 3 Quiz</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px 10px;
+    background: #f9f9f9;
+    color: #222;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  h1, h2 {
+    text-align: center;
+    color: #004080;
+  }
+  form {
+    background: white;
+    padding: 20px 25px 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #888;
+  }
+  .question {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+  }
+  .question h3 {
+    margin-bottom: 8px;
+  }
+  label {
+    display: block;
+    margin-bottom: 6px;
+    cursor: pointer;
+  }
+  button {
+    display: block;
+    margin: 25px auto 10px;
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #004080;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #002a4d;
+  }
+  .result {
+    background: #e0f0ff;
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #90bfff;
+  }
+  .correct {
+    color: green;
+    font-weight: bold;
+  }
+  .wrong {
+    color: red;
+    font-weight: bold;
+  }
+  .answer-details {
+    font-size: 0.9em;
+    margin-top: 8px;
+    padding-left: 25px;
+    color: #333;
+    background: #f0faff;
+    border-left: 4px solid #004080;
+    border-radius: 3px;
+  }
+  a {
+    color: #004080;
+  }
+</style>
+</head>
+<body>
+
+<h1>MIT OpenCourseWare Lecture 3: Morphology Part 2 Quiz</h1>
+<h2>Test Your Knowledge – 20 Questions</h2>
+
+<form id="quizForm">
+
+<!-- Questions injected by script -->
+
+<button type="button" onclick="submitQuiz()">Submit Answers</button>
+</form>
+
+<div id="results" class="result" style="display:none;"></div>
+
+<script>
+// Questions based on Norvin Richards' MIT OCW Lecture 3: Morphology Part 2 (YouTube transcript)
+// References include timestamps for precise academic grounding
+
+const questions = [
+  {
+    q: "1. What is an 'allomorph'?",
+    choices: [
+      "A prefix that attaches to verbs",
+      "A variant form of a morpheme conditioned by context",
+      "A type of free morpheme",
+      "A type of suffix"
+    ],
+    correct: 1,
+    explanation: `An allomorph is one of the variant phonological forms of a morpheme that appear in different contexts (e.g., past tense '-ed' pronounced as /t/, /d/, or /ɪd/). (Richards, Lecture 3, 13:00–14:30)`
+  },
+  {
+    q: "2. Which morpheme is exemplified by '-al' in words like 'industrial' and 'national'?",
+    choices: [
+      "A free morpheme",
+      "A verb-forming suffix",
+      "A noun-forming suffix",
+      "An adjective-forming suffix"
+    ],
+    correct: 3,
+    explanation: `' -al' is an adjective-forming suffix attaching to nouns (e.g., 'nation' →'national'). (Richards, Lecture 3, 2:30–5:00)`
+  },
+  {
+    q: "3. What is meant by the 'input' and 'output' of a morpheme in morphological processes?",
+    choices: [
+      "The sounds before and after a morpheme",
+      "The meaning given when a morpheme is added and the category it creates",
+      "The free and bound status",
+      "The root and stem"
+    ],
+    correct: 1,
+    explanation: `The input is the category or word a morpheme attaches to; the output is the new category or word resulting after attachment. For example, '-ation' attaches to verbs and outputs nouns. (Richards, Lecture 3, 5:00–8:00)`
+  },
+  {
+    q: "4. The suffix '-ation' typically attaches to which class of words?",
+    choices: [
+      "Nouns",
+      "Adjectives",
+      "Verbs",
+      "Adverbs"
+    ],
+    correct: 2,
+    explanation: `'-ation' attaches to verbs (e.g., 'industrialize') to form nouns ('industrialization'). (Richards, Lecture 3, 7:30–8:30)`
+  },
+  {
+    q: "5. How do different allomorphs of the English past tense suffix manifest?",
+    choices: [
+      "They always have the same pronunciation",
+      "They appear in mutually exclusive environments (e.g., after voiceless consonants vs voiced)",
+      "They are free morphemes",
+      "The spelling changes but the pronunciation does not"
+    ],
+    correct: 1,
+    explanation: `English past tense '-ed' has allomorphs /t/, /d/, /ɪd/ depending on the phonological environment (e.g., /t/ after voiceless sounds). (Richards, Lecture 3, 12:00–15:00)`
+  },
+  {
+    q: "6. According to Richards, what is the 'default' past tense allomorph in English?",
+    choices: [
+      "/t/",
+      "/d/",
+      "/ɪd/",
+      "No default; all are equally likely"
+    ],
+    correct: 1,
+    explanation: `The default allomorph for the English past tense is /d/ as in 'fleeped' (a made-up verb example). (Richards, Lecture 3, 16:00–17:00)`
+  },
+  {
+    q: "7. Why can't '-al' attach to verbs like 'industrialize' directly, but '-ation' can?",
+    choices: [
+      "'-al' only attaches to nouns; '-ation' attaches to verbs creating nouns",
+      "'-al' is a prefix; '-ation' is a suffix",
+      "'-al' is a free morpheme; '-ation' is bound",
+      "Both attach only to adjectives"
+    ],
+    correct: 0,
+    explanation: `'-al' attaches to nouns ('nation'→'national'), while '-ation' attaches to verbs ('industrialize'→'industrialization'). (Richards Lecture 3, 6:00–8:30)`
+  },
+  {
+    q: "8. What does Richards suggest about morpheme listing in the mental lexicon?",
+    choices: [
+      "Only words are listed, not morphemes",
+      "Morphemes are listed with their pronunciation, meanings, and category info",
+      "Phonemes are stored, not morphemes",
+      "Morphemes are randomly organized"
+    ],
+    correct: 1,
+    explanation: `Morphemes in the mental lexicon contain sound, meaning, and grammatical category info including if they are bound/free. (Richards, Lecture 3, 1:00–3:30)`
+  },
+  {
+    q: "9. What role do 'input' and 'output' categories serve in morphological rules?",
+    choices: [
+      "They determine phonetic changes",
+      "They specify the categories a morpheme can attach to and the resulting category",
+      "They separate prefixes from suffixes",
+      "They are only important for infixes"
+    ],
+    correct: 1,
+    explanation: `Morphological rules specify that morphemes attach to inputs (e.g., verbs) and produce output categories (e.g., nouns). (Richards, Lecture 3, 5:00–9:00)`
+  },
+  {
+    q: "10. How does Richards illustrate morpheme productivity?",
+    choices: [
+      "By showing irregular verbs only",
+      "By using made-up words to explain default allomorphs and morphological expectations",
+      "By focusing on fixed lexicon entries",
+      "By ignoring allomorphy"
+    ],
+    correct: 1,
+    explanation: `Richards invents verbs like 'fleep' to demonstrate how default morphological patterns and allomorphy operate productively. (Lecture 3, 15:30–17:00)`
+  },
+  {
+    q: "11. What is an example of a morphological generalization Richards discusses?",
+    choices: [
+      "'-al' attaches only to nouns",
+      "'-ed' creates present tense",
+      "'-ing' attaches only to adjectives",
+      "No suffixes attach to verbs"
+    ],
+    correct: 0,
+    explanation: `The suffix '-al' is limited to attaching to nouns to form adjectives, e.g., in 'industrial'. (Lecture 3, 2:00–4:00)`
+  },
+  {
+    q: "12. Richards emphasizes the mental lexicon treats morphemes as:",
+    choices: [
+      "Simple sound patterns with no meaning",
+      "Elements with linked pronunciation and meaning",
+      "Entire words only, no decomposition",
+      "Random parts of speech"
+    ],
+    correct: 1,
+    explanation: `Morphemes have structured representations linking sound and meaning, crucial for linguistic competence. (Lecture 3, 1:00–3:00)`
+  },
+  {
+    q: "13. How does the suffix '-ity' function morphologically according to Richards?",
+    choices: [
+      "It forms verbs from nouns",
+      "It forms nouns from adjectives, e.g., 'sincere'→'sincerity'",
+      "It denotes plural forms",
+      "It creates adjectives from verbs"
+    ],
+    correct: 1,
+    explanation: `' -ity' attaches to adjectives to form nouns, like 'chaste' → 'chastity'. (Lecture 3, 9:30–11:00)`
+  },
+  {
+    q: "14. Richards notes that allomorphy requires understanding:",
+    choices: [
+      "Phonetic environments shaping morpheme forms",
+      "That all morphemes have one fixed form",
+      "Free morphemes never change",
+      "Affixes are always prefixes"
+    ],
+    correct: 0,
+    explanation: `Allomorphs appear conditioned by phonetic context, like the English past tense suffix. (Lecture 3, 10:00–14:00)`
+  },
+  {
+    q: "15. Why are some morphological combinations impossible, e.g., '*industrializ-al'*?",
+    choices: [
+      "Because '-al' cannot attach to verbs directly",
+      "Because 'industrialize' is not a real word",
+      "All morphemes can combine freely",
+      "The spelling is incorrect"
+    ],
+    correct: 0,
+    explanation: `'-al' attaches only to nouns, not verbs; 'industrialization' works because '-ation' creates a noun. (Lecture 3, 6:30–7:30)`
+  },
+  {
+    q: "16. How does Richards demonstrate default assumptions about morpheme forms?",
+    choices: [
+      "By ignoring irregular verbs",
+      "By predicting the formation of past tense for invented verbs like 'fleep' → 'fleeped'",
+      "By memorizing all exceptions",
+      "By relying on random choice"
+    ],
+    correct: 1,
+    explanation: `He explains the default past tense form for new verbs is '-ed' even if exceptions like 'leap'→'leapt' exist. (Lecture 3, 15:00–16:30)`
+  },
+  {
+    q: "17. What does Richards say about complex words like 'industrialization'?",
+    choices: [
+      "They form by linear concatenation without constraints",
+      "They form by morphemes layering in sequences with set attachment rules",
+      "They are always exceptions",
+      "They do not obey morphological rules"
+    ],
+    correct: 1,
+    explanation: `Complex words build hierarchically via morphemes attaching to outputs of previous affixations. (Lecture 3, 6:00–8:00)`
+  },
+  {
+    q: "18. What is the role of 'allomorphy' in morphological theory?",
+    choices: [
+      "To explain phonological variation with no rules",
+      "To account for morpheme variants conditioned by environment and morphology",
+      "To ignore irregular verb forms",
+      "To describe only free morphemes"
+    ],
+    correct: 1,
+    explanation: `Allomorphy accounts for systematic variant forms of morphemes (e.g., 'talked' /t/, 'buzzed' /z/). (Lecture 3, 12:00–15:00)`
+  },
+  {
+    q: "19. What is meant by 'morphotactics' as discussed by Richards?",
+    choices: [
+      "Rules governing phoneme sounds",
+      "Rules about the order and combination of morphemes in words",
+      "Rules about sentence structure",
+      "Rules about vocabulary"
+    ],
+    correct: 1,
+    explanation: `Morphotactics are rules governing morpheme order and valid combinations in word formation. (Lecture 3, 4:00–6:00)`
+  },
+  {
+    q: "20. What challenge does Richards highlight about productive morphology?",
+    choices: [
+      "That all words have regular forms",
+      "That morphological rules apply even to novel and made-up words with exceptions",
+      "That morphology is unrelated to phonology",
+      "That all morphemes are phonologically invariant"
+    ],
+    correct: 1,
+    explanation: `Morphology is productive, applying rules to new words, but some words show irregular or exceptional allomorphs. (Lecture 3, 14:00–16:00)`
+  }
+];
+
+// Inject questions in the form
+const form = document.getElementById('quizForm');
+questions.forEach((item, idx) => {
+  const div = document.createElement('div');
+  div.className = 'question';
+  div.id = `q${idx+1}`;
+  div.innerHTML = `<h3>Q${idx+1}. ${item.q}</h3>`;
+  item.choices.forEach((choice, cidx) => {
+    div.innerHTML += `
+      <label>
+        <input type="radio" name="q${idx+1}" value="${cidx}" required>
+        ${choice}
+      </label>
+    `;
+  });
+  form.insertBefore(div, form.querySelector('button'));
+});
+
+function submitQuiz() {
+  let score = 0;
+  let output = '';
+  const resultsDiv = document.getElementById('results');
+  resultsDiv.style.display = 'block';
+  resultsDiv.innerHTML = '<h2>Results and Detailed Answers</h2>';
+
+  questions.forEach((q, idx) => {
+    const userAnswer = form[`q${idx+1}`].value;
+    const isCorrect = parseInt(userAnswer) === q.correct;
+    if (isCorrect) score++;
+    output += `<div><strong>Q${idx+1}.</strong> ${q.q}<br>`;
+    output += `<span class="${isCorrect ? 'correct' : 'wrong'}">Your answer: ${q.choices[userAnswer]} — ${isCorrect ? 'Correct' : 'Incorrect'}</span>`;
+    output += `<div class="answer-details"><em>Explanation:</em> ${q.explanation}</div></div><br>`;
+  });
+
+  output = `<h3>You scored ${score} out of ${questions.length}.</h3>` + output;
+  output += `<hr><p><strong>Reference:</strong> Norvin W. Richards, <em>MIT OpenCourseWare: Linguistics 24.900, Lecture 3: Morphology Part 2</em> (Spring 2022), available <a href="https://www.youtube.com/watch?v=NfD6QNY6Zzg" target="_blank" rel="noopener noreferrer">here (YouTube)</a>.</p>`;
+  
+  resultsDiv.innerHTML = output;
+  resultsDiv.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>

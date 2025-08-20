@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chapters 4–7: Advanced Linguistics MCQ Test</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #121212;
+      color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #ffcc00;
+      margin-bottom: 1em;
+    }
+    #quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .question-card {
+      background-color: #1e1e2f;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 0 10px #000;
+      margin-bottom: 1em;
+    }
+    .question-card h2 {
+      margin-top: 0;
+      color: #ffcc00;
+      font-size: 1.2em;
+    }
+    .options label {
+      display: block;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+    .options input[type="radio"] {
+      margin-right: 8px;
+    }
+    #navigation {
+      text-align: center;
+      margin-top: 1em;
+    }
+    .btn {
+      background-color: #ffcc00;
+      color: #121212;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 5px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+    .btn:hover:not(:disabled) {
+      background-color: #ffd633;
+    }
+    #results {
+      max-width: 800px;
+      margin: 2em auto;
+      background-color: #1e1e2f;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #000;
+    }
+    #results h2 {
+      color: #ffcc00;
+    }
+    .answer-explanation {
+      margin: 0.5em 0 1.5em;
+      color: #ccc;
+      font-size: 0.95em;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #333;
+      margin: 1.5em 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Chapters 4–7: Advanced Linguistics MCQ Test</h1>
+  <div id="quiz-container">
+    <div class="question-card" id="question-card"></div>
+    <div id="navigation">
+      <button class="btn" id="prevBtn">Previous</button>
+      <button class="btn" id="skipBtn">Skip</button>
+      <button class="btn" id="nextBtn">Next</button>
+      <button class="btn" id="submitBtn">Submit</button>
+    </div>
+  </div>
+  <div id="results"></div>
+
+  <script>
+    const questions = [
+      // Chapter 4: Allophones (1–10)
+      {
+        question: "What term describes a context-dependent phonetic variant of a phoneme?",
+        options: ["Allophone", "Grapheme", "Phoneme", "Morpheme"],
+        answer: 0,
+        explanation: "An allophone is a predictable, non-contrastive variant of a phoneme in a particular environment (Tench, 2011)."
+      },
+      {
+        question: "Which pair of sounds are allophones of the same phoneme in English?",
+        options: ["[p] and [pʰ]", "[p] and [b]", "[t] and [d]", "[s] and [z]"],
+        answer: 0,
+        explanation: "[p] (unaspirated) and [pʰ] (aspirated) are allophones of /p/ conditioned by position (Tench, 2011)."
+      },
+      {
+        question: "In English, the aspirated [pʰ] typically occurs in which environment?",
+        options: ["Word-initial in a stressed syllable", "After /s/", "Word-final", "Following a nasal"],
+        answer: 0,
+        explanation: "Stops are aspirated in word-initial position before a stressed vowel (Tench, 2011)."
+      },
+      {
+        question: "What allophonic variation of /l/ is found in coda position in RP?",
+        options: ["Clear [l]", "Dark [ɫ]", "Fronted [lʲ]", "Velar [k]"],
+        answer: 1,
+        explanation: "In RP, /l/ is velarized (dark [ɫ]) in syllable coda (Tench, 2011)."
+      },
+      {
+        question: "What process changes /n/ to [m] before /p/ or /b/?",
+        options: ["Assimilation", "Elision", "Lenition", "Fortition"],
+        answer: 0,
+        explanation: "Nasal place assimilation causes /n/ to become [m] before bilabials (Tench, 2011)."
+      },
+      {
+        question: "Which allophone of /t/ appears in American English between vowels when the second syllable is unstressed, as in 'butter'?",
+        options: ["[ɾ] (flap)", "[tʰ]", "[ʔ]", "[t]"],
+        answer: 0,
+        explanation: "Intervocalic /t/ before an unstressed syllable is realized as an alveolar flap [ɾ] (Tench, 2011)."
+      },
+      {
+        question: "Vowel nasalization in English is usually conditioned by which environment?",
+        options: ["Before a nasal consonant", "After a nasal consonant", "In stressed syllables", "Word-final position"],
+        answer: 0,
+        explanation: "Vowels become partially nasalized before nasal consonants (Tench, 2011)."
+      },
+      {
+        question: "Which environment conditions the glottal-stop allophone of /t/ in RP?",
+        options: ["In word-final position after a vowel", "Word-initial", "After /s/", "Between vowels"],
+        answer: 0,
+        explanation: "In RP, /t/ can be realized as [ʔ] in word-final position after a vowel (Tench, 2011)."
+      },
+      {
+        question: "The palatalization of /k/ to [tʃ] before /j/ (as in 'cute') is an example of:",
+        options: ["Coarticulation", "Lenition", "Fortition", "Glottalization"],
+        answer: 0,
+        explanation: "Coarticulation causes /k/ to become [tʃ] before a following /j/ (Tench, 2011)."
+      },
+      {
+        question: "Which of the following is a conditioned allophone pair?",
+        options: ["/l/ → [l] vs [ɫ]", "/p/ → [p] vs [b]", "/s/ → [s] vs [z]", "/tʃ/ → [tʃ] vs [dʒ]"],
+        answer: 0,
+        explanation: "/l/ has clear and dark allophones depending on syllable position (Tench, 2011)."
+      },
+
+      // Chapter 5: Accents (11–20)
+      {
+        question: "Which best defines an accent?",
+        options: [
+          "Regional phonetic-phonological features",
+          "Vocabulary differences",
+          "Grammar rules",
+          "Spelling conventions"
+        ],
+        answer: 0,
+        explanation: "An accent is defined by its characteristic phonetic and phonological patterns (Tench, 2011)."
+      },
+      {
+        question: "Which accent is known for the cot–caught merger?",
+        options: [
+          "Western American English",
+          "Received Pronunciation",
+          "Northern Cities Vowel Shift",
+          "General American"
+        ],
+        answer: 0,
+        explanation: "In many Western US varieties, /ɑ/ and /ɔ/ merge, e.g. cot≈caught (Tench, 2011)."
+      },
+      {
+        question: "What is the rhoticity difference between RP and General American?",
+        options: [
+          "RP is non-rhotic; GA is rhotic",
+          "RP is rhotic; GA is non-rhotic",
+          "Both are non-rhotic",
+          "Both are rhotic"
+        ],
+        answer: 0,
+        explanation: "Received Pronunciation omits /r/ after vowels, whereas General American retains it (Tench, 2011)."
+      },
+      {
+        question: "The 'bath' vowel is /ɑː/ in RP but /æ/ in GA. This split is called the:",
+        options: [
+          "Trap–bath split",
+          "Foot–strut split",
+          "Lot–cloth split",
+          "Dress–trap split"
+        ],
+        answer: 0,
+        explanation: "The trap–bath split distinguishes RP /ɑː/ vs GA /æ/ in words like bath (Tench, 2011)."
+      },
+      {
+        question: "T-glottalization (replacing /t/ with [ʔ]) is a salient feature of:",
+        options: ["Cockney English", "General American", "Scottish English", "Welsh English"],
+        answer: 0,
+        explanation: "Cockney and some Estuary speakers use [ʔ] for /t/ in certain positions (Tench, 2011)."
+      },
+      {
+        question: "Which accent fronts the vowel /uː/ to [ʉː]?",
+        options: [
+          "Australian English",
+          "Received Pronunciation",
+          "General American",
+          "Indian English"
+        ],
+        answer: 0,
+        explanation: "Australian English often fronts /uː/ to a central [ʉː] (Tench, 2011)."
+      },
+      {
+        question: "In Indian English, /t/ and /d/ are commonly produced as:",
+        options: [
+          "Retroflex stops",
+          "Alveolar stops",
+          "Dental stops",
+          "Palatal stops"
+        ],
+        answer: 0,
+        explanation: "Many Indian speakers use retroflex [ʈ, ɖ] for English /t, d/ (Tench, 2011)."
+      },
+      {
+        question: "Which L2-English accent is often syllable-timed rather than stress-timed?",
+        options: ["French-accented English","General American","Received Pronunciation","Cockney"],
+        answer: 0,
+        explanation: "French L1 speakers often impose a syllable-timed rhythm on English (Tench, 2011)."
+      },
+      {
+        question: "The Mary–merry–marry merger (all pronounced /ˈmɛri/) is typical of:",
+        options: [
+          "General American",
+          "Received Pronunciation",
+          "Australian English",
+          "Scottish English"
+        ],
+        answer: 0,
+        explanation: "In GA, these three words merge; RP keeps them distinct (Tench, 2011)."
+      },
+      {
+        question: "Which accent commonly uses an alveolar flap [ɾ] for /t/ in 'water'?",
+        options: [
+          "General American",
+          "Received Pronunciation",
+          "Australian English",
+          "Indian English"
+        ],
+        answer: 0,
+        explanation: "Most General American speakers use [ɾ] intervocalically in words like water (Tench, 2011)."
+      },
+
+      // Chapter 6: Phrases (21–30)
+      {
+        question: "What is a phonological phrase?",
+        options: [
+          "A group of words under one intonation contour",
+          "A clause marked by punctuation",
+          "A morphological unit",
+          "A lexical chunk"
+        ],
+        answer: 0,
+        explanation: "A phonological phrase is a prosodic unit defined by its intonation pattern (Tench, 2011)."
+      },
+      {
+        question: "Which feature often marks the end of a phonological phrase?",
+        options: [
+          "Final lengthening",
+          "Vowel reduction",
+          "Pitch rise",
+          "Stress shift"
+        ],
+        answer: 0,
+        explanation: "Syllables are lengthened at phrase-end (Tench, 2011)."
+      },
+      {
+        question: "Linking /r/ (as in 'law and order') is an example of:",
+        options: [
+          "Resyllabification",
+          "Elision",
+          "Vowel reduction",
+          "Fortition"
+        ],
+        answer: 0,
+        explanation: "Linking /r/ resyllabifies the l-vowel boundary (Tench, 2011)."
+      },
+      {
+        question: "In 'law and order', the linking sound is:",
+        options: ["/r/", "/j/", "/w/", "Ø"],
+        answer: 0,
+        explanation: "Speakers insert /r/ after 'law' to link to 'and' (Tench, 2011)."
+      },
+      {
+        question: "The palatalization of /t/ to [tʃ] across 'don’t you' → [doʊnˈtʃu] is called:",
+        options: [
+          "Coalescent assimilation",
+          "Elision",
+          "Fortition",
+          "Lenition"
+        ],
+        answer: 0,
+        explanation: "Coalescent assimilation merges alveolar + palatal into [tʃ] (Tench, 2011)."
+      },
+      {
+        question: "Epenthesis between words (e.g. 'go on' → [gəʊwɔn]) is termed:",
+        options: ["Intrusion", "Elision", "Assimilation", "Glottalization"],
+        answer: 0,
+        explanation: "Intrusive /w/ or /j/ arises between vowels across word boundary (Tench, 2011)."
+      },
+      {
+        question: "Which type of assimilation occurs in 'in Paris' → [ɪm pærɪs]?",
+        options: [
+          "Regressive nasal assimilation",
+          "Progressive voicing",
+          "Palatalization",
+          "Vowel raising"
+        ],
+        answer: 0,
+        explanation: "Nasal /n/ becomes [m] before bilabial /p/ (Tench, 2011)."
+      },
+      {
+        question: "Juncture refers to:",
+        options: [
+          "Acoustic cues to word/phrase boundaries",
+          "Stress-pattern assignments",
+          "Lexical stress",
+          "Tone levels"
+        ],
+        answer: 0,
+        explanation: "Juncture cues signal where phrases or words begin/end (Tench, 2011)."
+      },
+      {
+        question: "The nuclear stress (tonic syllable) of an English phrase usually falls on the:",
+        options: [
+          "Final content word",
+          "First function word",
+          "Penultimate syllable",
+          "Antepenultimate syllable"
+        ],
+        answer: 0,
+        explanation: "Nuclear stress typically falls on the last content word of a phrase (Tench, 2011)."
+      },
+      {
+        question: "Minor prosodic phrase boundaries often align with:",
+        options: ["Commas in text","Hyphens","Semicolons","Quotation marks"],
+        answer: 0,
+        explanation: "Writers use commas to mark small prosodic breaks (Tench, 2011)."
+      },
+
+      // Chapter 7: Rhythm (31–40)
+      {
+        question: "Which timing type best describes English rhythm?",
+        options: [
+          "Stress-timed",
+          "Syllable-timed",
+          "Mora-timed",
+          "Tone-timed"
+        ],
+        answer: 0,
+        explanation: "English organizes timing around stressed syllables (Tench, 2011)."
+      },
+      {
+        question: "Which language is typically syllable-timed?",
+        options: ["Spanish", "English", "German", "Russian"],
+        answer: 0,
+        explanation: "Spanish is a classic example of a syllable-timed language (Tench, 2011)."
+      },
+      {
+        question: "Vowel reduction in unstressed syllables is more common in:",
+        options: [
+          "Stress-timed languages",
+          "Syllable-timed languages",
+          "Mora-timed languages",
+          "Tone-timed languages"
+        ],
+        answer: 0,
+        explanation: "Stress-timed rhythm encourages reduction of unstressed vowels (Tench, 2011)."
+      },
+      {
+        question: "Isochrony refers to the perception of:",
+        options: [
+          "Equal time intervals between successive stressed syllables",
+          "Equal stress on each syllable",
+          "Equal vowel quality",
+          "Equal pitch steps"
+        ],
+        answer: 0,
+        explanation: "Isochrony is the impression of equal timing between stresses (Tench, 2011)."
+      },
+      {
+        question: "Roach's Pairwise Variability Index (PVI) measures:",
+        options: [
+          "Rhythmic variation between adjacent vowels",
+          "Pitch variability",
+          "Loudness variability",
+          "Articulation rate"
+        ],
+        answer: 0,
+        explanation: "PVI quantifies durational variability between syllables (Tench, 2011)."
+      },
+      {
+        question: "In rapid speech, function words are often:",
+        options: [
+          "Reduced or elided",
+          "Lengthened",
+          "Hyperarticulated",
+          "Prominently stressed"
+        ],
+        answer: 0,
+        explanation: "Speeded speech leads to reduction or deletion of function words (Tench, 2011)."
+      },
+      {
+        question: "Which language pair is often contrasted to illustrate stress- vs. syllable-timing?",
+        options: [
+          "English vs. French",
+          "German vs. Japanese",
+          "Spanish vs. Russian",
+          "Arabic vs. Mandarin"
+        ],
+        answer: 0,
+        explanation: "English (stress-timed) and French (syllable-timed) are a classic comparison (Tench, 2011)."
+      },
+      {
+        question: "Mora-timed rhythm is characteristic of:",
+        options: ["Japanese", "English", "Spanish", "Russian"],
+        answer: 0,
+        explanation: "Japanese timing is organized by moras rather than syllables or stress (Tench, 2011)."
+      },
+      {
+        question: "Speech rate can affect perceived rhythm by:",
+        options: [
+          "Altering durational ratios between stressed and unstressed syllables",
+          "Changing phoneme inventories",
+          "Reordering word sequences",
+          "Modifying lexical stress"
+        ],
+        answer: 0,
+        explanation: "Faster rates compress unstressed intervals more, shifting rhythmic balance (Tench, 2011)."
+      },
+      {
+        question: "Secondary stress in long words helps maintain:",
+        options: [
+          "Rhythmic alternation",
+          "Lexical meaning",
+          "Vowel reduction",
+          "Phrase-final lengthening"
+        ],
+        answer: 0,
+        explanation: "Secondary stress provides a regular alternation of strong and weak beats (Tench, 2011)."
+      }
+    ];
+
+    // Shuffle Qs & Options
+    let quizQuestions = questions
+      .map(q => {
+        const copy = JSON.parse(JSON.stringify(q));
+        const opts = copy.options.map((opt, i) => ({ opt, i }))
+          .sort(() => Math.random() - 0.5);
+        const newAnswer = opts.findIndex(o => o.i === copy.answer);
+        return {
+          question: copy.question,
+          options: opts.map(o => o.opt),
+          answer: newAnswer,
+          explanation: copy.explanation
+        };
+      })
+      .sort(() => Math.random() - 0.5);
+
+    let currentQ = 0;
+    const userAnswers = Array(quizQuestions.length).fill(null);
+
+    function renderQuestion() {
+      const card = document.getElementById("question-card");
+      const q = quizQuestions[currentQ];
+      let html = `<h2>Question ${currentQ + 1} of ${quizQuestions.length}</h2>`;
+      html += `<p>${q.question}</p><div class="options">`;
+      q.options.forEach((opt, i) => {
+        const checked = userAnswers[currentQ] === i ? "checked" : "";
+        html += `
+          <label>
+            <input type="radio" name="answer" value="${i}" ${checked}> ${opt}
+          </label>`;
+      });
+      html += `</div>`;
+      card.innerHTML = html;
+      document.getElementById("prevBtn").disabled = currentQ === 0;
+      document.getElementById("nextBtn").disabled = currentQ === quizQuestions.length - 1;
+    }
+
+    document.getElementById("prevBtn").onclick = () => {
+      storeAnswer();
+      if (currentQ > 0) currentQ--;
+      renderQuestion();
+    };
+    document.getElementById("nextBtn").onclick = () => {
+      storeAnswer();
+      if (currentQ < quizQuestions.length - 1) currentQ++;
+      renderQuestion();
+    };
+    document.getElementById("skipBtn").onclick = () => {
+      userAnswers[currentQ] = null;
+      if (currentQ < quizQuestions.length - 1) {
+        currentQ++;
+        renderQuestion();
+      }
+    };
+    document.getElementById("submitBtn").onclick = submitQuiz;
+
+    function storeAnswer() {
+      const sel = document.querySelector('input[name="answer"]:checked');
+      userAnswers[currentQ] = sel ? parseInt(sel.value) : null;
+    }
+
+    function submitQuiz() {
+      storeAnswer();
+      let score = 0;
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = `<h2>Your Score: 0 / ${quizQuestions.length}</h2>`;
+      quizQuestions.forEach((q, idx) => {
+        const ua = userAnswers[idx];
+        const correct = ua === q.answer;
+        if (correct) score++;
+        resultsDiv.innerHTML += `
+          <div>
+            <strong>Q${idx + 1}:</strong> ${q.question}<br>
+            <span style="color:${correct ? 'lightgreen' : 'tomato'}">
+              ${correct ? 'Correct' : 'Incorrect'}
+            </span>
+            <div class="answer-explanation">${q.explanation}</div>
+          </div><hr>`;
+      });
+      resultsDiv.querySelector("h2").textContent = `Your Score: ${score} / ${quizQuestions.length}`;
+      document.getElementById("quiz-container").style.display = "none";
+      resultsDiv.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Initialize
+    renderQuestion();
+  </script>
+</body>
+</html>

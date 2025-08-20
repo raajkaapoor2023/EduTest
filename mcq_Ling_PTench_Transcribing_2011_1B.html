@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Advanced Linguistics MCQ Test</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #121212;
+      color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #ffcc00;
+      margin-bottom: 1em;
+    }
+    #quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .question-card {
+      background-color: #1e1e2f;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 0 10px #000;
+      margin-bottom: 1em;
+    }
+    .question-card h2 {
+      margin-top: 0;
+      color: #ffcc00;
+      font-size: 1.2em;
+    }
+    .options label {
+      display: block;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+    .options input[type="radio"] {
+      margin-right: 8px;
+    }
+    #navigation {
+      text-align: center;
+      margin-top: 1em;
+    }
+    .btn {
+      background-color: #ffcc00;
+      color: #121212;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 5px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+    .btn:hover:not(:disabled) {
+      background-color: #ffd633;
+    }
+    #results {
+      max-width: 800px;
+      margin: 2em auto;
+      background-color: #1e1e2f;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #000;
+    }
+    #results h2 {
+      color: #ffcc00;
+    }
+    .answer-explanation {
+      margin: 0.5em 0 1.5em;
+      color: #ccc;
+      font-size: 0.95em;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #333;
+      margin: 1.5em 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Final-Year Linguistics MCQ Test</h1>
+  <div id="quiz-container">
+    <div class="question-card" id="question-card"></div>
+    <div id="navigation">
+      <button class="btn" id="prevBtn">Previous</button>
+      <button class="btn" id="skipBtn">Skip</button>
+      <button class="btn" id="nextBtn">Next</button>
+      <button class="btn" id="submitBtn">Submit</button>
+    </div>
+  </div>
+  <div id="results"></div>
+
+  <script>
+    // 1. Original question bank
+    const questions = [
+      // Vowels (1–15)
+      {
+        question: "Which vowel is a high front unrounded tense vowel?",
+        options: ["/iː/", "/ɪ/", "/e/", "/æ/"],
+        answer: 0,
+        explanation: "/iː/ is a high front unrounded tense vowel, found in words like 'fleece'. (Ladefoged & Johnson, 2015)"
+      },
+      {
+        question: "Which vowel is a low front lax vowel?",
+        options: ["/æ/", "/ɑː/", "/e/", "/ɪ/"],
+        answer: 0,
+        explanation: "/æ/ is a low front lax vowel, as in 'trap'. (Roach, 2009)"
+      },
+      {
+        question: "Which vowel is a mid central unrounded vowel, often heard in 'bird' (non-rhotic)?",
+        options: ["/ɜː/", "/e/", "/uː/", "/iː/"],
+        answer: 0,
+        explanation: "/ɜː/ is a mid central unrounded vowel used in words like 'bird' in non-rhotic accents. (Cruttenden, 2014)"
+      },
+      {
+        question: "Which vowel is typically used in unstressed syllables in English?",
+        options: ["/ə/", "/ɪ/", "/e/", "/ʌ/"],
+        answer: 0,
+        explanation: "/ə/ (schwa) is the most common vowel quality in unstressed syllables. (Ladefoged & Johnson, 2015)"
+      },
+      {
+        question: "Which diphthong begins with a low central vowel and glides to a high front vowel?",
+        options: ["/aɪ/", "/eɪ/", "/ɔɪ/", "/əʊ/"],
+        answer: 0,
+        explanation: "/aɪ/ begins at low central /a/ and glides to high front /ɪ/, as in 'price'. (Roach, 2009)"
+      },
+      {
+        question: "Which vowel is a high back rounded vowel?",
+        options: ["/uː/", "/ʊ/", "/ɔː/", "/ɒ/"],
+        answer: 0,
+        explanation: "/uː/ is a high back rounded vowel, as in 'goose'. (Cruttenden, 2014)"
+      },
+      {
+        question: "Which vowel occurs in the RP pronunciation of 'foot'?",
+        options: ["/ʊ/", "/uː/", "/ɒ/", "/ə/"],
+        answer: 0,
+        explanation: "'Foot' in RP contains /ʊ/, a near-high back rounded vowel. (Ladefoged & Johnson, 2015)"
+      },
+      {
+        question: "Which vowel is monophthongal in RP but can be diphthongal in some American accents?",
+        options: ["/iː/", "/eɪ/", "/əʊ/", "/ɔː/"],
+        answer: 0,
+        explanation: "/iː/ may be realized as [ɪi] in certain American varieties. (Roach, 2009)"
+      },
+      {
+        question: "Which vowel quality is most likely to centralize to schwa in connected speech?",
+        options: ["/æ/", "/ɪ/", "/ə/", "/e/"],
+        answer: 2,
+        explanation: "Full vowels often reduce to /ə/ in unstressed or rapid speech. (Cruttenden, 2014)"
+      },
+      {
+        question: "Which vowel is used in the RP word 'thought'?",
+        options: ["/ɔː/", "/ɒ/", "/ʌ/", "/ə/"],
+        answer: 0,
+        explanation: "'Thought' in RP uses /ɔː/, a mid back rounded vowel. (Ladefoged & Johnson, 2015)"
+      },
+      {
+        question: "Which vowel occurs in the word 'strut'?",
+        options: ["/ʌ/", "/ɒ/", "/ə/", "/ɑː/"],
+        answer: 0,
+        explanation: "'Strut' uses /ʌ/, a low central unrounded vowel. (Roach, 2009)"
+      },
+      {
+        question: "Which vowel is the most fronted in the English vowel space?",
+        options: ["/iː/", "/e/", "/æ/", "/ɪ/"],
+        answer: 0,
+        explanation: "/iː/ is articulated with the tongue at its most front position. (Cruttenden, 2014)"
+      },
+      {
+        question: "Which vowel is used in the word 'kit'?",
+        options: ["/ɪ/", "/iː/", "/e/", "/ʌ/"],
+        answer: 0,
+        explanation: "'Kit' contains /ɪ/, a near-high front lax vowel. (Ladefoged & Johnson, 2015)"
+      },
+      {
+        question: "Which vowel is used in non-rhotic varieties for 'nurse'?",
+        options: ["/ɜː/", "/ə/", "/ʌ/", "/ɔː/"],
+        answer: 0,
+        explanation: "'Nurse' uses /ɜː/ in many non-rhotic accents. (Roach, 2009)"
+      },
+      {
+        question: "Which vowel is used in the word 'trap'?",
+        options: ["/æ/", "/ɑː/", "/e/", "/ɪ/"],
+        answer: 0,
+        explanation: "'Trap' uses /æ/, a low front lax vowel. (Cruttenden, 2014)"
+      },
+
+      // Consonants (16–30)
+      {
+        question: "Which consonant is a voiceless alveolar fricative?",
+        options: ["/s/", "/z/", "/t/", "/d/"],
+        answer: 0,
+        explanation: "/s/ is produced by turbulent airflow at the alveolar ridge without voicing. (Roach, 2009)"
+      },
+      {
+        question: "Which consonant is a voiced bilabial nasal?",
+        options: ["/m/", "/b/", "/n/", "/ŋ/"],
+        answer: 0,
+        explanation: "/m/ is voiced and produced with both lips closed while air escapes through the nose. (Ladefoged & Johnson, 2015)"
+      },
+      {
+        question: "Which consonant is a voiceless glottal fricative?",
+        options: ["/h/", "/ʔ/", "/s/", "/f/"],
+        answer: 0,
+        explanation: "/h/ is produced at the glottis with turbulent airflow. (Cruttenden, 2014)"
+      },
+      {
+        question: "Which consonant is a voiced alveolar lateral approximant?",
+        options: ["/l/", "/r/", "/n/", "/d/"],
+        answer: 0,
+        explanation: "/l/ allows air to flow around the sides of the tongue at the alveolar ridge. (Roach, 2009)"
+      },
+      {
+        question: "Which consonant is a voiceless labiodental fricative?",
+        options: ["/f/", "/v/", "/θ/", "/s/"],
+        answer: 0,
+        explanation: "/f/ is produced by forcing air between the lower lip and upper teeth. (Ladefoged & Johnson, 2015)"
+      },
+      {
+        question: "Which consonant is a voiced velar plosive?",
+        options: ["/g/", "/k/", "/ŋ/", "/h/"],
+        answer: 0,
+        explanation: "/g/ is produced by complete closure at the velum with voicing. (Cruttenden, 2014)"
+      },
+      {
+        question: "Which consonant is a voiceless dental fricative?",
+        options: ["/θ/", "/ð/", "/s/", "/f/"],
+        answer: 0,
+        explanation: "/θ/ is produced with the tongue against the upper teeth without voicing. (Roach, 2009)"
+      },
+      {
+        question: "Which consonant occurs in the word 'judge'?",
+        options: ["/ʤ/", "/ʧ/", "/d/", "/ʒ/"],
+        answer: 0,
+        explanation: "'Judge' contains /ʤ/, a voiced postalveolar affricate. (Ladefoged & Johnson, 2015)"
+      },
+      {
+        question: "Which consonant is a voiced postalveolar fricative?",
+        options: ["/ʒ/", "/ʃ/", "/ʧ/", "/ʤ/"],
+        answer: 0,
+        explanation: "/ʒ/ is produced just behind the alveolar ridge with vocal fold vibration. (Cruttenden, 2014)"
+      },
+      {
+        question: "Which consonant is a voiceless postalveolar affricate?",
+        options: ["/ʧ/", "/ʤ/", "/ʃ/", "/θ/"],
+        answer: 0,
+        explanation: "/ʧ/ combines a stop and a fricative at the postalveolar region. (Roach, 2009)"
+      },
+      {
+        question: "Which consonant is a voiced velar nasal?",
+        options: ["/ŋ/", "/n/", "/g/", "/m/"],
+        answer: 0,
+        explanation: "/ŋ/ is produced with the back of the tongue against the velum, air flowing through the nose. (Ladefoged & Johnson, 2015)"
+      },
+      {
+        question: "Which consonant is an alveolar approximant in many English accents?",
+        options: ["/r/", "/l/", "/w/", "/j/"],
+        answer: 0,
+        explanation: "/r/ in RP and GA is an alveolar approximant. (Cruttenden, 2014)"
+      },
+      {
+        question: "Which consonant is a voiced labio-velar approximant?",
+        options: ["/w/", "/j/", "/v/", "/ʋ/"],
+        answer: 0,
+        explanation: "/w/ is produced with simultaneous lip rounding and velar raising. (Roach, 2009)"
+      },
+      {
+        question: "Which phonetic class includes /p/, /t/, and /k/?",
+        options: ["Plosives", "Fricatives", "Nasals", "Approximants"],
+        answer: 0,
+        explanation: "/p, t, k/ are plosives, made by complete closure and release. (Ladefoged & Johnson, 2015)"
+      },
+      {
+        question: "What feature primarily distinguishes /p/ from /b/?",
+        options: ["Place of articulation", "Manner of articulation", "Voicing", "Nasality"],
+        answer: 2,
+        explanation: "/p/ is voiceless, while /b/ is voiced; both share place and manner. (Roach, 2009)"
+      },
+
+      // Word Stress (31–40)
+      {
+        question: "In 'photograph', which syllable carries primary stress?",
+        options: ["First", "Second", "Third", "None"],
+        answer: 0,
+        explanation: "'PHO-to-graph' has stress on the first syllable. (Cruttenden, 2014)"
+      },
+      {
+        question: "In 'photography', which syllable carries primary stress?",
+        options: ["First", "Second", "Third", "Fourth"],
+        answer: 1,
+        explanation: "'pho-TOG-ra-phy' stresses the second syllable. (Cruttenden, 2014)"
+      },
+      {
+        question: "In 'economy', which syllable carries primary stress?",
+        options: ["First", "Second", "Third", "Fourth"],
+        answer: 2,
+        explanation: "'e-CON-o-my' has stress on the third syllable. (Cruttenden, 2014)"
+      },
+      {
+        question: "In 'analysis', which syllable carries primary stress?",
+        options: ["First", "Second", "Third", "Fourth"],
+        answer: 1,
+        explanation: "'a-NA-ly-sis' stresses the second syllable. (Roach, 2009)"
+      },
+      {
+        question: "In 'banana', which syllable carries primary stress?",
+        options: ["First", "Second", "Third"],
+        answer: 1,
+        explanation: "'ba-NA-na' stresses the second syllable. (Cruttenden, 2014)"
+      },
+      {
+        question: "In 'institution', which syllable carries primary stress?",
+        options: ["First", "Second", "Third", "Fourth"],
+        answer: 2,
+        explanation: "'in-sti-TU-tion' stresses the third syllable. (Roach, 2009)"
+      },
+      {
+        question: "In 'photographer', which syllable carries primary stress?",
+        options: ["First", "Second", "Third", "Fourth"],
+        answer: 1,
+        explanation: "'pho-TOG-ra-pher' stresses the second syllable. (Cruttenden, 2014)"
+      },
+      {
+        question: "Which word has primary stress on the penultimate syllable?",
+        options: ["revision", "economy", "photograph", "banana"],
+        answer: 0,
+        explanation: "'re-VI-sion' stresses the penultimate syllable. (Cruttenden, 2014)"
+      },
+      {
+        question: "Most two-syllable verbs in English are stressed on which syllable?",
+        options: ["First", "Second", "Final", "Antepenultimate"],
+        answer: 1,
+        explanation: "Two-syllable verbs (e.g., de-LAY, pro-JECT) are typically stressed on the second syllable. (Roach, 2009)"
+      },
+      {
+        question: "Most two-syllable nouns in English are stressed on which syllable?",
+        options: ["First", "Second", "Final", "Antepenultimate"],
+        answer: 0,
+        explanation: "Two-syllable nouns (e.g., TA-ble, RE-cord) are usually stressed on the first syllable. (Cruttenden, 2014)"
+      }
+    ];
+
+    // 2. Prepare quiz: shuffle questions & shuffle each question’s options
+    let quizQuestions = questions
+      .map(q => {
+        // deep-clone
+        const copy = JSON.parse(JSON.stringify(q));
+        // shuffle options
+        const opts = copy.options.map((txt, idx) => ({ txt, idx }))
+          .sort(() => Math.random() - 0.5);
+        // find new answer index
+        const newAns = opts.findIndex(o => o.idx === copy.answer);
+        return {
+          question: copy.question,
+          options: opts.map(o => o.txt),
+          answer: newAns,
+          explanation: copy.explanation
+        };
+      })
+      .sort(() => Math.random() - 0.5);
+
+    let currentQ = 0;
+    const userAnswers = Array(quizQuestions.length).fill(null);
+
+    // 3. Render a single question
+    function renderQuestion() {
+      const card = document.getElementById("question-card");
+      const q = quizQuestions[currentQ];
+      let html = `<h2>Question ${currentQ + 1} of ${quizQuestions.length}</h2>`;
+      html += `<p>${q.question}</p><div class="options">`;
+      q.options.forEach((opt, i) => {
+        const checked = userAnswers[currentQ] === i ? "checked" : "";
+        html += `
+          <label>
+            <input type="radio" name="answer" value="${i}" ${checked}> ${opt}
+          </label>`;
+      });
+      html += `</div>`;
+      card.innerHTML = html;
+      // update buttons
+      document.getElementById("prevBtn").disabled = currentQ === 0;
+      document.getElementById("nextBtn").disabled = currentQ === quizQuestions.length - 1;
+    }
+
+    // 4. Navigation handlers
+    document.getElementById("prevBtn").onclick = () => {
+      storeAnswer();
+      if (currentQ > 0) currentQ--;
+      renderQuestion();
+    };
+    document.getElementById("nextBtn").onclick = () => {
+      storeAnswer();
+      if (currentQ < quizQuestions.length - 1) currentQ++;
+      renderQuestion();
+    };
+    document.getElementById("skipBtn").onclick = () => {
+      userAnswers[currentQ] = null;
+      if (currentQ < quizQuestions.length - 1) {
+        currentQ++;
+        renderQuestion();
+      }
+    };
+    document.getElementById("submitBtn").onclick = submitQuiz;
+
+    function storeAnswer() {
+      const sel = document.querySelector('input[name="answer"]:checked');
+      userAnswers[currentQ] = sel ? parseInt(sel.value) : null;
+    }
+
+    // 5. Submission & Results
+    function submitQuiz() {
+      storeAnswer();
+      let score = 0;
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = `<h2>Your Score: ${0}/${quizQuestions.length}</h2>`;
+      quizQuestions.forEach((q, idx) => {
+        const ua = userAnswers[idx];
+        const correct = ua === q.answer;
+        if (correct) score++;
+        resultsDiv.innerHTML += `
+          <div>
+            <strong>Q${idx + 1}:</strong> ${q.question}<br>
+            <span style="color:${correct ? 'lightgreen' : 'tomato'}">
+              ${correct ? 'Correct' : 'Incorrect'}
+            </span>
+            <div class="answer-explanation">${q.explanation}</div>
+          </div><hr>`;
+      });
+      // update final score
+      resultsDiv.querySelector("h2").textContent = `Your Score: ${score}/${quizQuestions.length}`;
+      // hide quiz container
+      document.getElementById("quiz-container").style.display = "none";
+      resultsDiv.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Initialize
+    renderQuestion();
+  </script>
+</body>
+</html>

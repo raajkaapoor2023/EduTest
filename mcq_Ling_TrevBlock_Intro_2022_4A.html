@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Syntax – TrevTutor Lecture 04:12:02-04:37:51 MCQ Quiz</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 2rem;
+    max-width: 900px;
+    line-height: 1.5;
+    background: #f8f8fa;
+  }
+  h1 {
+    max-width: 900px;
+  }
+  .question {
+    margin-bottom: 1.5em;
+  }
+  .correct {
+    color: green;
+  }
+  .incorrect {
+    color: red;
+  }
+  .skipped {
+    color: orange;
+  }
+  .btn {
+    background: #0066cc;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    font-size: 1.1em;
+    margin: 1em 0;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .btn:hover {
+    background: #004999;
+  }
+  .answers {
+    display: none;
+    margin-top: 2em;
+    background: #f0f0fc;
+    padding: 2em;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  .answer-explanation {
+    font-size: 0.95em;
+    margin-bottom: 1.4em;
+  }
+  label {
+    cursor: pointer;
+    display: block;
+    padding: 0.25em 0;
+  }
+  a {
+    color: #0066cc;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+  <h1>Syntax – TrevTutor Lecture (Timestamp 04:12:02–04:37:51) MCQ Quiz</h1>
+  <form id="quizForm"></form>
+  <button type="button" class="btn" onclick="submitQuiz()">Submit Quiz</button>
+  <div id="score"></div>
+  <div class="answers" id="answers"></div>
+
+<script>
+  const quiz = [
+    {
+      q: "1. What is a phrase structure rule in syntax?",
+      o: [
+        "A rule that describes how words combine into phrases and sentences",
+        "A rule about pronunciation",
+        "A type of sentence meaning",
+        "A rule that governs word spelling"
+      ],
+      a: 0,
+      ref: "Phrase structure rules describe how categories (e.g., NP, VP) are built from their constituent parts to form grammatical sentences[1]."
+    },
+    {
+      q: "2. According to TrevTutor, what does 'XP' stand for?",
+      o: [
+        "Any type of phrase headed by the category X",
+        "An unknown syntactic element",
+        "An adverb phrase",
+        "A type of lexical word"
+      ],
+      a: 0,
+      ref: "'XP' denotes a phrase with head X, generalizing categories like NP (noun phrase), VP (verb phrase), etc.[1]."
+    },
+    {
+      q: "3. In phrase structure, what two major parts does an XP break into?",
+      o: [
+        "Specifier and X'",
+        "Subject and predicate",
+        "Modifier and head",
+        "Verb and object"
+      ],
+      a: 0,
+      ref: "XP divides into a specifier and an intermediate projection X' which further breaks down into the head and complements[1]."
+    },
+    {
+      q: "4. What is the role of the 'head' in a phrase?",
+      o: [
+        "The word that determines the syntactic category of the phrase",
+        "An optional modifier",
+        "An entire sentence",
+        "A type of complement"
+      ],
+      a: 0,
+      ref: "The head of a phrase determines the phrase’s category, e.g., a noun is the head of an NP[1]."
+    },
+    {
+      q: "5. What is a 'specifier' in the X-Bar theory framework?",
+      o: [
+        "An element that appears at the left edge of an XP, providing additional information",
+        "The core lexical item of a phrase",
+        "A complement of a verb",
+        "A kind of adjunct"
+      ],
+      a: 0,
+      ref: "Specifiers typically occur on the left edge of a phrase and provide additional syntactic or semantic information, such as determiners in NPs[1]."
+    },
+    {
+      q: "6. Which test can be used to identify constituents?",
+      o: [
+        "Substitution test",
+        "Pronunciation test",
+        "Tense agreement test",
+        "Punctuation test"
+      ],
+      a: 0,
+      ref: "Substitution tests (e.g., replacing a phrase with a pronoun) are widely used to determine constituency[1]."
+    },
+    {
+      q: "7. What is a complement in phrase structure?",
+      o: [
+        "A phrase required by the head to complete its meaning",
+        "An optional descriptive modifier",
+        "The subject of the sentence",
+        "A standalone sentence"
+      ],
+      a: 0,
+      ref: "Complements are phrases selected by the head that complete its meaning, such as a noun phrase complement after a preposition[1]."
+    },
+    {
+      q: "8. What is the difference between complements and adjuncts?",
+      o: [
+        "Complements are obligatory; adjuncts are optional",
+        "Adjuncts are obligatory; complements are optional",
+        "Both are always optional",
+        "There is no difference"
+      ],
+      a: 0,
+      ref: "Complements are syntactically required while adjuncts provide extra, optional information[1]."
+    },
+    {
+      q: "9. Which phrase structure rule is correct for a noun phrase (NP)?",
+      o: [
+        "NP → (Det) N (PP)",
+        "NP → V NP",
+        "NP → Adv VP",
+        "NP → Adj Adj"
+      ],
+      a: 0,
+      ref: "A noun phrase typically consists of an optional determiner, a noun, and optionally a prepositional phrase complement[1]."
+    },
+    {
+      q: "10. What does it mean if a phrase can be moved as a constituent in a sentence?",
+      o: [
+        "It confirms the phrase is a syntactic unit",
+        "It means the phrase is ungrammatical",
+        "It indicates a phonological problem",
+        "It changes sentence tense"
+      ],
+      a: 0,
+      ref: "The ability to move a phrase without losing grammaticality supports that it forms a syntactic constituent[1]."
+    },
+    {
+      q: "11. What is 'clefting' a phrase?",
+      o: [
+        "Moving a phrase to the front of a sentence to form a cleft construction",
+        "Deleting part of a phrase",
+        "Repeating a phrase for emphasis",
+        "Changing a phrase into a complement"
+      ],
+      a: 0,
+      ref: "Clefting involves moving a constituent to the front in a construction like 'It was X that Y,' confirming constituency[1]."
+    },
+    {
+      q: "12. What is the significance of coordinating phrases in a sentence?",
+      o: [
+        "Coordinated items tend to be constituents of the same type",
+        "Coordinate phrases are always adjuncts",
+        "Coordination destroys constituency",
+        "Coordination affects phonology only"
+      ],
+      a: 0,
+      ref: "Coordination helps identify constituents because only phrases of the same type can typically be coordinated[1]."
+    },
+    {
+      q: "13. How does the phrase structure rule notation represent optional elements?",
+      o: [
+        "By placing them within parentheses ()",
+        "By using square brackets []",
+        "By capitalization",
+        "With exclamation marks"
+      ],
+      a: 0,
+      ref: "Parentheses in phrase structure rules indicate optional constituents[1]."
+    },
+    {
+      q: "14. In the lecture example 'The small key,' what phrase serves as the specifier?",
+      o: [
+        "'The'",
+        "'small'",
+        "'key'",
+        "'small key'"
+      ],
+      a: 0,
+      ref: "In the NP 'The small key,' 'The' is the determiner serving as the specifier, while 'small' is an adjective modifier[1]."
+    },
+    {
+      q: "15. What does the bracketed notation for syntactic trees represent?",
+      o: [
+        "The hierarchical structure of phrases using nested brackets",
+        "Phonetic transcription",
+        "Semantic roles",
+        "Morphological components"
+      ],
+      a: 0,
+      ref: "Bracketed notation represents hierarchical phrase structures by nesting constituents inside labeled brackets[1]."
+    },
+    {
+      q: "16. What does the lecture suggest about memorizing specific phrase structure rules?",
+      o: [
+        "Understanding general components is more important than memorizing many rules",
+        "Memorizing rules exactly is essential",
+        "Phrase structure rules are irrelevant",
+        "Only one rule applies to all sentences"
+      ],
+      a: 0,
+      ref: "The lecturer recommends understanding phrase structure components conceptually rather than rote memorization of many rules[1]."
+    },
+    {
+      q: "17. In X-Bar theory, what is an intermediate projection X'?",
+      o: [
+        "A projection consisting of the head and its complements",
+        "The specifier of a phrase",
+        "An optional adjunct",
+        "The entire phrase including specifier"
+      ],
+      a: 0,
+      ref: "X' (X-bar) is the phrase level containing the head and its complements but excluding the specifier[1]."
+    },
+    {
+      q: "18. How is the subject typically realized in phrase structure diagrams presented?",
+      o: [
+        "As a noun phrase (NP) occupying the specifier position of TP",
+        "As an adjunct adverb",
+        "Only as a determiner",
+        "As a verb phrase"
+      ],
+      a: 0,
+      ref: "Subjects are usually NPs in the specifier of the Tense Phrase (TP) or equivalent functional projection[1]."
+    },
+    {
+      q: "19. What is the purpose of constituency tests?",
+      o: [
+        "To empirically verify whether a group of words forms a constituent",
+        "To test pronunciation",
+        "To identify phonemes",
+        "To analyze sentence meaning"
+      ],
+      a: 0,
+      ref: "Constituency tests help linguists establish what spans of words function as units in syntax[1]."
+    },
+    {
+      q: "20. Which book is commonly referenced for the syntax concepts covered in this lecture?",
+      o: [
+        "\"Syntax: A Generative Introduction\" by Andrew Carnie",
+        "\"Introduction to Phonetics\" by Ladefoged",
+        "\"Morphology\" by Aronoff",
+        "\"Semantics\" by Saeed"
+      ],
+      a: 0,
+      ref: "The lecture follows Andrew Carnie's \"Syntax: A Generative Introduction,\" a leading undergraduate syntax textbook[2]."
+    }
+  ];
+
+  const qForm = document.getElementById('quizForm');
+  quiz.forEach((item, idx) => {
+    const qDiv = document.createElement('div');
+    qDiv.classList.add('question');
+    let html = `<p><strong>${item.q}</strong></p>`;
+    item.o.forEach((opt, i) => {
+      html += `<label><input type="radio" name="q${idx}" value="${i}"> ${opt}</label>`;
+    });
+    qDiv.innerHTML = html;
+    qForm.appendChild(qDiv);
+  });
+
+  function submitQuiz() {
+    let score = 0;
+    let answered = 0;
+    let output = '';
+    for (let i = 0; i < quiz.length; i++) {
+      const options = document.getElementsByName(`q${i}`);
+      let selected = -1;
+      for (const option of options) {
+        if (option.checked) selected = parseInt(option.value);
+      }
+      const corr = quiz[i].a;
+      output += `<div class="answer-explanation"><strong>Q${i+1}:</strong> ${quiz[i].q}<br>`;
+      if (selected === -1) {
+        output += `<span class="skipped">No answer given.</span><br>`;
+        output += `<span class="correct">Correct answer: ${quiz[i].o[corr]}</span><br>`;
+      } else {
+        answered++;
+        const isCorrect = selected === corr;
+        if (isCorrect) score++;
+        output += `<span class="${isCorrect ? 'correct' : 'incorrect'}">Your answer: ${quiz[i].o[selected]}</span><br>`;
+        output += `<span class="correct">Correct answer: ${quiz[i].o[corr]}</span><br>`;
+      }
+      output += `<em>${quiz[i].ref}</em></div>`;
+    }
+    document.getElementById('score').innerHTML = `<h2>Score: ${score} / 20 (${answered} answered, ${quiz.length - answered} skipped)</h2>`;
+    const answersDiv = document.getElementById('answers');
+    answersDiv.innerHTML = output;
+    answersDiv.style.display = 'block';
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+</script>
+
+<hr />
+<p style="font-size:0.9em; max-width: 900px; color:#666;">
+  <strong>References:</strong><br/>
+  [1] TrevTutor, Syntax: The Complete Crash Course, Lecture segment 04:12:02–04:37:51, YouTube: <a href="https://www.youtube.com/watch?v=0nBzlNFwgs4&ab_channel=TrevTutor" target="_blank" rel="noopener">https://www.youtube.com/watch?v=0nBzlNFwgs4</a>.<br/>
+  [2] Andrew Carnie, <em>Syntax: A Generative Introduction</em> (4th Edition), Wiley-Blackwell, 2021.<br/>
+  This quiz is provided for educational and academic review purposes following fair use and licensing principles.
+</p>
+
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>English Linguistics Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f9f9f9; }
+    .quiz-container { max-width: 800px; margin: auto; padding: 20px; background: white; border-radius: 8px; }
+    .question { margin-bottom: 15px; }
+    .options { margin-bottom: 20px; }
+    button { padding: 10px 15px; }
+    #result { font-weight: bold; margin-top: 20px; }
+    .explanation { background: #eef; padding: 10px; margin: 10px 0; border-left: 4px solid #339; }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h2>English Linguistics MCQ Quiz</h2>
+    <form id="quizForm"></form>
+    <button onclick="submitQuiz()">Submit Quiz</button>
+    <div id="result"></div>
+    <div id="explanations"></div>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        q: "1. Which of the following is a progressive aspect?",
+        o: ["She sings", "She is singing", "She has sung", "She will sing"],
+        a: 1,
+        exp: "‘She is singing’ is in the present progressive aspect (to be + verb-ing)."
+      },
+      {
+        q: "2. The word 'unbelievable' is an example of:",
+        o: ["Inflection", "Derivation", "Compounding", "Clipping"],
+        a: 1,
+        exp: "‘Unbelievable’ involves prefixes and suffixes, which are part of derivational morphology."
+      },
+      {
+        q: "3. Which modal verb expresses ability?",
+        o: ["Must", "Should", "Can", "Might"],
+        a: 2,
+        exp: "‘Can’ is used to express ability (e.g., I can swim)."
+      },
+      {
+        q: "4. What tense is used in: 'She had been sleeping'?",
+        o: ["Past Perfect Continuous", "Present Perfect", "Future Perfect", "Past Simple"],
+        a: 0,
+        exp: "‘Had been sleeping’ indicates past perfect continuous."
+      },
+      {
+        q: "5. Syntax deals with:",
+        o: ["Word meaning", "Sentence structure", "Sound patterns", "Word formation"],
+        a: 1,
+        exp: "Syntax is the study of sentence structure and word order."
+      },
+      {
+        q: "6. Semantics is the study of:",
+        o: ["Sounds", "Sentence order", "Meaning", "Spelling"],
+        a: 2,
+        exp: "Semantics deals with the meanings of words, phrases, and sentences."
+      },
+      {
+        q: "7. The past tense of irregular verbs is formed by:",
+        o: ["Adding -ed", "Changing the vowel", "Adding -s", "No change"],
+        a: 1,
+        exp: "Irregular verbs often change vowels (e.g., sing → sang)."
+      },
+      {
+        q: "8. Which word is a derivational morpheme?",
+        o: ["-s", "-ed", "un-", "-ing"],
+        a: 2,
+        exp: "‘un-’ changes the meaning of the root word (happy → unhappy)."
+      },
+      {
+        q: "9. ‘The cat sat on the mat.’ is an example of which sentence type?",
+        o: ["Complex", "Compound", "Simple", "Interrogative"],
+        a: 2,
+        exp: "It’s a simple sentence (one independent clause)."
+      },
+      {
+        q: "10. The modal verb in ‘You must leave now’ indicates:",
+        o: ["Ability", "Obligation", "Possibility", "Suggestion"],
+        a: 1,
+        exp: "‘Must’ indicates strong obligation or necessity."
+      },
+      {
+        q: "11. ‘-s’ in ‘cats’ is a:",
+        o: ["Derivational suffix", "Inflectional suffix", "Prefix", "Base morpheme"],
+        a: 1,
+        exp: "‘-s’ is an inflectional suffix marking plural."
+      },
+      {
+        q: "12. Which one is a bound morpheme?",
+        o: ["Cat", "Jump", "Un-", "Tree"],
+        a: 2,
+        exp: "‘Un-’ cannot stand alone; it’s a bound morpheme."
+      },
+      {
+        q: "13. A phrase like ‘kick the bucket’ is:",
+        o: ["Metaphor", "Idiom", "Collocation", "Cliché"],
+        a: 1,
+        exp: "‘Kick the bucket’ is an idiom meaning ‘to die’."
+      },
+      {
+        q: "14. Pragmatics is concerned with:",
+        o: ["Grammar rules", "Sentence order", "Contextual meaning", "Spelling errors"],
+        a: 2,
+        exp: "Pragmatics studies meaning in context and speaker intent."
+      },
+      {
+        q: "15. Which is a semantic field?",
+        o: ["Eat, run, jump", "Red, blue, yellow", "Chair, table, sofa", "He, she, it"],
+        a: 2,
+        exp: "‘Chair, table, sofa’ are all related in the semantic field of furniture."
+      },
+      {
+        q: "16. ‘She has eaten’ is in which tense?",
+        o: ["Past Perfect", "Present Perfect", "Present Continuous", "Future Perfect"],
+        a: 1,
+        exp: "‘Has eaten’ is present perfect (has/have + past participle)."
+      },
+      {
+        q: "17. Which is a function word?",
+        o: ["Run", "Cat", "The", "Apple"],
+        a: 2,
+        exp: "‘The’ is a function word (determiner)."
+      },
+      {
+        q: "18. Which is not a syntactic category?",
+        o: ["Noun phrase", "Verb phrase", "Clause", "Lexeme"],
+        a: 3,
+        exp: "‘Lexeme’ is a lexical unit, not a syntactic category."
+      },
+      {
+        q: "19. Which shows subject-verb agreement?",
+        o: ["He go", "They goes", "She goes", "We goes"],
+        a: 2,
+        exp: "‘She goes’ is correct (third person singular + -s)."
+      },
+      {
+        q: "20. The suffix ‘-ness’ in ‘happiness’ changes:",
+        o: ["Tense", "Aspect", "Number", "Word class"],
+        a: 3,
+        exp: "‘-ness’ turns adjectives into nouns (happy → happiness)."
+      },
+      {
+        q: "21. The comparative of ‘good’ is:",
+        o: ["Gooder", "More good", "Better", "Best"],
+        a: 2,
+        exp: "‘Better’ is the correct irregular comparative form."
+      },
+      {
+        q: "22. ‘I saw her duck’ is ambiguous due to:",
+        o: ["Syntactic ambiguity", "Semantic ambiguity", "Phonetic ambiguity", "Morphological ambiguity"],
+        a: 1,
+        exp: "It can mean she avoided something or owns a duck — syntactic ambiguity."
+      },
+      {
+        q: "23. The word 'running' in ‘I am running’ is a:",
+        o: ["Gerund", "Past participle", "Present participle", "Infinitive"],
+        a: 2,
+        exp: "‘Running’ is a present participle in progressive aspect."
+      },
+      {
+        q: "24. Which is a phrasal verb?",
+        o: ["Jumped", "Looked", "Put off", "Run"],
+        a: 2,
+        exp: "‘Put off’ is a phrasal verb (verb + particle)."
+      },
+      {
+        q: "25. ‘Dis-’ in ‘disagree’ is a:",
+        o: ["Suffix", "Prefix", "Root", "Base"],
+        a: 1,
+        exp: "‘Dis-’ is a prefix meaning ‘not’ or ‘opposite’."
+      },
+      {
+        q: "26. Passive voice in English is formed with:",
+        o: ["Have + verb", "Be + past participle", "Will + verb", "Do + base verb"],
+        a: 1,
+        exp: "Passive = be + past participle (e.g., was eaten)."
+      },
+      {
+        q: "27. What is the root word of 'undeniably'?",
+        o: ["Deny", "Undeniable", "Un", "Able"],
+        a: 0,
+        exp: "‘Deny’ is the root; others are affixes or derived forms."
+      },
+      {
+        q: "28. The word class of ‘quickly’ is:",
+        o: ["Adjective", "Noun", "Adverb", "Verb"],
+        a: 2,
+        exp: "‘Quickly’ is an adverb modifying verbs."
+      },
+      {
+        q: "29. Which sentence uses a modal verb for possibility?",
+        o: ["You must leave", "You can swim", "She might come", "I should go"],
+        a: 2,
+        exp: "‘Might’ expresses possibility."
+      },
+      {
+        q: "30. Which term refers to the smallest unit of meaning?",
+        o: ["Syllable", "Morpheme", "Phoneme", "Lexicon"],
+        a: 1,
+        exp: "A morpheme is the smallest meaningful linguistic unit."
+      }
+    ];
+
+    function loadQuiz() {
+      const form = document.getElementById("quizForm");
+      quizData.forEach((item, index) => {
+        const qDiv = document.createElement("div");
+        qDiv.classList.add("question");
+        qDiv.innerHTML = `<p>${item.q}</p>`;
+
+        const opts = document.createElement("div");
+        opts.classList.add("options");
+
+        item.o.forEach((option, i) => {
+          opts.innerHTML += `
+            <label>
+              <input type="radio" name="q${index}" value="${i}" required />
+              ${option}
+            </label><br/>
+          `;
+        });
+
+        qDiv.appendChild(opts);
+        form.appendChild(qDiv);
+      });
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      const explanations = document.getElementById("explanations");
+      explanations.innerHTML = "<h3>Answer Explanations:</h3>";
+
+      quizData.forEach((item, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        const correct = item.a;
+        const userAns = selected ? parseInt(selected.value) : -1;
+
+        if (userAns === correct) score++;
+
+        const explainBlock = document.createElement("div");
+        explainBlock.classList.add("explanation");
+        explainBlock.innerHTML = `
+          <strong>Q${index + 1}:</strong> ${item.q}<br>
+          <strong>Your Answer:</strong> ${userAns !== -1 ? item.o[userAns] : "No answer"}<br>
+          <strong>Correct Answer:</strong> ${item.o[correct]}<br>
+          <em>${item.exp}</em>
+        `;
+        explanations.appendChild(explainBlock);
+      });
+
+      document.getElementById("result").innerText = `You scored ${score} out of ${quizData.length}.`;
+    }
+
+    loadQuiz();
+  </script>
+</body>
+</html>

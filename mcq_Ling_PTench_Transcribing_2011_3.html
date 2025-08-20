@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapters 8–10: Advanced Linguistics MCQ Test</title>
+  <style>
+    body {
+      font-family: Georgia, serif;
+      background-color: #121212;
+      color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #ffcc00;
+      margin-bottom: 1em;
+    }
+    #quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .question-card {
+      background-color: #1e1e2f;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 0 10px #000;
+      margin-bottom: 1em;
+    }
+    .question-card h2 {
+      margin-top: 0;
+      color: #ffcc00;
+      font-size: 1.2em;
+    }
+    .options label {
+      display: block;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+    .options input[type="radio"] {
+      margin-right: 8px;
+    }
+    #navigation {
+      text-align: center;
+      margin-top: 1em;
+    }
+    .btn {
+      background-color: #ffcc00;
+      color: #121212;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 5px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+    .btn:hover:not(:disabled) {
+      background-color: #ffd633;
+    }
+    #results {
+      max-width: 800px;
+      margin: 2em auto;
+      background-color: #1e1e2f;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #000;
+    }
+    #results h2 {
+      color: #ffcc00;
+    }
+    .answer-explanation {
+      margin: 0.5em 0 1.5em;
+      color: #ccc;
+      font-size: 0.95em;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #333;
+      margin: 1.5em 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Chapters 8–10: Advanced Linguistics MCQ Test</h1>
+  <div id="quiz-container">
+    <div class="question-card" id="question-card"></div>
+    <div id="navigation">
+      <button class="btn" id="prevBtn">Previous</button>
+      <button class="btn" id="skipBtn">Skip</button>
+      <button class="btn" id="nextBtn">Next</button>
+      <button class="btn" id="submitBtn">Submit</button>
+    </div>
+  </div>
+  <div id="results"></div>
+
+  <script>
+    const questions = [
+      // Chapter 8: Intonation (1–13)
+      {
+        question: "How many basic nuclear tones does Tench identify in English intonation?",
+        options: ["Four", "Five", "Six", "Seven"],
+        answer: 1,
+        explanation: "Tench describes five basic nuclear tones: fall, rise, fall–rise, rise–fall, and level (Tench, 2011)."
+      },
+      {
+        question: "Which nuclear tone typically marks a complete statement or command?",
+        options: ["Rise", "Fall", "Fall–rise", "Rise–fall"],
+        answer: 1,
+        explanation: "A falling nuclear tone is the default for full statements and commands (Tench, 2011)."
+      },
+      {
+        question: "Which tone signals continuation or incompleteness?",
+        options: ["Fall", "Rise", "Fall–rise", "Level"],
+        answer: 1,
+        explanation: "A rising nuclear tone often indicates that the speaker has more to say (Tench, 2011)."
+      },
+      {
+        question: "Which tone is used for polite or tentative questions?",
+        options: ["Rise", "Fall", "Fall–rise", "Rise–fall"],
+        answer: 2,
+        explanation: "The fall–rise tone can convey uncertainty, politeness, or suggestion (Tench, 2011)."
+      },
+      {
+        question: "Which tone is typical in tag questions expressing surprise or incredulity?",
+        options: ["Rise–fall", "Fall–rise", "Rise", "Level"],
+        answer: 0,
+        explanation: "The rise–fall tone often accompanies rhetorical tags or exclamations (Tench, 2011)."
+      },
+      {
+        question: "Which tone can be used in lists to show 'and then...' continuation?",
+        options: ["Fall", "Rise", "Fall–rise", "Level"],
+        answer: 2,
+        explanation: "The fall–rise tone is frequent in listing contexts to signal 'etc.' (Tench, 2011)."
+      },
+      {
+        question: "Which tone is most neutral and less common in everyday speech?",
+        options: ["Level", "Fall", "Rise", "Fall–rise"],
+        answer: 0,
+        explanation: "Level tone is relatively rare and often found in chanting or reading lists (Tench, 2011)."
+      },
+      {
+        question: "What term describes the syllable that carries the nuclear tone in an intonation unit?",
+        options: ["Head", "Nucleus", "Prehead", "Tail"],
+        answer: 1,
+        explanation: "In Tench’s model, the nucleus is the syllable bearing the nuclear tone (Tench, 2011)."
+      },
+      {
+        question: "Which constituent of an intonation unit comes before the nucleus but after any initial unstressed syllables?",
+        options: ["Prehead", "Head", "Tail", "Onset"],
+        answer: 1,
+        explanation: "The head is the material between the prehead and the nucleus (Tench, 2011)."
+      },
+      {
+        question: "What is the name for any syllables after the nucleus up to the end of the tone unit?",
+        options: ["Head", "Tail", "Prehead", "Coda"],
+        answer: 1,
+        explanation: "The tail follows the nucleus and carries no further tone movements (Tench, 2011)."
+      },
+      {
+        question: "What are unstressed syllables before the first stressed syllable of a tone unit called?",
+        options: ["Prehead", "Tail", "Head", "Onset"],
+        answer: 0,
+        explanation: "The prehead consists of any weak syllables before the head proper (Tench, 2011)."
+      },
+      {
+        question: "Which intonational function is commonly signaled by a fall–rise on the nucleus?",
+        options: ["Certainty", "Politeness", "Command", "Finality"],
+        answer: 1,
+        explanation: "Fall–rise often softens an utterance or expresses politeness (Tench, 2011)."
+      },
+      {
+        question: "In a spoken list, which nuclear tone marks all but the final item?",
+        options: ["Fall", "Rise", "Fall–rise", "Rise–fall"],
+        answer: 2,
+        explanation: "Fall–rise signals 'not finished yet' in list contexts (Tench, 2011)."
+      },
+
+      // Chapter 9: Transcription Conventions (14–26)
+      {
+        question: "Which symbol marks primary stress in Tench’s transcription?",
+        options: ["ˈ", "ˌ", "·", "’"],
+        answer: 0,
+        explanation: "Primary stress is indicated by ˈ immediately before the stressed syllable (Tench, 2011)."
+      },
+      {
+        question: "Which symbol marks secondary stress?",
+        options: ["ˈ", "ˌ", "·", "’"],
+        answer: 1,
+        explanation: "Secondary stress is marked by ˌ before the syllable (Tench, 2011)."
+      },
+      {
+        question: "How is a syllable boundary indicated?",
+        options: ["·", ".", "–", ":"],
+        answer: 1,
+        explanation: "A full stop between phonemes shows a syllable break, e.g. kɒt.ən (Tench, 2011)."
+      },
+      {
+        question: "What diacritic marks vowel length?",
+        options: [":", "ː", "¯", "–"],
+        answer: 1,
+        explanation: "The raised colon ː following a vowel indicates length, e.g. /iː/ (Tench, 2011)."
+      },
+      {
+        question: "Which diacritic shows nasalization of a vowel?",
+        options: ["~", "`", "¯", "ˇ"],
+        answer: 0,
+        explanation: "A tilde ~ above a vowel denotes partial nasalization, e.g. [æ̃] (Tench, 2011)."
+      },
+      {
+        question: "How is aspiration on a plosive marked?",
+        options: ["ʰ", "ʷ", "ʲ", "ˠ"],
+        answer: 0,
+        explanation: "Aspiration is shown by superscript h, as in [pʰ] (Tench, 2011)."
+      },
+      {
+        question: "What diacritic indicates labialization?",
+        options: ["ʷ", "ʰ", "ʲ", "ˠ"],
+        answer: 0,
+        explanation: "Superscript w marks lip rounding, e.g. [kʷ] (Tench, 2011)."
+      },
+      {
+        question: "How is palatalization indicated?",
+        options: ["ʲ", "ʷ", "ʰ", "ˠ"],
+        answer: 0,
+        explanation: "Superscript j shows palatalization, e.g. [tʲ] (Tench, 2011)."
+      },
+      {
+        question: "Which diacritic marks velarization or dark quality?",
+        options: ["ˠ", "ʷ", "ʲ", "ʰ"],
+        answer: 0,
+        explanation: "The under–tilde ˠ indicates velarization, as in dark [ɫ] (Tench, 2011)."
+      },
+      {
+        question: "How do you mark a glottal stop in Tench’s system?",
+        options: ["ʔ", "ʕ", "ɦ", "h"],
+        answer: 0,
+        explanation: "The symbol ʔ represents a glottal stop, e.g. [ʔæt] (Tench, 2011)."
+      },
+      {
+        question: "Which symbol shows syllabic consonants?",
+        options: ["̩", "ˈ", "ː", "·"],
+        answer: 0,
+        explanation: "The under–ring ̩ marks a syllabic consonant, e.g. [bɒt.l̩] (Tench, 2011)."
+      },
+      {
+        question: "Which marker indicates lengthening beyond normal quantity?",
+        options: ["ː", "…", ":", "–"],
+        answer: 2,
+        explanation: "A simple colon : (distinct from ː) shows extra lengthening (Tench, 2011)."
+      },
+      {
+        question: "What indicates a close juncture between syllables?",
+        options: ["|", "‖", ".", " "],
+        answer: 2,
+        explanation: "A dot shows a close juncture (no break), e.g. /n.ɛkst/ (Tench, 2011)."
+      },
+      {
+        question: "What indicates an open juncture?",
+        options: ["‖", "|", ".", " "],
+        answer: 1,
+        explanation: "A single vertical bar | marks an open juncture, e.g. /naɪt|reɪt/ (Tench, 2011)."
+      },
+
+      // Chapter 10: Connected-Speech Features (27–40)
+      {
+        question: "Which process deletes /t/ or /d/ in fast speech, e.g. 'next day' → [nɛks deɪ]?",
+        options: ["Elision", "Assimilation", "Intrusion", "Linking"],
+        answer: 0,
+        explanation: "Elision omits sounds in casual or rapid speech (Tench, 2011)."
+      },
+      {
+        question: "Adding a /j/ between 'see it' → [siː jɪt] is called:",
+        options: ["Intrusion", "Elision", "Assimilation", "Linking"],
+        answer: 0,
+        explanation: "Intrusion inserts segments like /j/, /w/, or /r/ between vowels (Tench, 2011)."
+      },
+      {
+        question: "Linking /r/ appears in non-rhotic accents in sequences like 'law and' → [lɔːr ænd]. This is called:",
+        options: ["Linking", "Intrusion", "Elision", "Fortition"],
+        answer: 0,
+        explanation: "Linking /r/ joins a vowel-final word to a following vowel-initial word (Tench, 2011)."
+      },
+      {
+        question: "Which process changes /n/ to [m] before /p/ or /b/?",
+        options: ["Regressive assimilation", "Elision", "Progressive assimilation", "Intrusion"],
+        answer: 0,
+        explanation: "Regressive nasal assimilation adapts place to the following consonant (Tench, 2011)."
+      },
+      {
+        question: "What name is given to a consonant that forms its own syllable, as in 'button' [bʌʔn̩]?",
+        options: ["Syllabic consonant", "Glottal stop", "Schwa", "Affricate"],
+        answer: 0,
+        explanation: "A syllabic consonant bears the syllable’s nucleus without an overt vowel (Tench, 2011)."
+      },
+      {
+        question: "A glottal stop in 'button' [bʌʔn̩] is an example of:",
+        options: ["Glottal reinforcement", "Elision", "Intrusion", "Lenition"],
+        answer: 0,
+        explanation: "Glottal reinforcement replaces or co-occurs with /t/ in coda position (Tench, 2011)."
+      },
+      {
+        question: "The alveolar flap [ɾ] in American 'butter' is a form of:",
+        options: ["Lenition", "Elision", "Intrusion", "Fortition"],
+        answer: 0,
+        explanation: "Flapping is a lenition process turning /t/ or /d/ into [ɾ] intervocalically (Tench, 2011)."
+      },
+      {
+        question: "What term describes insertion of /w/ between /oʊ/ and /ə/, as in 'go on' → [goʊwɔn]?",
+        options: ["Intrusion", "Linking", "Elision", "Assimilation"],
+        answer: 0,
+        explanation: "Intrusive /w/ occurs between back vowels in non-rhotic English (Tench, 2011)."
+      },
+      {
+        question: "Which phenomenon merges word-final /t/ with a following vowel-initial word via a glottal stop?",
+        options: ["Glottalization", "Elision", "Linking", "Assimilation"],
+        answer: 0,
+        explanation: "Glottalization inserts [ʔ] in place of final /t/ before vowels (Tench, 2011)."
+      },
+      {
+        question: "In 'this year' → [ðɪs jɪə], the change of /s/ → [ʃ] is due to:",
+        options: ["Coalescent assimilation", "Elision", "Intrusion", "Lenition"],
+        answer: 0,
+        explanation: "Coalescent assimilation merges alveolar + palatal into [ʃ] before /j/ (Tench, 2011)."
+      },
+      {
+        question: "Which term refers to cues signaling phrase or word boundaries in speech?",
+        options: ["Juncture", "Stress", "Tone", "Pitch"],
+        answer: 0,
+        explanation: "Juncture covers acoustic markers of boundary strength and type (Tench, 2011)."
+      },
+      {
+        question: "An open juncture often corresponds to a written:",
+        options: ["Space", "Comma", "Period", "Hyphen"],
+        answer: 0,
+        explanation: "Open juncture parallels the gap indicated by a space in orthography (Tench, 2011)."
+      },
+      {
+        question: "Which reduction process turns 'and' [ænd] into [ən] or [n̩] in fast speech?",
+        options: ["Vowel reduction", "Glottalization", "Intrusion", "Fortition"],
+        answer: 0,
+        explanation: "Function words commonly undergo vowel reduction in casual speech (Tench, 2011)."
+      },
+      {
+        question: "Which feature signals a faster speech rate by compressing unstressed intervals?",
+        options: ["Vowel reduction", "Lengthening", "Pitch lowering", "Secondary stress"],
+        answer: 0,
+        explanation: "Faster rate promotes reduction and elision of weak syllables (Tench, 2011)."
+      },
+      {
+        question: "Which connected-speech feature can impede clear segmentation for learners?",
+        options: ["Intrusion", "Aspiration", "Palatalization", "Voicing"],
+        answer: 0,
+        explanation: "Intrusive segments obscure word boundaries in non-rhotic varieties (Tench, 2011)."
+      },
+      {
+        question: "Syllabic /l̩/ in 'bottle' is transcribed using which diacritic?",
+        options: ["̩", "ˈ", "ʲ", "ʷ"],
+        answer: 0,
+        explanation: "The under–ring ̩ marks the consonant as syllabic (Tench, 2011)."
+      }
+    ];
+
+    // Shuffle questions & options
+    let quizQuestions = questions
+      .map(q => {
+        const copy = JSON.parse(JSON.stringify(q));
+        const opts = copy.options.map((opt, i) => ({ opt, i }))
+          .sort(() => Math.random() - 0.5);
+        const newAnswer = opts.findIndex(o => o.i === copy.answer);
+        return {
+          question: copy.question,
+          options: opts.map(o => o.opt),
+          answer: newAnswer,
+          explanation: copy.explanation
+        };
+      })
+      .sort(() => Math.random() - 0.5);
+
+    let currentQ = 0;
+    const userAnswers = Array(quizQuestions.length).fill(null);
+
+    function renderQuestion() {
+      const card = document.getElementById("question-card");
+      const q = quizQuestions[currentQ];
+      let html = `<h2>Question ${currentQ + 1} of ${quizQuestions.length}</h2>`;
+      html += `<p>${q.question}</p><div class="options">`;
+      q.options.forEach((opt, i) => {
+        const checked = userAnswers[currentQ] === i ? "checked" : "";
+        html += `
+          <label>
+            <input type="radio" name="answer" value="${i}" ${checked}> ${opt}
+          </label>`;
+      });
+      html += `</div>`;
+      card.innerHTML = html;
+      document.getElementById("prevBtn").disabled = currentQ === 0;
+      document.getElementById("nextBtn").disabled = currentQ === quizQuestions.length - 1;
+    }
+
+    document.getElementById("prevBtn").onclick = () => {
+      storeAnswer();
+      if (currentQ > 0) currentQ--;
+      renderQuestion();
+    };
+    document.getElementById("nextBtn").onclick = () => {
+      storeAnswer();
+      if (currentQ < quizQuestions.length - 1) currentQ++;
+      renderQuestion();
+    };
+    document.getElementById("skipBtn").onclick = () => {
+      userAnswers[currentQ] = null;
+      if (currentQ < quizQuestions.length - 1) {
+        currentQ++;
+        renderQuestion();
+      }
+    };
+    document.getElementById("submitBtn").onclick = submitQuiz;
+
+    function storeAnswer() {
+      const sel = document.querySelector('input[name="answer"]:checked');
+      userAnswers[currentQ] = sel ? parseInt(sel.value) : null;
+    }
+
+    function submitQuiz() {
+      storeAnswer();
+      let score = 0;
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = `<h2>Your Score: 0 / ${quizQuestions.length}</h2>`;
+      quizQuestions.forEach((q, idx) => {
+        const ua = userAnswers[idx];
+        const correct = ua === q.answer;
+        if (correct) score++;
+        resultsDiv.innerHTML += `
+          <div>
+            <strong>Q${idx + 1}:</strong> ${q.question}<br>
+            <span style="color:${correct ? 'lightgreen' : 'tomato'}">
+              ${correct ? 'Correct' : 'Incorrect'}
+            </span>
+            <div class="answer-explanation">${q.explanation}</div>
+          </div><hr>`;
+      });
+      resultsDiv.querySelector("h2").textContent = 
+        `Your Score: ${score} / ${quizQuestions.length}`;
+      document.getElementById("quiz-container").style.display = "none";
+      resultsDiv.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Initialize
+    renderQuestion();
+  </script>
+</body>
+</html>

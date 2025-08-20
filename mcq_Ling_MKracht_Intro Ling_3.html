@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Lectures 7–19: Advanced Linguistics MCQ Test</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #e0d7c6;
+      font-family: 'Georgia', serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #ffcc00;
+      margin-bottom: 1em;
+    }
+    #quiz-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .question-card {
+      background-color: #1e1e2f;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 1em;
+      box-shadow: 0 0 10px #000;
+    }
+    .question-card h2 {
+      margin-top: 0;
+      color: #ffcc00;
+      font-size: 1.2em;
+    }
+    .options label {
+      display: block;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+    .options input[type="radio"] {
+      margin-right: 8px;
+    }
+    #navigation {
+      text-align: center;
+      margin-top: 1em;
+    }
+    .btn {
+      background-color: #ffcc00;
+      color: #121212;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 5px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+    .btn:hover:not(:disabled) {
+      background-color: #ffd633;
+    }
+    #results {
+      max-width: 900px;
+      margin: 2em auto;
+      background-color: #1e1e2f;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #000;
+    }
+    #results h2 {
+      color: #ffcc00;
+    }
+    .answer-explanation {
+      margin: 0.5em 0 1.5em;
+      color: #ccc;
+      font-size: 0.95em;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #333;
+      margin: 1.5em 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lectures 7–19: Advanced Linguistics MCQ Test</h1>
+  <div id="quiz-container">
+    <div class="question-card" id="question-card"></div>
+    <div id="navigation">
+      <button class="btn" id="prevBtn">Previous</button>
+      <button class="btn" id="skipBtn">Skip</button>
+      <button class="btn" id="nextBtn">Next</button>
+      <button class="btn" id="submitBtn">Submit</button>
+    </div>
+  </div>
+  <div id="results"></div>
+
+  <script>
+    const questions = [
+      // Lecture 7–12 questions here (1–40) ...
+      
+      // Lecture 13: Morphology II (41–46)
+      {
+        question: "Which morphological typology describes a language with one morpheme per word?",
+        options: ["Synthetic","Fusional","Analytic","Agglutinative"],
+        answer: 2,
+        explanation: "Analytic languages tend to have isolated morphemes per word with minimal affixation."
+      },
+      {
+        question: "Infixation is best described as:",
+        options: ["Adding an affix at the beginning","Adding an affix at the end","Inserting an affix inside a root","Repeating a syllable"],
+        answer: 2,
+        explanation: "Infixes are inserted into the internal structure of a root or stem."
+      },
+      {
+        question: "Root-and-pattern morphology is characteristic of which family?",
+        options: ["Bantu","Semitic","Romance","Germanic"],
+        answer: 1,
+        explanation: "Semitic languages use consonantal roots and vocalic patterns to derive words."
+      },
+      {
+        question: "Suppletion occurs when:",
+        options: ["A new affix is coined","Allomorphs are predictable","Irregular forms share no phonetic overlap","Words are borrowed"],
+        answer: 2,
+        explanation: "Suppletive forms like go/went lack a common phonological base."
+      },
+      {
+        question: "Reduplication involves:",
+        options: ["Changing vowel quality","Doubling part or all of a morpheme","Inserting an infix","Deleting a consonant"],
+        answer: 1,
+        explanation: "Reduplication copies a segment of the base to convey grammatical or semantic meaning."
+      },
+      {
+        question: "Apophony refers to:",
+        options: ["Tone change","Vowel alternation indicating grammar","Suffix addition","Prefix deletion"],
+        answer: 1,
+        explanation: "Apophony involves systematic vowel changes like sing/sang/sung."
+      },
+
+      // Lecture 14: Semantics I (47–52)
+      {
+        question: "In semantics, 'sense' refers to:",
+        options: ["Real-world reference","Conceptual meaning","Pragmatic use","Argument structure"],
+        answer: 1,
+        explanation: "'Sense' is the internal, mental concept of a word, distinct from its reference."
+      },
+      {
+        question: "A hyponym is:",
+        options: ["A broader category","A specific instance of a category","A synonym","An antonym"],
+        answer: 1,
+        explanation: "A hyponym (e.g., 'rose') is a specific instance under a broader hypernym ('flower')."
+      },
+      {
+        question: "Polysemy describes:",
+        options: ["Unrelated homonyms","Multiple related senses of one form","A shift in word category","False friends"],
+        answer: 1,
+        explanation: "Polysemous words have several related meanings, like 'head' of a person vs. 'head' of state."
+      },
+      {
+        question: "Componential analysis breaks word meaning into:",
+        options: ["Phonemes","Semantic features","Pragmatic implicatures","Morphological slots"],
+        answer: 1,
+        explanation: "It represents meaning via sets of binary semantic features."
+      },
+      {
+        question: "Gradable antonyms are pairs like:",
+        options: ["True/false","Dead/alive","Hot/cold","Male/female"],
+        answer: 2,
+        explanation: "Hot/cold allow intermediate degrees, unlike binary pairs."
+      },
+      {
+        question: "A semantic field is:",
+        options: ["A grammatical category","A group of related lexemes","A phonological process","A discourse domain"],
+        answer: 1,
+        explanation: "Semantic fields collect words sharing a conceptual domain, e.g., colors."
+      },
+
+      // Lecture 15: Semantics II (53–58)
+      {
+        question: "Truth-conditions define:",
+        options: ["Pragmatic inference","Conditions under which a sentence is true","Syntactic well-formedness","Morphological constituency"],
+        answer: 1,
+        explanation: "They specify the world situations that make a proposition true."
+      },
+      {
+        question: "Entailment between sentences means:",
+        options: ["They rhyme","One logically follows from another","They are paradoxes","They share phonemes"],
+        answer: 1,
+        explanation: "If A entails B, whenever A is true, B must also be true."
+      },
+      {
+        question: "Presuppositions are:",
+        options: ["Inferred only when false","Background assumptions taken as given","Explicit assertions","Grammar rules"],
+        answer: 1,
+        explanation: "Presuppositions remain constant under negation."
+      },
+      {
+        question: "Conversational implicatures arise from:",
+        options: ["Phonetic form","Morphology","Flouting Gricean maxims","Syntactic movement"],
+        answer: 2,
+        explanation: "When a speaker flouts a maxim, listeners infer additional meaning."
+      },
+      {
+        question: "The principle of compositionality states:",
+        options: ["Meanings are arbitrary","Meaning of whole from parts","All words have single meaning","Context is irrelevant"],
+        answer: 1,
+        explanation: "A sentence’s meaning is a function of its constituents and their arrangement."
+      },
+      {
+        question: "A tautology is:",
+        options: ["A contradiction","Always false","Always true","An entailment"],
+        answer: 2,
+        explanation: "Tautologies are sentences true under all interpretations."
+      },
+
+      // Lecture 16: Semantics III (59–64)
+      {
+        question: "Indexicals like 'I' change meaning based on:",
+        options: ["Grammar","Context of utterance","Word order","Affixation"],
+        answer: 1,
+        explanation: "Indexicals rely on speaker, time, or place to determine reference."
+      },
+      {
+        question: "A performative speech act:",
+        options: ["Describes an action","Performs the action by uttering it","Reports past events","Asks questions"],
+        answer: 1,
+        explanation: "Saying 'I apologize' is itself the act of apologizing."
+      },
+      {
+        question: "Deixis covers:",
+        options: ["Phonology","Spatial and temporal reference","Sentence structure","Word formation"],
+        answer: 1,
+        explanation: "Deictic elements point to locations or times relative to the speaker."
+      },
+      {
+        question: "Which is NOT a Gricean maxim?",
+        options: ["Quality","Quantity","Width","Manner"],
+        answer: 2,
+        explanation: "Quality, Quantity, Relation, and Manner are the four maxims."
+      },
+      {
+        question: "Felicity conditions are required for:",
+        options: ["Grammaticality judgments","Successful speech acts","Morphological analyses","Semantic entailments"],
+        answer: 1,
+        explanation: "Speech acts must meet social and contextual conditions to succeed."
+      },
+      {
+        question: "Contextualism argues that:",
+        options: ["Meaning is fixed","Context shapes semantic content","Syntax determines all","Phonology is primary"],
+        answer: 1,
+        explanation: "Contextualism holds that context is integral to meaning determination."
+      },
+
+      // Lecture 17: Semantics IV (65–70)
+      {
+        question: "Universal quantifiers include:",
+        options: ["Some","Every","Many","Few"],
+        answer: 1,
+        explanation: "'Every' asserts that the predicate holds for all entities in the domain."
+      },
+      {
+        question: "Scope ambiguity arises when:",
+        options: ["Words rhyme","Quantifiers can take different semantic ranges","Sentences are anagrams","Phonemes shift"],
+        answer: 1,
+        explanation: "Sentences like 'Every student read a book' can mean different things."
+      },
+      {
+        question: "A negative polarity item:",
+        options: ["Occurs only under negation","Is a positive word","Is a quantifier","Changes form in questions"],
+        answer: 0,
+        explanation: "Words like 'any' are licensed only in downward-entailing contexts."
+      },
+      {
+        question: "Definiteness marks:",
+        options: ["New referents","Unknown entities","Familiar or unique entities","Plural only"],
+        answer: 2,
+        explanation: "Definite articles signal assumed shared knowledge of the referent."
+      },
+      {
+        question: "Specificity in indefinites distinguishes:",
+        options: ["Mass vs. count","Referential vs. existential readings","Tense vs. aspect","Active vs. passive"],
+        answer: 1,
+        explanation: "A specific 'a book' refers to a particular book known to the speaker."
+      },
+      {
+        question: "Distributive readings apply when:",
+        options: ["Predicate holds collectively","Predicate holds for each atomic member","There is a single entity","Sentence is passive"],
+        answer: 1,
+        explanation: "'The students lifted a table' distributively means each student lifted one table."
+      },
+
+      // Lecture 18: Semantics V (71–76)
+      {
+        question: "Structural ambiguity is shown by:",
+        options: ["Lexical homophones","Multiple parses yielding different meanings","Single interpretation only","Fixed word order"],
+        answer: 1,
+        explanation: "Sentences like 'Old men and women' have two distinct structures."
+      },
+      {
+        question: "Lexical ambiguity involves:",
+        options: ["Different syntactic trees","Multiple unrelated word senses","Sentence-level scope","Negation"],
+        answer: 1,
+        explanation: "Homonyms like 'bank' (riverbank vs. financial) are lexically ambiguous."
+      },
+      {
+        question: "Vagueness is characterized by:",
+        options: ["Sharp boundaries","Borderline cases","Single truth-value","Fixed interpretations"],
+        answer: 1,
+        explanation: "Adjectives like 'tall' allow borderline degrees without clear cut-offs."
+      },
+      {
+        question: "Metaphor differs from metonymy in that:",
+        options: ["It uses part-to-whole associations","It asserts literal identity","It maps across conceptual domains","It involves sound change"],
+        answer: 2,
+        explanation: "Metaphor maps features from one domain onto another by analogy."
+      },
+      {
+        question: "Semantic shift over time is known as:",
+        options: ["Calque","Loanword","Semantic change","Back-formation"],
+        answer: 2,
+        explanation: "Words often extend or narrow meaning through historical processes."
+      },
+      {
+        question: "A homonym is:",
+        options: ["Same spelling, related meaning","Different forms, same meaning","Same form, unrelated meanings","Only spoken words"],
+        answer: 2,
+        explanation: "Homonyms share form but have completely distinct meanings."
+      },
+
+      // Lecture 19: Language Families & History (77–82)
+      {
+        question: "The comparative method aims to:",
+        options: ["Describe one language","Reconstruct proto-languages","Create new scripts","Analyze speech acts"],
+        answer: 1,
+        explanation: "It compares cognates across languages to infer ancestral forms."
+      },
+      {
+        question: "Cognates are:",
+        options: ["Words borrowed recently","Sound changes","Related words from a common ancestor","Dialect variants"],
+        answer: 2,
+        explanation: "Cognates share form and meaning due to genetic relationship."
+      },
+      {
+        question: "A regular sound change law:",
+        options: ["Applies sporadically","Applies without exception in a context","Only affects prefixes","Is semantic only"],
+        answer: 1,
+        explanation: "Sound laws operate uniformly on all instances in the defined environment."
+      },
+      {
+        question: "A language isolate is one that:",
+        options: ["Belongs to a large family","Is unattested","Has no known relatives","Is extinct"],
+        answer: 2,
+        explanation: "An isolate like Basque cannot be linked genetically to any other language."
+      },
+      {
+        question: "A sprachbund describes:",
+        options: ["A family tree","An area of linguistic convergence","A proto-language","A writing system"],
+        answer: 1,
+        explanation: "In a sprachbund, unrelated languages share features through contact."
+      },
+      {
+        question: "Substratum influence arises from:",
+        options: ["The dominant language","The superstrate","The native language of a conquered population","A creole stage"],
+        answer: 2,
+        explanation: "Substrate features enter the dominant language from the previously spoken tongue."
+      }
+    ];
+
+    // Shuffle questions and options
+    let quizQuestions = questions
+      .map(q => {
+        const copy = JSON.parse(JSON.stringify(q));
+        const opts = copy.options
+          .map((opt, i) => ({ opt, i }))
+          .sort(() => Math.random() - 0.5);
+        const newAnswer = opts.findIndex(o => o.i === copy.answer);
+        return {
+          question: copy.question,
+          options: opts.map(o => o.opt),
+          answer: newAnswer,
+          explanation: copy.explanation
+        };
+      })
+      .sort(() => Math.random() - 0.5);
+
+    let currentQ = 0;
+    const userAnswers = Array(quizQuestions.length).fill(null);
+
+    function renderQuestion() {
+      const card = document.getElementById("question-card");
+      const q = quizQuestions[currentQ];
+      let html = `<h2>Question ${currentQ + 1} of ${quizQuestions.length}</h2>`;
+      html += `<p>${q.question}</p><div class="options">`;
+      q.options.forEach((opt, i) => {
+        const checked = userAnswers[currentQ] === i ? "checked" : "";
+        html += `
+          <label>
+            <input type="radio" name="answer" value="${i}" ${checked}>
+            ${opt}
+          </label>`;
+      });
+      html += `</div>`;
+      card.innerHTML = html;
+      document.getElementById("prevBtn").disabled = currentQ === 0;
+      document.getElementById("nextBtn").disabled = currentQ === quizQuestions.length - 1;
+    }
+
+    document.getElementById("prevBtn").onclick = () => {
+      storeAnswer();
+      if (currentQ > 0) currentQ--;
+      renderQuestion();
+    };
+    document.getElementById("nextBtn").onclick = () => {
+      storeAnswer();
+      if (currentQ < quizQuestions.length - 1) currentQ++;
+      renderQuestion();
+    };
+    document.getElementById("skipBtn").onclick = () => {
+      userAnswers[currentQ] = null;
+      if (currentQ < quizQuestions.length - 1) {
+        currentQ++;
+        renderQuestion();
+      }
+    };
+    document.getElementById("submitBtn").onclick = submitQuiz;
+
+    function storeAnswer() {
+      const sel = document.querySelector('input[name="answer"]:checked');
+      userAnswers[currentQ] = sel ? parseInt(sel.value) : null;
+    }
+
+    function submitQuiz() {
+      storeAnswer();
+      let score = 0;
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = `<h2>Your Score: 0 / ${quizQuestions.length}</h2>`;
+      quizQuestions.forEach((q, idx) => {
+        const ua = userAnswers[idx];
+        const correct = ua === q.answer;
+        if (correct) score++;
+        resultsDiv.innerHTML += `
+          <div>
+            <strong>Q${idx + 1}:</strong> ${q.question}<br>
+            <span style="color:${correct ? 'lightgreen' : 'tomato'}">
+              ${correct ? 'Correct' : 'Incorrect'}
+            </span>
+            <div class="answer-explanation">${q.explanation}</div>
+          </div>
+          <hr/>`;
+      });
+      resultsDiv.querySelector("h2").textContent =
+        `Your Score: ${score} / ${quizQuestions.length}`;
+      document.getElementById("quiz-container").style.display = "none";
+      resultsDiv.scrollIntoView({ behavior: "smooth" });
+    }
+
+    renderQuestion();
+  </script>
+</body>
+</html>

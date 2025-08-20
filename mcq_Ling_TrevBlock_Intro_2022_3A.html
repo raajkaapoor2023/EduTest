@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Syntax Quiz - TrevTutor Crash Course</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 960px; margin: auto; padding: 2rem; background: #fdfdfd; }
+    h1 { color: #003366; }
+    .question { margin-bottom: 1.8rem; padding: 1rem; background: #f0f5f9; border-radius: 8px; }
+    .question p { font-weight: bold; }
+    .result { font-weight: bold; font-size: 1.2rem; margin-top: 2rem; color: green; }
+    .answers { background: #eef4ea; padding: 1.2rem; margin-top: 2rem; border-left: 4px solid #4CAF50; }
+  </style>
+</head>
+<body>
+  <h1>Syntax Quiz (TrevTutor: 1:22:30 – 2:50:25)</h1>
+  <form id="quizForm"></form>
+
+  <script>
+    const questions = [
+      { q: "What is syntax primarily concerned with?", opts: ["Sound systems", "Meaning of words", "Structure of sentences", "Word pronunciation"], a: 2 },
+      { q: "Which of the following is a syntactic category?", opts: ["Noun", "Phoneme", "Allophone", "Morpheme"], a: 0 },
+      { q: "What is a phrase structure rule?", opts: ["A rule for stress", "Rule describing how words form sentences", "Rule of vowel harmony", "Semantic compatibility"], a: 1 },
+      { q: "Which of the following is a recursive syntactic structure?", opts: ["The cat", "He ran", "The man that the boy saw", "In the morning"], a: 2 },
+      { q: "What does constituency mean in syntax?", opts: ["Word pronunciation", "Grouping of words into units", "Inflection rules", "Syllable construction"], a: 1 },
+      { q: "Which test helps determine constituency?", opts: ["Deletion", "Minimal pair", "Allomorphy", "Voicing"], a: 0 },
+      { q: "Which of these is a valid syntactic tree node label?", opts: ["IPA", "VP", "VOT", "NPA"], a: 1 },
+      { q: "Which is an example of a transitive verb?", opts: ["Sleep", "Jump", "Eat", "Arrive"], a: 2 },
+      { q: "What does the term 'c-command' relate to?", opts: ["Vowel features", "Syntactic structure", "Phonological trees", "Morpheme alternation"], a: 1 },
+      { q: "Which of the following illustrates structural ambiguity?", opts: ["He left early.", "Flying planes can be dangerous.", "The cat is black.", "They studied syntax."], a: 1 },
+      { q: "In X-bar theory, what does X' (X-bar) represent?", opts: ["A phoneme", "An intermediate syntactic projection", "A semantic value", "An intonation"], a: 1 },
+      { q: "Which of these is a complement?", opts: ["Yesterday", "To the store", "His friend", "Sadly"], a: 2 },
+      { q: "Which phrase type can contain a determiner and a noun?", opts: ["PP", "VP", "NP", "AP"], a: 2 },
+      { q: "In syntax, a 'specifier' typically appears...", opts: ["To the right of the head", "Inside the complement", "Before the head in a phrase", "After the object"], a: 2 },
+      { q: "Which sentence exhibits movement in syntax?", opts: ["John slept.", "Mary will dance.", "What did you see?", "They ran."], a: 2 },
+      { q: "Which syntactic transformation involves switching positions?", opts: ["Topicalization", "Insertion", "Assimilation", "Allomorphy"], a: 0 },
+      { q: "Which is a well-formed syntactic tree node for 'the dog'?", opts: ["VP", "NP", "AP", "PP"], a: 1 },
+      { q: "What is a head in syntactic theory?", opts: ["The phonetic unit", "The first word", "Central word determining phrase type", "A punctuation mark"], a: 2 },
+      { q: "What does 'theta role' refer to?", opts: ["Sound features", "Syntactic tree shape", "Semantic roles assigned by verbs", "Case marking"], a: 2 },
+      { q: "Which approach underlies most modern syntax theory?", opts: ["Behaviorism", "Structuralism", "Generative grammar", "Cognitivism"], a: 2 }
+    ];
+
+    function buildQuiz() {
+      const form = document.getElementById("quizForm");
+      questions.forEach((item, i) => {
+        const div = document.createElement("div");
+        div.className = "question";
+        div.innerHTML = `<p>${i + 1}. ${item.q}</p>` +
+          item.opts.map((opt, j) =>
+            `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label><br>`
+          ).join("");
+        form.appendChild(div);
+      });
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = "Submit Quiz";
+      btn.onclick = grade;
+      form.appendChild(btn);
+    }
+
+    function grade() {
+      let score = 0;
+      questions.forEach((item, i) => {
+        const sel = document.querySelector(`input[name=q${i}]:checked`);
+        if (sel && Number(sel.value) === item.a) score++;
+      });
+      const form = document.getElementById("quizForm");
+      form.insertAdjacentHTML('beforeend', `<div class="result">You scored ${score} out of 20.</div>`);
+      const btn2 = document.createElement("button");
+      btn2.type = "button";
+      btn2.textContent = "Show Correct Answers with References";
+      btn2.onclick = showAnswers;
+      form.appendChild(btn2);
+    }
+
+    function showAnswers() {
+      const div = document.createElement("div");
+      div.className = "answers";
+      let html = "<h2>Correct Answers & References</h2>";
+      questions.forEach((item, i) => {
+        html += `<p><strong>Q${i + 1}:</strong> ${item.q}<br>✅ <em>${item.opts[item.a]}</em><br>` +
+          `<small>Ref: TrevTutor Syntax Lecture (1:22:30–2:50:25); Carnie, A. (2021). *Syntax: A Generative Introduction* (4th ed.); Radford, A. (2004). *English Syntax: An Introduction*</small></p>`;
+      });
+      div.innerHTML = html;
+      document.getElementById("quizForm").appendChild(div);
+    }
+
+    window.onload = buildQuiz;
+  </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Morphology Quiz (TrevTutor)</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 2rem; max-width: 960px; margin: auto; }
+    h1 { color: #2c3e50; }
+    .question { background: #ffffff; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 5px solid #3498db; }
+    .question p { font-weight: bold; }
+    button { padding: 0.5rem 1rem; margin-top: 1rem; font-size: 1rem; cursor: pointer; }
+    .result { font-size: 1.2rem; color: green; margin-top: 2rem; }
+    .answers { background: #fff3cd; border-left: 5px solid #f1c40f; padding: 1rem; margin-top: 2rem; }
+  </style>
+</head>
+<body>
+  <h1>Morphology Quiz (TrevTutor: 04:37:52 – 05:23:44)</h1>
+  <form id="quizForm"></form>
+
+  <script>
+    const questions = [
+      { q: "What is a morpheme?", opts: ["A syllable", "A minimal unit of meaning", "A phoneme", "A phrase"], a: 1 },
+      { q: "Which type of morpheme can stand alone as a word?", opts: ["Bound morpheme", "Derivational morpheme", "Free morpheme", "Inflectional morpheme"], a: 2 },
+      { q: "Which of the following is a bound morpheme?", opts: ["run", "cat", "-ed", "house"], a: 2 },
+      { q: "What type of morpheme is the suffix '-ness' in 'kindness'?", opts: ["Inflectional", "Derivational", "Free", "Root"], a: 1 },
+      { q: "How many morphemes are in the word 'unbelievable'?", opts: ["1", "2", "3", "4"], a: 2 },
+      { q: "Which morpheme changes the grammatical category of a word?", opts: ["Inflectional", "Derivational", "Root", "Free"], a: 1 },
+      { q: "The '-s' in 'dogs' is what kind of morpheme?", opts: ["Derivational suffix", "Plural inflection", "Root morpheme", "Prefix"], a: 1 },
+      { q: "What is an inflectional morpheme?", opts: ["It creates a new word", "It alters tense or number", "It stands alone", "It’s always a prefix"], a: 1 },
+      { q: "Which of the following has both derivational and inflectional morphemes?", opts: ["walking", "unhappiness", "dogs", "reopened"], a: 3 },
+      { q: "What is the root morpheme in 'disagreeable'?", opts: ["dis", "agree", "able", "agreeable"], a: 1 },
+      { q: "Which is true of derivational morphemes?", opts: ["They are always inflections", "They don’t affect meaning", "They change lexical category", "They come after inflectional suffixes"], a: 2 },
+      { q: "In 'restarted', what role does 're-' play?", opts: ["Inflection", "Prefixal derivation", "Suffix", "Free morpheme"], a: 1 },
+      { q: "Which word contains three morphemes?", opts: ["builder", "unfolded", "books", "cats"], a: 1 },
+      { q: "The plural '-en' in 'oxen' is an example of?", opts: ["Modern suffix", "Inflectional morpheme", "Derivational prefix", "Reduplication"], a: 1 },
+      { q: "Which language phenomenon shows internal vowel change (e.g., sing/sang)?", opts: ["Suppletion", "Inflection", "Ablaut", "Affixation"], a: 2 },
+      { q: "What is suppletion?", opts: ["Regular pluralization", "Unpredictable replacement of a root", "Prefix stacking", "Adding suffixes"], a: 1 },
+      { q: "Which affix in 'unhappily' is an inflectional morpheme?", opts: ["un-", "-ly", "happy", "None"], a: 3 },
+      { q: "The word 'talked' contains how many morphemes?", opts: ["1", "2", "3", "4"], a: 1 },
+      { q: "What is the correct morpheme structure for 'preexisting'?", opts: ["pre + exist + ing", "preexist + ing", "pre + exist", "pre + exist + ed"], a: 0 },
+      { q: "In 'misunderstanding', what is the root morpheme?", opts: ["mis", "under", "stand", "understand"], a: 2 }
+    ];
+
+    function buildQuiz() {
+      const form = document.getElementById("quizForm");
+      questions.forEach((item, i) => {
+        const div = document.createElement("div");
+        div.className = "question";
+        div.innerHTML = `<p>${i + 1}. ${item.q}</p>` +
+          item.opts.map((opt, j) =>
+            `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label><br>`
+          ).join("");
+        form.appendChild(div);
+      });
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = "Submit Quiz";
+      btn.onclick = grade;
+      form.appendChild(btn);
+    }
+
+    function grade() {
+      let score = 0;
+      questions.forEach((item, i) => {
+        const sel = document.querySelector(`input[name=q${i}]:checked`);
+        if (sel && Number(sel.value) === item.a) score++;
+      });
+      const form = document.getElementById("quizForm");
+      form.insertAdjacentHTML('beforeend', `<div class="result">You scored ${score} out of 20.</div>`);
+      const btn2 = document.createElement("button");
+      btn2.type = "button";
+      btn2.textContent = "Show Correct Answers with References";
+      btn2.onclick = showAnswers;
+      form.appendChild(btn2);
+    }
+
+    function showAnswers() {
+      const div = document.createElement("div");
+      div.className = "answers";
+      let html = "<h2>Correct Answers & References</h2>";
+      questions.forEach((item, i) => {
+        html += `<p><strong>Q${i + 1}:</strong> ${item.q}<br>✅ <em>${item.opts[item.a]}</em><br>` +
+          `<small>Ref: TrevTutor (04:37:52–05:23:44); Lieber (2016), *Introducing Morphology*; Aronoff & Fudeman (2011), *What is Morphology?*</small></p>`;
+      });
+      div.innerHTML = html;
+      document.getElementById("quizForm").appendChild(div);
+    }
+
+    window.onload = buildQuiz;
+  </script>
+</body>
+</html>

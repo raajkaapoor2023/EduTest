@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Phonetics Part 2 – Lecture 6 MCQ Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 900px; margin: 2rem auto; padding: 1rem; line-height: 1.6; }
+    h1 { color: #2c3e50; }
+    .question { margin-bottom: 1.5rem; }
+    .question p { font-weight: bold; }
+    .result { font-size: 1.2rem; font-weight: bold; margin-top: 1.5rem; }
+    .answers { margin-top: 2rem; padding: 1rem; background: #f9f9f9; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+<h1>Lecture 6 – Phonetics Part 2 (MIT 24.900) Quiz</h1>
+<form id="quizForm"></form>
+
+<script>
+const questions = [
+  { q: "Which airstream mechanism is used in most speech sounds, including English?", opts: ["Glottalic egressive", "Pulmonic egressive", "Velaric ingressive", "Glottalic ingressive"], a: 1 },
+  { q: "What does VOT stand for?", opts: ["Voice Over Time", "Voice Onset Time", "Vocal Overlap Timing", "Vocal Output Test"], a: 1 },
+  { q: "What distinguishes aspirated voiceless stops in English?", opts: ["They are louder", "They are longer", "They have delayed voicing", "They are nasalized"], a: 2 },
+  { q: "Which sound is an example of an aspirated stop?", opts: ["[b]", "[d]", "[pʰ]", "[g]"], a: 2 },
+  { q: "What is the manner of articulation for [s] and [z]?", opts: ["Stop", "Nasal", "Approximant", "Fricative"], a: 3 },
+  { q: "Which of these is a bilabial sound?", opts: ["[t]", "[f]", "[p]", "[k]"], a: 2 },
+  { q: "Which feature distinguishes [t] and [d]?", opts: ["Place of articulation", "Nasality", "Voicing", "Aspiration"], a: 2 },
+  { q: "What type of consonant is produced with complete closure of the oral cavity?", opts: ["Nasal", "Fricative", "Stop", "Approximant"], a: 2 },
+  { q: "What is the place of articulation for [k] and [g]?", opts: ["Alveolar", "Labiodental", "Velar", "Glottal"], a: 2 },
+  { q: "Which sound is a nasal consonant?", opts: ["[n]", "[s]", "[t]", "[l]"], a: 0 },
+  { q: "Approximants are characterized by:", opts: ["Turbulent airflow", "Nasal airflow", "Lack of complete closure", "High-frequency noise"], a: 2 },
+  { q: "What distinguishes fricatives from stops?", opts: ["Complete closure", "Voicing", "Turbulence", "Nasal airflow"], a: 2 },
+  { q: "Which of these is a voiced fricative?", opts: ["[f]", "[s]", "[ʃ]", "[v]"], a: 3 },
+  { q: "Which of the following is a glide (approximant)?", opts: ["[r]", "[n]", "[w]", "[z]"], a: 2 },
+  { q: "What kind of airflow is used in English click sounds?", opts: ["Pulmonic", "Velaric", "Glottalic", "Nasal"], a: 1 },
+  { q: "Which place of articulation involves the tongue tip at the alveolar ridge?", opts: ["Velar", "Glottal", "Alveolar", "Uvular"], a: 2 },
+  { q: "Which word begins with a voiceless bilabial stop?", opts: ["bat", "pat", "mat", "fat"], a: 1 },
+  { q: "Which pair differs only in voicing?", opts: ["[p] vs [b]", "[k] vs [t]", "[f] vs [s]", "[m] vs [n]"], a: 0 },
+  { q: "Which phonetic feature is not contrastive in all English dialects?", opts: ["Aspiration", "Voicing", "Place of articulation", "Manner of articulation"], a: 0 },
+  { q: "Which sound is produced with glottal closure?", opts: ["[k]", "[ʔ]", "[f]", "[s]"], a: 1 }
+];
+
+function buildQuiz() {
+  const form = document.getElementById("quizForm");
+  questions.forEach((item, i) => {
+    const div = document.createElement("div");
+    div.className = "question";
+    div.innerHTML = `<p>${i + 1}. ${item.q}</p>` +
+      item.opts.map((o, j) => `<label><input type="radio" name="q${i}" value="${j}"> ${o}</label><br>`).join("");
+    form.appendChild(div);
+  });
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.textContent = "Submit Quiz";
+  btn.onclick = grade;
+  form.appendChild(btn);
+}
+
+function grade() {
+  let score = 0;
+  questions.forEach((item, i) => {
+    const sel = document.querySelector(`input[name=q${i}]:checked`);
+    if (sel && Number(sel.value) === item.a) score++;
+  });
+  const form = document.getElementById("quizForm");
+  form.insertAdjacentHTML("beforeend", `<div class="result">Your score: ${score}/20</div>`);
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.textContent = "Show Answers & References";
+  btn.onclick = showAnswers;
+  form.appendChild(btn);
+}
+
+function showAnswers() {
+  const ref = document.createElement("div");
+  ref.className = "answers";
+  let html = "<h2>Correct Answers & Academic References</h2>";
+  questions.forEach((item, i) => {
+    html += `<p><strong>Q${i + 1}</strong>: ${item.q}<br>✅ <em>${item.opts[item.a]}</em><br><small>Reference: N.W. Richards, MIT Lecture 6; Ladefoged & Johnson, <i>A Course in Phonetics</i></small></p>`;
+  });
+  ref.innerHTML = html;
+  document.getElementById("quizForm").appendChild(ref);
+}
+
+window.onload = buildQuiz;
+</script>
+</body>
+</html>

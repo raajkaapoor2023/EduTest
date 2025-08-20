@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Syntax Quiz (TrevTutor – Advanced Syntax)</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f8f9fa; padding: 2rem; max-width: 960px; margin: auto; }
+    h1 { color: #003366; }
+    .question { background: #e9ecef; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; }
+    .question p { font-weight: bold; }
+    button { padding: 0.6rem 1.2rem; font-size: 1rem; }
+    .result { font-size: 1.3rem; color: green; margin-top: 2rem; }
+    .answers { margin-top: 2rem; padding: 1rem; background: #fff3cd; border-left: 5px solid #ffc107; }
+  </style>
+</head>
+<body>
+  <h1>Advanced Syntax Quiz (TrevTutor, 04:12:02 – 04:37:51)</h1>
+  <form id="quizForm"></form>
+
+  <script>
+    const questions = [
+      { q: "What is a CP in X-bar theory?", opts: ["Complement Phrase", "Complementizer Phrase", "Conjunction Phrase", "Constituent Phrase"], a: 1 },
+      { q: "Which element introduces embedded clauses in syntax?", opts: ["Det", "C", "T", "V"], a: 1 },
+      { q: "What is the function of the complementizer 'that' in the sentence: 'I believe that he is honest'?", opts: ["Head of VP", "Specifier of TP", "Head of CP", "Complement of NP"], a: 2 },
+      { q: "What does CP dominate in syntactic tree structures?", opts: ["NP", "TP", "VP", "PP"], a: 1 },
+      { q: "In CP structures, what does the specifier often hold?", opts: ["The subject", "The object", "Wh-phrase", "Auxiliary"], a: 2 },
+      { q: "What does T-to-C movement describe?", opts: ["Movement of tense feature to NP", "Raising of auxiliary to C", "Lowering of V to T", "Raising of subject to Spec-CP"], a: 1 },
+      { q: "In a yes/no question, where does the auxiliary move?", opts: ["From V to NP", "From T to C", "From NP to VP", "From CP to TP"], a: 1 },
+      { q: "Which sentence shows T-to-C movement?", opts: ["She is reading.", "Is she reading?", "She reading is.", "Reading she is?"], a: 1 },
+      { q: "What transformation is involved in wh-questions?", opts: ["Deletion", "Raising", "Wh-movement", "Substitution"], a: 2 },
+      { q: "Where do wh-phrases typically move to in English?", opts: ["Head of TP", "Spec-CP", "Head of VP", "Spec-TP"], a: 1 },
+      { q: "Which of the following is an ungrammatical wh-question due to improper movement?", opts: ["What did you say?", "What you said?", "Who is coming?", "Where are you going?"], a: 1 },
+      { q: "What is the role of the C head in wh-questions?", opts: ["Hosts tense", "Takes VP as complement", "Hosts moved auxiliary", "Selects subject"], a: 2 },
+      { q: "Why is 'What did she say she wanted?' grammatical?", opts: ["No CP involved", "No movement needed", "Wh-movement to matrix Spec-CP", "Auxiliary movement to VP"], a: 2 },
+      { q: "Which component allows recursion in CPs?", opts: ["VP", "CP complement", "Determiner", "Wh-feature"], a: 1 },
+      { q: "Which of the following best represents the order in embedded CPs?", opts: ["C > T > V", "V > C > T", "T > V > C", "NP > VP > CP"], a: 0 },
+      { q: "What is the significance of CP recursion?", opts: ["It blocks movement", "It limits phrase length", "It explains infinite sentence generation", "It assigns theta roles"], a: 2 },
+      { q: "What is the status of 'if' in the sentence 'I wonder if he’ll come'?", opts: ["Complementizer", "Determiner", "Subject", "Tense marker"], a: 0 },
+      { q: "In syntax, what type of clause is introduced by 'whether'?", opts: ["Declarative", "Interrogative", "Imperative", "Relative"], a: 1 },
+      { q: "Why can’t a wh-question have multiple overt wh-phrases fronted in English?", opts: ["Lack of CP", "Theta role mismatch", "Only one Spec-CP is licensed", "Verb inflection rules"], a: 2 },
+      { q: "Which transformation applies in 'Who do you think will win?'?", opts: ["Raising", "Topicalization", "Wh-movement from embedded clause", "VP ellipsis"], a: 2 }
+    ];
+
+    function buildQuiz() {
+      const form = document.getElementById("quizForm");
+      questions.forEach((item, i) => {
+        const div = document.createElement("div");
+        div.className = "question";
+        div.innerHTML = `<p>${i + 1}. ${item.q}</p>` +
+          item.opts.map((opt, j) =>
+            `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label><br>`
+          ).join("");
+        form.appendChild(div);
+      });
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = "Submit Quiz";
+      btn.onclick = grade;
+      form.appendChild(btn);
+    }
+
+    function grade() {
+      let score = 0;
+      questions.forEach((item, i) => {
+        const sel = document.querySelector(`input[name=q${i}]:checked`);
+        if (sel && Number(sel.value) === item.a) score++;
+      });
+      const form = document.getElementById("quizForm");
+      form.insertAdjacentHTML('beforeend', `<div class="result">You scored ${score} out of 20.</div>`);
+      const btn2 = document.createElement("button");
+      btn2.type = "button";
+      btn2.textContent = "Show Correct Answers with References";
+      btn2.onclick = showAnswers;
+      form.appendChild(btn2);
+    }
+
+    function showAnswers() {
+      const div = document.createElement("div");
+      div.className = "answers";
+      let html = "<h2>Correct Answers & References</h2>";
+      questions.forEach((item, i) => {
+        html += `<p><strong>Q${i + 1}:</strong> ${item.q}<br>✅ <em>${item.opts[item.a]}</em><br>` +
+          `<small>Ref: TrevTutor Syntax Lecture (04:12:02–04:37:51); Carnie (2021), *Syntax: A Generative Introduction*, 4th ed.; Radford (2004), *English Syntax: An Introduction*</small></p>`;
+      });
+      div.innerHTML = html;
+      document.getElementById("quizForm").appendChild(div);
+    }
+
+    window.onload = buildQuiz;
+  </script>
+</body>
+</html>

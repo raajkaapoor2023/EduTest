@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapters 11–Bibliography: Advanced Linguistics MCQ Test</title>
+  <style>
+    body {
+      font-family: Georgia, serif;
+      background-color: #121212;
+      color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #ffcc00;
+      margin-bottom: 1em;
+    }
+    #quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .question-card {
+      background-color: #1e1e2f;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 0 10px #000;
+      margin-bottom: 1em;
+    }
+    .question-card h2 {
+      margin-top: 0;
+      color: #ffcc00;
+      font-size: 1.2em;
+    }
+    .options label {
+      display: block;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+    .options input[type="radio"] {
+      margin-right: 8px;
+    }
+    #navigation {
+      text-align: center;
+      margin-top: 1em;
+    }
+    .btn {
+      background-color: #ffcc00;
+      color: #121212;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 5px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+    .btn:hover:not(:disabled) {
+      background-color: #ffd633;
+    }
+    #results {
+      max-width: 800px;
+      margin: 2em auto;
+      background-color: #1e1e2f;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #000;
+    }
+    #results h2 {
+      color: #ffcc00;
+    }
+    .answer-explanation {
+      margin: 0.5em 0 1.5em;
+      color: #ccc;
+      font-size: 0.95em;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #333;
+      margin: 1.5em 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Chapters 11–Bibliography: Advanced Linguistics MCQ Test</h1>
+  <div id="quiz-container">
+    <div class="question-card" id="question-card"></div>
+    <div id="navigation">
+      <button class="btn" id="prevBtn">Previous</button>
+      <button class="btn" id="skipBtn">Skip</button>
+      <button class="btn" id="nextBtn">Next</button>
+      <button class="btn" id="submitBtn">Submit</button>
+    </div>
+  </div>
+  <div id="results"></div>
+
+  <script>
+    const questions = [
+      // Chapter 11: Regional and Social Variation (1–13)
+      {
+        question: "What split distinguishes the vowels in 'foot' vs 'strut' in Southern English accents?",
+        options: ["FOOT-STRUT split", "TRAP-BATH split", "KIT-FLEECE split", "LOT-THOUGHT split"],
+        answer: 0,
+        explanation: "Southern English accents maintain the FOOT-STRUT split, keeping /ʊ/ (foot) distinct from /ʌ/ (strut)."
+      },
+      {
+        question: "Rhotic accents are characterized by retaining which phoneme after a vowel?",
+        options: ["/r/", "/t/", "/l/", "/ə/"],
+        answer: 0,
+        explanation: "Rhotic accents pronounce post-vocalic /r/, unlike non-rhotic varieties where it’s dropped."
+      },
+      {
+        question: "Which regional British accent is known for TH-fronting, turning /θ/ into [f]?",
+        options: ["Cockney", "Received Pronunciation", "Scottish", "General American"],
+        answer: 0,
+        explanation: "Cockney and Estuary English varieties commonly exhibit TH-fronting."
+      },
+      {
+        question: "T-glottalization refers to replacing /t/ with what sound in coda position?",
+        options: ["Glottal stop [ʔ]", "Aspirated [tʰ]", "Flap [ɾ]", "Trill [r]"],
+        answer: 0,
+        explanation: "In accents like Cockney and Estuary English, /t/ in coda often becomes a glottal stop [ʔ]."
+      },
+      {
+        question: "L-vocalization often turns /l/ into which approximant in coda position?",
+        options: ["[w]", "[j]", "[ɹ]", "[ʊ]"],
+        answer: 0,
+        explanation: "Coda /l/ may be realized as a labio-velar approximant [w] (e.g., 'milk' → [mɪʊk])."
+      },
+      {
+        question: "Yod-dropping typically removes /j/ after which consonant in RP?",
+        options: ["/t/", "/k/", "/s/", "/m/"],
+        answer: 0,
+        explanation: "RP speakers may drop the /j/ in /tj/ clusters (e.g., 'tune' → [tuːn])."
+      },
+      {
+        question: "The Trap-Bath split in Southern England lengthens /æ/ to /ɑː/ before which type of consonant?",
+        options: ["Voiceless fricatives", "Voiced stops", "Nasals", "Affricates"],
+        answer: 0,
+        explanation: "TRAP-BATH applies before voiceless fricatives (e.g., 'bath' /bɑːθ/ vs 'trap' /træp/)."
+      },
+      {
+        question: "Which process changes 'nature' to [ˈneɪtʃə] by merging /t/ and /j/?",
+        options: ["Yod-coalescence", "Intrusion", "Elision", "Assimilation"],
+        answer: 0,
+        explanation: "Yod-coalescence merges alveolar + /j/ into [tʃ] before a vowel."
+      },
+      {
+        question: "Which dialect uses the Scottish Vowel Length Rule to condition vowel length?",
+        options: ["Scottish English", "Cockney", "General American", "Received Pronunciation"],
+        answer: 0,
+        explanation: "Scottish Vowel Length Rule makes vowels long before voiced fricatives and /r/."
+      },
+      {
+        question: "Which of the following accents is non-rhotic?",
+        options: ["Received Pronunciation", "General American", "Scottish", "Irish"],
+        answer: 0,
+        explanation: "RP does not pronounce post-vocalic /r/, unlike rhotic varieties such as General American."
+      },
+      {
+        question: "Which feature of African American Vernacular English involves dropping the final consonant in clusters?",
+        options: ["Consonant cluster reduction", "TH-fronting", "L-vocalization", "Yod-dropping"],
+        answer: 0,
+        explanation: "AAVE often simplifies final clusters (e.g., 'cold' → [koʊd̥] or [koʊ])."
+      },
+      {
+        question: "Estuary English is often described as a midpoint between which two accents?",
+        options: ["Cockney and RP", "Scottish and RP", "American and RP", "Welsh and RP"],
+        answer: 0,
+        explanation: "Estuary English blends features of Cockney with Received Pronunciation."
+      },
+      {
+        question: "What phenomenon describes the merging of /w/ and /ʍ/ in words like 'wine' and 'whine'?",
+        options: ["Wine–whine merger", "Foot–strut split", "Trap-Bath split", "NG-coalescence"],
+        answer: 0,
+        explanation: "Many speakers merge /w/ and /ʍ/, pronouncing both 'wine' and 'whine' as [waɪn]."
+      },
+
+      // Bibliography & Referencing (14–25)
+      {
+        question: "Which referencing style is most commonly used in applied linguistics journals?",
+        options: ["APA", "MLA", "Chicago", "Harvard"],
+        answer: 0,
+        explanation: "APA (American Psychological Association) style is the standard in linguistics."
+      },
+      {
+        question: "In APA style, a work with how many authors is abbreviated to 'et al.' in in-text citations (7th ed)?",
+        options: ["Three or more", "Two or more", "Five or more", "Six or more"],
+        answer: 0,
+        explanation: "APA 7th edition uses 'et al.' for three or more authors from the first citation."
+      },
+      {
+        question: "Which element is unique to a book reference but not typically included in a journal article reference?",
+        options: ["Publisher name", "Volume number", "Issue number", "DOI"],
+        answer: 0,
+        explanation: "Book citations require the publisher; journal articles specify volume/issue and DOI."
+      },
+      {
+        question: "In APA reference list entries, how is the DOI formatted?",
+        options: ["As a URL starting with https://doi.org/", "Preceded by 'doi:'", "In parentheses", "Omitted"],
+        answer: 0,
+        explanation: "Current APA style presents a DOI as a full URL beginning 'https://doi.org/'."
+      },
+      {
+        question: "The bibliography section in a research paper is primarily used to:",
+        options: ["List sources cited", "Provide definitions", "Summarize chapters", "Give acknowledgments"],
+        answer: 0,
+        explanation: "A bibliography (or reference list) lists every work cited in the text."
+      },
+      {
+        question: "Which citation component indicates the date you accessed an online resource in APA style?",
+        options: ["Access date", "Publication date", "Retrieval URL", "In-text citation"],
+        answer: 0,
+        explanation: "When content is likely to change, you include 'Retrieved Month Day, Year, from URL'."
+      },
+      {
+        question: "In MLA style, the list of works cited is sorted by:",
+        options: ["Alphabetical order by author surname", "Chronological order", "Title length", "Number of pages"],
+        answer: 0,
+        explanation: "MLA’s Works Cited is arranged alphabetically by each author’s last name."
+      },
+      {
+        question: "What is the correct in-text citation format for a direct quote in APA style?",
+        options: ["(Smith, 2020, p. 15)", "(Smith, 15, 2020)", "(p. 15, Smith 2020)", "(Smith p.15, 2020)"],
+        answer: 0,
+        explanation: "APA requires author, year, and page: (Smith, 2020, p. 15)."
+      },
+      {
+        question: "When citing a source with no identified author in APA, what is used in place of the author?",
+        options: ["Title of work", "Editor’s name", "Publisher name", "URL"],
+        answer: 0,
+        explanation: "The title moves into the author position, shortened in-text if lengthy."
+      },
+      {
+        question: "Which referencing style uses footnotes or endnotes instead of in-text citations?",
+        options: ["Chicago Notes & Bibliography", "APA", "MLA", "Harvard"],
+        answer: 0,
+        explanation: "Chicago’s Notes and Bibliography system relies on numbered footnotes/endnotes."
+      },
+      {
+        question: "In APA, how should multiple works by the same author be ordered in the reference list?",
+        options: ["Chronologically by year", "Alphabetically by title", "Randomly", "By page count"],
+        answer: 0,
+        explanation: "APA orders same-author works from earliest to latest by publication date."
+      },
+      {
+        question: "Which element should not appear in a journal article bibliography entry in APA style?",
+        options: ["Editor name", "Volume number", "Issue number", "Page range"],
+        answer: 0,
+        explanation: "Journal articles do not list an editor; that element is for edited books."
+      }
+    ];
+
+    // Shuffle questions & options
+    let quizQuestions = questions
+      .map(q => {
+        const copy = JSON.parse(JSON.stringify(q));
+        const opts = copy.options.map((opt, i) => ({ opt, i }))
+          .sort(() => Math.random() - 0.5);
+        const newAnswer = opts.findIndex(o => o.i === copy.answer);
+        return {
+          question: copy.question,
+          options: opts.map(o => o.opt),
+          answer: newAnswer,
+          explanation: copy.explanation
+        };
+      })
+      .sort(() => Math.random() - 0.5);
+
+    let currentQ = 0;
+    const userAnswers = Array(quizQuestions.length).fill(null);
+
+    function renderQuestion() {
+      const card = document.getElementById("question-card");
+      const q = quizQuestions[currentQ];
+      let html = `<h2>Question ${currentQ + 1} of ${quizQuestions.length}</h2>`;
+      html += `<p>${q.question}</p><div class="options">`;
+      q.options.forEach((opt, i) => {
+        const checked = userAnswers[currentQ] === i ? "checked" : "";
+        html += `
+          <label>
+            <input type="radio" name="answer" value="${i}" ${checked}> ${opt}
+          </label>`;
+      });
+      html += `</div>`;
+      card.innerHTML = html;
+      document.getElementById("prevBtn").disabled = currentQ === 0;
+      document.getElementById("nextBtn").disabled = currentQ === quizQuestions.length - 1;
+    }
+
+    document.getElementById("prevBtn").onclick = () => {
+      storeAnswer();
+      if (currentQ > 0) currentQ--;
+      renderQuestion();
+    };
+    document.getElementById("nextBtn").onclick = () => {
+      storeAnswer();
+      if (currentQ < quizQuestions.length - 1) currentQ++;
+      renderQuestion();
+    };
+    document.getElementById("skipBtn").onclick = () => {
+      userAnswers[currentQ] = null;
+      if (currentQ < quizQuestions.length - 1) {
+        currentQ++;
+        renderQuestion();
+      }
+    };
+    document.getElementById("submitBtn").onclick = submitQuiz;
+
+    function storeAnswer() {
+      const sel = document.querySelector('input[name="answer"]:checked');
+      userAnswers[currentQ] = sel ? parseInt(sel.value) : null;
+    }
+
+    function submitQuiz() {
+      storeAnswer();
+      let score = 0;
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = `<h2>Your Score: 0 / ${quizQuestions.length}</h2>`;
+      quizQuestions.forEach((q, idx) => {
+        const ua = userAnswers[idx];
+        const correct = ua === q.answer;
+        if (correct) score++;
+        resultsDiv.innerHTML += `
+          <div>
+            <strong>Q${idx + 1}:</strong> ${q.question}<br>
+            <span style="color:${correct ? 'lightgreen' : 'tomato'}">
+              ${correct ? 'Correct' : 'Incorrect'}
+            </span>
+            <div class="answer-explanation">${q.explanation}</div>
+          </div><hr>`;
+      });
+      resultsDiv.querySelector("h2").textContent = 
+        `Your Score: ${score} / ${quizQuestions.length}`;
+      document.getElementById("quiz-container").style.display = "none";
+      resultsDiv.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Initialize
+    renderQuestion();
+  </script>
+</body>
+</html>
