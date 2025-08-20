@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QCM Traduction-Traductologie Littéraire Anglais↔Français</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+            text-align: center;
+        }
+        #quiz {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2d87f0;
+        }
+        #dashboard {
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        #question {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .option {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 80%;
+            text-align: left;
+        }
+        .option:hover {
+            background-color: #ddd;
+        }
+        .selected {
+            background-color: #ffff99;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #2d87f0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1a6cd0;
+        }
+        #results {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: left;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz">
+        <h1>QCM sur la Traduction-Traductologie Littéraire Anglais↔Français</h1>
+        <div id="dashboard">
+            Question: <span id="current">1</span>/40<br>
+            Répondues: <span id="answered">0</span>/40
+        </div>
+        <div id="question"></div>
+        <div id="options"></div>
+        <button id="prev">Précédent</button>
+        <button id="next">Suivant</button>
+        <button id="submit">Valider</button>
+    </div>
+    <div id="results" style="display:none;"></div>
+
+    <script>
+        let originalQuestions = [
+            // Questions sur The Translator's Invisibility by Lawrence Venuti
+            {
+                question: "Selon Lawrence Venuti dans 'The Translator's Invisibility', quelle stratégie de traduction rend le traducteur invisible en assimilant le texte étranger à la culture cible ?",
+                options: ["Foreignization", "Domestication", "Équivalence dynamique", "Fidélité abusive"],
+                correct: 1,
+                explanation: "Venuti critique la domestication pour créer une illusion de transparence, masquant l'intervention du traducteur et réduisant les différences culturelles. Référence: Venuti (1995), pp. 1-20. Cela est particulièrement pertinent dans les traductions littéraires anglais-français, où la fluidité anglaise domine souvent."
+            },
+            {
+                question: "Dans 'The Translator's Invisibility' de Lawrence Venuti, qu'est-ce que la 'foreignization' vise à accomplir dans la traduction littéraire ?",
+                options: ["Rendre le texte fluide et transparent", "Mettre en évidence les différences culturelles et linguistiques", "Adapter le texte à l'idéologie cible", "Utiliser des archaïsmes pour historiciser"],
+                correct: 1,
+                explanation: "La foreignization retient les éléments étrangers pour challenger les normes de la culture cible et rendre le traducteur visible. Exemple: Traductions de Proust en anglais conservant des structures françaises. Référence: Venuti (1995), pp. 99-118."
+            },
+            {
+                question: "Lawrence Venuti dans 'The Translator's Invisibility' associe la 'fluency' à quelle illusion dans les traductions anglais-français ?",
+                options: ["Illusion d'originalité", "Illusion de transparence", "Illusion de fidélité littérale", "Illusion de cultural narcissism"],
+                correct: 1,
+                explanation: "La fluency crée l'illusion que le texte traduit est un original en langue cible, masquant le processus de traduction. Exemple: Traduction de Camus 'The Stranger' louée pour sa 'naturalité'. Référence: Venuti (1995), pp. 44-65."
+            },
+            {
+                question: "Quelle théorie Venuti critique-t-il pour promouvoir la domestication dans 'The Translator's Invisibility' ?",
+                options: ["Théorie polysystémique", "Équivalence dynamique de Nida", "Théorie skopos", "Herméneutique de Steiner"],
+                correct: 1,
+                explanation: "Venuti critique l'équivalence dynamique de Nida pour prioriser la naturalité, menant à la domestication ethnocentrique. Pertinent pour les traductions littéraires Fr-Eng. Référence: Venuti (1995), pp. 1-20."
+            },
+            {
+                question: "Dans 'The Translator's Invisibility' de Lawrence Venuti, quel exemple illustre la foreignization dans la traduction italienne influencée par le français ?",
+                options: ["Traduction de Camus", "Tarchetti's Shelley", "Denham's Virgil", "Sagan's Bonjour Tristesse"],
+                correct: 1,
+                explanation: "Tarchetti utilise la foreignization pour challenger le réalisme italien, avec influences baudelairiennes françaises. Référence: Venuti (1995), pp. 148-150."
+            },
+            // Questions sur Exploring Translation Theories by Anthony Pym
+            {
+                question: "Selon Anthony Pym dans 'Exploring Translation Theories', qu'est-ce que la 'natural equivalence' présuppose dans la traduction littéraire anglais-français ?",
+                options: ["Similarités préexistantes entre langues", "Adaptation basée sur le but", "Normes descriptives", "Incertitude déconstructive"],
+                correct: 0,
+                explanation: "La natural equivalence assume des expressions équivalentes indépendantes de la traduction, souvent critiquée pour ignorer les asymétries culturelles. Exemple: Traductions de poésie où les métaphores ne correspondent pas naturellement. Référence: Pym (2010), chapitre sur l'équivalence."
+            },
+            {
+                question: "Dans 'Exploring Translation Theories' d'Anthony Pym, la théorie skopos est associée à quel principe pour la traduction littéraire ?",
+                options: ["Orientation source", "But de la traduction détermine la méthode", "Réécriture culturelle", "Fidélité littérale"],
+                correct: 1,
+                explanation: "Développée par Vermeer, skopos priorise le purpose, utile pour adapter les romans Fr-Eng à des publics spécifiques. Référence: Pym (2010), chapitre sur le purpose."
+            },
+            {
+                question: "Quelle théorie dans 'Exploring Translation Theories' de Pym implique les polysystèmes pour analyser les traductions littéraires ?",
+                options: ["Équivalence", "Purpose", "Description", "Uncertainty"],
+                correct: 2,
+                explanation: "La théorie descriptive (Even-Zohar, Toury) voit la traduction dans les systèmes littéraires, e.g., position périphérique des traductions Fr en Eng. Référence: Pym (2010), chapitre sur la description."
+            },
+            {
+                question: "Pym dans 'Exploring Translation Theories' décrit l'équivalence directionnelle comme ?",
+                options: ["Symétrique", "Asymétrique, source à cible diffère de cible à source", "Culturelle seulement", "Linguistique seulement"],
+                correct: 1,
+                explanation: "L'équivalence n'est pas réversible, pertinent pour les asymétries Eng-Fr en littérature. Référence: Pym (2010), chapitre sur l'équivalence."
+            },
+            {
+                question: "Dans le chapitre sur la traduction culturelle de 'Exploring Translation Theories' de Pym, quelle idée de Bhabha est référencée ?",
+                options: ["Hybridité", "Domestication de Venuti", "Équivalence de Nida", "Normes de Toury"],
+                correct: 0,
+                explanation: "L'hybridity souligne les espaces intermédiaires en traduction, e.g., traductions postcoloniales Fr-Eng. Référence: Pym (2010), chapitre sur la traduction culturelle."
+            },
+            // Questions sur La traduction et la lettre ou l'auberge du lointain by Antoine Berman
+            {
+                question: "Dans 'La traduction et la lettre ou l'auberge du lointain' d'Antoine Berman, quelle est la 'épreuve de l'étranger' ?",
+                options: ["Adaptation culturelle", "Relation entre le propre et l'étranger", "Fidélité littérale", "Déconstruction linguistique"],
+                correct: 1,
+                explanation: "Berman voit la traduction comme une épreuve double: ouvrir l'œuvre étrangère tout en confrontant le propre. Pertinent pour traductions littéraires Eng-Fr. Référence: Berman (1999), p. 285."
+            },
+            {
+                question: "Berman dans 'La traduction et la lettre ou l'auberge du lointain' critique quelles tendances déformantes en traduction ?",
+                options: ["Rationalisation, clarification, expansion", "Foreignization, resistancy", "Skopos, polysystème", "Herméneutique, restitution"],
+                correct: 0,
+                explanation: "Ces tendances ethnocentriques déforment le texte source, e.g., clarification dans traductions de Kafka en français. Référence: Berman (1999), pp. 284-297."
+            },
+            {
+                question: "Quelle approche Berman préconise-t-il pour la traduction littéraire dans son livre ?",
+                options: ["Domestication", "Foreignizing", "Équivalence dynamique", "Réécriture idéologique"],
+                correct: 1,
+                explanation: "Berman advocate le foreignizing pour préserver l'étrangeté, influençant les traductions Fr-Eng. Référence: Berman (1999), p. 285."
+            },
+            {
+                question: "Dans 'La traduction et la lettre ou l'auberge du lointain', Berman discute de la traduction comme ?",
+                options: ["Acte neutre", "Responsabilité éthique", "Processus économique", "Adaptation artistique seulement"],
+                correct: 1,
+                explanation: "La traduction implique une éthique envers l'étranger, critique de l'ethnocentrisme. Exemple: Traductions de Faulkner en français. Référence: Berman (1999), pp. 284-297."
+            },
+            {
+                question: "Berman identifie combien de tendances déformantes dans la traduction prose ?",
+                options: ["5", "12", "8", "3"],
+                correct: 1,
+                explanation: "12 tendances comme ennoblement, popularisation, affectant les traductions littéraires Eng-Fr. Référence: Berman (1999)."
+            },
+            // Questions sur Traduire : théorèmes pour la traduction by Jean-René Ladmiral
+            {
+                question: "Dans 'Traduire : théorèmes pour la traduction' de Jean-René Ladmiral, quelle est la distinction clé entre approches ?",
+                options: ["Sourcier vs cibliste", "Domestication vs foreignization", "Équivalence vs skopos", "Herméneutique vs polysystème"],
+                correct: 0,
+                explanation: "Sourcier (orienté source, littéral) vs cibliste (orienté cible, adaptatif), central pour traductions littéraires Fr-Eng. Référence: Ladmiral (1994)."
+            },
+            {
+                question: "Ladmiral dans son livre accepte une théorie de traduction comme ?",
+                options: ["Unifiée et spéculative", "En miettes ou plurielle", "Purement pratique", "Idéologique seulement"],
+                correct: 1,
+                explanation: "Il préfère une théorie plurielle basée sur la pratique. Référence: Ladmiral (1994), résumé Goodreads."
+            },
+            {
+                question: "Quelle est la vue de Ladmiral sur la relation théorie-pratique en traduction ?",
+                options: ["Théorie interfère directement", "Théorie est séparée", "Pratique domine théorie", "Théorie est inutile"],
+                correct: 0,
+                explanation: "La théorie interfère linéairement avec la pratique. Exemple: Traductions de philosophie Eng-Fr. Référence: Ladmiral (1994)."
+            },
+            {
+                question: "Dans 'Traduire', Ladmiral voit la traduction comme une ?",
+                options: ["Affaire d'amour bilingue", "Tâche technique", "Réécriture culturelle", "Interprétation sémiotique"],
+                correct: 0,
+                explanation: "Traduction comme amour bilingue entre langues et cultures. Pertinent pour littérature Eng-Fr. Référence: Ladmiral (2016 article)."
+            },
+            {
+                question: "Ladmiral critique quelle vue traditionnelle de la fidélité ?",
+                options: ["Fidélité absolue", "Fidélité relative cibliste", "Fidélité sourcier", "Fidélité éthique"],
+                correct: 0,
+                explanation: "Il propose fidélité relative, équilibrant source et cible. Référence: Ladmiral (1994)."
+            },
+            // Questions sur After Babel by George Steiner
+            {
+                question: "Dans 'After Babel' de George Steiner, la traduction est décrite comme un processus de ?",
+                options: ["Pertes inévitables", "Gains culturels", "Équivalence parfaite", "Adaptation idéologique"],
+                correct: 0,
+                explanation: "Traduction implique des pertes, même avec efforts. Exemple: Traductions poétiques Eng-Fr. Référence: Steiner (1975), p. 336."
+            },
+            {
+                question: "Quelle est la 'herméneutic motion' dans 'After Babel' de Steiner ?",
+                options: ["Trust, aggression, incorporation, restitution", "Domestication, foreignization, fluency", "Sourcier, cibliste, equivalence", "Polysystem, norms, skopos"],
+                correct: 0,
+                explanation: "Quatre étapes: confiance, agression, incorporation, restitution éthique. Référence: Steiner (1975), pp. 186-191."
+            },
+            {
+                question: "Steiner dans 'After Babel' voit la diversité linguistique post-Babel comme ?",
+                options: ["Malédiction uniquement", "Richesse d'options", "Obstacle insurmontable", "Illusion culturelle"],
+                correct: 1,
+                explanation: "Diversité offre richesse et compensations. Pertinent pour Eng-Fr littéraire. Référence: Steiner (1975)."
+            },
+            {
+                question: "Selon Steiner, comprendre c'est ?",
+                options: ["Décoder et traduire", "Adapter culturellement", "Réécrire idéologiquement", "Interpréter littéralement"],
+                correct: 0,
+                explanation: "To understand is to decipher and translate. Référence: Steiner (1975), synopsis."
+            },
+            {
+                question: "Steiner challenge quelles théories conventionnelles dans 'After Babel' ?",
+                options: ["Théories de traduction et langage", "Théories polysystémiques", "Théories skopos", "Théories de localisation"],
+                correct: 0,
+                explanation: "Il challenge théories sur diversité linguistique et traduction. Référence: Steiner (1975)."
+            },
+            // Questions sur Translation, Rewriting, and the Manipulation of Literary Fame by André Lefevere
+            {
+                question: "Dans 'Translation, Rewriting, and the Manipulation of Literary Fame' d'André Lefevere, la traduction est vue comme une forme de ?",
+                options: ["Réécriture influencée par idéologie", "Fidélité littérale", "Équivalence naturelle", "Interprétation sémiotique"],
+                correct: 0,
+                explanation: "Traduction manipule la littérature via idéologie, poetics, patronage. Exemple: Traductions de Brecht en anglais. Référence: Lefevere (1992)."
+            },
+            {
+                question: "Lefevere identifie quels facteurs systémiques affectant la réécriture ?",
+                options: ["Idéologie, poetics, patronage", "Skopos, norms, equivalence", "Herméneutique, restitution, trust", "Domestication, foreignization, fluency"],
+                correct: 0,
+                explanation: "Ces facteurs manipulent la fama littéraire. Référence: Lefevere (1992), pp. 233-249."
+            },
+            {
+                question: "Selon Lefevere, comment la réécriture affecte-t-elle la littérature traduite ?",
+                options: ["Adapte à nouvelle culture ou contexte", "Préserve l'original intact", "Ignore l'idéologie", "Se concentre sur linguistique seulement"],
+                correct: 0,
+                explanation: "Réécriture adapte pour idéologique/artistic ends. Exemple: Traductions Eng-Fr de classiques. Référence: Lefevere (1992)."
+            },
+            {
+                question: "Dans le livre de Lefevere, quel exemple illustre la manipulation ?",
+                options: ["Brecht en anglais", "Camus en anglais", "Proust en anglais", "Shakespeare en français"],
+                correct: 0,
+                explanation: "Traductions de Brecht compromises with poetics and patronage. Référence: Lefevere (1992), p. 244."
+            },
+            {
+                question: "Lefevere voit la traduction comme ?",
+                options: ["Réfraction systémique", "Processus neutre", "Acte individuel", "Interprétation pure"],
+                correct: 0,
+                explanation: "Traduction réfracte via contraintes systémiques. Référence: Lefevere (1992)."
+            },
+            // Questions sur Translation Studies by Susan Bassnett
+            {
+                question: "Dans 'Translation Studies' de Susan Bassnett, quelle histoire de la théorie de traduction est tracée ?",
+                options: ["Des Romains anciens à aujourd'hui", "Seulement médiévale", "Postcoloniale uniquement", "Linguistique moderne"],
+                correct: 0,
+                explanation: "Commence avec Romains, discute problèmes littéraires. Référence: Bassnett (1980)."
+            },
+            {
+                question: "Bassnett discute quels problèmes spécifiques en traduction littéraire ?",
+                options: ["Poésie, prose, drame", "Technique seulement", "Culturelle uniquement", "Idéologique"],
+                correct: 0,
+                explanation: "Central issues et problèmes spécifiques. Exemple: Traduction de poésie Eng-Fr. Référence: Bassnett (1980)."
+            },
+            {
+                question: "Selon Bassnett, la traduction est à l'intersection de ?",
+                options: ["Langue, culture, identité", "Linguistique, économie", "Politique, technique", "Art, science"],
+                correct: 0,
+                explanation: "Enrichit compréhension de traduction comme intersection. Référence: Bassnett (1980)."
+            },
+            {
+                question: "Bassnett aborde la traduction comme un champ ?",
+                options: ["Interdisciplinaire", "Purement linguistique", "Historique seulement", "Pratique uniquement"],
+                correct: 0,
+                explanation: "Examine utilisation actuelle comme interdisciplinaire. Référence: Bassnett (1980)."
+            },
+            {
+                question: "Dans 'Translation Studies', Bassnett offre une histoire de théorie commençant par ?",
+                options: ["Romains anciens", "Moyen Âge", "Renaissance", "Ère moderne"],
+                correct: 0,
+                explanation: "Début avec Romains et Horace. Référence: Bassnett (1980)."
+            },
+            // Questions sur Experiences in Translation by Umberto Eco
+            {
+                question: "Dans 'Experiences in Translation' d'Umberto Eco, la traduction est vue comme ?",
+                options: ["Interprétation de texte en deux langues", "Comparaison linguistique", "Adaptation culturelle", "Réécriture idéologique"],
+                correct: 0,
+                explanation: "Non comparaison de langues, mais interprétation. Exemple: Traductions de ses romans Eng-Fr. Référence: Eco (2001)."
+            },
+            {
+                question: "Eco argue que la traduction implique ?",
+                options: ["Négociation de pertes", "Gains absolus", "Équivalence parfaite", "Fidélité littérale"],
+                correct: 0,
+                explanation: "Négocie pertes en interprétation. Référence: Eco (2001)."
+            },
+            {
+                question: "Quelle approche Eco utilise-t-il, basée sur ses expériences ?",
+                options: ["Sémiotique", "Polysystémique", "Skopos", "Herméneutique"],
+                correct: 0,
+                explanation: "Approche sémiotique, comme auteur traduit. Référence: Eco (2001)."
+            },
+            {
+                question: "Eco discute de la traduction comme ?",
+                options: ["Processus de négociation", "Acte neutre", "Tâche technique", "Réplication exacte"],
+                correct: 0,
+                explanation: "Négociation entre langues et cultures. Exemple: Ses fictions traduites. Référence: Eco (2001)."
+            },
+            {
+                question: "Dans 'Experiences in Translation', Eco tire de ses expériences en tant que ?",
+                options: ["Auteur traduit", "Théoricien seulement", "Traducteur professionnel", "Critique littéraire"],
+                correct: 0,
+                explanation: "En tant qu'auteur, il discute de ses œuvres traduites. Référence: Eco (2001)."
+            }
+        ];
+
+        // Shuffle questions
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        let questions = shuffle([...originalQuestions]);
+
+        let current = 0;
+        let answers = new Array(questions.length).fill(-1);
+        let shuffledOptions = questions.map(q => {
+            let opts = [...q.options];
+            let corrIndex = q.correct;
+            let shuffled = shuffle(opts.map((opt, idx) => ({opt, idx: idx === corrIndex ? true : false})));
+            let newCorrect = shuffled.findIndex(o => o.idx);
+            return {options: shuffled.map(o => o.opt), correct: newCorrect};
+        });
+
+        function loadQuestion() {
+            document.getElementById('current').textContent = current + 1;
+            document.getElementById('question').textContent = questions[current].question;
+            let optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            shuffledOptions[current].options.forEach((opt, idx) => {
+                let div = document.createElement('div');
+                div.className = 'option';
+                div.textContent = opt;
+                div.onclick = () => selectOption(idx);
+                if (answers[current] === idx) div.classList.add('selected');
+                optionsDiv.appendChild(div);
+            });
+            updateAnswered();
+        }
+
+        function selectOption(idx) {
+            answers[current] = idx;
+            loadQuestion();
+        }
+
+        function updateAnswered() {
+            let count = answers.filter(a => a !== -1).length;
+            document.getElementById('answered').textContent = count;
+        }
+
+        document.getElementById('prev').onclick = () => {
+            if (current > 0) current--;
+            loadQuestion();
+        };
+
+        document.getElementById('next').onclick = () => {
+            if (current < questions.length - 1) current++;
+            loadQuestion();
+        };
+
+        document.getElementById('submit').onclick = () => {
+            let score = 0;
+            let resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<h2>Résultats</h2><p>Score: <span id="score"></span>/40</p>';
+            questions.forEach((q, i) => {
+                let userAns = answers[i];
+                let correctIdx = shuffledOptions[i].correct;
+                if (userAns === correctIdx) score++;
+                let div = document.createElement('div');
+                div.innerHTML = `<p><strong>Question ${i+1}:</strong> ${q.question}</p>`;
+                shuffledOptions[i].options.forEach((opt, j) => {
+                    let span = document.createElement('span');
+                    span.textContent = opt;
+                    if (j === correctIdx) span.classList.add('correct');
+                    if (j === userAns && j !== correctIdx) span.classList.add('incorrect');
+                    div.appendChild(span);
+                    div.appendChild(document.createElement('br'));
+                });
+                div.innerHTML += `<p><strong>Explication:</strong> ${q.explanation}</p><hr>`;
+                resultsDiv.appendChild(div);
+            });
+            document.getElementById('score').textContent = score;
+            document.getElementById('quiz').style.display = 'none';
+            resultsDiv.style.display = 'block';
+        };
+
+        loadQuestion();
+    </script>
+</body>
+</html>
